@@ -13,6 +13,28 @@ export interface VillageInterface {
   nama: string;
 }
 
+export interface AdminProfileInterface {
+  id: number;
+  slug: number;
+  nik: string;
+  email: string;
+  telepon: string;
+  rt: number;
+  rw: number;
+  alamat: string;
+  agama: string;
+  tempat_lahir: string;
+  tgl_lahir: string;
+  gender: string;
+  goldar: string;
+  role_id: number;
+  role_name: string;
+  jabatans: [];
+  pangkats: [];
+  pendidikans: [];
+  createdAt: string;
+}
+
 export interface NewUserInterface {
   name: string;
   nip: string;

@@ -245,3 +245,58 @@ export const faqs = [
       "Kami menyediakan fasilitas mewah seperti armada full AC, captain seat, audio & TV, port USB, snack gratis, dan bagasi yang luas untuk kenyamanan Anda.",
   },
 ];
+
+export const masterDataSupers = [
+  {
+    id: 1,
+    name: "Bidang",
+  },
+  {
+    id: 2,
+    name: "Layanan",
+  },
+  {
+    id: 3,
+    name: "Persyaratan Layanan",
+  },
+  {
+    id: 4,
+    name: "Berita",
+  },
+  {
+    id: 5,
+    name: "Foto Kegiatan",
+  },
+  {
+    id: 6,
+    name: "Tentang, Visi, & Misi",
+  },
+  {
+    id: 7,
+    name: "Struktur Organisasi",
+  },
+  {
+    id: 8,
+    name: "FAQ",
+  },
+  {
+    id: 9,
+    name: "Syarat dan Ketentuan",
+  },
+  {
+    id: 10,
+    name: "Manual Book",
+  },
+  {
+    id: 11,
+    name: "Logo",
+  },
+  {
+    id: 12,
+    name: "Carousel - Slider",
+  },
+  {
+    id: 13,
+    name: "Lokasi - Maps",
+  },
+];

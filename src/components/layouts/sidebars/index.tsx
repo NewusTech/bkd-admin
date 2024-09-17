@@ -15,8 +15,13 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import { getAreas, getServiceByAreas, getUserProfile } from "@/services/api";
-import { AreasInterface, ServiceInterface } from "@/types/interface";
+import {
+  AdminProfileInterface,
+  AreasInterface,
+  ServiceInterface,
+} from "@/types/interface";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { masterDataSupers } from "@/constants/main";
 
 export default function DashBoardSidebarPages() {
   const router = useRouter();
@@ -24,7 +29,7 @@ export default function DashBoardSidebarPages() {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const limitItem = 10;
   const [activeAccordionValue, setActiveAccordionValue] = useState("account");
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<AdminProfileInterface>();
   const [areas, setAreas] = useState<AreasInterface[]>([]);
   const [services, setServices] = useState<ServiceInterface[]>();
   const [serviceId, setServiceId] = useState<number | null>(null);
@@ -37,16 +42,6 @@ export default function DashBoardSidebarPages() {
     }
   }, [router]);
 
-  const fetchAreas = async (limit: number) => {
-    try {
-      const response = await getAreas(limit);
-
-      setAreas(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const fetchUserProfile = async () => {
     try {
       const response = await getUserProfile();
@@ -58,26 +53,7 @@ export default function DashBoardSidebarPages() {
 
   useEffect(() => {
     fetchUserProfile();
-    fetchAreas(limitItem);
   }, []);
-
-  const fetchServices = async (bidang_id: number) => {
-    try {
-      const response = await getServiceByAreas(bidang_id);
-
-      setServices(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (serviceId) {
-      fetchServices(serviceId);
-    }
-  }, [serviceId]);
-
-  console.log(services, "ini service");
 
   return (
     <section className="flex flex-col w-10/12 md:w-[28%] h-full justify-center items-center fixed">
@@ -92,13 +68,14 @@ export default function DashBoardSidebarPages() {
 
         <div className="w-full flex flex-col py-5 verticalScroll gap-y-5 h-full border bg-white shadow-md border-line-20">
           <Link
-            href={"/dashboard"}
+            href={"/"}
             className="w-full flex flex-row items-center cursor-pointer px-4 gap-x-3">
             <HomeIcon className="w-5 h-5 text-black-80" />
 
             <p className="text-[16px] text-black-80">Dashboard</p>
           </Link>
 
+          {/* render Super Admin */}
           <div className="w-full flex flex-col">
             <Accordion
               className="w-full flex flex-col gap-y-4"
@@ -108,79 +85,92 @@ export default function DashBoardSidebarPages() {
               onValueChange={(value) => {
                 setActiveAccordionValue(value);
               }}>
-              {areas &&
-                areas.length > 0 &&
-                areas?.map((area: AreasInterface, i: number) => {
-                  return (
-                    <AccordionItem
-                      key={i}
-                      className="w-full border-none flex flex-col"
-                      value={`item-${i}`}>
-                      <AccordionTrigger
-                        onClick={() => setServiceId(area.id)}
-                        className="px-4 py-2 bg-white font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4">
-                        <div className="w-full flex flex-row items-center gap-x-2">
-                          <p className="text-black-80 text-[16px]">
-                            {area?.nama}
-                          </p>
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
-                        <div className="w-full flex flex-col">
-                          {services &&
-                            services?.length > 0 &&
-                            services?.map(
-                              (service: ServiceInterface, j: number) => {
-                                return (
-                                  <Link
-                                    key={j}
-                                    href={`/application-form/${service?.bidang_id}/${service?.id}`}
-                                    className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
-                                    <div className="w-10/12 flex flex-row items-center gap-x-2">
-                                      <DotIcon
-                                        className={`w-5 h-5 text-black-80`}
-                                      />
-                                      <p>{service.nama}</p>
-                                    </div>
-                                  </Link>
-                                );
-                              }
-                            )}
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  );
-                })}
+              <AccordionItem
+                className="w-full border-none flex flex-col"
+                value={`item-1`}>
+                <AccordionTrigger
+                  // onClick={() => setServiceId(area.id)}
+                  className="px-4 py-2 bg-white font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4">
+                  <div className="w-full flex flex-row items-center gap-x-2">
+                    <p className="text-black-80 text-[16px]">Data Master</p>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                  <div className="w-full flex flex-col">
+                    {masterDataSupers &&
+                      masterDataSupers?.length > 0 &&
+                      masterDataSupers?.map(
+                        (master: { id: number; name: string }, i: number) => {
+                          let linking;
+
+                          switch (master?.name) {
+                            case "Bidang":
+                              linking = "/super-admin/master-data/areas";
+                              break;
+                            case "Layanan":
+                              linking = "/super-admin/master-data/services";
+                              break;
+                            case "Persyaratan Layanan":
+                              linking =
+                                "/super-admin/master-data/service-requirements";
+                              break;
+                            case "Berita":
+                              linking = "/super-admin/master-data/news";
+                              break;
+                            case "Foto Kegiatan":
+                              linking =
+                                "/super-admin/master-data/bkd-gallery-activities";
+                              break;
+                            case "Tentang, Visi, & Misi":
+                              linking =
+                                "/super-admin/master-data/about-us-vision-mission";
+                              break;
+                            case "Struktur Organisasi":
+                              linking =
+                                "/super-admin/master-data/structure-organization";
+                              break;
+                            case "FAQ":
+                              linking = "/super-admin/master-data/faq";
+                              break;
+                            case "Syarat dan Ketentuan":
+                              linking =
+                                "/super-admin/master-data/terms-and-conditions";
+                              break;
+                            case "Manual Book":
+                              linking = "/super-admin/master-data/manual-book";
+                              break;
+                            case "Logo":
+                              linking = "/super-admin/master-data/logo";
+                              break;
+                            case "Carousel - Slider":
+                              linking =
+                                "/super-admin/master-data/carousel-slider";
+                              break;
+                            case "Lokasi - Maps":
+                              linking =
+                                "/super-admin/master-data/location-maps";
+                              break;
+                            default:
+                              break;
+                          }
+
+                          return (
+                            <Link
+                              key={i}
+                              href={`${linking}`}
+                              className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                              <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                <DotIcon className={`w-5 h-5 text-black-80`} />
+                                <p>{master?.name}</p>
+                              </div>
+                            </Link>
+                          );
+                        }
+                      )}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
-          </div>
-
-          <div className="w-full flex flex-col gap-y-3">
-            <div
-              className={`${pathName === "/application-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
-              <Link
-                href={"/application-history"}
-                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
-                Riwayat Permohonan
-              </Link>
-            </div>
-
-            <div
-              className={`${pathName === "/satisfaction-index" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
-              <Link
-                href={"/satisfaction-index"}
-                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
-                Indeks kepuasan
-              </Link>
-            </div>
-
-            <div
-              className={`${pathName === "/user-complaint" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
-              <Link
-                href={"/user-complaint"}
-                className={` w-full flex flex-row text-black-80 text-[16px] px-4`}>
-                Pengaduan
-              </Link>
-            </div>
           </div>
 
           <div className="w-full flex flex-col items-center justify-center">
@@ -202,7 +192,9 @@ export default function DashBoardSidebarPages() {
               </div>
 
               <div className="w-full flex flex-col justify-center gap-y-1">
-                <h5 className="text-black-80 text-[16px]">Irsyad Al-Haq</h5>
+                <h5 className="text-black-80 text-[16px]">
+                  {user && user?.role_name}
+                </h5>
 
                 <p className="text-black-40 text-sm">Bandar Lampung</p>
               </div>
