@@ -1,6 +1,5 @@
 "use client";
 
-import google from "@/../../public/assets/images/google-color.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,12 +11,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import BackgroundImage from "@/components/layouts/background_images";
-import { schemaLogin } from "@/validations";
+import { schemaLoginAdmin } from "@/validations";
 import { z } from "zod";
 import Swal from "sweetalert2";
 import parse from "html-react-parser";
@@ -42,13 +39,13 @@ export default function LoginScreen() {
     const token = Cookies.get("Authorization");
 
     if (token) {
-      router.push("/dashboard");
+      router.push("/");
     }
   }, [router]);
 
   const validateForm = useCallback(async () => {
     try {
-      await schemaLogin.parseAsync(data);
+      await schemaLoginAdmin.parseAsync(data);
       setErrors({});
       return true;
     } catch (error) {
@@ -88,7 +85,7 @@ export default function LoginScreen() {
             showConfirmButton: false,
             position: "center",
           });
-          router.push("/dashboard");
+          router.push("/");
         } else {
           Swal.fire({
             icon: "error",
@@ -129,7 +126,7 @@ export default function LoginScreen() {
     <section className="relative flex justify-center items-center w-screen h-screen">
       <BackgroundImage />
 
-      <div className="relative z-50 flex flex-col w-6/12 items-center justify-center gap-y-8 bg-white p-12 shadow-lg rounded-lg">
+      <div className="relative z-50 flex flex-col w-5/12 items-center justify-center gap-y-8 bg-white p-12 shadow-lg rounded-lg">
         <div className="w-full flex flex-col items-center gap-y-2">
           <h2 className="text-black-80 text-xl">
             Selamat Datang Di Aplikasi BKD
@@ -166,7 +163,7 @@ export default function LoginScreen() {
                     })
                   }
                   type="text"
-                  inputMode="numeric"
+                  // inputMode="numeric"
                   className="w-full focus-visible:text-neutral-70 focus-visible:border focus-visible:border-primary-70"
                   placeholder="Masukkan NIP Anda"
                 />
@@ -222,22 +219,6 @@ export default function LoginScreen() {
             </div>
 
             <div className="w-full flex flex-col gap-y-8">
-              <div className="w-full flex flex-row justify-between">
-                <Link
-                  className="text-primary-40 text-sm"
-                  href={"/forgot-password"}>
-                  Lupa kata sandi?
-                </Link>
-
-                <div className="flex flex-row gap-x-1 text-sm">
-                  <p className="text-black-70">Kamu belum punya akun?</p>
-
-                  <Link className="text-primary-40" href={"/register"}>
-                    Daftar
-                  </Link>
-                </div>
-              </div>
-
               <div className="w-full flex flex-col gap-y-6">
                 <div className="w-full flex flex-row">
                   <Button
@@ -248,38 +229,6 @@ export default function LoginScreen() {
                   </Button>
                 </div>
               </div>
-            </div>
-
-            <div className="w-full flex flex-row items-center gap-x-1 mt-3">
-              <div className="w-full h-0.5 bg-line-40"></div>
-
-              <div className="w-full">
-                <p className="text-black-80 text-center text-sm">
-                  Atau masuk dengan
-                </p>
-              </div>
-
-              <div className="w-full h-0.5 bg-line-40"></div>
-            </div>
-
-            <div className="w-3/12 mt-2 flex items-center justify-center self-center">
-              {/* <Link className="w-full" href={`${process.env.NEXT_PUBLIC_API_URL_MPP_GOOGLE}/auth/google`}> */}
-              <Button
-                // onClick={handleLogin}
-                className="border border-line-50 rounded-lg bg-neutral-50 shadow-md w-full flex flex-row items-center py-3 px-1 gap-x-2">
-                <div className="w-[20px] flex items-center">
-                  <Image
-                    src={google}
-                    alt="Google Login"
-                    width={30}
-                    height={30}
-                    className="w-full h-full"
-                  />
-                </div>
-
-                <p className="text-black-80">Google</p>
-              </Button>
-              {/* </Link> */}
             </div>
 
             <div className="w-full text-center text-black-80 text-sm mt-5">
