@@ -77,6 +77,13 @@ export interface AreasInterface {
   jmlLayanan: number;
 }
 
+export interface AreasCreateInterface {
+  nama: string;
+  desc: string;
+  pj: string;
+  nip_pj: string;
+}
+
 export interface OutputServiceInterface {
   status: number;
   message: string;
@@ -98,7 +105,69 @@ export interface ServiceInterface {
   Bidang_nama: string;
 }
 
+export interface ServiceCreateInterface {
+  nama: string;
+  desc: string;
+  penanggung_jawab: string;
+  syarat: string;
+  ketentuan: string;
+  langkah: string;
+  bidang_id: string;
+}
+
 export interface TermConditionInterface {
   id: number;
   desc: string;
+}
+
+export interface NewsInterface {
+  id: number;
+  title: string;
+  slug: string;
+  desc: string;
+  image: string;
+  createdAt: string;
+}
+
+export interface NewsCreateInterface {
+  title: string;
+  slug: string;
+  desc: string;
+  image: string;
+}
+
+export interface BKDGalleryActivitiesInterface {
+  id: number;
+  title: string;
+  slug: string;
+  image: string;
+  createdAt: string;
+}
+
+export interface AboutUsVisionMisionInterface {
+  id: number;
+  about_bkd: string;
+  visi: string;
+  misi: string;
+  kontak: string;
+  long: string;
+  lang: string;
+  createdAt: string;
+}
+
+export interface AboutUsVisionMisionUpdateInterface {
+  about_bkd: string;
+  visi: string;
+  misi: string;
+  kontak: string;
+  long: string;
+  lang: string;
+}
+
+export interface StructureOrganizationInterface {
+  id: number;
+  nama: string;
+  slug: string;
+  jabatan: string;
+  image: string;
 }
