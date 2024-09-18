@@ -62,9 +62,9 @@ export default function ServicesScreen() {
     langkah: "",
   });
 
-  const fetchAreas = async (limit: number) => {
+  const fetchAreas = async (page: number, limit: number) => {
     try {
-      const response = await getAreas(limit);
+      const response = await getAreas(page, limit);
 
       setAreas(response.data);
     } catch (error) {
@@ -83,7 +83,7 @@ export default function ServicesScreen() {
   };
 
   useMemo(() => {
-    fetchAreas(limitItem);
+    fetchAreas(1, limitItem);
     fetchService(limitItem);
   }, [limitItem]);
 

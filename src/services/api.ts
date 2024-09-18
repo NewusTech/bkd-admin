@@ -4,10 +4,12 @@ import Cookies from "js-cookie";
 import {
   AboutUsVisionMisionUpdateInterface,
   AreasCreateInterface,
+  FaqsCreateInterface,
   LoginUserInterface,
   NewsCreateInterface,
   NewUserInterface,
   ServiceCreateInterface,
+  TermConditionUpdateInterface,
 } from "@/types/interface";
 
 // get user profile
@@ -72,54 +74,6 @@ export const postLoginUser = async (data: LoginUserInterface) => {
   return await response.json();
 };
 
-// get term and condition
-export const getTermConditions = async () => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/term-condition/get`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
-    }
-  );
-
-  return await response.json();
-};
-
-// get Faqs
-export const getFaqs = async () => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/faq/get`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
-    }
-  );
-
-  return await response.json();
-};
-
-// get carousel slider
-export const getCarouselSliders = async () => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/banner/get`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
-    }
-  );
-
-  return await response.json();
-};
-
 // get gallery image activities
 export const getGalleryImageActivities = async () => {
   const response = await fetch(
@@ -153,9 +107,9 @@ export const getServices = async () => {
 };
 
 // get areas / bidang
-export const getAreas = async (limit: number) => {
+export const getAreas = async (page: number, limit: number) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/bidang/get?limit=${limit}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/bidang/get?page=${page}&limit=${limit}`,
     {
       method: "GET",
       headers: {
@@ -539,7 +493,7 @@ export const postStructureOrganizations = async (data: any) => {
   return await response.json();
 };
 
-// delete bkd gallery activities
+// delete struktur organisasi
 export const deleteStructureOrganizations = async (slug: string) => {
   const token = Cookies.get("Authorization");
 
@@ -557,12 +511,196 @@ export const deleteStructureOrganizations = async (slug: string) => {
   return await response.json();
 };
 
-// update bkd gallery activities
+// update struktur organisasi
 export const updateStructureOrganizations = async (slug: string, data: any) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/user/bkd/struktur/update/${slug}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: data,
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// get faqs
+export const getFaqs = async (limit: number) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/faq/get?limit=${limit}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// post faqs
+export const postFaqs = async (data: FaqsCreateInterface) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/faq/create`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// delete faqs
+export const deleteFaqs = async (id: number) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/faq/delete/${id}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// update faqs
+export const updateFaqs = async (id: number, data: FaqsCreateInterface) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/faq/update/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// get term and condition
+export const getTermConditions = async () => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/term-condition/get`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// update term and condition
+export const updateTermConditions = async (
+  data: TermConditionUpdateInterface
+) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/term-condition/update`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// get carousel slider
+export const getCarouselSliders = async () => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/banner/get`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// post carousel slider
+export const postCarouselSliders = async (data: any) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/banner/create`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: data,
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// delete carousel slider
+export const deleteCarouselSliders = async (id: number) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/banner/delete/${id}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// update carousel slider
+export const updateCarouselSliders = async (id: number, data: any) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/banner/update/${id}`,
     {
       method: "PUT",
       headers: {

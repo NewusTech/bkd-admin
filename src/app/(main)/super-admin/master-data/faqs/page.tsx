@@ -3,8 +3,17 @@
 import SearchPages from "@/components/elements/search";
 import SuperAreasMasterDataTablePages from "@/components/tables/master_datas/areas_table";
 import { Button } from "@/components/ui/button";
-import { deleteAreas, getAreas, postAreas, updateAreas } from "@/services/api";
-import { AreasInterface } from "@/types/interface";
+import {
+  deleteAreas,
+  deleteFaqs,
+  getAreas,
+  getFaqs,
+  postAreas,
+  postFaqs,
+  updateAreas,
+  updateFaqs,
+} from "@/services/api";
+import { AreasInterface, FaqsInterface } from "@/types/interface";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   AlertDialog,
@@ -23,9 +32,9 @@ import { Textarea } from "@/components/ui/textarea";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
-import PaginationComponent from "@/components/elements/pagination";
+import SuperFaqsMasterDataTablePages from "@/components/tables/master_datas/faqs_table";
 
-export default function AreasScreen() {
+export default function FaqsScreen() {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -34,45 +43,25 @@ export default function AreasScreen() {
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
   const limitItem = 30;
-  const [areas, setAreas] = useState<AreasInterface[]>([]);
+  const [faqs, setFaqs] = useState<FaqsInterface[]>([]);
   const [data, setData] = useState({
-    nama: "",
-    desc: "",
-    nip_pj: "",
-    pj: "",
-  });
-  const [pagination, setPagination] = useState({
-    currentPage: 1,
-    perPage: 10,
-    totalPages: 1,
-    totalCount: 0,
+    answer: "",
+    question: "",
   });
 
-  const fetchAreas = async (page: number, limit: number) => {
+  const fetchFaqs = async (limit: number) => {
     try {
-      const response = await getAreas(page, limit);
+      const response = await getFaqs(limit);
 
-      setAreas(response.data);
-      setPagination((prev) => ({
-        ...prev,
-        currentPage: page,
-        totalPages: response.pagination.totalPages,
-        totalCount: response.pagination.totalCount,
-      }));
+      setFaqs(response.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    fetchAreas(1, 10);
+  useMemo(() => {
+    fetchFaqs(limitItem);
   }, []);
-
-  const handlePageChange = (newPage: number) => {
-    if (newPage !== pagination.currentPage) {
-      fetchAreas(newPage, 10);
-    }
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({
@@ -81,34 +70,32 @@ export default function AreasScreen() {
     });
   };
 
-  const handleCreateAreas = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCreateFaqs = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      const response = await postAreas(data);
+      const response = await postFaqs(data);
 
       if (response.status === 201) {
         setData({
-          nama: "",
-          desc: "",
-          nip_pj: "",
-          pj: "",
+          answer: "",
+          question: "",
         });
         Swal.fire({
           icon: "success",
-          title: "Berhasil Menambahkan Bidang!",
+          title: "Berhasil Menambahkan Faq!",
           timer: 2000,
           showConfirmButton: false,
           position: "center",
         });
-        fetchAreas(pagination.currentPage, 10);
+        fetchFaqs(limitItem);
         setIsDialogOpen(false);
-        router.push("/super-admin/master-data/areas");
+        router.push("/super-admin/master-data/faqs");
       } else {
         Swal.fire({
           icon: "error",
-          title: "Gagal Menambahkan Bidang!",
+          title: "Gagal Menambahkan Faq!",
           timer: 2000,
           showConfirmButton: false,
           position: "center",
@@ -122,12 +109,12 @@ export default function AreasScreen() {
     }
   };
 
-  const handleDeleteAreas = async (slug: string) => {
+  const handleDeleteFaqs = async (id: number) => {
     setIsDeleteLoading(true);
     try {
       const result = await Swal.fire({
-        title: "Apakah Anda Yakin Menghapus Bidang?",
-        text: "Bidang yang telah dihapus tidak dapat dipulihkan!",
+        title: "Apakah Anda Yakin Menghapus Faq?",
+        text: "Faq yang telah dihapus tidak dapat dipulihkan!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#0000FF",
@@ -136,17 +123,17 @@ export default function AreasScreen() {
       });
 
       if (result.isConfirmed) {
-        const response = await deleteAreas(slug);
+        const response = await deleteFaqs(id);
 
         if (response.status === 200) {
           await Swal.fire({
             icon: "success",
-            title: `Bidang berhasil dihapus!`,
+            title: `Faq berhasil dihapus!`,
             timer: 2000,
             position: "center",
           });
           setIsDeleteLoading(false);
-          fetchAreas(pagination.currentPage, 10);
+          fetchFaqs(limitItem);
         }
       }
     } catch (error) {
@@ -156,37 +143,35 @@ export default function AreasScreen() {
     }
   };
 
-  const handleUpdateArea = async (
+  const handleUpdateFaqs = async (
     e: React.FormEvent<HTMLFormElement>,
-    slug: string
+    id: number
   ) => {
     e.preventDefault();
     setIsUpdateLoading(true);
 
     try {
-      const response = await updateAreas(slug, data);
+      const response = await updateFaqs(id, data);
 
       if (response.status === 200) {
         setData({
-          nama: "",
-          desc: "",
-          nip_pj: "",
-          pj: "",
+          answer: "",
+          question: "",
         });
         Swal.fire({
           icon: "success",
-          title: "Berhasil Mengupdate Bidang!",
+          title: "Berhasil Mengupdate Faq!",
           timer: 2000,
           showConfirmButton: false,
           position: "center",
         });
-        fetchAreas(pagination.currentPage, 10);
+        fetchFaqs(limitItem);
         setIsDialogEditOpen(false);
-        router.push("/super-admin/master-data/areas");
+        router.push("/super-admin/master-data/faqs");
       } else {
         Swal.fire({
           icon: "error",
-          title: "Gagal Menagupdate Bidang!",
+          title: "Gagal Mengupdate Faq!",
           timer: 2000,
           showConfirmButton: false,
           position: "center",
@@ -230,72 +215,37 @@ export default function AreasScreen() {
                     Input data yang diperlukan
                   </AlertDialogDescription>
                   <form
-                    onSubmit={handleCreateAreas}
+                    onSubmit={handleCreateFaqs}
                     className="w-full flex flex-col gap-y-3 verticalScroll">
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                       <Label className="focus-within:text-primary-70 font-normal text-sm">
-                        Nama Bidang
+                        Pertanyaan
                       </Label>
 
                       <Input
-                        id="nama-bidang"
-                        name="nama"
-                        value={data.nama}
+                        id="question"
+                        name="question"
+                        value={data.question}
                         onChange={handleChange}
                         type="text"
                         className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Nama Bidang"
+                        placeholder="Masukkan Pertanyaan Anda"
                       />
                     </div>
 
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                       <Label className="focus-within:text-primary-70 font-normal text-sm">
-                        Penanggung Jawab
+                        Jawaban
                       </Label>
 
                       <Input
-                        id="pj"
-                        name="pj"
-                        value={data.pj}
+                        id="answer"
+                        name="answer"
+                        value={data.answer}
                         onChange={handleChange}
                         type="text"
                         className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Nama Penanggung Jawab"
-                      />
-                    </div>
-
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label
-                        htmlFor="nip-pj"
-                        className="focus-within:text-primary-70 font-normal text-sm">
-                        NIP Penanggung Jawab
-                      </Label>
-
-                      <Input
-                        id="nip-pj"
-                        name="nip_pj"
-                        value={data.nip_pj}
-                        onChange={handleChange}
-                        type="text"
-                        inputMode="numeric"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan NIP Penanggung Jawab"
-                      />
-                    </div>
-
-                    <div className="w-full flex flex-col gap-y-2">
-                      <Label className="text-sm text-black-70 font-normal">
-                        Deskripsi Bidang
-                      </Label>
-
-                      <Textarea
-                        name="desc"
-                        placeholder="Masukkan Deskripsi Bidang"
-                        value={data.desc}
-                        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                          setData({ ...data, desc: e.target.value })
-                        }
-                        className="w-full rounded-lg h-[74px] border border-line-20 md:h-[122px] text-sm placeholder:opacity-[70%]"
+                        placeholder="Masukkan Jawaban Anda"
                       />
                     </div>
 
@@ -322,27 +272,19 @@ export default function AreasScreen() {
         </div>
 
         <div className="w-full">
-          {areas && areas.length > 0 && (
-            <SuperAreasMasterDataTablePages
-              areas={areas}
-              handleDeleteArea={handleDeleteAreas}
+          {faqs && faqs.length > 0 && (
+            <SuperFaqsMasterDataTablePages
+              faqs={faqs}
+              handleDeleteFaqs={handleDeleteFaqs}
               isDeleteLoading={isDeleteLoading}
               data={data}
               setData={setData}
               isUpdateLoading={isUpdateLoading}
               isDialogEditOpen={isDialogEditOpen}
-              setIsDialogEditOpen={setIsDialogOpen}
-              handleUpdateArea={handleUpdateArea}
+              setIsDialogEditOpen={setIsDialogEditOpen}
+              handleUpdateFaqs={handleUpdateFaqs}
             />
           )}
-        </div>
-
-        <div className="w-full">
-          <PaginationComponent
-            currentPage={pagination.currentPage}
-            totalPages={pagination.totalPages}
-            onPageChange={handlePageChange}
-          />
         </div>
       </div>
     </section>
