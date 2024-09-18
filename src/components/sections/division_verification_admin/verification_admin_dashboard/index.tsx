@@ -144,7 +144,7 @@ export default function DivisionVerificationAdminDashboardPages() {
 
         <div className="w-full flex flex-row items-center self-center">
           <h3 className="w-full text-black-80 font-semibold text-lg md:text-3xl">
-            Admin Verifikasi
+            Super Admin
           </h3>
         </div>
       </div>
