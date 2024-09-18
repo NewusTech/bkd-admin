@@ -24,3 +24,80 @@ body {
 .background-about-us {
   background-color: rgba(53, 114, 239);
 }
+
+.prose {
+  /* text-align: center; */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center;
+  align-items: center;
+  align-self: center; */
+}
+
+.prose ol {
+  display: flex;
+  flex-direction: column;
+  list-style-type: decimal;
+  margin-left: 2em;
+}
+
+.prose ul {
+  list-style-type: disc;
+  margin-left: 3em;
+}
+
+.prose li > span {
+  color: white !important;
+}
+
+.prose-mpp {
+  /* text-align: center; */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center;
+  align-items: center;
+  align-self: center; */
+  font-family: Poppins, sans-serif !important;
+}
+
+.prose-mpp ol {
+  display: flex;
+  flex-direction: column;
+  list-style-type: decimal;
+  margin-left: 1.2em;
+  font-family: poppins, sans-serif !important;
+}
+
+.prose-mpp ul {
+  list-style-type: disc;
+  margin-left: 1.2em;
+  font-family: poppins, sans-serif !important;
+}
+
+.prose-mpp li > span {
+  color: white !important;
+  font-family: poppins, sans-serif !important;
+}
+
+.prose-maklumat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.prose-maklumat ol {
+  display: flex;
+  flex-direction: column;
+  list-style-type: decimal;
+  margin-left: 3em;
+  gap: 1.5rem;
+}
+
+.prose-maklumat ul {
+  list-style-type: disc;
+  margin-left: 3em;
+}
+
+.prose-maklumat li > span {
+  color: white !important;
+}

@@ -3,6 +3,23 @@ export interface debounceInterface {
   delay: number;
 }
 
+export interface PaginationInterface {
+  page: number;
+  perPage: number;
+  totalPages: number;
+  totalCount: number;
+  // links: {
+  //   prev: string | null;
+  //   next: string | null;
+  // };
+}
+
+export interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}
+
 export interface SubDistrictInterface {
   id: number;
   nama: string;
@@ -118,6 +135,11 @@ export interface ServiceCreateInterface {
 export interface TermConditionInterface {
   id: number;
   desc: string;
+  createdAt: string;
+}
+
+export interface TermConditionUpdateInterface {
+  desc: string;
 }
 
 export interface NewsInterface {
@@ -170,4 +192,22 @@ export interface StructureOrganizationInterface {
   slug: string;
   jabatan: string;
   image: string;
+}
+
+export interface FaqsInterface {
+  id: number;
+  question: string;
+  answer: string;
+  createdAt: string;
+}
+
+export interface FaqsCreateInterface {
+  question: string;
+  answer: string;
+}
+
+export interface CarouselSliderInterface {
+  id: number;
+  image: string;
+  createdAt: string;
 }

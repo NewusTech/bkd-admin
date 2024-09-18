@@ -130,7 +130,7 @@ export default function DashBoardSidebarPages() {
                                 "/super-admin/master-data/structure-organization";
                               break;
                             case "FAQ":
-                              linking = "/super-admin/master-data/faq";
+                              linking = "/super-admin/master-data/faqs";
                               break;
                             case "Syarat dan Ketentuan":
                               linking =
