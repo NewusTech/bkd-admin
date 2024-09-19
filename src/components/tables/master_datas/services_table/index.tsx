@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import SuperSerhandleUpdateServicesMasterDataCard from "@/components/all_cards/superAreasMasterDataCard";
 import { AreasInterface, ServiceInterface } from "@/types/interface";
 import SuperServicesMasterDataCard from "@/components/all_cards/superServicesMasterDataCard";
 

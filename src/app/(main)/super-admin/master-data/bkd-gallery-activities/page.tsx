@@ -1,5 +1,6 @@
 "use client";
 
+export const dynamic = "force-dynamic";
 import SearchPages from "@/components/elements/search";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,7 +10,7 @@ import {
   updateBKDGalleryActivities,
 } from "@/services/api";
 import { BKDGalleryActivitiesInterface } from "@/types/interface";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -26,6 +27,8 @@ import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import { Trash } from "@phosphor-icons/react";
 import SuperBKDGalleryActivitiesMasterDataTablePages from "@/components/tables/master_datas/bkd_gallery_activities_table";
+import Image from "next/image";
+import PaginationComponent from "@/components/elements/pagination";
 
 export default function BKDGalleryActivitiesScreen() {
   const router = useRouter();
@@ -46,20 +49,38 @@ export default function BKDGalleryActivitiesScreen() {
     title: "",
     image: "",
   });
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    perPage: 10,
+    totalPages: 1,
+    totalCount: 0,
+  });
 
-  const fetchGalleries = async (limit: number) => {
+  const fetchGalleries = async (page: number, limit: number) => {
     try {
-      const response = await getBKDGalleryActivities(limit);
+      const response = await getBKDGalleryActivities(page, limit);
 
       setGalleries(response.data);
+      setPagination((prev) => ({
+        ...prev,
+        currentPage: page,
+        totalPages: response.pagination.totalPages,
+        totalCount: response.pagination.totalCount,
+      }));
     } catch (error) {
       console.log(error);
     }
   };
 
-  useMemo(() => {
-    fetchGalleries(limitItem);
+  useEffect(() => {
+    fetchGalleries(1, 10);
   }, []);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage !== pagination.currentPage) {
+      fetchGalleries(newPage, 10);
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({
@@ -135,7 +156,7 @@ export default function BKDGalleryActivitiesScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchGalleries(limitItem);
+        fetchGalleries(pagination.currentPage, 10);
         setIsDialogOpen(false);
         router.push("/super-admin/master-data/bkd-gallery-activities");
       } else {
@@ -179,7 +200,7 @@ export default function BKDGalleryActivitiesScreen() {
             position: "center",
           });
           setIsDeleteLoading(false);
-          fetchGalleries(limitItem);
+          fetchGalleries(pagination.currentPage, 10);
         }
       }
     } catch (error) {
@@ -217,7 +238,7 @@ export default function BKDGalleryActivitiesScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchGalleries(limitItem);
+        fetchGalleries(pagination.currentPage, 10);
         setIsDialogEditOpen(false);
         router.push("/super-admin/master-data/bkd-gallery-activities");
       } else {
@@ -319,11 +340,15 @@ export default function BKDGalleryActivitiesScreen() {
                         {previewImage && (
                           <div className="relative md:ml-4 w-full mt-1">
                             <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
-                              <img
-                                src={previewImage}
-                                alt="Preview"
-                                className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
-                              />
+                              <div className="w-full h-full">
+                                <Image
+                                  src={previewImage}
+                                  width={1000}
+                                  height={1000}
+                                  alt="Preview"
+                                  className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                />
+                              </div>
                               <button
                                 type="button"
                                 onClick={handleRemoveImage}
@@ -377,6 +402,14 @@ export default function BKDGalleryActivitiesScreen() {
               handleUpdateGallery={handleUpdateGallery}
             />
           )}
+        </div>
+
+        <div className="w-full">
+          <PaginationComponent
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
     </section>

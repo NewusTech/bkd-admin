@@ -7,11 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  BKDGalleryActivitiesInterface,
-  CarouselSliderInterface,
-} from "@/types/interface";
-import SuperBKDGalleryActivitiesMasterDataCard from "@/components/all_cards/superBKDGalleryActivitiesCard";
+import { CarouselSliderInterface } from "@/types/interface";
 import SuperCarouselSliderMasterDataCard from "@/components/all_cards/superCarouselSliderMasterDataCard";
 
 export default function SuperCarouselSliderMasterDataTablePages({

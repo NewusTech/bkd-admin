@@ -7,13 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import SuperSerhandleUpdateServicesMasterDataCard from "@/components/all_cards/superAreasMasterDataCard";
-import {
-  AreasInterface,
-  NewsInterface,
-  ServiceInterface,
-} from "@/types/interface";
-import SuperServicesMasterDataCard from "@/components/all_cards/superServicesMasterDataCard";
+import { NewsInterface } from "@/types/interface";
 import SuperNewsMasterDataCard from "@/components/all_cards/superNewsMasterDataCard";
 
 export default function SuperNewsMasterDataTablePages({
@@ -38,14 +32,12 @@ export default function SuperNewsMasterDataTablePages({
   isDeleteLoading: boolean;
   data: {
     title: string;
-    slug: string;
     desc: string;
     image: string;
   };
   setData: React.Dispatch<
     React.SetStateAction<{
       title: string;
-      slug: string;
       desc: string;
       image: string;
     }>
@@ -69,7 +61,7 @@ export default function SuperNewsMasterDataTablePages({
             <TableHead className="">No.</TableHead>
             <TableHead className="text-center">Nama Layanan</TableHead>
             <TableHead className="text-center">Deskripsi</TableHead>
-            {/* <TableHead className="text-center">Deskripsi</TableHead> */}
+            <TableHead className="text-center">Foto Berita</TableHead>
             <TableHead className="text-center w-3/12">Aksi</TableHead>
           </TableRow>
         </TableHeader>

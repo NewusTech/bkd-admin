@@ -7,11 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  BKDGalleryActivitiesInterface,
-  StructureOrganizationInterface,
-} from "@/types/interface";
-import SuperBKDGalleryActivitiesMasterDataCard from "@/components/all_cards/superBKDGalleryActivitiesCard";
+import { StructureOrganizationInterface } from "@/types/interface";
 import SuperStructureOrganizationMasterDataCard from "@/components/all_cards/superStructureOrganizationCard";
 
 export default function SuperStructureOrganizationMasterDataTablePages({

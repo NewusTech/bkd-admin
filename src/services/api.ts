@@ -198,9 +198,9 @@ export const getServiceByAreas = async (bidang_id: number) => {
 };
 
 // get detail area by service
-export const getService = async (limit: number) => {
+export const getService = async (page: number, limit: number) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/layanan/get?limit=${limit}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/layanan/get?page=${page}&limit=${limit}`,
     {
       method: "GET",
       headers: {
@@ -275,9 +275,9 @@ export const updateService = async (
 };
 
 // get news / berita
-export const getNews = async (limit: number) => {
+export const getNews = async (page: number, limit: number) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/berita/get?limit=${limit}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/berita/get?page=${page}&limit=${limit}`,
     {
       method: "GET",
       headers: {
@@ -348,9 +348,9 @@ export const updateNews = async (slug: string, data: any) => {
 };
 
 // get bkd gallery activities
-export const getBKDGalleryActivities = async (limit: number) => {
+export const getBKDGalleryActivities = async (page: number, limit: number) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/galeri/get?limit=${limit}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/galeri/get?page=${page}&limit=${limit}`,
     {
       method: "GET",
       headers: {

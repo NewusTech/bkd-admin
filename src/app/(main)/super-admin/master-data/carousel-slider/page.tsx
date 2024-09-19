@@ -1,18 +1,15 @@
 "use client";
 
-import SearchPages from "@/components/elements/search";
+export const dynamic = "force-dynamic";
 import { Button } from "@/components/ui/button";
 import {
-  deleteBKDGalleryActivities,
   deleteCarouselSliders,
   getCarouselSliders,
   postCarouselSliders,
-  postCreateBKDGalleryActivities,
-  updateBKDGalleryActivities,
   updateCarouselSliders,
 } from "@/services/api";
 import { CarouselSliderInterface } from "@/types/interface";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -23,18 +20,16 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import { Trash } from "@phosphor-icons/react";
-import SuperBKDGalleryActivitiesMasterDataTablePages from "@/components/tables/master_datas/bkd_gallery_activities_table";
 import SuperCarouselSliderMasterDataTablePages from "@/components/tables/master_datas/carousel_sliders_table";
+import Image from "next/image";
 
 export default function CarouselSliderScreen() {
   const router = useRouter();
   const dropRef = useRef<HTMLDivElement>(null);
-  const [search, setSearch] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +52,7 @@ export default function CarouselSliderScreen() {
     }
   };
 
-  useMemo(() => {
+  useEffect(() => {
     fetchCarouselSliders();
   }, []);
 
@@ -285,11 +280,15 @@ export default function CarouselSliderScreen() {
                         {previewImage && (
                           <div className="relative md:ml-4 w-full mt-1">
                             <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
-                              <img
-                                src={previewImage}
-                                alt="Preview"
-                                className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
-                              />
+                              <div className="w-full h-full">
+                                <Image
+                                  src={previewImage}
+                                  width={1000}
+                                  height={1000}
+                                  alt="Preview"
+                                  className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                />
+                              </div>
                               <button
                                 type="button"
                                 onClick={handleRemoveImage}

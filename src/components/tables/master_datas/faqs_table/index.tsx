@@ -7,8 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import SuperAreasMasterDataCard from "@/components/all_cards/superAreasMasterDataCard";
-import { AreasInterface, FaqsInterface } from "@/types/interface";
+import { FaqsInterface } from "@/types/interface";
 import SuperFaqsMasterDataCard from "@/components/all_cards/superFaqsMasterDataCard";
 
 export default function SuperFaqsMasterDataTablePages({

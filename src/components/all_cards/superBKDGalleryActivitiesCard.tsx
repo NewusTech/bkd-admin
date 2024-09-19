@@ -10,6 +10,7 @@ import {
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
+  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
@@ -17,6 +18,7 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Trash } from "@phosphor-icons/react";
+import Image from "next/image";
 
 export default function SuperBKDGalleryActivitiesMasterDataCard({
   gallery,
@@ -76,7 +78,43 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
     <TableRow className="border border-line-20">
       <TableCell className="text-center">{index + 1}</TableCell>
       <TableCell className="text-center">{gallery.title}</TableCell>
-      {/* <TableCell className="text-center">{item?.image}</TableCell> */}
+      <TableCell className="text-center">
+        <div className="w-full">
+          <AlertDialog>
+            <AlertDialogTrigger className="w-full">
+              <div className="w-full text-sm flex items-center justify-center h-10 text-black-80 hover:underline hover:text-primary-40 rounded-lg">
+                Lihat Foto Berita
+              </div>
+            </AlertDialogTrigger>
+            <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
+              <AlertDialogHeader className="flex flex-col max-h-[500px]">
+                <AlertDialogTitle className="text-center">
+                  Master Data
+                </AlertDialogTitle>
+                <AlertDialogDescription className="text-center">
+                  Galeri
+                </AlertDialogDescription>
+                {gallery && (
+                  <div className="w-full h-full flex justify-center">
+                    <Image
+                      src={gallery?.image}
+                      alt="Slider"
+                      width={1000}
+                      height={1000}
+                      className="w-9/12 h-5/6"
+                    />
+                  </div>
+                )}
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className="hover:bg-line-70 hover:text-line-10">
+                  Cancel
+                </AlertDialogCancel>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
+      </TableCell>
       <TableCell className="text-center flex items-center w-full">
         <div className="w-full flex flex-row items-center justify-center gap-x-2">
           <div className="w-full">
@@ -161,11 +199,15 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
                         {(previewImage || data?.image) && (
                           <div className="relative md:ml-4 w-full mt-1">
                             <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
-                              <img
-                                src={previewImage || data?.image}
-                                alt="Preview"
-                                className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
-                              />
+                              <div className="w-full h-full">
+                                <Image
+                                  src={previewImage || data?.image}
+                                  width={1000}
+                                  height={1000}
+                                  alt="Preview"
+                                  className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                />
+                              </div>
                               <button
                                 type="button"
                                 onClick={handleRemoveImage}

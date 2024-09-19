@@ -92,13 +92,17 @@ export default function DivisionVerificationAdminDashboardPages() {
     // },
   } satisfies ChartConfig;
 
-  const chartDataPie = [
-    { browser: "chrome", visitors: 275, fill: "#1947BC" },
-    { browser: "safari", visitors: 200, fill: "#1947BC" },
-    { browser: "firefox", visitors: 287, fill: "#BC6D19" },
-    { browser: "edge", visitors: 173, fill: "#D51C7F" },
-    { browser: "other", visitors: 190, fill: "#4D56B7" },
-  ];
+  const chartDataPie = useMemo(
+    () => [
+      { browser: "chrome", visitors: 275, fill: "#1947BC" },
+      { browser: "safari", visitors: 200, fill: "#1947BC" },
+      { browser: "firefox", visitors: 287, fill: "#BC6D19" },
+      { browser: "edge", visitors: 173, fill: "#D51C7F" },
+      { browser: "other", visitors: 190, fill: "#4D56B7" },
+    ],
+    []
+  );
+
   const chartConfigPie = {
     visitors: {
       label: "Visitors",
@@ -127,7 +131,7 @@ export default function DivisionVerificationAdminDashboardPages() {
 
   const totalVisitors = useMemo(() => {
     return chartDataPie?.reduce((acc, curr) => acc + curr.visitors, 0);
-  }, []);
+  }, [chartDataPie]);
 
   return (
     <div className="w-full flex flex-col gap-y-5 mb-24">
@@ -189,10 +193,27 @@ export default function DivisionVerificationAdminDashboardPages() {
                     tickLine={false}
                     tickMargin={10}
                     axisLine={false}
+                    hide={true}
+                  />
+
+                  <XAxis
+                    dataKey="device"
+                    type="number"
+                    hide={true}
+                    tickLine={false}
+                    tickMargin={10}
+                    axisLine={false}
+                  />
+                  {/* <YAxis
+                    dataKey="service"
+                    type="category"
+                    tickLine={false}
+                    tickMargin={10}
+                    axisLine={false}
                     // tickFormatter={(value) => value.slice(0, 3)}
                     hide
                   />
-                  <XAxis dataKey="device" type="number" hide />
+                  <XAxis dataKey="device" type="number" hide /> */}
                   <ChartTooltip
                     cursor={false}
                     content={<ChartTooltipContent indicator="line" />}
