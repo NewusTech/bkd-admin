@@ -61,6 +61,7 @@ export default function SuperBKDGalleryActivitiesMasterDataTablePages({
           <TableRow className="w-full">
             <TableHead className="">No.</TableHead>
             <TableHead className="text-center">Judul Foto Kegiatan</TableHead>
+            <TableHead className="text-center">Foto Kegiatan</TableHead>
             <TableHead className="text-center w-3/12">Aksi</TableHead>
           </TableRow>
         </TableHeader>

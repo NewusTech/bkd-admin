@@ -2,17 +2,14 @@
 
 import React from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
-import Link from "next/link";
 import { Button } from "../ui/button";
 import { AreasInterface, ServiceInterface } from "@/types/interface";
 import { Loader } from "lucide-react";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,

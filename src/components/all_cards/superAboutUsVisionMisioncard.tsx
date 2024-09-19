@@ -2,27 +2,20 @@
 
 import React from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
-import Link from "next/link";
 import { Button } from "../ui/button";
-import {
-  AboutUsVisionMisionInterface,
-  AreasInterface,
-} from "@/types/interface";
+import { AboutUsVisionMisionInterface } from "@/types/interface";
 import { Loader } from "lucide-react";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Textarea } from "../ui/textarea";
 
 export default function SuperAboutUsVisionMisionMasterDataCard({
   about,

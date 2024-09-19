@@ -1,8 +1,8 @@
 "use client";
 
+export const dynamic = "force-dynamic";
 import "quill/dist/quill.snow.css";
 import { useQuill } from "react-quilljs";
-import SearchPages from "@/components/elements/search";
 import { getTermConditions, updateTermConditions } from "@/services/api";
 import { TermConditionInterface } from "@/types/interface";
 import React, { useEffect, useMemo, useState } from "react";
@@ -23,7 +23,6 @@ import { Label } from "@/components/ui/label";
 
 export default function TermConditionScreen() {
   const router = useRouter();
-  const [search, setSearch] = useState("");
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
   const { quill, quillRef } = useQuill();
   const [terms, setTerms] = useState<TermConditionInterface>();
@@ -41,7 +40,7 @@ export default function TermConditionScreen() {
     }
   };
 
-  useMemo(() => {
+  useEffect(() => {
     fetchTermConditions();
   }, []);
 

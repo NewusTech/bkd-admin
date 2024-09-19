@@ -7,11 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import SuperAreasMasterDataCard from "@/components/all_cards/superAreasMasterDataCard";
-import {
-  AboutUsVisionMisionInterface,
-  AreasInterface,
-} from "@/types/interface";
+import { AboutUsVisionMisionInterface } from "@/types/interface";
 import SuperAboutUsVisionMisionMasterDataCard from "@/components/all_cards/superAboutUsVisionMisioncard";
 
 export default function SuperAboutUsVisionMisionMasterDataTablePages({

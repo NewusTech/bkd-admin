@@ -2,17 +2,11 @@
 
 import React, { useRef } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
-import Link from "next/link";
 import { Button } from "../ui/button";
-import {
-  AreasInterface,
-  NewsInterface,
-  ServiceInterface,
-} from "@/types/interface";
+import { NewsInterface } from "@/types/interface";
 import { Loader } from "lucide-react";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -21,17 +15,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import { Trash } from "@phosphor-icons/react";
+import Image from "next/image";
 
 export default function SuperNewsMasterDataCard({
   item,
@@ -57,14 +45,12 @@ export default function SuperNewsMasterDataCard({
   isDeleteLoading: boolean;
   data: {
     title: string;
-    slug: string;
     desc: string;
     image: string;
   };
   setData: React.Dispatch<
     React.SetStateAction<{
       title: string;
-      slug: string;
       desc: string;
       image: string;
     }>
@@ -84,7 +70,6 @@ export default function SuperNewsMasterDataCard({
   const handleSetService = () => {
     setData({
       title: item?.title,
-      slug: item?.slug,
       desc: item?.desc,
       image: item?.image,
     });
@@ -95,7 +80,43 @@ export default function SuperNewsMasterDataCard({
       <TableCell className="text-center">{index + 1}</TableCell>
       <TableCell className="text-center">{item.title}</TableCell>
       <TableCell className="text-center">{item?.desc}</TableCell>
-      {/* <TableCell className="text-center">{item?.image}</TableCell> */}
+      <TableCell className="text-center">
+        <div className="w-full">
+          <AlertDialog>
+            <AlertDialogTrigger className="w-full">
+              <div className="w-full text-sm flex items-center justify-center h-10 text-black-80 hover:underline hover:text-primary-40 rounded-lg">
+                Lihat Foto Berita
+              </div>
+            </AlertDialogTrigger>
+            <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
+              <AlertDialogHeader className="flex flex-col max-h-[500px]">
+                <AlertDialogTitle className="text-center">
+                  Master Data
+                </AlertDialogTitle>
+                <AlertDialogDescription className="text-center">
+                  Berita
+                </AlertDialogDescription>
+                {item && (
+                  <div className="w-full h-full flex justify-center">
+                    <Image
+                      src={item?.image}
+                      alt="Slider"
+                      width={1000}
+                      height={1000}
+                      className="w-10/12 h-5/6"
+                    />
+                  </div>
+                )}
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className="hover:bg-line-70 hover:text-line-10">
+                  Cancel
+                </AlertDialogCancel>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
+      </TableCell>
       <TableCell className="text-center flex items-center w-full">
         <div className="w-full flex flex-row items-center justify-center gap-x-2">
           <div className="w-full">
@@ -143,27 +164,6 @@ export default function SuperNewsMasterDataCard({
                         type="text"
                         className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                         placeholder="Masukkan Judul Berita"
-                      />
-                    </div>
-
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
-                        Kunci Berita
-                      </Label>
-
-                      <Input
-                        id="slug"
-                        name="slug"
-                        value={data.slug}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setData({
-                            ...data,
-                            slug: e.target.value,
-                          })
-                        }
-                        type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Kata Kunci Berita"
                       />
                     </div>
 
@@ -217,11 +217,15 @@ export default function SuperNewsMasterDataCard({
                         {(previewImage || data?.image) && (
                           <div className="relative md:ml-4 w-full mt-1">
                             <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
-                              <img
-                                src={previewImage || data?.image}
-                                alt="Preview"
-                                className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
-                              />
+                              <div className="w-full h-full">
+                                <Image
+                                  src={previewImage || data?.image}
+                                  width={1000}
+                                  height={1000}
+                                  alt="Preview"
+                                  className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                />
+                              </div>
                               <button
                                 type="button"
                                 onClick={handleRemoveImage}

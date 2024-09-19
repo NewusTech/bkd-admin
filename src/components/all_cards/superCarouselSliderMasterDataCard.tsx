@@ -3,10 +3,7 @@
 import React, { useRef } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "../ui/button";
-import {
-  BKDGalleryActivitiesInterface,
-  CarouselSliderInterface,
-} from "@/types/interface";
+import { CarouselSliderInterface } from "@/types/interface";
 import { Loader } from "lucide-react";
 import {
   AlertDialog,
@@ -18,7 +15,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Trash } from "@phosphor-icons/react";
 import Image from "next/image";
@@ -78,7 +74,7 @@ export default function SuperCarouselSliderMasterDataCard({
         <div className="w-full">
           <AlertDialog>
             <AlertDialogTrigger className="w-full">
-              <div className="w-full text-sm bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg">
+              <div className="w-full text-sm flex items-center justify-center h-10 text-black-80 hover:underline hover:text-primary-40 rounded-lg">
                 Lihat Slider
               </div>
             </AlertDialogTrigger>
@@ -92,13 +88,13 @@ export default function SuperCarouselSliderMasterDataCard({
                 </AlertDialogDescription>
 
                 {carousel && (
-                  <div className="w-full h-full">
+                  <div className="w-full h-full flex justify-center">
                     <Image
                       src={carousel?.image}
                       alt="Slider"
                       width={1000}
                       height={1000}
-                      className="w-full h-full"
+                      className="w-10/12 h-5/6"
                     />
                   </div>
                 )}
@@ -173,11 +169,15 @@ export default function SuperCarouselSliderMasterDataCard({
                         {(previewImage || data?.image) && (
                           <div className="relative md:ml-4 w-full mt-1">
                             <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
-                              <img
-                                src={previewImage || data?.image}
-                                alt="Preview"
-                                className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
-                              />
+                              <div className="w-full h-full">
+                                <Image
+                                  src={previewImage || data?.image}
+                                  width={1000}
+                                  height={1000}
+                                  alt="Preview"
+                                  className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                />
+                              </div>
                               <button
                                 type="button"
                                 onClick={handleRemoveImage}

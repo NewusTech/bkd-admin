@@ -1,22 +1,16 @@
 "use client";
 
+export const dynamic = "force-dynamic";
 import SearchPages from "@/components/elements/search";
 import { Button } from "@/components/ui/button";
 import {
-  deleteBKDGalleryActivities,
   deleteStructureOrganizations,
-  getBKDGalleryActivities,
   getStructureOrganizations,
-  postCreateBKDGalleryActivities,
   postStructureOrganizations,
-  updateBKDGalleryActivities,
   updateStructureOrganizations,
 } from "@/services/api";
-import {
-  BKDGalleryActivitiesInterface,
-  StructureOrganizationInterface,
-} from "@/types/interface";
-import React, { useMemo, useRef, useState } from "react";
+import { StructureOrganizationInterface } from "@/types/interface";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -32,8 +26,8 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import { Trash } from "@phosphor-icons/react";
-import SuperBKDGalleryActivitiesMasterDataTablePages from "@/components/tables/master_datas/bkd_gallery_activities_table";
 import SuperStructureOrganizationMasterDataTablePages from "@/components/tables/master_datas/structure_organization_table";
+import Image from "next/image";
 
 export default function StructureOrganizationScreen() {
   const router = useRouter();
@@ -66,7 +60,7 @@ export default function StructureOrganizationScreen() {
     }
   };
 
-  useMemo(() => {
+  useEffect(() => {
     fetchStructureOrganization(limitItem);
   }, []);
 
@@ -221,8 +215,6 @@ export default function StructureOrganizationScreen() {
     try {
       const response = await updateStructureOrganizations(slug, formData);
 
-      console.log(response, "ini res");
-
       if (response.status === 200) {
         setData({
           nama: "",
@@ -354,11 +346,15 @@ export default function StructureOrganizationScreen() {
                         {previewImage && (
                           <div className="relative md:ml-4 w-full mt-1">
                             <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
-                              <img
-                                src={previewImage}
-                                alt="Preview"
-                                className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
-                              />
+                              <div className="w-full h-full">
+                                <Image
+                                  src={previewImage}
+                                  width={1000}
+                                  height={1000}
+                                  alt="Preview"
+                                  className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                />
+                              </div>
                               <button
                                 type="button"
                                 onClick={handleRemoveImage}

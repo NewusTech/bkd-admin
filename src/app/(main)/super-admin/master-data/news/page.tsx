@@ -1,27 +1,21 @@
 "use client";
 
+export const dynamic = "force-dynamic";
 import SearchPages from "@/components/elements/search";
-import SuperAreasMasterDataTablePages from "@/components/tables/master_datas/areas_table";
 import { Button } from "@/components/ui/button";
 import {
-  deleteAreas,
   deleteNews,
-  getAreas,
   getNews,
-  postAreas,
   postCreateNews,
-  updateAreas,
   updateNews,
 } from "@/services/api";
-import { AreasInterface, NewsInterface } from "@/types/interface";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { NewsInterface } from "@/types/interface";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
@@ -34,6 +28,8 @@ import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import { Trash } from "@phosphor-icons/react";
 import SuperNewsMasterDataTablePages from "@/components/tables/master_datas/news_table";
+import Image from "next/image";
+import PaginationComponent from "@/components/elements/pagination";
 
 export default function NewsScreen() {
   const router = useRouter();
@@ -44,30 +40,46 @@ export default function NewsScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
-  const limitItem = 30;
   const [news, setNews] = useState<NewsInterface[]>([]);
   const [fileImage, setFileImage] = useState(null);
   const [previewImage, setPreviewImage] = useState("");
   const [data, setData] = useState({
     title: "",
-    slug: "",
     desc: "",
     image: "",
   });
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    perPage: 10,
+    totalPages: 1,
+    totalCount: 0,
+  });
 
-  const fetchNews = async (limit: number) => {
+  const fetchNews = async (page: number, limit: number) => {
     try {
-      const response = await getNews(limit);
+      const response = await getNews(page, limit);
 
       setNews(response.data);
+      setPagination((prev) => ({
+        ...prev,
+        currentPage: page,
+        totalPages: response.pagination.totalPages,
+        totalCount: response.pagination.totalCount,
+      }));
     } catch (error) {
       console.log(error);
     }
   };
 
-  useMemo(() => {
-    fetchNews(limitItem);
+  useEffect(() => {
+    fetchNews(1, 10);
   }, []);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage !== pagination.currentPage) {
+      fetchNews(newPage, 10);
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({
@@ -124,7 +136,6 @@ export default function NewsScreen() {
 
     const formData = new FormData();
     formData.append("title", data.title);
-    formData.append("slug", data.slug);
     formData.append("desc", data.desc);
     if (fileImage) {
       formData.append("image", fileImage);
@@ -136,7 +147,6 @@ export default function NewsScreen() {
       if (response.status === 201) {
         setData({
           title: "",
-          slug: "",
           desc: "",
           image: "",
         });
@@ -147,7 +157,7 @@ export default function NewsScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchNews(limitItem);
+        fetchNews(pagination.currentPage, 10);
         setIsDialogOpen(false);
         router.push("/super-admin/master-data/news");
       } else {
@@ -191,7 +201,7 @@ export default function NewsScreen() {
             position: "center",
           });
           setIsDeleteLoading(false);
-          fetchNews(limitItem);
+          fetchNews(pagination.currentPage, 10);
         }
       }
     } catch (error) {
@@ -210,7 +220,6 @@ export default function NewsScreen() {
 
     const formData = new FormData();
     formData.append("title", data.title);
-    formData.append("slug", data.slug);
     formData.append("desc", data.desc);
     if (fileImage) {
       formData.append("image", fileImage);
@@ -222,7 +231,6 @@ export default function NewsScreen() {
       if (response.status === 200) {
         setData({
           title: "",
-          slug: "",
           desc: "",
           image: "",
         });
@@ -233,7 +241,7 @@ export default function NewsScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchNews(limitItem);
+        fetchNews(pagination.currentPage, 10);
         setIsDialogEditOpen(false);
         router.push("/super-admin/master-data/areas");
       } else {
@@ -301,22 +309,6 @@ export default function NewsScreen() {
                       />
                     </div>
 
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
-                        Kunci Berita
-                      </Label>
-
-                      <Input
-                        id="slug"
-                        name="slug"
-                        value={data.slug}
-                        onChange={handleChange}
-                        type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Kata Kunci Berita"
-                      />
-                    </div>
-
                     <div className="w-full flex flex-col gap-y-2">
                       <Label className="text-sm text-black-70 font-normal">
                         Deskripsi Berita
@@ -367,11 +359,15 @@ export default function NewsScreen() {
                         {(previewImage || data?.image) && (
                           <div className="relative md:ml-4 w-full mt-1">
                             <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
-                              <img
-                                src={previewImage || data?.image}
-                                alt="Preview"
-                                className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
-                              />
+                              <div className="w-full h-full">
+                                <Image
+                                  src={previewImage || data?.image}
+                                  width={1000}
+                                  height={1000}
+                                  alt="Preview"
+                                  className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                />
+                              </div>
                               <button
                                 type="button"
                                 onClick={handleRemoveImage}
@@ -425,6 +421,14 @@ export default function NewsScreen() {
               handleUpdateNews={handleUpdateNews}
             />
           )}
+        </div>
+
+        <div className="w-full">
+          <PaginationComponent
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
     </section>

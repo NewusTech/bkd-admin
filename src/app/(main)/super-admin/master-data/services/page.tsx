@@ -1,27 +1,22 @@
 "use client";
 
+export const dynamic = "force-dynamic";
 import SearchPages from "@/components/elements/search";
-import SuperAreasMasterDataTablePages from "@/components/tables/master_datas/areas_table";
 import { Button } from "@/components/ui/button";
 import {
-  deleteAreas,
   deleteService,
   getAreas,
   getService,
-  postAreas,
   postCreateService,
-  updateAreas,
   updateService,
 } from "@/services/api";
 import { AreasInterface, ServiceInterface } from "@/types/interface";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
@@ -40,6 +35,7 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import SuperServicesMasterDataTablePages from "@/components/tables/master_datas/services_table";
+import PaginationComponent from "@/components/elements/pagination";
 
 export default function ServicesScreen() {
   const router = useRouter();
@@ -61,6 +57,12 @@ export default function ServicesScreen() {
     ketentuan: "",
     langkah: "",
   });
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    perPage: 10,
+    totalPages: 1,
+    totalCount: 0,
+  });
 
   const fetchAreas = async (page: number, limit: number) => {
     try {
@@ -72,20 +74,32 @@ export default function ServicesScreen() {
     }
   };
 
-  const fetchService = async (limit: number) => {
+  const fetchService = async (page: number, limit: number) => {
     try {
-      const response = await getService(limit);
+      const response = await getService(page, limit);
 
       setServices(response.data);
+      setPagination((prev) => ({
+        ...prev,
+        currentPage: page,
+        totalPages: response.pagination.totalPages,
+        totalCount: response.pagination.totalCount,
+      }));
     } catch (error) {
       console.log(error);
     }
   };
 
-  useMemo(() => {
+  useEffect(() => {
     fetchAreas(1, limitItem);
-    fetchService(limitItem);
+    fetchService(1, 10);
   }, [limitItem]);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage !== pagination.currentPage) {
+      fetchService(newPage, 10);
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({
@@ -125,7 +139,7 @@ export default function ServicesScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchService(limitItem);
+        fetchService(pagination.currentPage, 10);
         setIsDialogOpen(false);
         router.push("/super-admin/master-data/services");
       } else {
@@ -169,7 +183,7 @@ export default function ServicesScreen() {
             position: "center",
           });
           setIsDeleteLoading(false);
-          fetchService(limitItem);
+          fetchService(pagination.currentPage, 10);
         }
       }
     } catch (error) {
@@ -206,7 +220,7 @@ export default function ServicesScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchService(limitItem);
+        fetchService(pagination.currentPage, 10);
         setIsDialogEditOpen(false);
         router.push("/super-admin/master-data/services");
       } else {
@@ -432,6 +446,14 @@ export default function ServicesScreen() {
               handleUpdateService={handleUpdateService}
             />
           )}
+        </div>
+
+        <div className="w-full">
+          <PaginationComponent
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
     </section>

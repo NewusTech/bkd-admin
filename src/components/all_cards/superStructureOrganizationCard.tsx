@@ -3,10 +3,7 @@
 import React, { useRef } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "../ui/button";
-import {
-  BKDGalleryActivitiesInterface,
-  StructureOrganizationInterface,
-} from "@/types/interface";
+import { StructureOrganizationInterface } from "@/types/interface";
 import { Loader } from "lucide-react";
 import {
   AlertDialog,
@@ -20,6 +17,7 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Trash } from "@phosphor-icons/react";
+import Image from "next/image";
 
 export default function SuperStructureOrganizationMasterDataCard({
   organization,
@@ -189,11 +187,15 @@ export default function SuperStructureOrganizationMasterDataCard({
                         {(previewImage || data?.image) && (
                           <div className="relative md:ml-4 w-full mt-1">
                             <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
-                              <img
-                                src={previewImage || data?.image}
-                                alt="Preview"
-                                className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
-                              />
+                              <div className="w-full h-full">
+                                <Image
+                                  src={previewImage || data?.image}
+                                  width={1000}
+                                  height={1000}
+                                  alt="Preview"
+                                  className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                />
+                              </div>
                               <button
                                 type="button"
                                 onClick={handleRemoveImage}

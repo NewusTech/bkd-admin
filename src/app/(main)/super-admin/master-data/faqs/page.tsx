@@ -1,34 +1,22 @@
 "use client";
 
+export const dynamic = "force-dynamic";
 import SearchPages from "@/components/elements/search";
-import SuperAreasMasterDataTablePages from "@/components/tables/master_datas/areas_table";
 import { Button } from "@/components/ui/button";
-import {
-  deleteAreas,
-  deleteFaqs,
-  getAreas,
-  getFaqs,
-  postAreas,
-  postFaqs,
-  updateAreas,
-  updateFaqs,
-} from "@/services/api";
-import { AreasInterface, FaqsInterface } from "@/types/interface";
+import { deleteFaqs, getFaqs, postFaqs, updateFaqs } from "@/services/api";
+import { FaqsInterface } from "@/types/interface";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
@@ -59,7 +47,7 @@ export default function FaqsScreen() {
     }
   };
 
-  useMemo(() => {
+  useEffect(() => {
     fetchFaqs(limitItem);
   }, []);
 
@@ -265,7 +253,6 @@ export default function FaqsScreen() {
                     </div>
                   </form>
                 </AlertDialogHeader>
-                {/* <AlertDialogFooter className="w-full flex flex-row justify-center items-center gap-x-5"></AlertDialogFooter> */}
               </AlertDialogContent>
             </AlertDialog>
           </div>
