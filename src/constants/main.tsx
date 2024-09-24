@@ -246,6 +246,28 @@ export const faqs = [
   },
 ];
 
+export const adminBars = [
+  {
+    id: 1,
+    name: "Riwayat Pengajuan",
+  },
+  {
+    id: 2,
+    name: "Revisi",
+  },
+];
+
+export const areasHeadBars = [
+  {
+    id: 1,
+    name: "Layanan",
+  },
+  {
+    id: 2,
+    name: "Persyaratan Layanan",
+  },
+];
+
 export const masterDataSupers = [
   {
     id: 1,
