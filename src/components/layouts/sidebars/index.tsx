@@ -21,7 +21,7 @@ import {
   ServiceInterface,
 } from "@/types/interface";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { masterDataSupers } from "@/constants/main";
+import { adminBars, areasHeadBars, masterDataSupers } from "@/constants/main";
 
 export default function DashBoardSidebarPages() {
   const router = useRouter();
@@ -56,7 +56,7 @@ export default function DashBoardSidebarPages() {
   }, []);
 
   return (
-    <section className="flex flex-col w-10/12 md:w-[28%] h-full justify-center items-center fixed">
+    <section className="flex flex-col w-10/12 md:w-[23%] h-full justify-center items-center fixed">
       <div className="w-full h-screen flex flex-col">
         {!isMobile && (
           <div className="w-full h-[8%] flex flex-row items-center justify-center gap-x-3 bg-primary-40">
@@ -75,8 +75,165 @@ export default function DashBoardSidebarPages() {
             <p className="text-[16px] text-black-80">Dashboard</p>
           </Link>
 
+          {/* render admin verified */}
+          {/* <div className="w-full flex flex-col">
+            <Accordion
+              className="w-full flex flex-col gap-y-4"
+              type="single"
+              collapsible
+              value={activeAccordionValue}
+              onValueChange={(value) => {
+                setActiveAccordionValue(value);
+              }}>
+              <AccordionItem
+                className="w-full border-none flex flex-col"
+                value={`item-1`}>
+                <AccordionTrigger className="px-4 py-2 bg-white font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4">
+                  <div className="w-full flex flex-row items-center gap-x-2">
+                    <p className="text-black-80 text-[16px]">
+                      Riwayat Permohonan
+                    </p>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                  <div className="w-full flex flex-col">
+                    {adminBars &&
+                      adminBars.length > 0 &&
+                      adminBars?.map(
+                        (bar: { id: number; name: string }, i: number) => {
+                          return (
+                            <Link
+                              key={i}
+                              href={`${bar?.name === "Riwayat Pengajuan" ? "/verified-admin/user-application-histories" : "/verified-admin/user-application-revition-histories"}`}
+                              className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                              <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                <DotIcon className={`w-5 h-5 text-black-80`} />
+                                <p>{bar?.name}</p>
+                              </div>
+                            </Link>
+                          );
+                        }
+                      )}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div> */}
+
+          {/* admin verified */}
+          {/* <div className="w-full flex flex-col gap-y-3">
+            <div
+              className={`${pathName === "/application-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+              <Link
+                href={"/verification-admin/verification-reportings"}
+                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                Laporan
+              </Link>
+            </div>
+          </div> */}
+
+          {/* render areas lead */}
+          {/* <div className="w-full flex flex-col gap-y-3">
+            <div
+              className={`${pathName === "/application-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+              <Link
+                href={"/areas-head/head-manage-approvals"}
+                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                Kelola Persetujuan
+              </Link>
+            </div>
+          </div> */}
+
+          {/* render areas lead */}
+          {/* <div className="w-full flex flex-col">
+            <Accordion
+              className="w-full flex flex-col gap-y-4"
+              type="single"
+              collapsible
+              value={activeAccordionValue}
+              onValueChange={(value) => {
+                setActiveAccordionValue(value);
+              }}>
+              <AccordionItem
+                className="w-full border-none flex flex-col"
+                value={`item-1`}>
+                <AccordionTrigger className="px-4 py-2 bg-white font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4">
+                  <div className="w-full flex flex-row items-center gap-x-2">
+                    <p className="text-black-80 text-[16px]">Data Master</p>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                  <div className="w-full flex flex-col">
+                    {areasHeadBars &&
+                      areasHeadBars.length > 0 &&
+                      areasHeadBars?.map(
+                        (area: { id: number; name: string }, i: number) => {
+                          return (
+                            <Link
+                              key={i}
+                              href={`${area?.name === "Riwayat Pengajuan" ? "/verified-admin/user-application-histories" : "/verified-admin/user-application-revition-histories"}`}
+                              className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                              <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                <DotIcon className={`w-5 h-5 text-black-80`} />
+                                <p>{area?.name}</p>
+                              </div>
+                            </Link>
+                          );
+                        }
+                      )}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div> */}
+
+          {/* render areas lead */}
+          {/* <div className="w-full flex flex-col gap-y-3">
+            <div
+              className={`${pathName === "/application-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+              <Link
+                href={"/areas-head/head-reporting"}
+                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                Laporan
+              </Link>
+            </div>
+
+            <div
+              className={`${pathName === "/application-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+              <Link
+                href={"/areas-head/head-settings"}
+                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                Pengaturan
+              </Link>
+            </div>
+          </div> */}
+
+          {/* render secretary department */}
+          <div className="w-full flex flex-col gap-y-3">
+            <div
+              className={`${pathName === "/application-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+              <Link
+                href={"/department-secretary/department-signature-validation"}
+                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                Pengesahan Tanda Tangan
+              </Link>
+            </div>
+          </div>
+
+          {/* render secretary department */}
+          <div className="w-full flex flex-col gap-y-3">
+            <div
+              className={`${pathName === "/application-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+              <Link
+                href={"/department-secretary/department-reportings"}
+                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                Laporan
+              </Link>
+            </div>
+          </div>
+
           {/* render Super Admin */}
-          <div className="w-full flex flex-col">
+          {/* <div className="w-full flex flex-col">
             <Accordion
               className="w-full flex flex-col gap-y-4"
               type="single"
@@ -171,7 +328,7 @@ export default function DashBoardSidebarPages() {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
-          </div>
+          </div> */}
 
           <div className="w-full flex flex-col items-center justify-center">
             <div className="w-11/12 h-[1px] bg-line-50"></div>

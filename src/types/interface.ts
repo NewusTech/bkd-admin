@@ -211,3 +211,12 @@ export interface CarouselSliderInterface {
   image: string;
   createdAt: string;
 }
+
+export interface AdminApplicationHistoryInterface {
+  startDate: Date;
+  setStartDate: (e: Date | undefined) => void;
+  endDate: Date;
+  setEndDate: (e: Date | undefined) => void;
+  search: string;
+  setSearch: (e: string) => void;
+}
