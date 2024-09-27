@@ -1,6 +1,9 @@
 "use client";
 
 export const dynamic = "force-dynamic";
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import { useQuill } from "react-quilljs";
 import SearchPages from "@/components/elements/search";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,6 +43,15 @@ import PaginationComponent from "@/components/elements/pagination";
 export default function ServicesScreen() {
   const router = useRouter();
   const [search, setSearch] = useState("");
+  const { quill: quillCondition, quillRef: quillConditionRef } = useQuill();
+  const { quill: quillTerm, quillRef: quillTermRef } = useQuill();
+  const { quill: quillStep, quillRef: quillStepRef } = useQuill();
+  const { quill: quillDesc, quillRef: quillDescRef } = useQuill();
+  const { quill: quillConditionEdit, quillRef: quillConditionEditRef } =
+    useQuill();
+  const { quill: quillTermEdit, quillRef: quillTermEditRef } = useQuill();
+  const { quill: quillStepEdit, quillRef: quillStepEditRef } = useQuill();
+  const { quill: quillDescEdit, quillRef: quillDescEditRef } = useQuill();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -63,6 +75,111 @@ export default function ServicesScreen() {
     totalPages: 1,
     totalCount: 0,
   });
+
+  useEffect(() => {
+    if (quillCondition && isDialogOpen) {
+      quillCondition.on("text-change", () => {
+        setData((prevData) => ({
+          ...prevData,
+          syarat: quillCondition.root.innerHTML,
+        }));
+      });
+    }
+
+    if (quillTerm && isDialogOpen) {
+      quillTerm.on("text-change", () => {
+        setData((prevData) => ({
+          ...prevData,
+          ketentuan: quillTerm.root.innerHTML,
+        }));
+      });
+    }
+
+    if (quillStep && isDialogOpen) {
+      quillStep.on("text-change", () => {
+        setData((prevData) => ({
+          ...prevData,
+          langkah: quillStep.root.innerHTML,
+        }));
+      });
+    }
+
+    if (quillDesc && isDialogOpen) {
+      quillDesc.on("text-change", () => {
+        setData((prevData) => ({
+          ...prevData,
+          desc: quillDesc.root.innerHTML,
+        }));
+      });
+    }
+
+    if (quillConditionEdit && isDialogEditOpen) {
+      quillConditionEdit.on("text-change", () => {
+        setData((prevData) => ({
+          ...prevData,
+          syarat: quillConditionEdit.root.innerHTML,
+        }));
+      });
+
+      if (data?.syarat && isDialogEditOpen) {
+        quillConditionEdit.clipboard.dangerouslyPasteHTML(data?.syarat);
+      }
+    }
+
+    if (quillTermEdit && isDialogEditOpen) {
+      quillTermEdit.on("text-change", () => {
+        setData((prevData) => ({
+          ...prevData,
+          ketentuan: quillTermEdit.root.innerHTML,
+        }));
+      });
+
+      if (data?.ketentuan && isDialogEditOpen) {
+        quillTermEdit.clipboard.dangerouslyPasteHTML(data?.ketentuan);
+      }
+    }
+
+    if (quillStepEdit && isDialogEditOpen) {
+      quillStepEdit.on("text-change", () => {
+        setData((prevData) => ({
+          ...prevData,
+          langkah: quillStepEdit.root.innerHTML,
+        }));
+      });
+
+      if (data?.langkah && isDialogEditOpen) {
+        quillStepEdit.clipboard.dangerouslyPasteHTML(data?.langkah);
+      }
+    }
+
+    if (quillDescEdit && isDialogEditOpen) {
+      quillDescEdit.on("text-change", () => {
+        setData((prevData) => ({
+          ...prevData,
+          desc: quillDescEdit.root.innerHTML,
+        }));
+      });
+
+      if (data?.desc && isDialogEditOpen) {
+        quillDescEdit.clipboard.dangerouslyPasteHTML(data?.desc);
+      }
+    }
+  }, [
+    quillCondition,
+    quillTerm,
+    quillStep,
+    quillDesc,
+    quillConditionEdit,
+    quillTermEdit,
+    quillStepEdit,
+    quillDescEdit,
+    isDialogOpen,
+    isDialogEditOpen,
+    data?.syarat,
+    data?.ketentuan,
+    data?.langkah,
+    data?.desc,
+  ]);
 
   const fetchAreas = async (page: number, limit: number) => {
     try {
@@ -226,7 +343,7 @@ export default function ServicesScreen() {
       } else {
         Swal.fire({
           icon: "error",
-          title: "Gagal Menagupdate Bidang!",
+          title: "Gagal Mengupdate Bidang!",
           timer: 2000,
           showConfirmButton: false,
           position: "center",
@@ -261,7 +378,7 @@ export default function ServicesScreen() {
                   Tambah
                 </div>
               </AlertDialogTrigger>
-              <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
+              <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
                 <AlertDialogHeader className="flex flex-col max-h-[500px]">
                   <AlertDialogTitle className="text-center">
                     Master Data Layanan
@@ -311,7 +428,13 @@ export default function ServicesScreen() {
                         Syarat Layanan
                       </Label>
 
-                      <Input
+                      <div className="w-full h-[250px] flex flex-col gap-y-2">
+                        <div
+                          className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                          ref={quillConditionRef}></div>
+                      </div>
+
+                      {/* <Input
                         id="syarat"
                         name="syarat"
                         value={data.syarat}
@@ -320,7 +443,7 @@ export default function ServicesScreen() {
                         inputMode="numeric"
                         className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                         placeholder="Masukkan Syarat"
-                      />
+                      /> */}
                     </div>
 
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
@@ -330,7 +453,13 @@ export default function ServicesScreen() {
                         Ketentuan
                       </Label>
 
-                      <Input
+                      <div className="w-full h-[250px] flex flex-col gap-y-2">
+                        <div
+                          className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                          ref={quillTermRef}></div>
+                      </div>
+
+                      {/* <Input
                         id="ketentuan"
                         name="ketentuan"
                         value={data.ketentuan}
@@ -338,7 +467,7 @@ export default function ServicesScreen() {
                         type="text"
                         className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                         placeholder="Masukkan Ketentuan"
-                      />
+                      /> */}
                     </div>
 
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
@@ -348,7 +477,13 @@ export default function ServicesScreen() {
                         Langkah
                       </Label>
 
-                      <Input
+                      <div className="w-full h-[250px] flex flex-col gap-y-2">
+                        <div
+                          className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                          ref={quillStepRef}></div>
+                      </div>
+
+                      {/* <Input
                         id="langkah"
                         name="langkah"
                         value={data.langkah}
@@ -356,7 +491,7 @@ export default function ServicesScreen() {
                         type="text"
                         className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                         placeholder="Masukkan Langkah"
-                      />
+                      /> */}
                     </div>
 
                     <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
@@ -398,7 +533,13 @@ export default function ServicesScreen() {
                         Deskripsi Bidang
                       </Label>
 
-                      <Textarea
+                      <div className="w-full h-[250px] flex flex-col gap-y-2">
+                        <div
+                          className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                          ref={quillDescRef}></div>
+                      </div>
+
+                      {/* <Textarea
                         name="desc"
                         placeholder="Masukkan Deskripsi Bidang"
                         value={data.desc}
@@ -406,7 +547,7 @@ export default function ServicesScreen() {
                           setData({ ...data, desc: e.target.value })
                         }
                         className="w-full rounded-lg h-[74px] border border-line-20 md:h-[122px] text-sm placeholder:opacity-[70%]"
-                      />
+                      /> */}
                     </div>
 
                     <div className="w-full flex flex-row justify-center items-center gap-x-5">
@@ -444,6 +585,14 @@ export default function ServicesScreen() {
               isDialogEditOpen={isDialogEditOpen}
               setIsDialogEditOpen={setIsDialogEditOpen}
               handleUpdateService={handleUpdateService}
+              quillConditionEdit={quillConditionEdit}
+              quillConditionEditRef={quillConditionEditRef}
+              quillTermEdit={quillTermEdit}
+              quillTermEditRef={quillTermEditRef}
+              quillStepEdit={quillStepEdit}
+              quillStepEditRef={quillStepEditRef}
+              quillDescEdit={quillDescEdit}
+              quillDescEditRef={quillDescEditRef}
             />
           )}
         </div>

@@ -257,6 +257,32 @@ export const adminBars = [
   },
 ];
 
+export const SatisfactionIndexs = [
+  {
+    id: 1,
+    name: "Questions Master",
+    value: "Master Pertanyaan",
+  },
+  {
+    id: 2,
+    name: "Index History",
+    value: "Riwayat",
+  },
+];
+
+export const AccountManagement = [
+  {
+    id: 1,
+    name: "Roles",
+    value: "Peran",
+  },
+  {
+    id: 2,
+    name: "Users",
+    value: "Pengguna",
+  },
+];
+
 export const areasHeadBars = [
   {
     id: 1,

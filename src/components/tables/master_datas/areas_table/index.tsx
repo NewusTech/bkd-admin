@@ -20,6 +20,8 @@ export default function SuperAreasMasterDataTablePages({
   isDialogEditOpen,
   setIsDialogEditOpen,
   handleUpdateArea,
+  quillEdit,
+  quillEditRef,
 }: {
   areas: AreasInterface[];
   handleDeleteArea: (slug: string) => void;
@@ -37,6 +39,8 @@ export default function SuperAreasMasterDataTablePages({
   isDialogEditOpen: boolean;
   setIsDialogEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
   handleUpdateArea: (e: React.FormEvent<HTMLFormElement>, slug: string) => void;
+  quillEdit: any;
+  quillEditRef: any;
 }) {
   return (
     <>
@@ -66,6 +70,8 @@ export default function SuperAreasMasterDataTablePages({
                   handleUpdateArea={handleUpdateArea}
                   isDialogEditOpen={isDialogEditOpen}
                   setIsDialogEditOpen={setIsDialogEditOpen}
+                  quillEdit={quillEdit}
+                  quillEditRef={quillEditRef}
                 />
               );
             })}

@@ -74,9 +74,6 @@ importers:
       next:
         specifier: 14.2.5
         version: 14.2.5(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      quill:
-        specifier: ^2.0.2
-        version: 2.0.2
       react:
         specifier: ^18
         version: 18.3.1
@@ -171,6 +168,9 @@ importers:
       prettier:
         specifier: 3.3.3
         version: 3.3.3
+      quill:
+        specifier: ^2.0.2
+        version: 2.0.2
       react-signature-canvas:
         specifier: ^1.0.6
         version: 1.0.6(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)

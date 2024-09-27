@@ -1,11 +1,14 @@
 "use client";
 
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import { useQuill } from "react-quilljs";
 import SearchPages from "@/components/elements/search";
 import SuperAreasMasterDataTablePages from "@/components/tables/master_datas/areas_table";
 import { Button } from "@/components/ui/button";
 import { deleteAreas, getAreas, postAreas, updateAreas } from "@/services/api";
 import { AreasInterface } from "@/types/interface";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,7 +22,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
@@ -47,6 +49,32 @@ export default function AreasScreen() {
     totalPages: 1,
     totalCount: 0,
   });
+  const { quill: quillAdd, quillRef: quillAddRef } = useQuill();
+  const { quill: quillEdit, quillRef: quillEditRef } = useQuill();
+
+  useEffect(() => {
+    if (quillAdd && isDialogOpen) {
+      quillAdd.on("text-change", () => {
+        setData((prevData) => ({
+          ...prevData,
+          desc: quillAdd.root.innerHTML,
+        }));
+      });
+    }
+
+    if (quillEdit && isDialogEditOpen) {
+      quillEdit.on("text-change", () => {
+        setData((prevData) => ({
+          ...prevData,
+          desc: quillEdit.root.innerHTML,
+        }));
+      });
+
+      if (data?.desc && isDialogEditOpen) {
+        quillEdit.clipboard.dangerouslyPasteHTML(data?.desc);
+      }
+    }
+  }, [quillAdd, quillEdit, isDialogOpen, isDialogEditOpen, data?.desc]);
 
   const fetchAreas = async (page: number, limit: number) => {
     try {
@@ -215,13 +243,15 @@ export default function AreasScreen() {
           <div className="w-3/12">
             <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <AlertDialogTrigger
-                onClick={() => setIsDialogOpen(true)}
+                onClick={() => {
+                  setIsDialogOpen(true);
+                }}
                 className="w-full">
                 <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
                   Tambah
                 </div>
               </AlertDialogTrigger>
-              <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
+              <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
                 <AlertDialogHeader className="flex flex-col max-h-[500px]">
                   <AlertDialogTitle className="text-center">
                     Master Data Bidang
@@ -283,20 +313,18 @@ export default function AreasScreen() {
                       />
                     </div>
 
-                    <div className="w-full flex flex-col gap-y-2">
-                      <Label className="text-sm text-black-70 font-normal">
+                    <div className="w-full flex flex-col gap-y-3">
+                      <Label className="text-[15px] text-black-80 font-normal">
                         Deskripsi Bidang
                       </Label>
 
-                      <Textarea
-                        name="desc"
-                        placeholder="Masukkan Deskripsi Bidang"
-                        value={data.desc}
-                        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                          setData({ ...data, desc: e.target.value })
-                        }
-                        className="w-full rounded-lg h-[74px] border border-line-20 md:h-[122px] text-sm placeholder:opacity-[70%]"
-                      />
+                      {isDialogOpen && (
+                        <div className="w-full h-[250px] flex flex-col gap-y-2">
+                          <div
+                            className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                            ref={quillAddRef}></div>
+                        </div>
+                      )}
                     </div>
 
                     <div className="w-full flex flex-row justify-center items-center gap-x-5">
@@ -331,8 +359,10 @@ export default function AreasScreen() {
               setData={setData}
               isUpdateLoading={isUpdateLoading}
               isDialogEditOpen={isDialogEditOpen}
-              setIsDialogEditOpen={setIsDialogOpen}
+              setIsDialogEditOpen={setIsDialogEditOpen}
               handleUpdateArea={handleUpdateArea}
+              quillEdit={quillEdit}
+              quillEditRef={quillEditRef}
             />
           )}
         </div>

@@ -420,9 +420,9 @@ export const updateBKDGalleryActivities = async (slug: string, data: any) => {
 };
 
 // get bkd about visi misi
-export const getAboutVisionMision = async (limit: number) => {
+export const getAboutVisionMision = async () => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/bkd/profile/get?limit=${limit}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/bkd/profile/get`,
     {
       method: "GET",
       headers: {

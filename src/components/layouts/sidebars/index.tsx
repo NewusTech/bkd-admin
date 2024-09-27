@@ -1,7 +1,7 @@
 "use client";
 
 import profilePicture from "@/../../public/assets/images/foto-profile.jpg";
-import { DotIcon, HomeIcon } from "lucide-react";
+import { DotIcon, HomeIcon, Loader, LogOut } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Accordion,
@@ -21,14 +21,23 @@ import {
   ServiceInterface,
 } from "@/types/interface";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { adminBars, areasHeadBars, masterDataSupers } from "@/constants/main";
+import {
+  AccountManagement,
+  adminBars,
+  areasHeadBars,
+  masterDataSupers,
+  SatisfactionIndexs,
+} from "@/constants/main";
+import Swal from "sweetalert2";
+import { Button } from "@/components/ui/button";
 
 export default function DashBoardSidebarPages() {
   const router = useRouter();
   const pathName = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const limitItem = 10;
-  const [activeAccordionValue, setActiveAccordionValue] = useState("account");
+  const [isLoadingOut, setIsLoadingOut] = useState(false);
+  const [activeAccordionValue, setActiveAccordionValue] = useState("");
   const [user, setUser] = useState<AdminProfileInterface>();
   const [areas, setAreas] = useState<AreasInterface[]>([]);
   const [services, setServices] = useState<ServiceInterface[]>();
@@ -41,6 +50,22 @@ export default function DashBoardSidebarPages() {
       router.push("/login");
     }
   }, [router]);
+
+  const handleLogout = () => {
+    setIsLoadingOut(true);
+    setTimeout(() => {
+      setIsLoadingOut(false);
+      Cookies.remove("Authorization");
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil logout, silahkan login kembali!",
+        timer: 2000,
+        showConfirmButton: false,
+        position: "center",
+      });
+      router.push("/");
+    }, 1000);
+  };
 
   const fetchUserProfile = async () => {
     try {
@@ -69,10 +94,12 @@ export default function DashBoardSidebarPages() {
         <div className="w-full flex flex-col py-5 verticalScroll gap-y-5 h-full border bg-white shadow-md border-line-20">
           <Link
             href={"/"}
-            className="w-full flex flex-row items-center cursor-pointer px-4 gap-x-3">
-            <HomeIcon className="w-5 h-5 text-black-80" />
+            className={`${pathName === "/" ? "bg-primary-40 group bg-opacity-20" : ""} hover:pl-5 ease-in-out duration-300 animate-in py-3 w-full flex flex-row items-center cursor-pointer px-4 gap-x-3`}>
+            <HomeIcon className="w-5 h-5 text-black-80 group-hover:text-primary-40" />
 
-            <p className="text-[16px] text-black-80">Dashboard</p>
+            <p className="text-[16px] text-black-80 group-hover:text-primary-40">
+              Dashboard
+            </p>
           </Link>
 
           {/* render admin verified */}
@@ -209,7 +236,7 @@ export default function DashBoardSidebarPages() {
           </div> */}
 
           {/* render secretary department */}
-          <div className="w-full flex flex-col gap-y-3">
+          {/* <div className="w-full flex flex-col gap-y-3">
             <div
               className={`${pathName === "/application-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
               <Link
@@ -218,10 +245,10 @@ export default function DashBoardSidebarPages() {
                 Pengesahan Tanda Tangan
               </Link>
             </div>
-          </div>
+          </div> */}
 
           {/* render secretary department */}
-          <div className="w-full flex flex-col gap-y-3">
+          {/* <div className="w-full flex flex-col gap-y-3">
             <div
               className={`${pathName === "/application-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
               <Link
@@ -230,10 +257,10 @@ export default function DashBoardSidebarPages() {
                 Laporan
               </Link>
             </div>
-          </div>
+          </div> */}
 
           {/* render Super Admin */}
-          {/* <div className="w-full flex flex-col">
+          <div className="w-full flex flex-col">
             <Accordion
               className="w-full flex flex-col gap-y-4"
               type="single"
@@ -245,11 +272,147 @@ export default function DashBoardSidebarPages() {
               <AccordionItem
                 className="w-full border-none flex flex-col"
                 value={`item-1`}>
+                <AccordionTrigger className="px-4 py-2 bg-white font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4">
+                  <div className="w-full flex flex-row items-center gap-x-2">
+                    <p className="text-black-80 text-[16px]">
+                      Riwayat Permohonan
+                    </p>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                  <div className="w-full flex flex-col">
+                    {adminBars &&
+                      adminBars.length > 0 &&
+                      adminBars?.map(
+                        (bar: { id: number; name: string }, i: number) => {
+                          return (
+                            <Link
+                              key={i}
+                              href={`${bar?.name === "Riwayat Pengajuan" ? "/verified-admin/user-application-histories" : "/verified-admin/user-application-revition-histories"}`}
+                              className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                              <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                <DotIcon className={`w-5 h-5 text-black-80`} />
+                                <p>{bar?.name}</p>
+                              </div>
+                            </Link>
+                          );
+                        }
+                      )}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+
+          <div className="w-full flex flex-col gap-y-4">
+            <div
+              className={`${pathName === "/department-secretary/department-signature-validation" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-detail" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-upload" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+              <Link
+                href={"/department-secretary/department-signature-validation"}
+                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                Pengesahan Tanda Tangan
+              </Link>
+            </div>
+
+            <div
+              className={`${pathName === "/areas-head/head-manage-approvals" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+              <Link
+                href={"/areas-head/head-manage-approvals"}
+                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                Kelola Persetujuan
+              </Link>
+            </div>
+
+            <div
+              className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+              <Link
+                href={"/department-secretary/department-reportings"}
+                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                Pengaduan
+              </Link>
+            </div>
+
+            <div
+              className={`${pathName === "/department-head/lead-bkd-staff" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+              <Link
+                href={"/department-secretary/department-reportings"}
+                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                Staff BKD
+              </Link>
+            </div>
+
+            <div
+              className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+              <Link
+                href={"/department-secretary/department-reportings"}
+                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                Laporan
+              </Link>
+            </div>
+          </div>
+
+          <div className="w-full flex flex-col">
+            <Accordion
+              className="w-full flex flex-col gap-y-4"
+              type="single"
+              collapsible
+              value={activeAccordionValue}
+              onValueChange={(value) => {
+                setActiveAccordionValue(value);
+              }}>
+              <AccordionItem
+                className="w-full border-none flex flex-col"
+                value={`item-2`}>
+                <AccordionTrigger className="px-4 py-2 bg-white font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4">
+                  <div className="w-full flex flex-row items-center gap-x-2">
+                    <p className="text-black-80 text-[16px]">Indeks Kepuasan</p>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                  <div className="w-full flex flex-col">
+                    {SatisfactionIndexs &&
+                      SatisfactionIndexs.length > 0 &&
+                      SatisfactionIndexs?.map(
+                        (
+                          bar: { id: number; name: string; value: string },
+                          i: number
+                        ) => {
+                          return (
+                            <Link
+                              key={i}
+                              href={`${bar?.name === "Questions Master" ? "/verified-admin/user-application-histories" : "/verified-admin/user-application-revition-histories"}`}
+                              className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                              <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                <DotIcon className={`w-5 h-5 text-black-80`} />
+                                <p>{bar?.value}</p>
+                              </div>
+                            </Link>
+                          );
+                        }
+                      )}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+
+          <div className="w-full flex flex-col">
+            <Accordion
+              className="w-full flex flex-col gap-y-4"
+              type="single"
+              collapsible
+              value={activeAccordionValue}
+              onValueChange={(value) => {
+                setActiveAccordionValue(value);
+              }}>
+              <AccordionItem
+                className="w-full border-none flex flex-col"
+                value={`item-3`}>
                 <AccordionTrigger
                   // onClick={() => setServiceId(area.id)}
-                  className="px-4 py-2 bg-white font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4">
+                  className={`${pathName === "/super-admin/master-data/areas" || pathName === "/super-admin/master-data/services" || pathName === "/super-admin/master-data/service-requirements" || pathName === "/super-admin/master-data/news" || pathName === "/super-admin/master-data/bkd-gallery-activities" || pathName === "/super-admin/master-data/about-us-vision-mission" || pathName === "/super-admin/master-data/structure-organization" || pathName === "/super-admin/master-data/faqs" || pathName === "/super-admin/master-data/terms-and-conditions" || pathName === "/super-admin/master-data/manual-book" || pathName === "/super-admin/master-data/logo" || pathName === "/super-admin/master-data/carousel-slider" || pathName === "/super-admin/master-data/location-maps" ? "bg-primary-40 bg-opacity-20 text-primary-40" : "text-black-80"} px-4 py-3 font-normal text-sm text-start h-[50px] md:h-full pr-4`}>
                   <div className="w-full flex flex-row items-center gap-x-2">
-                    <p className="text-black-80 text-[16px]">Data Master</p>
+                    <p className="text-[16px]">Data Master</p>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
@@ -315,9 +478,11 @@ export default function DashBoardSidebarPages() {
                             <Link
                               key={i}
                               href={`${linking}`}
-                              className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                              className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50`}>
                               <div className="w-10/12 flex flex-row items-center gap-x-2">
-                                <DotIcon className={`w-5 h-5 text-black-80`} />
+                                <DotIcon
+                                  className={`w-5 h-5 ${pathName === linking ? "text-primary-40" : "text-black-80"}`}
+                                />
                                 <p>{master?.name}</p>
                               </div>
                             </Link>
@@ -328,35 +493,121 @@ export default function DashBoardSidebarPages() {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
-          </div> */}
+          </div>
+
+          <div className="w-full flex flex-col">
+            <Accordion
+              className="w-full flex flex-col gap-y-4"
+              type="single"
+              collapsible
+              value={activeAccordionValue}
+              onValueChange={(value) => {
+                setActiveAccordionValue(value);
+              }}>
+              <AccordionItem
+                className="w-full border-none flex flex-col"
+                value={`item-4`}>
+                <AccordionTrigger className="px-4 py-2 bg-white font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4">
+                  <div className="w-full flex flex-row items-center gap-x-2">
+                    <p className="text-black-80 text-[16px]">Kelola Akun</p>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                  <div className="w-full flex flex-col">
+                    {AccountManagement &&
+                      AccountManagement.length > 0 &&
+                      AccountManagement?.map(
+                        (
+                          bar: { id: number; name: string; value: string },
+                          i: number
+                        ) => {
+                          return (
+                            <Link
+                              key={i}
+                              href={`${bar?.name === "Roles" ? "/verified-admin/user-application-histories" : "/verified-admin/user-application-revition-histories"}`}
+                              className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                              <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                <DotIcon className={`w-5 h-5 text-black-80`} />
+                                <p>{bar?.value}</p>
+                              </div>
+                            </Link>
+                          );
+                        }
+                      )}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+
+          <div className="w-full flex flex-col gap-y-3">
+            <div
+              className={`${pathName === "/super-admin/settings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+              <Link
+                href={"/department-secretary/department-signature-validation"}
+                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                Pengaturan
+              </Link>
+            </div>
+          </div>
 
           <div className="w-full flex flex-col items-center justify-center">
             <div className="w-11/12 h-[1px] bg-line-50"></div>
           </div>
 
-          {user && (
-            <Link
-              href={"/user-profile"}
-              className="w-full flex flex-row gap-x-3 px-4">
-              <div className="w-3/12 h-full">
-                <Image
-                  src={profilePicture}
-                  alt="Profile-Picture"
-                  width={1000}
-                  height={1000}
-                  className="w-16 h-16 rounded-full"
-                />
-              </div>
+          <div className="w-full flex flex-col">
+            <Accordion
+              className="w-full flex flex-col gap-y-4"
+              type="single"
+              collapsible
+              value={activeAccordionValue}
+              onValueChange={(value) => {
+                setActiveAccordionValue(value);
+              }}>
+              <AccordionItem
+                className="w-full border-none flex flex-col"
+                value={`item-5`}>
+                <AccordionTrigger className="px-4 py-2 bg-white font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4">
+                  <div className="w-full flex flex-row gap-x-3 px-4">
+                    <div className="w-3/12 h-full">
+                      <img
+                        src={`https://ui-avatars.com/api/?name=${user?.role_name}&background=random&rounded=true`}
+                        alt="image"
+                        className="rounded-full w-full h-full"
+                      />
+                    </div>
 
-              <div className="w-full flex flex-col justify-center gap-y-1">
-                <h5 className="text-black-80 text-[16px]">
-                  {user && user?.role_name}
-                </h5>
+                    <div className="w-full flex flex-col justify-center gap-y-1">
+                      <h5 className="text-black-80 text-[16px]">
+                        {user && user?.role_name}
+                      </h5>
 
-                <p className="text-black-40 text-sm">Bandar Lampung</p>
-              </div>
-            </Link>
-          )}
+                      <p className="text-black-40 text-sm">Bandar Lampung</p>
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                  <div className="w-full flex flex-row px-5">
+                    <Button
+                      onClick={handleLogout}
+                      className="w-full flex flex-row items-center rounded-lg bg-error-50 bg-opacity-30 justify-start px-5 py-6 gap-x-3 group">
+                      {isLoadingOut ? (
+                        <Loader className="animate-spin" />
+                      ) : (
+                        <>
+                          <LogOut className="w-5 h-5 text-error-50 group-hover:text-error-70" />
+
+                          <p className="text-error-50 font-light text-[16px] group-hover:text-error-70 hover:underline">
+                            Keluar
+                          </p>
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
         </div>
       </div>
     </section>

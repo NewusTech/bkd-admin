@@ -26,6 +26,8 @@ export default function SuperNewsMasterDataTablePages({
   handleDropImage,
   handleImageChange,
   handleRemoveImage,
+  quillEdit,
+  quillEditRef,
 }: {
   news: NewsInterface[];
   handleDeleteNews: (slug: string) => void;
@@ -52,6 +54,8 @@ export default function SuperNewsMasterDataTablePages({
   handleDropImage: (e: React.DragEvent<HTMLDivElement>) => void;
   handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleRemoveImage: () => void;
+  quillEdit: any;
+  quillEditRef: any;
 }) {
   return (
     <>
@@ -88,6 +92,8 @@ export default function SuperNewsMasterDataTablePages({
                   handleUpdateNews={handleUpdateNews}
                   isDialogEditOpen={isDialogEditOpen}
                   setIsDialogEditOpen={setIsDialogEditOpen}
+                  quillEdit={quillEdit}
+                  quillEditRef={quillEditRef}
                 />
               );
             })}

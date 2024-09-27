@@ -1,6 +1,9 @@
 "use client";
 
 export const dynamic = "force-dynamic";
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import { useQuill } from "react-quilljs";
 import SearchPages from "@/components/elements/search";
 import { Button } from "@/components/ui/button";
 import {
@@ -54,6 +57,32 @@ export default function NewsScreen() {
     totalPages: 1,
     totalCount: 0,
   });
+  const { quill: quillAdd, quillRef: quillAddRef } = useQuill();
+  const { quill: quillEdit, quillRef: quillEditRef } = useQuill();
+
+  useEffect(() => {
+    if (quillAdd && isDialogOpen) {
+      quillAdd.on("text-change", () => {
+        setData((prevData) => ({
+          ...prevData,
+          desc: quillAdd.root.innerHTML,
+        }));
+      });
+    }
+
+    if (quillEdit && isDialogEditOpen) {
+      quillEdit.on("text-change", () => {
+        setData((prevData) => ({
+          ...prevData,
+          desc: quillEdit.root.innerHTML,
+        }));
+      });
+
+      if (data?.desc && isDialogEditOpen) {
+        quillEdit.clipboard.dangerouslyPasteHTML(data?.desc);
+      }
+    }
+  }, [quillAdd, quillEdit, isDialogOpen, isDialogEditOpen, data?.desc]);
 
   const fetchNews = async (page: number, limit: number) => {
     try {
@@ -314,7 +343,13 @@ export default function NewsScreen() {
                         Deskripsi Berita
                       </Label>
 
-                      <Textarea
+                      <div className="w-full h-[250px] flex flex-col gap-y-2">
+                        <div
+                          className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                          ref={quillAddRef}></div>
+                      </div>
+
+                      {/* <Textarea
                         name="desc"
                         placeholder="Masukkan Deskripsi Berita"
                         value={data.desc}
@@ -322,7 +357,7 @@ export default function NewsScreen() {
                           setData({ ...data, desc: e.target.value })
                         }
                         className="w-full rounded-lg h-[74px] border border-line-20 md:h-[122px] text-sm placeholder:opacity-[70%]"
-                      />
+                      /> */}
                     </div>
 
                     <div className="flex flex-col w-full">
@@ -419,6 +454,8 @@ export default function NewsScreen() {
               isDialogEditOpen={isDialogEditOpen}
               setIsDialogEditOpen={setIsDialogOpen}
               handleUpdateNews={handleUpdateNews}
+              quillEdit={quillEdit}
+              quillEditRef={quillEditRef}
             />
           )}
         </div>

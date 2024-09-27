@@ -1,6 +1,9 @@
 "use client";
 
 export const dynamic = "force-dynamic";
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import { useQuill } from "react-quilljs";
 import SearchPages from "@/components/elements/search";
 import { getAboutVisionMision, updateAboutVisionMision } from "@/services/api";
 import { AboutUsVisionMisionInterface } from "@/types/interface";
@@ -12,10 +15,13 @@ import SuperAboutUsVisionMisionMasterDataTablePages from "@/components/tables/ma
 export default function AboutUsVisionMisionScreen() {
   const router = useRouter();
   const [search, setSearch] = useState("");
+  const { quill: quillAboutEdit, quillRef: quillAboutEditRef } = useQuill();
+  const { quill: quillVisionEdit, quillRef: quillVisionEditRef } = useQuill();
+  const { quill: quillMisionEdit, quillRef: quillMisionEditRef } = useQuill();
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
   const limitItem = 30;
-  const [abouts, setAbouts] = useState<AboutUsVisionMisionInterface[]>([]);
+  const [abouts, setAbouts] = useState<AboutUsVisionMisionInterface>();
   const [data, setData] = useState({
     kontak: "",
     visi: "",
@@ -25,9 +31,58 @@ export default function AboutUsVisionMisionScreen() {
     lang: "",
   });
 
-  const fetchAboutVisionMision = async (limit: number) => {
+  useEffect(() => {
+    if (quillAboutEdit && isDialogEditOpen) {
+      quillAboutEdit.on("text-change", () => {
+        setData((prevData) => ({
+          ...prevData,
+          about_bkd: quillAboutEdit.root.innerHTML,
+        }));
+      });
+
+      if (data?.about_bkd && isDialogEditOpen) {
+        quillAboutEdit.clipboard.dangerouslyPasteHTML(data?.about_bkd);
+      }
+    }
+
+    if (quillVisionEdit && isDialogEditOpen) {
+      quillVisionEdit.on("text-change", () => {
+        setData((prevData) => ({
+          ...prevData,
+          visi: quillVisionEdit.root.innerHTML,
+        }));
+      });
+
+      if (data?.visi && isDialogEditOpen) {
+        quillVisionEdit.clipboard.dangerouslyPasteHTML(data?.visi);
+      }
+    }
+
+    if (quillMisionEdit && isDialogEditOpen) {
+      quillMisionEdit.on("text-change", () => {
+        setData((prevData) => ({
+          ...prevData,
+          misi: quillMisionEdit.root.innerHTML,
+        }));
+      });
+
+      if (data?.misi && isDialogEditOpen) {
+        quillMisionEdit.clipboard.dangerouslyPasteHTML(data?.misi);
+      }
+    }
+  }, [
+    quillAboutEdit,
+    quillVisionEdit,
+    quillMisionEdit,
+    isDialogEditOpen,
+    data?.misi,
+    data?.visi,
+    data?.about_bkd,
+  ]);
+
+  const fetchAboutVisionMision = async () => {
     try {
-      const response = await getAboutVisionMision(limit);
+      const response = await getAboutVisionMision();
 
       setAbouts(response.data);
     } catch (error) {
@@ -36,7 +91,7 @@ export default function AboutUsVisionMisionScreen() {
   };
 
   useEffect(() => {
-    fetchAboutVisionMision(limitItem);
+    fetchAboutVisionMision();
   }, []);
 
   const handleUpdateAbout = async (
@@ -65,7 +120,7 @@ export default function AboutUsVisionMisionScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchAboutVisionMision(limitItem);
+        fetchAboutVisionMision();
         setIsDialogEditOpen(false);
         router.push("/super-admin/master-data/about-us-vision-mission");
       } else {
@@ -86,8 +141,8 @@ export default function AboutUsVisionMisionScreen() {
 
   return (
     <section className="w-full flex flex-col items-center px-5 mt-5">
-      <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
-        <div className="w-full flex flex-row gap-x-5">
+      <div className="w-full flex flex-col p-5 gap-y-5">
+        {/* <div className="w-full flex flex-row gap-x-5">
           <SearchPages
             search={search}
             setSearch={setSearch}
@@ -96,10 +151,10 @@ export default function AboutUsVisionMisionScreen() {
             }
             placeholder="Pencarian"
           />
-        </div>
+        </div> */}
 
         <div className="w-full">
-          {abouts && abouts.length > 0 && (
+          {abouts && (
             <SuperAboutUsVisionMisionMasterDataTablePages
               abouts={abouts}
               data={data}
@@ -108,6 +163,12 @@ export default function AboutUsVisionMisionScreen() {
               isDialogEditOpen={isDialogEditOpen}
               setIsDialogEditOpen={setIsDialogEditOpen}
               handleUpdateAbout={handleUpdateAbout}
+              quillAboutEdit={quillAboutEdit}
+              quillAboutEditRef={quillAboutEditRef}
+              quillVisionEdit={quillVisionEdit}
+              quillVisionEditRef={quillVisionEditRef}
+              quillMisionEdit={quillMisionEdit}
+              quillMisionEditRef={quillMisionEditRef}
             />
           )}
         </div>

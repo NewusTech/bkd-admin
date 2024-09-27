@@ -1,5 +1,8 @@
 "use client";
 
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import { useQuill } from "react-quilljs";
 import React from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "../ui/button";
@@ -37,6 +40,14 @@ export default function SuperServicesMasterDataCard({
   handleUpdateService,
   isDialogEditOpen,
   setIsDialogEditOpen,
+  quillConditionEdit,
+  quillConditionEditRef,
+  quillTermEdit,
+  quillTermEditRef,
+  quillStepEdit,
+  quillStepEditRef,
+  quillDescEdit,
+  quillDescEditRef,
 }: {
   service: ServiceInterface;
   areas: AreasInterface[];
@@ -70,6 +81,14 @@ export default function SuperServicesMasterDataCard({
   ) => void;
   isDialogEditOpen: boolean;
   setIsDialogEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  quillConditionEdit: any;
+  quillConditionEditRef: any;
+  quillTermEdit: any;
+  quillTermEditRef: any;
+  quillStepEdit: any;
+  quillStepEditRef: any;
+  quillDescEdit: any;
+  quillDescEditRef: any;
 }) {
   const handleSetService = () => {
     setData({
@@ -81,6 +100,22 @@ export default function SuperServicesMasterDataCard({
       ketentuan: service.ketentuan,
       langkah: service.langkah,
     });
+
+    if (quillConditionEdit && service?.syarat) {
+      quillConditionEdit.clipboard.dangerouslyPasteHTML(service?.syarat);
+    }
+
+    if (quillTermEdit && service?.ketentuan) {
+      quillTermEdit.clipboard.dangerouslyPasteHTML(service?.ketentuan);
+    }
+
+    if (quillStepEdit && service?.langkah) {
+      quillStepEdit.clipboard.dangerouslyPasteHTML(service?.langkah);
+    }
+
+    if (quillDescEdit && service?.desc) {
+      quillDescEdit.clipboard.dangerouslyPasteHTML(service?.desc);
+    }
   };
 
   return (
@@ -108,7 +143,7 @@ export default function SuperServicesMasterDataCard({
               <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
                 <AlertDialogHeader className="flex flex-col max-h-[500px]">
                   <AlertDialogTitle className="text-center">
-                    Master Data Bidang
+                    Master Data Layanan
                   </AlertDialogTitle>
                   <AlertDialogDescription className="text-center">
                     Input data yang diperlukan
@@ -167,7 +202,13 @@ export default function SuperServicesMasterDataCard({
                         Syarat Layanan
                       </Label>
 
-                      <Input
+                      <div className="w-full h-[250px] flex flex-col gap-y-2">
+                        <div
+                          className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                          ref={quillConditionEditRef}></div>
+                      </div>
+
+                      {/* <Input
                         id="syarat"
                         name="syarat"
                         value={data.syarat}
@@ -181,7 +222,7 @@ export default function SuperServicesMasterDataCard({
                         inputMode="numeric"
                         className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                         placeholder="Masukkan Syarat"
-                      />
+                      /> */}
                     </div>
 
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
@@ -191,7 +232,13 @@ export default function SuperServicesMasterDataCard({
                         Ketentuan
                       </Label>
 
-                      <Input
+                      <div className="w-full h-[250px] flex flex-col gap-y-2">
+                        <div
+                          className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                          ref={quillTermEditRef}></div>
+                      </div>
+
+                      {/* <Input
                         id="ketentuan"
                         name="ketentuan"
                         value={data.ketentuan}
@@ -204,7 +251,7 @@ export default function SuperServicesMasterDataCard({
                         type="text"
                         className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                         placeholder="Masukkan Ketentuan"
-                      />
+                      /> */}
                     </div>
 
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
@@ -214,7 +261,13 @@ export default function SuperServicesMasterDataCard({
                         Langkah
                       </Label>
 
-                      <Input
+                      <div className="w-full h-[250px] flex flex-col gap-y-2">
+                        <div
+                          className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                          ref={quillStepEditRef}></div>
+                      </div>
+
+                      {/* <Input
                         id="langkah"
                         name="langkah"
                         value={data.langkah}
@@ -227,7 +280,7 @@ export default function SuperServicesMasterDataCard({
                         type="text"
                         className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                         placeholder="Masukkan Langkah"
-                      />
+                      /> */}
                     </div>
 
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
@@ -275,7 +328,13 @@ export default function SuperServicesMasterDataCard({
                         Deskripsi Bidang
                       </Label>
 
-                      <Textarea
+                      <div className="w-full h-[250px] flex flex-col gap-y-2">
+                        <div
+                          className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                          ref={quillDescEditRef}></div>
+                      </div>
+
+                      {/* <Textarea
                         name="desc"
                         placeholder="Masukkan Deskripsi Bidang"
                         value={data.desc}
@@ -283,7 +342,7 @@ export default function SuperServicesMasterDataCard({
                           setData({ ...data, desc: e.target.value })
                         }
                         className="w-full rounded-lg h-[74px] border border-line-20 md:h-[122px] text-sm placeholder:opacity-[70%]"
-                      />
+                      /> */}
                     </div>
 
                     <div className="w-full flex flex-row justify-center items-center gap-x-5">
