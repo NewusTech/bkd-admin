@@ -244,7 +244,7 @@ export default function LoginScreen() {
                   <AlertDialogDescription>Ini Syarat</AlertDialogDescription>
 
                   <div className="m-3 px-4 flex flex-col items-center w-full verticalScroll gap-y-6">
-                    <div>{terms && parse(terms?.desc)}</div>
+                    <div>{terms?.desc && parse(terms?.desc)}</div>
 
                     <div
                       onClick={handleAgree}
@@ -266,7 +266,7 @@ export default function LoginScreen() {
                   <AlertDialogDescription>Ini Ketentuan</AlertDialogDescription>
 
                   <div className="m-3 px-4 flex flex-col items-center w-full verticalScroll gap-y-6">
-                    <div>{terms && parse(terms?.desc)}</div>
+                    <div>{terms?.desc && parse(terms?.desc)}</div>
 
                     <div
                       onClick={handleAgree}

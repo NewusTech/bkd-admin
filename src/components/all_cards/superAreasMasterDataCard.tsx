@@ -1,5 +1,7 @@
 "use client";
 
+// import "quill/dist/quill.snow.css";
+// import { useQuill } from "react-quilljs";
 import React from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import Link from "next/link";
@@ -32,6 +34,8 @@ export default function SuperAreasMasterDataCard({
   handleUpdateArea,
   isDialogEditOpen,
   setIsDialogEditOpen,
+  quillEdit,
+  quillEditRef,
 }: {
   area: AreasInterface;
   index: number;
@@ -55,6 +59,8 @@ export default function SuperAreasMasterDataCard({
   handleUpdateArea: (e: React.FormEvent<HTMLFormElement>, slug: string) => void;
   isDialogEditOpen: boolean;
   setIsDialogEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  quillEdit: any;
+  quillEditRef: any;
 }) {
   const handleSetArea = () => {
     setData({
@@ -63,6 +69,10 @@ export default function SuperAreasMasterDataCard({
       pj: area?.pj,
       nip_pj: area?.nip_pj,
     });
+
+    if (quillEdit && area?.desc) {
+      quillEdit.clipboard.dangerouslyPasteHTML(area?.desc);
+    }
   };
 
   return (
@@ -161,15 +171,11 @@ export default function SuperAreasMasterDataCard({
                         Deskripsi Bidang
                       </Label>
 
-                      <Textarea
-                        name="desc"
-                        placeholder="Masukkan Deskripsi Bidang"
-                        value={data.desc}
-                        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                          setData({ ...data, desc: e.target.value })
-                        }
-                        className="w-full rounded-lg h-[74px] border border-line-20 md:h-[122px] text-sm placeholder:opacity-[70%]"
-                      />
+                      <div className="w-full h-[250px] flex flex-col gap-y-2">
+                        <div
+                          className="flex flex-col h-[250px] w-full border border-line-20 rounded-b-lg"
+                          ref={quillEditRef}></div>
+                      </div>
                     </div>
 
                     <div className="w-full flex flex-row justify-center items-center gap-x-5">

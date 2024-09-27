@@ -1,5 +1,8 @@
 "use client";
 
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import { useQuill } from "react-quilljs";
 import React, { useRef } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "../ui/button";
@@ -38,6 +41,8 @@ export default function SuperNewsMasterDataCard({
   handleImageChange,
   handleRemoveImage,
   previewImage,
+  quillEdit,
+  quillEditRef,
 }: {
   item: NewsInterface;
   index: number;
@@ -65,6 +70,8 @@ export default function SuperNewsMasterDataCard({
   handleDropImage: (e: React.DragEvent<HTMLDivElement>) => void;
   handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleRemoveImage: () => void;
+  quillEdit: any;
+  quillEditRef: any;
 }) {
   const dropRef = useRef<HTMLDivElement>(null);
   const handleSetService = () => {
@@ -73,6 +80,10 @@ export default function SuperNewsMasterDataCard({
       desc: item?.desc,
       image: item?.image,
     });
+
+    if (quillEdit && item?.desc) {
+      quillEdit.clipboard.dangerouslyPasteHTML(item?.desc);
+    }
   };
 
   return (
@@ -172,7 +183,13 @@ export default function SuperNewsMasterDataCard({
                         Deskripsi Berita
                       </Label>
 
-                      <Textarea
+                      <div className="w-full h-[250px] flex flex-col gap-y-2">
+                        <div
+                          className="flex flex-col h-[250px] w-full border border-line-20 rounded-b-lg"
+                          ref={quillEditRef}></div>
+                      </div>
+
+                      {/* <Textarea
                         name="desc"
                         placeholder="Masukkan Deskripsi Berita"
                         value={data.desc}
@@ -180,7 +197,7 @@ export default function SuperNewsMasterDataCard({
                           setData({ ...data, desc: e.target.value })
                         }
                         className="w-full rounded-lg h-[74px] border border-line-20 md:h-[122px] text-sm placeholder:opacity-[70%]"
-                      />
+                      /> */}
                     </div>
 
                     <div className="flex flex-col w-full">
