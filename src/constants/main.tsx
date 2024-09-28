@@ -348,3 +348,46 @@ export const masterDataSupers = [
     name: "Lokasi - Maps",
   },
 ];
+
+export const colors = [
+  {
+    id: 1,
+    color: `#3572EF`,
+    name: "satu",
+  },
+  {
+    id: 2,
+    color: `#FC6736`,
+    name: "dua",
+  },
+  {
+    id: 3,
+    color: `#3D3D3D`,
+    name: "tiga",
+  },
+  {
+    id: 4,
+    color: `#B0B0B0`,
+    name: "empat",
+  },
+  {
+    id: 5,
+    color: `#FFFFFF`,
+    name: "lima",
+  },
+  {
+    id: 6,
+    color: `#DF1212`,
+    name: "enam",
+  },
+  {
+    id: 7,
+    color: `#C07204`,
+    name: "tujuh",
+  },
+  {
+    id: 8,
+    color: `#35BE23`,
+    name: "delapan",
+  },
+];

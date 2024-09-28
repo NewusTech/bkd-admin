@@ -379,7 +379,7 @@ export default function ServicesScreen() {
                 </div>
               </AlertDialogTrigger>
               <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
-                <AlertDialogHeader className="flex flex-col max-h-[500px]">
+                <AlertDialogHeader className="flex flex-col">
                   <AlertDialogTitle className="text-center">
                     Master Data Layanan
                   </AlertDialogTitle>
@@ -388,53 +388,90 @@ export default function ServicesScreen() {
                   </AlertDialogDescription>
                   <form
                     onSubmit={handleCreateService}
-                    className="w-full flex flex-col gap-y-3 verticalScroll">
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
-                        Nama Layanan
-                      </Label>
+                    className="w-full flex flex-col gap-y-3 max-h-[500px]">
+                    <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                      <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
+                        <Label className="focus-within:text-black-800 font-normal text-sm">
+                          Pilih Bidang
+                        </Label>
 
-                      <Input
-                        id="nama-layanan"
-                        name="nama"
-                        value={data.nama}
-                        onChange={handleChange}
-                        type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Nama Layanan"
-                      />
-                    </div>
-
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
-                        Penanggung Jawab
-                      </Label>
-
-                      <Input
-                        id="pj"
-                        name="penanggung_jawab"
-                        value={data.penanggung_jawab}
-                        onChange={handleChange}
-                        type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Nama Penanggung Jawab"
-                      />
-                    </div>
-
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label
-                        htmlFor="syarat"
-                        className="focus-within:text-primary-70 font-normal text-sm">
-                        Syarat Layanan
-                      </Label>
-
-                      <div className="w-full h-[250px] flex flex-col gap-y-2">
-                        <div
-                          className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
-                          ref={quillConditionRef}></div>
+                        <div className="w-full border border-line-20 rounded-lg">
+                          <Select onValueChange={handleSelectChange}>
+                            <SelectTrigger
+                              className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                              <SelectValue
+                                placeholder="Pilih Bidang"
+                                className="text-black-80 w-full"
+                              />
+                            </SelectTrigger>
+                            <SelectContent className="bg-line-10">
+                              <div className="pt-2">
+                                {areas &&
+                                  areas.length > 0 &&
+                                  areas.map(
+                                    (area: AreasInterface, i: number) => {
+                                      return (
+                                        <SelectItem
+                                          key={i}
+                                          className={`w-full px-4`}
+                                          value={area.id.toString()}>
+                                          {area.nama}
+                                        </SelectItem>
+                                      );
+                                    }
+                                  )}
+                              </div>
+                            </SelectContent>
+                          </Select>
+                        </div>
                       </div>
 
-                      {/* <Input
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          Nama Layanan
+                        </Label>
+
+                        <Input
+                          id="nama-layanan"
+                          name="nama"
+                          value={data.nama}
+                          onChange={handleChange}
+                          type="text"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          placeholder="Masukkan Nama Layanan"
+                        />
+                      </div>
+
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          Penanggung Jawab
+                        </Label>
+
+                        <Input
+                          id="pj"
+                          name="penanggung_jawab"
+                          value={data.penanggung_jawab}
+                          onChange={handleChange}
+                          type="text"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          placeholder="Masukkan Nama Penanggung Jawab"
+                        />
+                      </div>
+
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label
+                          htmlFor="syarat"
+                          className="focus-within:text-primary-70 font-normal text-sm">
+                          Syarat Layanan
+                        </Label>
+
+                        <div className="w-full h-[250px] flex flex-col gap-y-2">
+                          <div
+                            className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                            ref={quillConditionRef}></div>
+                        </div>
+
+                        {/* <Input
                         id="syarat"
                         name="syarat"
                         value={data.syarat}
@@ -444,22 +481,22 @@ export default function ServicesScreen() {
                         className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                         placeholder="Masukkan Syarat"
                       /> */}
-                    </div>
-
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label
-                        htmlFor="ketentuan"
-                        className="focus-within:text-primary-70 font-normal text-sm">
-                        Ketentuan
-                      </Label>
-
-                      <div className="w-full h-[250px] flex flex-col gap-y-2">
-                        <div
-                          className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
-                          ref={quillTermRef}></div>
                       </div>
 
-                      {/* <Input
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label
+                          htmlFor="ketentuan"
+                          className="focus-within:text-primary-70 font-normal text-sm">
+                          Ketentuan
+                        </Label>
+
+                        <div className="w-full h-[250px] flex flex-col gap-y-2">
+                          <div
+                            className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                            ref={quillTermRef}></div>
+                        </div>
+
+                        {/* <Input
                         id="ketentuan"
                         name="ketentuan"
                         value={data.ketentuan}
@@ -468,22 +505,22 @@ export default function ServicesScreen() {
                         className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                         placeholder="Masukkan Ketentuan"
                       /> */}
-                    </div>
-
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label
-                        htmlFor="langkah"
-                        className="focus-within:text-primary-70 font-normal text-sm">
-                        Langkah
-                      </Label>
-
-                      <div className="w-full h-[250px] flex flex-col gap-y-2">
-                        <div
-                          className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
-                          ref={quillStepRef}></div>
                       </div>
 
-                      {/* <Input
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label
+                          htmlFor="langkah"
+                          className="focus-within:text-primary-70 font-normal text-sm">
+                          Langkah
+                        </Label>
+
+                        <div className="w-full h-[250px] flex flex-col gap-y-2">
+                          <div
+                            className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                            ref={quillStepRef}></div>
+                        </div>
+
+                        {/* <Input
                         id="langkah"
                         name="langkah"
                         value={data.langkah}
@@ -492,54 +529,20 @@ export default function ServicesScreen() {
                         className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                         placeholder="Masukkan Langkah"
                       /> */}
-                    </div>
-
-                    <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-black-800 font-normal text-sm">
-                        Pilih Bidang
-                      </Label>
-
-                      <div className="w-full border border-line-20 rounded-lg">
-                        <Select onValueChange={handleSelectChange}>
-                          <SelectTrigger
-                            className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-                            <SelectValue
-                              placeholder="Pilih Bidang"
-                              className="text-black-80 w-full"
-                            />
-                          </SelectTrigger>
-                          <SelectContent className="bg-line-10">
-                            <div className="pt-2">
-                              {areas &&
-                                areas.length > 0 &&
-                                areas.map((area: AreasInterface, i: number) => {
-                                  return (
-                                    <SelectItem
-                                      key={i}
-                                      className={`w-full px-4`}
-                                      value={area.id.toString()}>
-                                      {area.nama}
-                                    </SelectItem>
-                                  );
-                                })}
-                            </div>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-
-                    <div className="w-full flex flex-col gap-y-2">
-                      <Label className="text-sm text-black-70 font-normal">
-                        Deskripsi Bidang
-                      </Label>
-
-                      <div className="w-full h-[250px] flex flex-col gap-y-2">
-                        <div
-                          className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
-                          ref={quillDescRef}></div>
                       </div>
 
-                      {/* <Textarea
+                      <div className="w-full flex flex-col gap-y-2">
+                        <Label className="text-sm text-black-70 font-normal">
+                          Deskripsi Layanan
+                        </Label>
+
+                        <div className="w-full h-[250px] flex flex-col gap-y-2">
+                          <div
+                            className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                            ref={quillDescRef}></div>
+                        </div>
+
+                        {/* <Textarea
                         name="desc"
                         placeholder="Masukkan Deskripsi Bidang"
                         value={data.desc}
@@ -548,9 +551,10 @@ export default function ServicesScreen() {
                         }
                         className="w-full rounded-lg h-[74px] border border-line-20 md:h-[122px] text-sm placeholder:opacity-[70%]"
                       /> */}
+                      </div>
                     </div>
 
-                    <div className="w-full flex flex-row justify-center items-center gap-x-5">
+                    <div className="w-full flex flex-row justify-between items-center gap-x-5">
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
 
                       <Button
