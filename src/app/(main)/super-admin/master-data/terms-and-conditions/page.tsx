@@ -129,24 +129,30 @@ export default function TermConditionScreen() {
           onSubmit={handleUpdateTerms}
           className="w-full flex flex-col gap-y-3">
           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
-            <Label className="focus-within:text-primary-70 font-normal text-[16px]">
-              Deskripsi
-            </Label>
+            <div className="w-full flex flex-row justify-between items-center">
+              <Label className="focus-within:text-primary-70 font-normal text-[16px]">
+                Deskripsi
+              </Label>
 
-            <div className="w-full h-[300px] flex flex-col gap-y-2">
+              <div className="w-full flex flex-row justify-end items-center gap-x-5">
+                <Button
+                  type="submit"
+                  disabled={isUpdateLoading ? true : false}
+                  className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                  {isUpdateLoading ? (
+                    <Loader className="animate-spin" />
+                  ) : (
+                    "Simpan"
+                  )}
+                </Button>
+              </div>
+            </div>
+
+            <div className="w-full min-h-[300px] flex flex-col gap-y-2">
               <div
-                className="flex flex-col h-[300px] w-full border border-line-20 rounded-lg"
+                className="flex flex-col min-h-[300px] w-full border border-line-20 rounded-lg"
                 ref={quillRef}></div>
             </div>
-          </div>
-
-          <div className="w-full flex flex-row justify-center items-center gap-x-5">
-            <Button
-              type="submit"
-              disabled={isUpdateLoading ? true : false}
-              className="bg-primary-40 hover:bg-primary-70 text-line-10">
-              {isUpdateLoading ? <Loader className="animate-spin" /> : "Simpan"}
-            </Button>
           </div>
         </form>
       </div>

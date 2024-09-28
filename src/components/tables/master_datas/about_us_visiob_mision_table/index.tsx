@@ -112,7 +112,7 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                   </div>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
-                  <AlertDialogHeader className="flex flex-col max-h-[500px]">
+                  <AlertDialogHeader className="flex flex-col">
                     <AlertDialogTitle className="text-center">
                       Master Data Bidang
                     </AlertDialogTitle>
@@ -123,19 +123,40 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                       onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                         handleUpdateAbout(e, abouts.id)
                       }
-                      className="w-full flex flex-col gap-y-3 verticalScroll">
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
-                          Tentang BKD
-                        </Label>
+                      className="w-full flex flex-col gap-y-3 max-h-[500px]">
+                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label
+                            htmlFor="kontak"
+                            className="focus-within:text-primary-70 font-normal text-sm">
+                            Kontak
+                          </Label>
 
-                        <div className="w-full h-[250px] flex flex-col gap-y-2">
-                          <div
-                            className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
-                            ref={quillAboutEditRef}></div>
+                          <Input
+                            id="kontak"
+                            name="kontak"
+                            value={data.kontak}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => setData({ ...data, kontak: e.target.value })}
+                            type="text"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan Misi BKD"
+                          />
                         </div>
 
-                        {/* <Input
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                            Tentang BKD
+                          </Label>
+
+                          <div className="w-full h-[250px] flex flex-col gap-y-2">
+                            <div
+                              className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                              ref={quillAboutEditRef}></div>
+                          </div>
+
+                          {/* <Input
                         id="about-bkd"
                         name="about_bkd"
                         value={data?.about_bkd}
@@ -146,20 +167,20 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                         className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                         placeholder="Masukkan Tentang BKD"
                       /> */}
-                      </div>
-
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
-                          Visi
-                        </Label>
-
-                        <div className="w-full h-[250px] flex flex-col gap-y-2">
-                          <div
-                            className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
-                            ref={quillVisionEditRef}></div>
                         </div>
 
-                        {/* <Input
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                            Visi
+                          </Label>
+
+                          <div className="w-full h-[250px] flex flex-col gap-y-2">
+                            <div
+                              className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                              ref={quillVisionEditRef}></div>
+                          </div>
+
+                          {/* <Input
                         id="visi"
                         name="visi"
                         value={data.visi}
@@ -170,20 +191,20 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                         className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                         placeholder="Masukkan Visi BKD"
                       /> */}
-                      </div>
-
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
-                          Misi
-                        </Label>
-
-                        <div className="w-full h-[250px] flex flex-col gap-y-2">
-                          <div
-                            className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
-                            ref={quillMisionEditRef}></div>
                         </div>
 
-                        {/* <Input
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                            Misi
+                          </Label>
+
+                          <div className="w-full h-[250px] flex flex-col gap-y-2">
+                            <div
+                              className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                              ref={quillMisionEditRef}></div>
+                          </div>
+
+                          {/* <Input
                         id="visi"
                         name="visi"
                         value={data.visi}
@@ -194,88 +215,49 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                         className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                         placeholder="Masukkan Visi BKD"
                       /> */}
-                      </div>
+                        </div>
 
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label
-                          htmlFor="misi"
-                          className="focus-within:text-primary-70 font-normal text-sm">
-                          NIP Penanggung Jawab
-                        </Label>
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label
+                            htmlFor="long"
+                            className="focus-within:text-primary-70 font-normal text-sm">
+                            Bujur
+                          </Label>
 
-                        <Input
-                          id="misi"
-                          name="misi"
-                          value={data.misi}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            setData({ ...data, misi: e.target.value })
-                          }
-                          type="text"
-                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                          placeholder="Masukkan Misi BKD"
-                        />
-                      </div>
+                          <Input
+                            id="long"
+                            name="long"
+                            value={data.long}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => setData({ ...data, long: e.target.value })}
+                            type="text"
+                            inputMode="numeric"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan Bujur Lokasi"
+                          />
+                        </div>
 
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label
-                          htmlFor="kontak"
-                          className="focus-within:text-primary-70 font-normal text-sm">
-                          Kontak
-                        </Label>
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label
+                            htmlFor="lang"
+                            className="focus-within:text-primary-70 font-normal text-sm">
+                            Lintang
+                          </Label>
 
-                        <Input
-                          id="kontak"
-                          name="kontak"
-                          value={data.kontak}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            setData({ ...data, kontak: e.target.value })
-                          }
-                          type="text"
-                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                          placeholder="Masukkan Misi BKD"
-                        />
-                      </div>
-
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label
-                          htmlFor="long"
-                          className="focus-within:text-primary-70 font-normal text-sm">
-                          Bujur
-                        </Label>
-
-                        <Input
-                          id="long"
-                          name="long"
-                          value={data.long}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            setData({ ...data, long: e.target.value })
-                          }
-                          type="text"
-                          inputMode="numeric"
-                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                          placeholder="Masukkan Bujur Lokasi"
-                        />
-                      </div>
-
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label
-                          htmlFor="lang"
-                          className="focus-within:text-primary-70 font-normal text-sm">
-                          Lintang
-                        </Label>
-
-                        <Input
-                          id="lang"
-                          name="lang"
-                          value={data.lang}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            setData({ ...data, lang: e.target.value })
-                          }
-                          type="text"
-                          inputMode="numeric"
-                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                          placeholder="Masukkan Lintang"
-                        />
+                          <Input
+                            id="lang"
+                            name="lang"
+                            value={data.lang}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => setData({ ...data, lang: e.target.value })}
+                            type="text"
+                            inputMode="numeric"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan Lintang"
+                          />
+                        </div>
                       </div>
 
                       {/* <div className="w-full flex flex-col gap-y-2">
@@ -294,7 +276,7 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                       />
                     </div> */}
 
-                      <div className="w-full flex flex-row justify-center items-center gap-x-5">
+                      <div className="w-full flex flex-row justify-between items-center gap-x-5">
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
 
                         <Button

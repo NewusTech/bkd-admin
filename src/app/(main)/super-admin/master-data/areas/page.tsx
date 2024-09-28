@@ -26,6 +26,7 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import PaginationComponent from "@/components/elements/pagination";
+import Editor from "@/components/elements/toolbar_editors";
 
 export default function AreasScreen() {
   const router = useRouter();
@@ -74,7 +75,7 @@ export default function AreasScreen() {
         quillEdit.clipboard.dangerouslyPasteHTML(data?.desc);
       }
     }
-  }, [quillAdd, quillEdit, isDialogOpen, isDialogEditOpen, data?.desc]);
+  }, [isDialogOpen, isDialogEditOpen, quillAdd, quillEdit, data?.desc]);
 
   const fetchAreas = async (page: number, limit: number) => {
     try {
@@ -252,7 +253,7 @@ export default function AreasScreen() {
                 </div>
               </AlertDialogTrigger>
               <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
-                <AlertDialogHeader className="flex flex-col max-h-[500px]">
+                <AlertDialogHeader className="flex flex-col">
                   <AlertDialogTitle className="text-center">
                     Master Data Bidang
                   </AlertDialogTitle>
@@ -261,73 +262,84 @@ export default function AreasScreen() {
                   </AlertDialogDescription>
                   <form
                     onSubmit={handleCreateAreas}
-                    className="w-full flex flex-col gap-y-3 verticalScroll">
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
-                        Nama Bidang
-                      </Label>
+                    className="w-full flex flex-col gap-y-3 max-h-[500px]">
+                    <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          Nama Bidang
+                        </Label>
 
-                      <Input
-                        id="nama-bidang"
-                        name="nama"
-                        value={data.nama}
-                        onChange={handleChange}
-                        type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Nama Bidang"
-                      />
+                        <Input
+                          id="nama-bidang"
+                          name="nama"
+                          value={data.nama}
+                          onChange={handleChange}
+                          type="text"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          placeholder="Masukkan Nama Bidang"
+                        />
+                      </div>
+
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          Penanggung Jawab
+                        </Label>
+
+                        <Input
+                          id="pj"
+                          name="pj"
+                          value={data.pj}
+                          onChange={handleChange}
+                          type="text"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          placeholder="Masukkan Nama Penanggung Jawab"
+                        />
+                      </div>
+
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label
+                          htmlFor="nip-pj"
+                          className="focus-within:text-primary-70 font-normal text-sm">
+                          NIP Penanggung Jawab
+                        </Label>
+
+                        <Input
+                          id="nip-pj"
+                          name="nip_pj"
+                          value={data.nip_pj}
+                          onChange={handleChange}
+                          type="text"
+                          inputMode="numeric"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          placeholder="Masukkan NIP Penanggung Jawab"
+                        />
+                      </div>
+
+                      <div className="w-full flex flex-col gap-y-3">
+                        <Label className="text-[15px] text-black-80 font-normal">
+                          Deskripsi Bidang
+                        </Label>
+
+                        {isDialogOpen && (
+                          <div className="w-full h-[250px] flex flex-col gap-y-2">
+                            <div
+                              className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
+                              ref={quillAddRef}></div>
+                          </div>
+                        )}
+
+                        {/* <Editor
+                        onChange={(value: any) =>
+                          setData({
+                            ...data,
+                            desc: value,
+                          })
+                        }
+                      /> */}
+                      </div>
                     </div>
 
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
-                        Penanggung Jawab
-                      </Label>
-
-                      <Input
-                        id="pj"
-                        name="pj"
-                        value={data.pj}
-                        onChange={handleChange}
-                        type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Nama Penanggung Jawab"
-                      />
-                    </div>
-
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label
-                        htmlFor="nip-pj"
-                        className="focus-within:text-primary-70 font-normal text-sm">
-                        NIP Penanggung Jawab
-                      </Label>
-
-                      <Input
-                        id="nip-pj"
-                        name="nip_pj"
-                        value={data.nip_pj}
-                        onChange={handleChange}
-                        type="text"
-                        inputMode="numeric"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan NIP Penanggung Jawab"
-                      />
-                    </div>
-
-                    <div className="w-full flex flex-col gap-y-3">
-                      <Label className="text-[15px] text-black-80 font-normal">
-                        Deskripsi Bidang
-                      </Label>
-
-                      {isDialogOpen && (
-                        <div className="w-full h-[250px] flex flex-col gap-y-2">
-                          <div
-                            className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
-                            ref={quillAddRef}></div>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="w-full flex flex-row justify-center items-center gap-x-5">
+                    <div className="w-full flex flex-row justify-between items-center gap-x-5">
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
 
                       <Button
