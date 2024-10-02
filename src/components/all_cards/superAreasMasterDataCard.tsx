@@ -75,15 +75,29 @@ export default function SuperAreasMasterDataCard({
     }
   };
 
+  function truncateString(str: string, num: number): string {
+    if (str.length <= num) {
+      return str;
+    }
+    return str.slice(0, num) + "...";
+  }
+
   return (
-    <TableRow className="border border-line-20">
-      <TableCell className="text-center">{index + 1}</TableCell>
-      <TableCell className="text-center">{area?.nama}</TableCell>
-      <TableCell className="text-center">{area?.pj}</TableCell>
-      <TableCell className="text-center">{area?.nip_pj}</TableCell>
-      <TableCell className="text-center">{area?.desc}</TableCell>
+    <TableRow className="border border-line-20 text-sm text-left">
+      <TableCell className="text-sm">{index + 1}</TableCell>
+      <TableCell className="text-sm">{area?.nama}</TableCell>
+      <TableCell className="text-sm">{area?.pj}</TableCell>
+      <TableCell className="text-sm">{area?.nip_pj}</TableCell>
+      <TableCell className="text-sm">
+        {truncateString(area?.desc, 30)}
+      </TableCell>
       <TableCell className="text-center flex items-center w-full">
         <div className="w-full flex flex-row items-center justify-center gap-x-2">
+          <div className="w-full">
+            <Button title="Lihat Data" className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+              Lihat
+            </Button>
+          </div>
           <div className="w-full">
             <AlertDialog
               open={isDialogEditOpen}
@@ -94,9 +108,12 @@ export default function SuperAreasMasterDataCard({
                   setIsDialogEditOpen(true);
                 }}
                 className="w-full">
-                <div className="w-full text-sm bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg">
+                <Button
+                  name="Edit"
+                  title="Edit Data"
+                  className='h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10'>
                   Edit
-                </div>
+                </Button>
               </AlertDialogTrigger>
               <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
                 <AlertDialogHeader className="flex flex-col max-h-[500px]">
@@ -181,12 +198,12 @@ export default function SuperAreasMasterDataCard({
                     </div>
 
                     <div className="w-full flex flex-row justify-center items-center gap-x-5">
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-
+                      <AlertDialogCancel className="">Cancel</AlertDialogCancel>
                       <Button
+                        title="Simpan Data"
                         type="submit"
                         disabled={isUpdateLoading ? true : false}
-                        className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                        className='h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-primary-40 hover:bg-primary-70 text-line-10'>
                         {isUpdateLoading ? (
                           <Loader className="animate-spin" />
                         ) : (
@@ -202,9 +219,10 @@ export default function SuperAreasMasterDataCard({
 
           <div className="w-full">
             <Button
+              title="Hapus Data"
               disabled={isDeleteLoading ? true : false}
               onClick={() => handleDeleteArea(area?.slug)}
-              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10">
+              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 h-10 text-xs md:text-sm px-3 border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
               {isDeleteLoading ? (
                 <Loader className="animate-spin" />
               ) : isDeleteLoading ? (
