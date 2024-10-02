@@ -229,6 +229,33 @@ export interface RegulationInterface {
   updatedAt: string;
 }
 
+export interface UserComplaintInterface {
+  id: number;
+  bidang_id: number;
+  layanan_id: number;
+  userinfo_id: number;
+  status: number;
+  isi_pengaduan: string;
+  judul_pengaduan: string;
+  jawaban: string;
+  image: string;
+  createdAt: string;
+  updatedAt: string;
+  Layanan: {
+    id: number;
+    nama: string;
+  };
+  Bidang: {
+    id: number;
+    nama: string;
+  };
+  User_info: {
+    id: number;
+    name: string;
+    nip: string;
+  };
+}
+
 export interface CardStepProps {
   isLastStep: boolean;
   isActive: boolean;
