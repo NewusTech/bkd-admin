@@ -23,6 +23,7 @@ import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import { Trash } from "@phosphor-icons/react";
 import Image from "next/image";
+import EditorProvide from "../pages/areas";
 
 export default function SuperNewsMasterDataCard({
   item,
@@ -41,8 +42,6 @@ export default function SuperNewsMasterDataCard({
   handleImageChange,
   handleRemoveImage,
   previewImage,
-  quillEdit,
-  quillEditRef,
 }: {
   item: NewsInterface;
   index: number;
@@ -70,8 +69,6 @@ export default function SuperNewsMasterDataCard({
   handleDropImage: (e: React.DragEvent<HTMLDivElement>) => void;
   handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleRemoveImage: () => void;
-  quillEdit: any;
-  quillEditRef: any;
 }) {
   const dropRef = useRef<HTMLDivElement>(null);
   const handleSetService = () => {
@@ -81,9 +78,9 @@ export default function SuperNewsMasterDataCard({
       image: item?.image,
     });
 
-    if (quillEdit && item?.desc) {
-      quillEdit.clipboard.dangerouslyPasteHTML(item?.desc);
-    }
+    // if (quillEdit && item?.desc) {
+    //   quillEdit.clipboard.dangerouslyPasteHTML(item?.desc);
+    // }
   };
 
   return (
@@ -183,11 +180,18 @@ export default function SuperNewsMasterDataCard({
                         Deskripsi Berita
                       </Label>
 
-                      <div className="w-full h-[250px] flex flex-col gap-y-2">
+                      <div className="w-full h-[250px] border border-line-20 rounded-lg">
+                        <EditorProvide
+                          content={data.desc}
+                          onChange={(e: any) => setData({ ...data, desc: e })}
+                        />
+                      </div>
+
+                      {/* <div className="w-full h-[250px] flex flex-col gap-y-2">
                         <div
                           className="flex flex-col h-[250px] w-full border border-line-20 rounded-b-lg"
                           ref={quillEditRef}></div>
-                      </div>
+                      </div> */}
 
                       {/* <Textarea
                         name="desc"
@@ -231,12 +235,12 @@ export default function SuperNewsMasterDataCard({
                           </>
                         </div>
 
-                        {(previewImage || data?.image) && (
+                        {(data?.image || previewImage) && (
                           <div className="relative md:ml-4 w-full mt-1">
                             <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
                               <div className="w-full h-full">
                                 <Image
-                                  src={previewImage || data?.image}
+                                  src={data?.image || previewImage}
                                   width={1000}
                                   height={1000}
                                   alt="Preview"

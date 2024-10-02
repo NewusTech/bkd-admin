@@ -337,14 +337,18 @@ export const masterDataSupers = [
   },
   {
     id: 11,
-    name: "Logo",
+    name: "Regulasi",
   },
   {
     id: 12,
-    name: "Carousel - Slider",
+    name: "Logo",
   },
   {
     id: 13,
+    name: "Carousel - Slider",
+  },
+  {
+    id: 14,
     name: "Lokasi - Maps",
   },
 ];
@@ -389,5 +393,32 @@ export const colors = [
     id: 8,
     color: `#35BE23`,
     name: "delapan",
+  },
+];
+
+export const headings = [
+  {
+    id: 1,
+    name: "Heading 1",
+  },
+  {
+    id: 2,
+    name: "Heading 2",
+  },
+  {
+    id: 3,
+    name: "Heading 3",
+  },
+  {
+    id: 4,
+    name: "Heading 4",
+  },
+  {
+    id: 5,
+    name: "Heading 5",
+  },
+  {
+    id: 6,
+    name: "Heading 6",
   },
 ];
