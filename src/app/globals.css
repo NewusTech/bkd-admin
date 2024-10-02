@@ -17,6 +17,12 @@ body {
   scrollbar-color: transparent transparent;
 }
 
+.horizontalScroll {
+  width: 100%;
+  overflow-x: scroll;
+  scrollbar-color: transparent transparent;
+}
+
 .verticalScroll::-webkit-scrollbar {
   display: none;
 }

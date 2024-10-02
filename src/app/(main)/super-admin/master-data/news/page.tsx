@@ -33,6 +33,7 @@ import { Trash } from "@phosphor-icons/react";
 import SuperNewsMasterDataTablePages from "@/components/tables/master_datas/news_table";
 import Image from "next/image";
 import PaginationComponent from "@/components/elements/pagination";
+import EditorProvide from "@/components/pages/areas";
 
 export default function NewsScreen() {
   const router = useRouter();
@@ -57,56 +58,6 @@ export default function NewsScreen() {
     totalPages: 1,
     totalCount: 0,
   });
-  const { quill: quillAdd, quillRef: quillAddRef } = useQuill({
-    modules: {
-      toolbar: [
-        ["bold", "italic", "underline", "strike"], // toggled buttons
-        ["blockquote", "code-block"],
-        ["link", "image", "video", "formula"],
-
-        [{ header: 1 }, { header: 2 }], // custom button values
-        [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-        [{ script: "sub" }, { script: "super" }], // superscript/subscript
-        [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-        [{ direction: "rtl" }], // text direction
-
-        [{ size: ["small", false, "large", "huge"] }], // custom dropdown
-        [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-        [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-        [{ font: [] }],
-        [{ align: [] }],
-
-        ["clean"], // remove formatting button
-      ],
-    },
-    theme: "snow", // or 'bubble'
-  });
-  const { quill: quillEdit, quillRef: quillEditRef } = useQuill();
-
-  useEffect(() => {
-    if (quillAdd && isDialogOpen) {
-      quillAdd.on("text-change", () => {
-        setData((prevData) => ({
-          ...prevData,
-          desc: quillAdd.root.innerHTML,
-        }));
-      });
-    }
-
-    if (quillEdit && isDialogEditOpen) {
-      quillEdit.on("text-change", () => {
-        setData((prevData) => ({
-          ...prevData,
-          desc: quillEdit.root.innerHTML,
-        }));
-      });
-
-      if (data?.desc && isDialogEditOpen) {
-        quillEdit.clipboard.dangerouslyPasteHTML(data?.desc);
-      }
-    }
-  }, [quillAdd, quillEdit, isDialogOpen, isDialogEditOpen, data?.desc]);
 
   const fetchNews = async (page: number, limit: number) => {
     try {
@@ -194,8 +145,14 @@ export default function NewsScreen() {
       formData.append("image", fileImage);
     }
 
+    Object.keys(formData).forEach((key) => {
+      console.log(key, formData.get(key));
+    });
+
     try {
       const response = await postCreateNews(formData);
+
+      console.log(response, "ini response");
 
       if (response.status === 201) {
         setData({
@@ -335,7 +292,7 @@ export default function NewsScreen() {
                   Tambah
                 </div>
               </AlertDialogTrigger>
-              <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
+              <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
                 <AlertDialogHeader className="flex flex-col">
                   <AlertDialogTitle className="text-center">
                     Master Data Berita
@@ -368,11 +325,18 @@ export default function NewsScreen() {
                           Deskripsi Berita
                         </Label>
 
-                        <div className="w-full h-[250px] flex flex-col gap-y-2">
+                        <div className="w-full h-[250px] border border-line-20 rounded-lg">
+                          <EditorProvide
+                            content={data.desc}
+                            onChange={(e: any) => setData({ ...data, desc: e })}
+                          />
+                        </div>
+
+                        {/* <div className="w-full h-[250px] flex flex-col gap-y-2">
                           <div
                             className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
                             ref={quillAddRef}></div>
-                        </div>
+                        </div> */}
 
                         {/* <Textarea
                         name="desc"
@@ -480,10 +444,8 @@ export default function NewsScreen() {
               setData={setData}
               isUpdateLoading={isUpdateLoading}
               isDialogEditOpen={isDialogEditOpen}
-              setIsDialogEditOpen={setIsDialogOpen}
+              setIsDialogEditOpen={setIsDialogEditOpen}
               handleUpdateNews={handleUpdateNews}
-              quillEdit={quillEdit}
-              quillEditRef={quillEditRef}
             />
           )}
         </div>

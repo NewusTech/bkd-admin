@@ -27,6 +27,7 @@ import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import PaginationComponent from "@/components/elements/pagination";
 import Editor from "@/components/elements/toolbar_editors";
+import EditorProvide from "@/components/pages/areas";
 
 export default function AreasScreen() {
   const router = useRouter();
@@ -54,7 +55,7 @@ export default function AreasScreen() {
   const { quill: quillEdit, quillRef: quillEditRef } = useQuill();
 
   useEffect(() => {
-    if (quillAdd && isDialogOpen) {
+    if (quillAdd) {
       quillAdd.on("text-change", () => {
         setData((prevData) => ({
           ...prevData,
@@ -63,7 +64,7 @@ export default function AreasScreen() {
       });
     }
 
-    if (quillEdit && isDialogEditOpen) {
+    if (quillEdit) {
       quillEdit.on("text-change", () => {
         setData((prevData) => ({
           ...prevData,
@@ -71,11 +72,11 @@ export default function AreasScreen() {
         }));
       });
 
-      if (data?.desc && isDialogEditOpen) {
+      if (data?.desc) {
         quillEdit.clipboard.dangerouslyPasteHTML(data?.desc);
       }
     }
-  }, [isDialogOpen, isDialogEditOpen, quillAdd, quillEdit, data?.desc]);
+  }, [quillAdd, quillEdit, data?.desc]);
 
   const fetchAreas = async (page: number, limit: number) => {
     try {
@@ -114,8 +115,12 @@ export default function AreasScreen() {
     e.preventDefault();
     setIsLoading(true);
 
+    console.log(data, "ini dara");
+
     try {
       const response = await postAreas(data);
+
+      console.log(response, "ini response");
 
       if (response.status === 201) {
         setData({
@@ -320,13 +325,20 @@ export default function AreasScreen() {
                           Deskripsi Bidang
                         </Label>
 
-                        {isDialogOpen && (
+                        <div className="w-full h-[250px] border border-line-20 rounded-lg">
+                          <EditorProvide
+                            content={data.desc}
+                            onChange={(e: any) => setData({ ...data, desc: e })}
+                          />
+                        </div>
+
+                        {/* {isDialogOpen && (
                           <div className="w-full h-[250px] flex flex-col gap-y-2">
                             <div
                               className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
                               ref={quillAddRef}></div>
                           </div>
-                        )}
+                        )} */}
 
                         {/* <Editor
                         onChange={(value: any) =>

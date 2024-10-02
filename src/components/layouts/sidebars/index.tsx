@@ -459,6 +459,9 @@ export default function DashBoardSidebarPages() {
                             case "Manual Book":
                               linking = "/super-admin/master-data/manual-book";
                               break;
+                            case "Regulasi":
+                              linking = "/super-admin/master-data/regulations";
+                              break;
                             case "Logo":
                               linking = "/super-admin/master-data/logo";
                               break;

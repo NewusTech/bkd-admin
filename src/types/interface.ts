@@ -220,3 +220,11 @@ export interface AdminApplicationHistoryInterface {
   search: string;
   setSearch: (e: string) => void;
 }
+
+export interface RegulationInterface {
+  id: number;
+  title: string;
+  file: string;
+  createdAt: string;
+  updatedAt: string;
+}
