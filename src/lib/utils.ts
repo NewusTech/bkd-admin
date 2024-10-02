@@ -11,3 +11,28 @@ export const formatDate = (date: Date) => {
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 };
+
+export const formatDateString = (date: string) => {
+  const bulanIndonesia = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
+  ];
+
+  const tanggal = new Date(date);
+
+  const hari = tanggal.getDate();
+  const bulan = bulanIndonesia[tanggal.getMonth()];
+  const tahun = tanggal.getFullYear();
+
+  return `${hari} ${bulan} ${tahun}`;
+};
