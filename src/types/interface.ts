@@ -220,3 +220,31 @@ export interface AdminApplicationHistoryInterface {
   search: string;
   setSearch: (e: string) => void;
 }
+
+export interface CardStepProps {
+  isLastStep: boolean;
+  isActive: boolean;
+  desk: string;
+  isCompleted: boolean;
+}
+
+export interface OptionType {
+  id: number;
+  key: string;
+}
+
+export interface CardType {
+  id?: any;
+  toggle?: boolean;
+  field: string;
+  tipedata:
+    | "text"
+    | "number"
+    | "radio"
+    | "checkbox"
+    | "date"
+    | "textarea"
+    | "string";
+  isrequired: any;
+  options?: OptionType[];
+}

@@ -249,7 +249,7 @@ export default function AreasScreen() {
                 }}
                 className="w-full">
                 <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                  Tambah
+                  Tambah Bidang
                 </div>
               </AlertDialogTrigger>
               <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">

@@ -47,34 +47,32 @@ export default function SuperAreasMasterDataTablePages({
       <Table className="w-full border border-line-20">
         <TableHeader className="bg-primary-40 text-line-10">
           <TableRow className="w-full">
-            <TableHead className="">No.</TableHead>
+            <TableHead className="text-center">No.</TableHead>
             <TableHead className="text-center">Nama Bidang</TableHead>
+            <TableHead className="text-center">Penanggung Jawab</TableHead>
+            <TableHead className="text-center">NIP Penanggung Jawab</TableHead>
             <TableHead className="text-center">Deskripsi</TableHead>
-            <TableHead className="text-center w-3/12">Aksi</TableHead>
+            <TableHead className="text-center">Aksi</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {areas &&
-            areas.length > 0 &&
-            areas?.map((area: AreasInterface, i: number) => {
-              return (
-                <SuperAreasMasterDataCard
-                  key={i}
-                  area={area}
-                  index={i}
-                  handleDeleteArea={handleDeleteArea}
-                  isDeleteLoading={isDeleteLoading}
-                  data={data}
-                  setData={setData}
-                  isUpdateLoading={isUpdateLoading}
-                  handleUpdateArea={handleUpdateArea}
-                  isDialogEditOpen={isDialogEditOpen}
-                  setIsDialogEditOpen={setIsDialogEditOpen}
-                  quillEdit={quillEdit}
-                  quillEditRef={quillEditRef}
-                />
-              );
-            })}
+          {areas && areas.length > 0 && areas.map((area: AreasInterface, i: number) => (
+            <SuperAreasMasterDataCard
+              key={i}
+              area={area}
+              index={i}
+              handleDeleteArea={handleDeleteArea}
+              isDeleteLoading={isDeleteLoading}
+              data={data}
+              setData={setData}
+              isUpdateLoading={isUpdateLoading}
+              handleUpdateArea={handleUpdateArea}
+              isDialogEditOpen={isDialogEditOpen}
+              setIsDialogEditOpen={setIsDialogEditOpen}
+              quillEdit={quillEdit}
+              quillEditRef={quillEditRef}
+            />
+          ))}
         </TableBody>
       </Table>
     </>

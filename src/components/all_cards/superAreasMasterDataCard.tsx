@@ -79,6 +79,8 @@ export default function SuperAreasMasterDataCard({
     <TableRow className="border border-line-20">
       <TableCell className="text-center">{index + 1}</TableCell>
       <TableCell className="text-center">{area?.nama}</TableCell>
+      <TableCell className="text-center">{area?.pj}</TableCell>
+      <TableCell className="text-center">{area?.nip_pj}</TableCell>
       <TableCell className="text-center">{area?.desc}</TableCell>
       <TableCell className="text-center flex items-center w-full">
         <div className="w-full flex flex-row items-center justify-center gap-x-2">
