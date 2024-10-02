@@ -221,6 +221,14 @@ export interface AdminApplicationHistoryInterface {
   setSearch: (e: string) => void;
 }
 
+export interface RegulationInterface {
+  id: number;
+  title: string;
+  file: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface CardStepProps {
   isLastStep: boolean;
   isActive: boolean;
