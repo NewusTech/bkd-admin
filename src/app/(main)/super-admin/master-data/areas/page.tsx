@@ -258,7 +258,7 @@ export default function AreasScreen() {
                     setIsDialogOpen(true);
                   }}
                   className="w-full">
-                  <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah Bidang
                   </div>
@@ -288,7 +288,7 @@ export default function AreasScreen() {
                     setIsDialogOpen(true);
                   }}
                   className="w-full">
-                  <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah Bidang
                   </div>
@@ -306,7 +306,7 @@ export default function AreasScreen() {
                       className="w-full flex flex-col gap-y-3 max-h-[500px]">
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
                             Nama Bidang
                           </Label>
 
@@ -322,7 +322,7 @@ export default function AreasScreen() {
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
                             Penanggung Jawab
                           </Label>
 
@@ -340,7 +340,7 @@ export default function AreasScreen() {
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label
                             htmlFor="nip-pj"
-                            className="focus-within:text-primary-70 font-normal text-sm">
+                            className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
                             NIP Penanggung Jawab
                           </Label>
 
@@ -357,11 +357,11 @@ export default function AreasScreen() {
                         </div>
 
                         <div className="w-full flex flex-col gap-y-3">
-                          <Label className="text-[15px] text-black-80 font-normal">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
                             Deskripsi Bidang
                           </Label>
 
-                          <div className="w-full h-[250px] border border-line-20 rounded-lg">
+                          <div className="w-full h-full md:h-[250px] border border-line-20 rounded-lg text-left">
                             <EditorProvide
                               content={data.desc}
                               onChange={(e: any) => setData({ ...data, desc: e })}
