@@ -886,3 +886,22 @@ export const postStructureOrganizationsMain = async (data: any) => {
 
   return await response.json();
 };
+
+// create servicr form multi
+export const serviceRequirementStep2 = async (data: any) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/layanan/form/createmulti`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: data,
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};

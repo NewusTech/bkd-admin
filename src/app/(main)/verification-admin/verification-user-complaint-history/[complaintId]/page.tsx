@@ -59,7 +59,7 @@ export default function VerificationUserComplaintDetailScreen({
     fetchUserComplaint(params.complaintId);
   }, [params.complaintId]);
 
-  console.log(complaint, "ini compaint");
+  // console.log(complaint, "ini compaint");
 
   const updateUserComplaintVerification = async (
     e: React.FormEvent<HTMLFormElement>,
@@ -71,7 +71,7 @@ export default function VerificationUserComplaintDetailScreen({
     try {
       const response = await updateUserComplaint(data, id);
 
-      console.log(response, "ini res");
+      // console.log(response, "ini res");
 
       if (response.status === 200) {
         setData({

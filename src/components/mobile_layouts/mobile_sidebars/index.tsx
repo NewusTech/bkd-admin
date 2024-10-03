@@ -25,16 +25,16 @@ export default function MobileDashboardSideBarPages() {
             alt="Lampung Timur"
             width={1000}
             height={1000}
-            className="w-full h-full"
+            className="w-8 h-8"
           />
         </div>
 
-        <div className="flex flex-col justify-center w-full h-full leading-none gap-y-1">
-          <h3 className={`font-semibold text-[16px] text-black-80`}>
+        <div className="flex flex-col justify-center w-full h-full leading-none">
+          <h3 className={`font-semibold text-[16px] text-black-80 animate-pulse transition-all`}>
             Badan Kepegawaian Daerah
           </h3>
 
-          <h3 className={`font-normal text-black-80 text-sm`}>
+          <h3 className={`font-normal text-black-80 text-sm animate-pulse transition-all`}>
             Kabupaten Lampung Timur
           </h3>
         </div>

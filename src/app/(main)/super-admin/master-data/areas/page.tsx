@@ -20,6 +20,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Swal from "sweetalert2";
@@ -28,12 +38,16 @@ import { Loader } from "lucide-react";
 import PaginationComponent from "@/components/elements/pagination";
 import Editor from "@/components/elements/toolbar_editors";
 import EditorProvide from "@/components/pages/areas";
+import AddIcon from "@/components/elements/add_button";
+import TypingEffect from "@/components/ui/TypingEffect";
 
 export default function AreasScreen() {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerEditOpen, setIsDrawerEditOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
@@ -51,32 +65,6 @@ export default function AreasScreen() {
     totalPages: 1,
     totalCount: 0,
   });
-  const { quill: quillAdd, quillRef: quillAddRef } = useQuill();
-  const { quill: quillEdit, quillRef: quillEditRef } = useQuill();
-
-  useEffect(() => {
-    if (quillAdd) {
-      quillAdd.on("text-change", () => {
-        setData((prevData) => ({
-          ...prevData,
-          desc: quillAdd.root.innerHTML,
-        }));
-      });
-    }
-
-    if (quillEdit) {
-      quillEdit.on("text-change", () => {
-        setData((prevData) => ({
-          ...prevData,
-          desc: quillEdit.root.innerHTML,
-        }));
-      });
-
-      if (data?.desc) {
-        quillEdit.clipboard.dangerouslyPasteHTML(data?.desc);
-      }
-    }
-  }, [quillAdd, quillEdit, data?.desc]);
 
   const fetchAreas = async (page: number, limit: number) => {
     try {
@@ -115,12 +103,8 @@ export default function AreasScreen() {
     e.preventDefault();
     setIsLoading(true);
 
-    console.log(data, "ini dara");
-
     try {
       const response = await postAreas(data);
-
-      console.log(response, "ini response");
 
       if (response.status === 201) {
         setData({
@@ -138,6 +122,7 @@ export default function AreasScreen() {
         });
         fetchAreas(pagination.currentPage, 10);
         setIsDialogOpen(false);
+        setIsDrawerOpen(false);
         router.push("/super-admin/master-data/areas");
       } else {
         Swal.fire({
@@ -153,6 +138,7 @@ export default function AreasScreen() {
     } finally {
       setIsLoading(false);
       setIsDialogOpen(false);
+      setIsDrawerOpen(false);
     }
   };
 
@@ -216,6 +202,7 @@ export default function AreasScreen() {
         });
         fetchAreas(pagination.currentPage, 10);
         setIsDialogEditOpen(false);
+        setIsDrawerEditOpen(false);
         router.push("/super-admin/master-data/areas");
       } else {
         Swal.fire({
@@ -234,144 +221,262 @@ export default function AreasScreen() {
   };
 
   return (
-    <section className="w-full flex flex-col items-center px-5 mt-5">
-      <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
-        <div className="w-full flex flex-row gap-x-5">
-          <SearchPages
-            search={search}
-            setSearch={setSearch}
-            change={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setSearch(e.target.value)
-            }
-            placeholder="Pencarian"
-          />
+    <section className="w-full flex flex-col items-center md:px-5 md:mt-5">
+      <div className="bg-[#F6F6F6] md:bg-line-10 md:shadow-md md:rounded-lg w-full flex flex-col p-5 gap-y-5">
+        {/* Mobile */}
+        <div className="md:hidden">
+          <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-4 gap-y-4 md:p-5 md:gap-y-5">
+            <div className="w-full">
+              <SearchPages
+                search={search}
+                setSearch={setSearch}
+                change={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSearch(e.target.value)
+                }
+                placeholder="Pencarian"
+              />
+            </div>
+            <div className="w-full">
+              <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+                <DrawerTrigger
+                  onClick={() => {
+                    setIsDrawerOpen(true);
+                  }}
+                  className="w-full">
+                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                    <AddIcon />
+                    Tambah Bidang
+                  </div>
+                </DrawerTrigger>
+                <DrawerContent className="bg-white">
+                  <DrawerHeader>
+                    <DrawerTitle>Master Data Bidang</DrawerTitle>
 
-          <div className="w-3/12">
-            <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <AlertDialogTrigger
-                onClick={() => {
-                  setIsDialogOpen(true);
-                }}
-                className="w-full">
-                <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                  Tambah
-                </div>
-              </AlertDialogTrigger>
-              <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
-                <AlertDialogHeader className="flex flex-col">
-                  <AlertDialogTitle className="text-center">
-                    Master Data Bidang
-                  </AlertDialogTitle>
-                  <AlertDialogDescription className="text-center">
-                    Input data yang diperlukan
-                  </AlertDialogDescription>
-                  <form
-                    onSubmit={handleCreateAreas}
-                    className="w-full flex flex-col gap-y-3 max-h-[500px]">
-                    <div className="w-full flex flex-col gap-y-3 verticalScroll">
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
-                          Nama Bidang
-                        </Label>
-
-                        <Input
-                          id="nama-bidang"
-                          name="nama"
-                          value={data.nama}
-                          onChange={handleChange}
-                          type="text"
-                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                          placeholder="Masukkan Nama Bidang"
+                    <form
+                      onSubmit={handleCreateAreas}
+                      className="w-full flex flex-col gap-y-3 max-h-full">
+                      <div className="text-center mb-4">
+                        <TypingEffect
+                          text={["Tambah data yang diperlukan...."]}
                         />
                       </div>
 
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
-                          Penanggung Jawab
-                        </Label>
-
-                        <Input
-                          id="pj"
-                          name="pj"
-                          value={data.pj}
-                          onChange={handleChange}
-                          type="text"
-                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                          placeholder="Masukkan Nama Penanggung Jawab"
-                        />
-                      </div>
-
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label
-                          htmlFor="nip-pj"
-                          className="focus-within:text-primary-70 font-normal text-sm">
-                          NIP Penanggung Jawab
-                        </Label>
-
-                        <Input
-                          id="nip-pj"
-                          name="nip_pj"
-                          value={data.nip_pj}
-                          onChange={handleChange}
-                          type="text"
-                          inputMode="numeric"
-                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                          placeholder="Masukkan NIP Penanggung Jawab"
-                        />
-                      </div>
-
-                      <div className="w-full flex flex-col gap-y-3">
-                        <Label className="text-[15px] text-black-80 font-normal">
-                          Deskripsi Bidang
-                        </Label>
-
-                        <div className="w-full h-[250px] border border-line-20 rounded-lg">
-                          <EditorProvide
-                            content={data.desc}
-                            onChange={(e: any) => setData({ ...data, desc: e })}
+                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                            Nama Bidang
+                          </Label>
+                          <Input
+                            id="nama-bidang"
+                            name="nama"
+                            value={data.nama}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan Nama Bidang"
                           />
                         </div>
 
-                        {/* {isDialogOpen && (
-                          <div className="w-full h-[250px] flex flex-col gap-y-2">
-                            <div
-                              className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
-                              ref={quillAddRef}></div>
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                            Penanggung Jawab
+                          </Label>
+                          <Input
+                            id="pj"
+                            name="pj"
+                            value={data.pj}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan Nama Penanggung Jawab"
+                          />
+                        </div>
+
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label
+                            htmlFor="nip-pj"
+                            className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                            NIP Penanggung Jawab
+                          </Label>
+                          <Input
+                            id="nip-pj"
+                            name="nip_pj"
+                            value={data.nip_pj}
+                            onChange={handleChange}
+                            type="text"
+                            inputMode="numeric"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan NIP Penanggung Jawab"
+                          />
+                        </div>
+
+                        <div className="w-full flex flex-col gap-y-3">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                            Deskripsi Bidang
+                          </Label>
+                          <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
+                            <EditorProvide
+                              content={data.desc}
+                              onChange={(e: any) =>
+                                setData({ ...data, desc: e })
+                              }
+                            />
                           </div>
-                        )} */}
+                        </div>
 
-                        {/* <Editor
-                        onChange={(value: any) =>
-                          setData({
-                            ...data,
-                            desc: value,
-                          })
-                        }
-                      /> */}
+                        <div className="flex gap-4 justify-between">
+                          <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
+                            <DrawerDescription>Batal</DrawerDescription>
+                          </DrawerClose>
+                          <Button
+                            title="Simpan Data"
+                            type="submit"
+                            disabled={isLoading ? true : false}
+                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] md:text-[16px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                            {isLoading ? (
+                              <Loader className="animate-spin" />
+                            ) : (
+                              "Simpan"
+                            )}
+                          </Button>
+                        </div>
                       </div>
-                    </div>
-
-                    <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-
-                      <Button
-                        type="submit"
-                        disabled={isLoading ? true : false}
-                        className="bg-primary-40 hover:bg-primary-70 text-line-10">
-                        {isLoading ? (
-                          <Loader className="animate-spin" />
-                        ) : (
-                          "Simpan"
-                        )}
-                      </Button>
-                    </div>
-                  </form>
-                </AlertDialogHeader>
-                {/* <AlertDialogFooter className="w-full flex flex-row justify-center items-center gap-x-5"></AlertDialogFooter> */}
-              </AlertDialogContent>
-            </AlertDialog>
+                    </form>
+                  </DrawerHeader>
+                </DrawerContent>
+              </Drawer>
+            </div>
           </div>
         </div>
+        {/* Mobile */}
+
+        {/* dekstop*/}
+        <div className="hidden md:block">
+          <div className="w-full flex flex-row gap-x-5">
+            <SearchPages
+              search={search}
+              setSearch={setSearch}
+              change={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setSearch(e.target.value)
+              }
+              placeholder="Pencarian"
+            />
+
+            <div className="w-3/12">
+              <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <AlertDialogTrigger
+                  onClick={() => {
+                    setIsDialogOpen(true);
+                  }}
+                  className="w-full">
+                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                    <AddIcon />
+                    Tambah Bidang
+                  </div>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
+                  <div className="flex flex-col gap-y-3">
+                    <AlertDialogTitle className="text-center">
+                      Master Data Bidang
+                    </AlertDialogTitle>
+
+                    <div className="flex w-full justify-center">
+                      <TypingEffect text={["Input data yang diperlukan"]} />
+                    </div>
+
+                    <form
+                      onSubmit={handleCreateAreas}
+                      className="w-full flex flex-col gap-y-3 max-h-[500px]">
+                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                            Nama Bidang
+                          </Label>
+                          <Input
+                            id="nama-bidang"
+                            name="nama"
+                            value={data.nama}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan Nama Bidang"
+                          />
+                        </div>
+
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                            Penanggung Jawab
+                          </Label>
+                          <Input
+                            id="pj"
+                            name="pj"
+                            value={data.pj}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan Nama Penanggung Jawab"
+                          />
+                        </div>
+
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label
+                            htmlFor="nip-pj"
+                            className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                            NIP Penanggung Jawab
+                          </Label>
+                          <Input
+                            id="nip-pj"
+                            name="nip_pj"
+                            value={data.nip_pj}
+                            onChange={handleChange}
+                            type="text"
+                            inputMode="numeric"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan NIP Penanggung Jawab"
+                          />
+                        </div>
+
+                        <div className="w-full flex flex-col gap-y-3">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                            Deskripsi Bidang
+                          </Label>
+                          <div className="w-full h-full md:h-[250px] border border-line-20 rounded-lg text-left">
+                            <EditorProvide
+                              content={data.desc}
+                              onChange={(e: any) =>
+                                setData({ ...data, desc: e })
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="w-full flex flex-row justify-between items-center gap-x-5">
+                        <AlertDialogCancel>
+                          <AlertDialogDescription className="text-center">
+                            Batal
+                          </AlertDialogDescription>
+                        </AlertDialogCancel>
+                        <Button
+                          type="submit"
+                          disabled={isLoading ? true : false}
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                          {isLoading ? (
+                            <Loader className="animate-spin" />
+                          ) : (
+                            "Simpan"
+                          )}
+                        </Button>
+                      </div>
+                    </form>
+                  </div>
+                  {/* <AlertDialogFooter className="w-full flex flex-row justify-center items-center gap-x-5"></AlertDialogFooter> */}
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
+          </div>
+        </div>
+        {/* dekstop*/}
 
         <div className="w-full">
           {areas && areas.length > 0 && (
@@ -384,9 +489,9 @@ export default function AreasScreen() {
               isUpdateLoading={isUpdateLoading}
               isDialogEditOpen={isDialogEditOpen}
               setIsDialogEditOpen={setIsDialogEditOpen}
+              isDrawerEditOpen={isDrawerEditOpen}
+              setIsDrawerEditOpen={setIsDrawerEditOpen}
               handleUpdateArea={handleUpdateArea}
-              quillEdit={quillEdit}
-              quillEditRef={quillEditRef}
             />
           )}
         </div>
