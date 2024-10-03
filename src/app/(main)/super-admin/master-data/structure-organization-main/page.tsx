@@ -98,7 +98,7 @@ export default function StructureOrganizationMainScreen() {
     e.preventDefault();
     setIsLoading(true);
 
-    console.log(data, "ini data");
+    // console.log(data, "ini data");
 
     try {
       const response = await postStructureOrganizationsMain({
@@ -106,7 +106,7 @@ export default function StructureOrganizationMainScreen() {
         bkdstruktur_id: Number(data.bkdstruktur_id),
       });
 
-      console.log(response, "ini res");
+      // console.log(response, "ini res");
 
       if (response.status === 201) {
         setData({

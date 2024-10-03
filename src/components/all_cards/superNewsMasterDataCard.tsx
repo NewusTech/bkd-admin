@@ -77,10 +77,6 @@ export default function SuperNewsMasterDataCard({
       desc: item?.desc,
       image: item?.image,
     });
-
-    // if (quillEdit && item?.desc) {
-    //   quillEdit.clipboard.dangerouslyPasteHTML(item?.desc);
-    // }
   };
 
   return (

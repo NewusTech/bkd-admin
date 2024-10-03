@@ -283,3 +283,11 @@ export interface CardType {
   isrequired: any;
   options?: OptionType[];
 }
+
+export interface CardTypeFile {
+  id?: any;
+  toggle?: boolean;
+  field: string;
+  tipedata: "file";
+  isrequired?: string;
+}
