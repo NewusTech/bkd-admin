@@ -325,30 +325,34 @@ export const masterDataSupers = [
   },
   {
     id: 8,
-    name: "FAQ",
+    name: "Struktur Organisasi Inti",
   },
   {
     id: 9,
-    name: "Syarat dan Ketentuan",
+    name: "FAQ",
   },
   {
     id: 10,
-    name: "Manual Book",
+    name: "Syarat dan Ketentuan",
   },
   {
     id: 11,
-    name: "Regulasi",
+    name: "Manual Book",
   },
   {
     id: 12,
-    name: "Logo",
+    name: "Regulasi",
   },
   {
     id: 13,
-    name: "Carousel - Slider",
+    name: "Logo",
   },
   {
     id: 14,
+    name: "Carousel - Slider",
+  },
+  {
+    id: 15,
     name: "Lokasi - Maps",
   },
 ];
