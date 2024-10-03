@@ -35,12 +35,12 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 export default function SuperAreasMasterDataCard({
   area,
@@ -53,7 +53,6 @@ export default function SuperAreasMasterDataCard({
   handleUpdateArea,
   isDialogEditOpen,
   setIsDialogEditOpen,
-
 }: {
   area: AreasInterface;
   index: number;
@@ -85,8 +84,6 @@ export default function SuperAreasMasterDataCard({
       pj: area?.pj,
       nip_pj: area?.nip_pj,
     });
-
-
   };
 
   function truncateString(str: string, num: number): string {
@@ -123,21 +120,23 @@ export default function SuperAreasMasterDataCard({
                     setIsDialogEditOpen(true);
                   }}
                   className="w-full">
-                  <Button
-                    name="Edit"
-                    title="Edit Data"
-                    className='h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10'>
+                  <div
+                    // name="Edit"
+                    // title="Edit Data"
+                    className="h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10">
                     Edit
-                  </Button>
+                  </div>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
-                  <AlertDialogHeader className="flex flex-col">
+                  <AlertDialogHeader className="flex flex-col gap-y-3">
                     <AlertDialogTitle className="text-center">
                       Master Data Bidang
                     </AlertDialogTitle>
-                    <AlertDialogDescription className="text-center">
+
+                    <div className="w-full flex justify-center gap-y-3">
                       <TypingEffect text={["Edit data yang diperlukan"]} />
-                    </AlertDialogDescription>
+                    </div>
+
                     <form
                       onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                         handleUpdateArea(e, area?.slug)
@@ -152,9 +151,9 @@ export default function SuperAreasMasterDataCard({
                             id="nama-bidang"
                             name="nama"
                             value={data?.nama}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                              setData({ ...data, nama: e.target.value })
-                            }
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => setData({ ...data, nama: e.target.value })}
                             type="text"
                             className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan Nama Bidang"
@@ -169,9 +168,9 @@ export default function SuperAreasMasterDataCard({
                             id="pj"
                             name="pj"
                             value={data.pj}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                              setData({ ...data, pj: e.target.value })
-                            }
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => setData({ ...data, pj: e.target.value })}
                             type="text"
                             className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan Nama Penanggung Jawab"
@@ -188,9 +187,9 @@ export default function SuperAreasMasterDataCard({
                             id="nip-pj"
                             name="nip_pj"
                             value={data.nip_pj}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                              setData({ ...data, nip_pj: e.target.value })
-                            }
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => setData({ ...data, nip_pj: e.target.value })}
                             type="text"
                             inputMode="numeric"
                             className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
@@ -205,14 +204,20 @@ export default function SuperAreasMasterDataCard({
                           <div className="w-full h-[250px] border border-line-20 rounded-lg text-left">
                             <EditorProvide
                               content={data.desc}
-                              onChange={(e: any) => setData({ ...data, desc: e })}
+                              onChange={(e: any) =>
+                                setData({ ...data, desc: e })
+                              }
                             />
                           </div>
                         </div>
                       </div>
 
                       <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                        <AlertDialogCancel>Batal</AlertDialogCancel>
+                        <AlertDialogCancel>
+                          <AlertDialogDescription className="text-center">
+                            Batal
+                          </AlertDialogDescription>
+                        </AlertDialogCancel>
                         <Button
                           title="Simpan Data"
                           type="submit"
@@ -251,6 +256,5 @@ export default function SuperAreasMasterDataCard({
         </TableCell>
       </TableRow>
     </>
-
   );
 }

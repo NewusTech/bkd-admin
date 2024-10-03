@@ -29,7 +29,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer"
+} from "@/components/ui/drawer";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Swal from "sweetalert2";
@@ -65,7 +65,6 @@ export default function AreasScreen() {
     totalPages: 1,
     totalCount: 0,
   });
-
 
   const fetchAreas = async (page: number, limit: number) => {
     try {
@@ -104,12 +103,8 @@ export default function AreasScreen() {
     e.preventDefault();
     setIsLoading(true);
 
-    console.log(data, "ini dara");
-
     try {
       const response = await postAreas(data);
-
-      console.log(response, "ini response");
 
       if (response.status === 201) {
         setData({
@@ -228,7 +223,6 @@ export default function AreasScreen() {
   return (
     <section className="w-full flex flex-col items-center md:px-5 md:mt-5">
       <div className="bg-[#F6F6F6] md:bg-line-10 md:shadow-md md:rounded-lg w-full flex flex-col p-5 gap-y-5">
-        
         {/* Mobile */}
         <div className="md:hidden">
           <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-4 gap-y-4 md:p-5 md:gap-y-5">
@@ -243,11 +237,12 @@ export default function AreasScreen() {
               />
             </div>
             <div className="w-full">
-              <Drawer
-                open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
-                <DrawerTrigger onClick={() => {
-                  setIsDrawerOpen(true);
-                }} className="w-full">
+              <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+                <DrawerTrigger
+                  onClick={() => {
+                    setIsDrawerOpen(true);
+                  }}
+                  className="w-full">
                   <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah Bidang
@@ -260,13 +255,13 @@ export default function AreasScreen() {
                     <form
                       onSubmit={handleCreateAreas}
                       className="w-full flex flex-col gap-y-3 max-h-full">
-                      <DrawerDescription>
-                        <div className="text-center mb-4">
-                          <TypingEffect text={["Tambah data yang diperlukan...."]} />
-                        </div>
-                      </DrawerDescription>
-                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                      <div className="text-center mb-4">
+                        <TypingEffect
+                          text={["Tambah data yang diperlukan...."]}
+                        />
+                      </div>
 
+                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
                             Nama Bidang
@@ -322,20 +317,22 @@ export default function AreasScreen() {
                           <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
                             <EditorProvide
                               content={data.desc}
-                              onChange={(e: any) => setData({ ...data, desc: e })}
+                              onChange={(e: any) =>
+                                setData({ ...data, desc: e })
+                              }
                             />
                           </div>
                         </div>
 
-                        <div className="flex gap-4 justify-center">
-                          <DrawerClose>
-                            <div className="text-xs md:text-sm">Batal</div>
+                        <div className="flex gap-4 justify-between">
+                          <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
+                            <DrawerDescription>Batal</DrawerDescription>
                           </DrawerClose>
                           <Button
                             title="Simpan Data"
                             type="submit"
                             disabled={isLoading ? true : false}
-                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-fit">
+                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] md:text-[16px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                             {isLoading ? (
                               <Loader className="animate-spin" />
                             ) : (
@@ -343,10 +340,8 @@ export default function AreasScreen() {
                             )}
                           </Button>
                         </div>
-
                       </div>
                     </form>
-
                   </DrawerHeader>
                 </DrawerContent>
               </Drawer>
@@ -380,13 +375,15 @@ export default function AreasScreen() {
                   </div>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
-                  <AlertDialogHeader className="flex flex-col">
+                  <div className="flex flex-col gap-y-3">
                     <AlertDialogTitle className="text-center">
                       Master Data Bidang
                     </AlertDialogTitle>
-                    <AlertDialogDescription className="text-center">
+
+                    <div className="flex w-full justify-center">
                       <TypingEffect text={["Input data yang diperlukan"]} />
-                    </AlertDialogDescription>
+                    </div>
+
                     <form
                       onSubmit={handleCreateAreas}
                       className="w-full flex flex-col gap-y-3 max-h-[500px]">
@@ -446,15 +443,20 @@ export default function AreasScreen() {
                           <div className="w-full h-full md:h-[250px] border border-line-20 rounded-lg text-left">
                             <EditorProvide
                               content={data.desc}
-                              onChange={(e: any) => setData({ ...data, desc: e })}
+                              onChange={(e: any) =>
+                                setData({ ...data, desc: e })
+                              }
                             />
                           </div>
-
                         </div>
                       </div>
 
                       <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                        <AlertDialogCancel>Batal</AlertDialogCancel>
+                        <AlertDialogCancel>
+                          <AlertDialogDescription className="text-center">
+                            Batal
+                          </AlertDialogDescription>
+                        </AlertDialogCancel>
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
@@ -467,7 +469,7 @@ export default function AreasScreen() {
                         </Button>
                       </div>
                     </form>
-                  </AlertDialogHeader>
+                  </div>
                   {/* <AlertDialogFooter className="w-full flex flex-row justify-center items-center gap-x-5"></AlertDialogFooter> */}
                 </AlertDialogContent>
               </AlertDialog>

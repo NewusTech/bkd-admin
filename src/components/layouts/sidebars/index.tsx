@@ -80,7 +80,7 @@ export default function DashBoardSidebarPages() {
     fetchUserProfile();
   }, []);
 
-  console.log(user, "ini user");
+  // console.log(user, "ini user");
 
   return (
     <section className="flex flex-col w-10/12 md:w-[23%] h-full justify-center items-center fixed">
