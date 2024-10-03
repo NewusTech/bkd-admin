@@ -20,6 +20,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Swal from "sweetalert2";
@@ -29,12 +39,15 @@ import PaginationComponent from "@/components/elements/pagination";
 import Editor from "@/components/elements/toolbar_editors";
 import EditorProvide from "@/components/pages/areas";
 import AddIcon from "@/components/elements/add_button";
+import TypingEffect from "@/components/ui/TypingEffect";
 
 export default function AreasScreen() {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerEditOpen, setIsDrawerEditOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
@@ -52,32 +65,7 @@ export default function AreasScreen() {
     totalPages: 1,
     totalCount: 0,
   });
-  const { quill: quillAdd, quillRef: quillAddRef } = useQuill();
-  const { quill: quillEdit, quillRef: quillEditRef } = useQuill();
 
-  useEffect(() => {
-    if (quillAdd) {
-      quillAdd.on("text-change", () => {
-        setData((prevData) => ({
-          ...prevData,
-          desc: quillAdd.root.innerHTML,
-        }));
-      });
-    }
-
-    if (quillEdit) {
-      quillEdit.on("text-change", () => {
-        setData((prevData) => ({
-          ...prevData,
-          desc: quillEdit.root.innerHTML,
-        }));
-      });
-
-      if (data?.desc) {
-        quillEdit.clipboard.dangerouslyPasteHTML(data?.desc);
-      }
-    }
-  }, [quillAdd, quillEdit, data?.desc]);
 
   const fetchAreas = async (page: number, limit: number) => {
     try {
@@ -139,6 +127,7 @@ export default function AreasScreen() {
         });
         fetchAreas(pagination.currentPage, 10);
         setIsDialogOpen(false);
+        setIsDrawerOpen(false);
         router.push("/super-admin/master-data/areas");
       } else {
         Swal.fire({
@@ -154,6 +143,7 @@ export default function AreasScreen() {
     } finally {
       setIsLoading(false);
       setIsDialogOpen(false);
+      setIsDrawerOpen(false);
     }
   };
 
@@ -217,6 +207,7 @@ export default function AreasScreen() {
         });
         fetchAreas(pagination.currentPage, 10);
         setIsDialogEditOpen(false);
+        setIsDrawerEditOpen(false);
         router.push("/super-admin/master-data/areas");
       } else {
         Swal.fire({
@@ -235,12 +226,12 @@ export default function AreasScreen() {
   };
 
   return (
-    <section className="w-full flex flex-col items-center px-5 mt-5">
-      <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
-
+    <section className="w-full flex flex-col items-center md:px-5 md:mt-5">
+      <div className="bg-[#F6F6F6] md:bg-line-10 md:shadow-md md:rounded-lg w-full flex flex-col p-5 gap-y-5">
+        
         {/* Mobile */}
         <div className="md:hidden">
-          <div className="w-full">
+          <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-4 gap-y-4 md:p-5 md:gap-y-5">
             <div className="w-full">
               <SearchPages
                 search={search}
@@ -251,19 +242,114 @@ export default function AreasScreen() {
                 placeholder="Pencarian"
               />
             </div>
-            <div className="mt-2 w-full">
-              <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <AlertDialogTrigger
-                  onClick={() => {
-                    setIsDialogOpen(true);
-                  }}
-                  className="w-full">
+            <div className="w-full">
+              <Drawer
+                open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+                <DrawerTrigger onClick={() => {
+                  setIsDrawerOpen(true);
+                }} className="w-full">
                   <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah Bidang
                   </div>
-                </AlertDialogTrigger>
-              </AlertDialog>
+                </DrawerTrigger>
+                <DrawerContent className="bg-white">
+                  <DrawerHeader>
+                    <DrawerTitle>Master Data Bidang</DrawerTitle>
+
+                    <form
+                      onSubmit={handleCreateAreas}
+                      className="w-full flex flex-col gap-y-3 max-h-full">
+                      <DrawerDescription>
+                        <div className="text-center mb-4">
+                          <TypingEffect text={["Tambah data yang diperlukan...."]} />
+                        </div>
+                      </DrawerDescription>
+                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
+
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                            Nama Bidang
+                          </Label>
+                          <Input
+                            id="nama-bidang"
+                            name="nama"
+                            value={data.nama}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan Nama Bidang"
+                          />
+                        </div>
+
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                            Penanggung Jawab
+                          </Label>
+                          <Input
+                            id="pj"
+                            name="pj"
+                            value={data.pj}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan Nama Penanggung Jawab"
+                          />
+                        </div>
+
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label
+                            htmlFor="nip-pj"
+                            className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                            NIP Penanggung Jawab
+                          </Label>
+                          <Input
+                            id="nip-pj"
+                            name="nip_pj"
+                            value={data.nip_pj}
+                            onChange={handleChange}
+                            type="text"
+                            inputMode="numeric"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan NIP Penanggung Jawab"
+                          />
+                        </div>
+
+                        <div className="w-full flex flex-col gap-y-3">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                            Deskripsi Bidang
+                          </Label>
+                          <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
+                            <EditorProvide
+                              content={data.desc}
+                              onChange={(e: any) => setData({ ...data, desc: e })}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="flex gap-4 justify-center">
+                          <DrawerClose>
+                            <div className="text-xs md:text-sm">Batal</div>
+                          </DrawerClose>
+                          <Button
+                            title="Simpan Data"
+                            type="submit"
+                            disabled={isLoading ? true : false}
+                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-fit">
+                            {isLoading ? (
+                              <Loader className="animate-spin" />
+                            ) : (
+                              "Simpan"
+                            )}
+                          </Button>
+                        </div>
+
+                      </div>
+                    </form>
+
+                  </DrawerHeader>
+                </DrawerContent>
+              </Drawer>
             </div>
           </div>
         </div>
@@ -299,7 +385,7 @@ export default function AreasScreen() {
                       Master Data Bidang
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
-                      Input data yang diperlukan
+                      <TypingEffect text={["Input data yang diperlukan"]} />
                     </AlertDialogDescription>
                     <form
                       onSubmit={handleCreateAreas}
@@ -309,7 +395,6 @@ export default function AreasScreen() {
                           <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
                             Nama Bidang
                           </Label>
-
                           <Input
                             id="nama-bidang"
                             name="nama"
@@ -325,7 +410,6 @@ export default function AreasScreen() {
                           <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
                             Penanggung Jawab
                           </Label>
-
                           <Input
                             id="pj"
                             name="pj"
@@ -343,7 +427,6 @@ export default function AreasScreen() {
                             className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
                             NIP Penanggung Jawab
                           </Label>
-
                           <Input
                             id="nip-pj"
                             name="nip_pj"
@@ -360,7 +443,6 @@ export default function AreasScreen() {
                           <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
                             Deskripsi Bidang
                           </Label>
-
                           <div className="w-full h-full md:h-[250px] border border-line-20 rounded-lg text-left">
                             <EditorProvide
                               content={data.desc}
@@ -372,8 +454,7 @@ export default function AreasScreen() {
                       </div>
 
                       <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-
+                        <AlertDialogCancel>Batal</AlertDialogCancel>
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
@@ -406,9 +487,9 @@ export default function AreasScreen() {
               isUpdateLoading={isUpdateLoading}
               isDialogEditOpen={isDialogEditOpen}
               setIsDialogEditOpen={setIsDialogEditOpen}
+              isDrawerEditOpen={isDrawerEditOpen}
+              setIsDrawerEditOpen={setIsDrawerEditOpen}
               handleUpdateArea={handleUpdateArea}
-              quillEdit={quillEdit}
-              quillEditRef={quillEditRef}
             />
           )}
         </div>

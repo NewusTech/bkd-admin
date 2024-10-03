@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import SuperAreasMasterDataCard from "@/components/all_cards/superAreasMasterDataCard";
 import { AreasInterface } from "@/types/interface";
+import MobileSuperAreasMasterDataCard from "@/components/all_cards/mobile/superAreasMasterDataCard";
 
 export default function SuperAreasMasterDataTablePages({
   areas,
@@ -18,10 +19,11 @@ export default function SuperAreasMasterDataTablePages({
   setData,
   isUpdateLoading,
   isDialogEditOpen,
+  isDrawerEditOpen,
   setIsDialogEditOpen,
+  setIsDrawerEditOpen,
   handleUpdateArea,
-  quillEdit,
-  quillEditRef,
+
 }: {
   areas: AreasInterface[];
   handleDeleteArea: (slug: string) => void;
@@ -37,27 +39,18 @@ export default function SuperAreasMasterDataTablePages({
   >;
   isUpdateLoading: boolean;
   isDialogEditOpen: boolean;
+  isDrawerEditOpen: boolean;
   setIsDialogEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsDrawerEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
   handleUpdateArea: (e: React.FormEvent<HTMLFormElement>, slug: string) => void;
-  quillEdit: any;
-  quillEditRef: any;
 }) {
   return (
     <>
-      <Table className="w-full border border-line-20">
-        <TableHeader className="bg-primary-40 text-line-10">
-          <TableRow className="w-full">
-            <TableHead className="text-center">No.</TableHead>
-            <TableHead className="text-center">Nama Bidang</TableHead>
-            <TableHead className="text-center">Penanggung Jawab</TableHead>
-            <TableHead className="text-center">NIP Penanggung Jawab</TableHead>
-            <TableHead className="text-center">Deskripsi</TableHead>
-            <TableHead className="text-center">Aksi</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
+      {/* mobile*/}
+      <div className="md:hidden">
+        <>
           {areas && areas.length > 0 && areas.map((area: AreasInterface, i: number) => (
-            <SuperAreasMasterDataCard
+            <MobileSuperAreasMasterDataCard
               key={i}
               area={area}
               index={i}
@@ -67,14 +60,47 @@ export default function SuperAreasMasterDataTablePages({
               setData={setData}
               isUpdateLoading={isUpdateLoading}
               handleUpdateArea={handleUpdateArea}
-              isDialogEditOpen={isDialogEditOpen}
-              setIsDialogEditOpen={setIsDialogEditOpen}
-              quillEdit={quillEdit}
-              quillEditRef={quillEditRef}
+              isDrawerEditOpen={isDrawerEditOpen}
+              setIsDrawerEditOpen={setIsDrawerEditOpen}
             />
           ))}
-        </TableBody>
-      </Table>
+        </>
+      </div>
+      {/* mobile*/}
+
+      {/* dekstop*/}
+      <div className="hidden md:block">
+        <Table className="w-full border border-line-20">
+          <TableHeader className="bg-primary-40 text-line-10">
+            <TableRow className="w-full">
+              <TableHead className="text-center">No.</TableHead>
+              <TableHead className="text-center">Nama Bidang</TableHead>
+              <TableHead className="text-center">Penanggung Jawab</TableHead>
+              <TableHead className="text-center">NIP Penanggung Jawab</TableHead>
+              <TableHead className="text-center">Deskripsi</TableHead>
+              <TableHead className="text-center">Aksi</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {areas && areas.length > 0 && areas.map((area: AreasInterface, i: number) => (
+              <SuperAreasMasterDataCard
+                key={i}
+                area={area}
+                index={i}
+                handleDeleteArea={handleDeleteArea}
+                isDeleteLoading={isDeleteLoading}
+                data={data}
+                setData={setData}
+                isUpdateLoading={isUpdateLoading}
+                handleUpdateArea={handleUpdateArea}
+                isDialogEditOpen={isDialogEditOpen}
+                setIsDialogEditOpen={setIsDialogEditOpen}
+              />
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      {/* dekstop*/}
     </>
   );
 }

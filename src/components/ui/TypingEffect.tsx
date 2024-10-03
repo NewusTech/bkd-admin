@@ -34,7 +34,7 @@ const TypingEffect: React.FC<TypingEffectProps> = ({ text, speed = 120, deleteSp
 
     return (
         <div className="h-5">
-            <div className="text-sm md:text-base text-left text-primary">{displayText}</div>
+            <div className="text-sm md:text-base text-primary">{displayText}</div>
         </div>
     );
 };
