@@ -849,6 +849,44 @@ export const updateLocationMaps = async (
   return await response.json();
 };
 
+// get struktur organisasi inti
+export const getStructureOrganizationsMain = async () => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/selected/struktur/get`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// post struktur organisasi inti
+export const postStructureOrganizationsMain = async (data: any) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/selected/struktur/create`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
 // create servicr form multi
 export const serviceRequirementStep2 = async (data: any) => {
   const token = Cookies.get("Authorization");

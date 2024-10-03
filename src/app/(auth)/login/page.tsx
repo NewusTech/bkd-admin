@@ -133,8 +133,9 @@ export default function LoginScreen() {
           </h2>
 
           <p className="text-black-80 text-center text-sm">
-            Lorem ipsum sit amet Lorem ipsum sit amet Lorem ipsum sit amet Lorem
-            ipsum sit amet
+            Aplikasi BKD mempermudah pengelolaan administrasi kepegawaian dengan
+            proses cepat, efisien, dan transparan. Login untuk mengakses fitur
+            sesuai kebutuhan Anda.
           </p>
         </div>
 
