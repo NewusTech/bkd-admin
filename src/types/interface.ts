@@ -302,3 +302,22 @@ export interface CardTypeFile {
   tipedata: "file";
   isrequired?: string;
 }
+
+export interface UserApplicationHistoryInterface {
+  id: number;
+  admin_updated: string;
+  bidang_id: number;
+  bidang_name: string;
+  createdAt: string;
+  fileoutput: string;
+  layanan_id: number;
+  layanan_name: string;
+  name: string;
+  nip: string;
+  no_request: string;
+  pesan: string;
+  status: number;
+  tgl_selesai: string;
+  updatedAt: string;
+  userinfo_id: number;
+}

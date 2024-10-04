@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import FilterDataPages from "@/components/elements/data_filters";
 import VerificationUserApplicationHistoryTablePages from "@/components/tables/verification_admin_user_application_history_table";
 import { getApplicationUserHistories } from "@/services/api";
+import { UserApplicationHistoryInterface } from "@/types/interface";
 
 export default function VerificationUserApplicationHistoriesScreen() {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -25,28 +26,28 @@ export default function VerificationUserApplicationHistoriesScreen() {
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
   const [startDate, setStartDate] = useState<Date | undefined>(firstDayOfMonth);
   const [endDate, setEndDate] = useState<Date | undefined>(new Date());
-  const [user, setUser] = useState([]);
+  const [users, setUsers] = useState<UserApplicationHistoryInterface[]>([]);
 
   const startDateFormatted = startDate
     ? formatDate(new Date(startDate))
     : undefined;
   const endDateFormatted = endDate ? formatDate(new Date(endDate)) : undefined;
 
-  const fetchApplicationHistoryUser = async () => {
+  const fetchApplicationHistoryUser = async (status?: number) => {
     try {
-      const response = await getApplicationUserHistories();
+      const response = await getApplicationUserHistories(status);
 
-      setUser(response.data);
+      setUsers(response.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchApplicationHistoryUser();
+    fetchApplicationHistoryUser(1);
   }, []);
 
-  console.log(user, "ini user");
+  console.log(users, "ini user");
 
   return (
     <section className="w-full flex flex-col items-center px-5 mt-5">
@@ -60,7 +61,9 @@ export default function VerificationUserApplicationHistoriesScreen() {
       />
 
       <div className="w-full">
-        <VerificationUserApplicationHistoryTablePages />
+        {users && users.length > 0 && (
+          <VerificationUserApplicationHistoryTablePages users={users} />
+        )}
       </div>
     </section>
   );

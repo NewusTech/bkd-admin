@@ -942,11 +942,11 @@ export const serviceRequirementStep2 = async (data: any) => {
 };
 
 // get application user histories
-export const getApplicationUserHistories = async () => {
+export const getApplicationUserHistories = async (status?: number) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/history/form`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/history/form?status=${status}`,
     {
       method: "GET",
       headers: {

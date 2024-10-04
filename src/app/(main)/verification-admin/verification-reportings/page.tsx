@@ -42,7 +42,7 @@ export default function VerificationUserApplicationRevitionHistoriesScreen() {
       />
 
       <div className="w-full">
-        <VerificationUserApplicationHistoryTablePages />
+        {/* <VerificationUserApplicationHistoryTablePages /> */}
       </div>
     </section>
   );

@@ -36,3 +36,20 @@ export const formatDateString = (date: string) => {
 
   return `${hari} ${bulan} ${tahun}`;
 };
+
+export function formatToWIB(dateString: string): string {
+  const date = new Date(dateString);
+
+  if (isNaN(date.getTime())) {
+    console.log("Invalid date string");
+  }
+
+  const wibOffset = 7 * 60 * 60 * 1000;
+
+  const wibTime = new Date(date.getTime() + wibOffset);
+
+  const hours = wibTime.getUTCHours().toString().padStart(2, "0");
+  const minutes = wibTime.getUTCMinutes().toString().padStart(2, "0");
+
+  return `${hours}.${minutes} WIB`;
+}
