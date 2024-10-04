@@ -20,6 +20,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Swal from "sweetalert2";
@@ -28,10 +38,13 @@ import { Loader } from "lucide-react";
 import { Trash } from "@phosphor-icons/react";
 import SuperStructureOrganizationMasterDataTablePages from "@/components/tables/master_datas/structure_organization_table";
 import Image from "next/image";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import MobileStructureOrganizationMasterDataCard from "@/components/mobile_all_cards/mobileStructureOrganizationMasterDataCard";
 
 export default function StructureOrganizationScreen() {
   const router = useRouter();
   const dropRef = useRef<HTMLDivElement>(null);
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
@@ -250,7 +263,7 @@ export default function StructureOrganizationScreen() {
   return (
     <section className="w-full flex flex-col items-center px-5 mt-5">
       <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
-        <div className="w-full flex flex-row gap-x-5">
+        <div className="w-full flex flex-col md:flex-row gap-x-5 gap-y-5">
           <SearchPages
             search={search}
             setSearch={setSearch}
@@ -260,157 +273,327 @@ export default function StructureOrganizationScreen() {
             placeholder="Pencarian"
           />
 
-          <div className="w-3/12">
-            <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <AlertDialogTrigger
-                onClick={() => setIsDialogOpen(true)}
-                className="w-full">
-                <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                  Tambah
-                </div>
-              </AlertDialogTrigger>
-              <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
-                <AlertDialogHeader className="flex flex-col max-h-[500px]">
-                  <AlertDialogTitle className="text-center">
-                    Master Data Struktur Organisasi
-                  </AlertDialogTitle>
-                  <AlertDialogDescription className="text-center">
-                    Input data yang diperlukan
-                  </AlertDialogDescription>
-                  <form
-                    onSubmit={handleCreateStructureOrganization}
-                    className="w-full flex flex-col gap-y-3 verticalScroll">
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
-                        Nama Lengkap
-                      </Label>
+          <div className="w-full md:w-3/12">
+            {!isMobile ? (
+              <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <AlertDialogTrigger
+                  onClick={() => setIsDialogOpen(true)}
+                  className="w-full">
+                  <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
+                    Tambah
+                  </div>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
+                  <AlertDialogHeader className="flex flex-col max-h-[500px]">
+                    <AlertDialogTitle className="text-center">
+                      Master Data Struktur Organisasi
+                    </AlertDialogTitle>
+                    <AlertDialogDescription className="text-center">
+                      Input data yang diperlukan
+                    </AlertDialogDescription>
+                    <form
+                      onSubmit={handleCreateStructureOrganization}
+                      className="w-full flex flex-col gap-y-3 verticalScroll">
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          Nama Lengkap
+                        </Label>
 
-                      <Input
-                        id="nama"
-                        name="nama"
-                        value={data.nama}
-                        onChange={handleChange}
-                        type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Nama Lengkap Anda"
-                      />
-                    </div>
+                        <Input
+                          id="nama"
+                          name="nama"
+                          value={data.nama}
+                          onChange={handleChange}
+                          type="text"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          placeholder="Masukkan Nama Lengkap Anda"
+                        />
+                      </div>
 
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
-                        jabatan
-                      </Label>
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          jabatan
+                        </Label>
 
-                      <Input
-                        id="jabatan"
-                        name="jabatan"
-                        value={data.jabatan}
-                        onChange={handleChange}
-                        type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Jabatan Anda"
-                      />
-                    </div>
+                        <Input
+                          id="jabatan"
+                          name="jabatan"
+                          value={data.jabatan}
+                          onChange={handleChange}
+                          type="text"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          placeholder="Masukkan Jabatan Anda"
+                        />
+                      </div>
 
-                    <div className="flex flex-col w-full">
-                      <Label className="text-[16px] text-neutral-700 font-normal mb-2">
-                        Foto Diri
-                      </Label>
+                      <div className="flex flex-col w-full">
+                        <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                          Foto Diri
+                        </Label>
 
-                      <div className="flex flex-col md:flex-row w-full">
-                        <div
-                          ref={dropRef}
-                          onDragOver={handleDragOver}
-                          onDragLeave={handleDragLeave}
-                          onDrop={handleDropImage}
-                          className={`w-full ${
-                            previewImage ? "md:w-8/12" : "w-full"
-                          }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
-                          <>
-                            <input
-                              type="file"
-                              id="file-input-image"
-                              name="image"
-                              accept="image/*"
-                              onChange={handleImageChange}
-                              className="hidden"
-                            />
-                            <label
-                              htmlFor="file-input-image"
-                              className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
-                              Drag and drop file here or click to select file
-                            </label>
-                          </>
+                        <div className="flex flex-col md:flex-row w-full">
+                          <div
+                            ref={dropRef}
+                            onDragOver={handleDragOver}
+                            onDragLeave={handleDragLeave}
+                            onDrop={handleDropImage}
+                            className={`w-full ${
+                              previewImage ? "md:w-8/12" : "w-full"
+                            }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                            <>
+                              <input
+                                type="file"
+                                id="file-input-image"
+                                name="image"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                className="hidden"
+                              />
+                              <label
+                                htmlFor="file-input-image"
+                                className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                Drag and drop file here or click to select file
+                              </label>
+                            </>
+                          </div>
+
+                          {previewImage && (
+                            <div className="relative md:ml-4 w-full mt-1">
+                              <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
+                                <div className="w-full h-full">
+                                  <Image
+                                    src={previewImage}
+                                    width={1000}
+                                    height={1000}
+                                    alt="Preview"
+                                    className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                  />
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={handleRemoveImage}
+                                  className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
+                                  <Trash />
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="w-full flex flex-row justify-center items-center gap-x-5">
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+
+                        <Button
+                          type="submit"
+                          disabled={isLoading ? true : false}
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                          {isLoading ? (
+                            <Loader className="animate-spin" />
+                          ) : (
+                            "Simpan"
+                          )}
+                        </Button>
+                      </div>
+                    </form>
+                  </AlertDialogHeader>
+                </AlertDialogContent>
+              </AlertDialog>
+            ) : (
+              <Drawer open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DrawerTrigger
+                  onClick={() => setIsDialogOpen(true)}
+                  className="w-full min-h-[50px] md:min-h-[60px] text-line-10 text-[13px] md:text-lg bg-primary-40 hover:bg-primary-70 rounded-lg">
+                  <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
+                    Tambah
+                  </div>
+                </DrawerTrigger>
+                <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
+                  <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                    <DrawerTitle className="text-center">
+                      Master Data Struktur Organisasi
+                    </DrawerTitle>
+
+                    <DrawerDescription className="text-center">
+                      Input data yang diperlukan
+                    </DrawerDescription>
+
+                    <form
+                      onSubmit={handleCreateStructureOrganization}
+                      className="w-full flex flex-col gap-y-5 verticalScroll">
+                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                            Nama Lengkap
+                          </Label>
+
+                          <Input
+                            id="nama"
+                            name="nama"
+                            value={data.nama}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan Nama Lengkap Anda"
+                          />
                         </div>
 
-                        {previewImage && (
-                          <div className="relative md:ml-4 w-full mt-1">
-                            <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
-                              <div className="w-full h-full">
-                                <Image
-                                  src={previewImage}
-                                  width={1000}
-                                  height={1000}
-                                  alt="Preview"
-                                  className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                            jabatan
+                          </Label>
+
+                          <Input
+                            id="jabatan"
+                            name="jabatan"
+                            value={data.jabatan}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan Jabatan Anda"
+                          />
+                        </div>
+
+                        <div className="flex flex-col w-full">
+                          <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                            Foto Diri
+                          </Label>
+
+                          <div className="flex flex-col md:flex-row w-full">
+                            <div
+                              ref={dropRef}
+                              onDragOver={handleDragOver}
+                              onDragLeave={handleDragLeave}
+                              onDrop={handleDropImage}
+                              className={`w-full ${
+                                previewImage ? "md:w-8/12" : "w-full"
+                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              <>
+                                <input
+                                  type="file"
+                                  id="file-input-image"
+                                  name="image"
+                                  accept="image/*"
+                                  onChange={handleImageChange}
+                                  className="hidden"
                                 />
-                              </div>
-                              <button
-                                type="button"
-                                onClick={handleRemoveImage}
-                                className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
-                                <Trash />
-                              </button>
+                                <label
+                                  htmlFor="file-input-image"
+                                  className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                  Drag and drop file here or click to select
+                                  file
+                                </label>
+                              </>
                             </div>
+
+                            {previewImage && (
+                              <div className="relative md:ml-4 w-full mt-1">
+                                <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
+                                  <div className="w-full h-full">
+                                    <Image
+                                      src={previewImage}
+                                      width={1000}
+                                      height={1000}
+                                      alt="Preview"
+                                      className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                    />
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={handleRemoveImage}
+                                    className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
+                                    <Trash />
+                                  </button>
+                                </div>
+                              </div>
+                            )}
                           </div>
-                        )}
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="w-full flex flex-row justify-center items-center gap-x-5">
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <div className="w-full flex flex-row justify-between items-center gap-x-5">
+                        {/* <AlertDialogCancel>Cancel</AlertDialogCancel> */}
 
-                      <Button
-                        type="submit"
-                        disabled={isLoading ? true : false}
-                        className="bg-primary-40 hover:bg-primary-70 text-line-10">
-                        {isLoading ? (
-                          <Loader className="animate-spin" />
-                        ) : (
-                          "Simpan"
-                        )}
-                      </Button>
-                    </div>
-                  </form>
-                </AlertDialogHeader>
-              </AlertDialogContent>
-            </AlertDialog>
+                        <Button
+                          type="submit"
+                          disabled={isLoading ? true : false}
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                          {isLoading ? (
+                            <Loader className="animate-spin" />
+                          ) : (
+                            "Simpan"
+                          )}
+                        </Button>
+                      </div>
+                    </form>
+                  </div>
+                </DrawerContent>
+              </Drawer>
+            )}
           </div>
         </div>
 
         <div className="w-full">
-          {organizations && organizations.length > 0 && (
-            <SuperStructureOrganizationMasterDataTablePages
-              organizations={organizations}
-              previewImage={previewImage}
-              handleDragOver={handleDragOver}
-              handleDragLeave={handleDragLeave}
-              handleDropImage={handleDropImage}
-              handleImageChange={handleImageChange}
-              handleRemoveImage={handleRemoveImage}
-              handleDeleteStructureOrganization={
-                handleDeleteStructureOrganization
-              }
-              isDeleteLoading={isDeleteLoading}
-              data={data}
-              setData={setData}
-              isUpdateLoading={isUpdateLoading}
-              isDialogEditOpen={isDialogEditOpen}
-              setIsDialogEditOpen={setIsDialogEditOpen}
-              handleUpdateStructureOrganization={
-                handleUpdateStructureOrganization
-              }
-            />
+          {!isMobile ? (
+            <>
+              {organizations && organizations.length > 0 && (
+                <SuperStructureOrganizationMasterDataTablePages
+                  organizations={organizations}
+                  previewImage={previewImage}
+                  handleDragOver={handleDragOver}
+                  handleDragLeave={handleDragLeave}
+                  handleDropImage={handleDropImage}
+                  handleImageChange={handleImageChange}
+                  handleRemoveImage={handleRemoveImage}
+                  handleDeleteStructureOrganization={
+                    handleDeleteStructureOrganization
+                  }
+                  isDeleteLoading={isDeleteLoading}
+                  data={data}
+                  setData={setData}
+                  isUpdateLoading={isUpdateLoading}
+                  isDialogEditOpen={isDialogEditOpen}
+                  setIsDialogEditOpen={setIsDialogEditOpen}
+                  handleUpdateStructureOrganization={
+                    handleUpdateStructureOrganization
+                  }
+                />
+              )}
+            </>
+          ) : (
+            <>
+              {organizations &&
+                organizations.length > 0 &&
+                organizations?.map(
+                  (organization: StructureOrganizationInterface, i: number) => {
+                    return (
+                      <MobileStructureOrganizationMasterDataCard
+                        key={i}
+                        organization={organization}
+                        index={i}
+                        previewImage={previewImage}
+                        handleDragOver={handleDragOver}
+                        handleDragLeave={handleDragLeave}
+                        handleDropImage={handleDropImage}
+                        handleImageChange={handleImageChange}
+                        handleRemoveImage={handleRemoveImage}
+                        handleDeleteStructureOrganization={
+                          handleDeleteStructureOrganization
+                        }
+                        isDeleteLoading={isDeleteLoading}
+                        data={data}
+                        setData={setData}
+                        isUpdateLoading={isUpdateLoading}
+                        handleUpdateStructureOrganization={
+                          handleUpdateStructureOrganization
+                        }
+                        isDialogEditOpen={isDialogEditOpen}
+                        setIsDialogEditOpen={setIsDialogEditOpen}
+                      />
+                    );
+                  }
+                )}
+            </>
           )}
         </div>
       </div>

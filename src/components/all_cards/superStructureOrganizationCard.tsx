@@ -101,7 +101,7 @@ export default function SuperStructureOrganizationMasterDataCard({
               <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
                 <AlertDialogHeader className="flex flex-col max-h-[500px]">
                   <AlertDialogTitle className="text-center">
-                    Master Data Foto Kegiatan
+                    Master Data Struktur Kegiatan
                   </AlertDialogTitle>
                   <AlertDialogDescription className="text-center">
                     Input data yang diperlukan

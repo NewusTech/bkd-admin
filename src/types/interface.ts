@@ -135,11 +135,13 @@ export interface ServiceCreateInterface {
 export interface TermConditionInterface {
   id: number;
   desc: string;
+  privacy_policy: string;
   createdAt: string;
 }
 
 export interface TermConditionUpdateInterface {
   desc: string;
+  privacy_policy: string;
 }
 
 export interface NewsInterface {
@@ -174,6 +176,15 @@ export interface AboutUsVisionMisionInterface {
   kontak: string;
   long: string;
   lang: string;
+  createdAt: string;
+}
+
+export interface AboutVisionMisionInterface {
+  id: number;
+  about_bkd: string;
+  visi: string;
+  misi: string;
+  kontak: string;
   createdAt: string;
 }
 
