@@ -940,3 +940,22 @@ export const serviceRequirementStep2 = async (data: any) => {
 
   return await response.json();
 };
+
+// get application user histories
+export const getApplicationUserHistories = async () => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/history/form`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};

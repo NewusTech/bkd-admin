@@ -3,7 +3,7 @@
 import DatePages from "@/components/elements/date";
 import SearchPages from "@/components/elements/search";
 import { formatDate } from "@/lib/utils";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -16,6 +16,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Button } from "@/components/ui/button";
 import FilterDataPages from "@/components/elements/data_filters";
 import VerificationUserApplicationHistoryTablePages from "@/components/tables/verification_admin_user_application_history_table";
+import { getApplicationUserHistories } from "@/services/api";
 
 export default function VerificationUserApplicationHistoriesScreen() {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -24,11 +25,28 @@ export default function VerificationUserApplicationHistoriesScreen() {
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
   const [startDate, setStartDate] = useState<Date | undefined>(firstDayOfMonth);
   const [endDate, setEndDate] = useState<Date | undefined>(new Date());
+  const [user, setUser] = useState([]);
 
   const startDateFormatted = startDate
     ? formatDate(new Date(startDate))
     : undefined;
   const endDateFormatted = endDate ? formatDate(new Date(endDate)) : undefined;
+
+  const fetchApplicationHistoryUser = async () => {
+    try {
+      const response = await getApplicationUserHistories();
+
+      setUser(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchApplicationHistoryUser();
+  }, []);
+
+  console.log(user, "ini user");
 
   return (
     <section className="w-full flex flex-col items-center px-5 mt-5">
