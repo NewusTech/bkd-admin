@@ -21,13 +21,10 @@ export default function SuperManualBookMasterDataTablePages({
   handleUpdateBooks,
 }: {
   books: any;
-  data: { nama: string; desc: string; pj: string; nip_pj: string };
+  data: { dokumen: string };
   setData: React.Dispatch<
     React.SetStateAction<{
-      nama: string;
-      desc: string;
-      pj: string;
-      nip_pj: string;
+      dokumen: string;
     }>
   >;
   isUpdateLoading: boolean;

@@ -99,7 +99,7 @@ export default function SuperCarouselSliderMasterDataCard({
                   </div>
                 )}
               </AlertDialogHeader>
-              <AlertDialogFooter>
+              <AlertDialogFooter className="w-full flex flex-row justify-center">
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
               </AlertDialogFooter>
             </AlertDialogContent>

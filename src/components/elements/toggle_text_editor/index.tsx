@@ -82,7 +82,9 @@ export default function TextEditorToogle() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => editor?.chain().focus().toggleUnderline().run()}
+                  onClick={() =>
+                    editor?.chain().focus().toggleUnderline().run()
+                  }
                   className={`${editor?.isActive("underline") ? "is-active" : ""} border border-line-20 rounded-lg px-3`}>
                   U
                 </button>
@@ -95,13 +97,13 @@ export default function TextEditorToogle() {
               </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button
-                    className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300 border border-line-20 rounded-lg px-4"
-                  >
+                  <Button className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300 border border-line-20 rounded-lg px-4">
                     <ListCollapse className="text-primary w-5 h-5" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent side="top" className="w-96 transition-all duration-300 ease-in-out opacity-1 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 bg-white border border-gray-300 shadow-2xl rounded-md mr-4">
+                <DropdownMenuContent
+                  side="top"
+                  className="w-96 transition-all duration-300 ease-in-out opacity-1 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 bg-white border border-gray-300 shadow-2xl rounded-md mr-4">
                   <DropdownMenuLabel className="font-semibold text-primary text-sm w-full shadow-md">
                     <TypingEffect text={["Detail Text Editor..."]} />
                   </DropdownMenuLabel>
@@ -114,7 +116,11 @@ export default function TextEditorToogle() {
                             <button
                               type="button"
                               onClick={() =>
-                                editor?.chain().focus().setTextAlign("left").run()
+                                editor
+                                  ?.chain()
+                                  .focus()
+                                  .setTextAlign("left")
+                                  .run()
                               }
                               className={`
                   ${editor?.isActive({ textAlign: "left" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 p-2`}>
@@ -123,7 +129,11 @@ export default function TextEditorToogle() {
                             <button
                               type="button"
                               onClick={() =>
-                                editor?.chain().focus().setTextAlign("center").run()
+                                editor
+                                  ?.chain()
+                                  .focus()
+                                  .setTextAlign("center")
+                                  .run()
                               }
                               className={`
                   ${editor?.isActive({ textAlign: "center" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 p-2`}>
@@ -132,7 +142,11 @@ export default function TextEditorToogle() {
                             <button
                               type="button"
                               onClick={() =>
-                                editor?.chain().focus().setTextAlign("right").run()
+                                editor
+                                  ?.chain()
+                                  .focus()
+                                  .setTextAlign("right")
+                                  .run()
                               }
                               className={`
                   ${editor?.isActive({ textAlign: "right" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 p-2`}>
@@ -141,7 +155,11 @@ export default function TextEditorToogle() {
                             <button
                               type="button"
                               onClick={() =>
-                                editor?.chain().focus().setTextAlign("justify").run()
+                                editor
+                                  ?.chain()
+                                  .focus()
+                                  .setTextAlign("justify")
+                                  .run()
                               }
                               className={`
                   ${editor?.isActive({ textAlign: "justify" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 p-2`}>
@@ -149,14 +167,20 @@ export default function TextEditorToogle() {
                             </button>
                             <button
                               type="button"
-                              onClick={() => editor?.chain().focus().toggleBulletList().run()}
+                              onClick={() =>
+                                editor?.chain().focus().toggleBulletList().run()
+                              }
                               className={`${editor?.isActive("bulletList") ? "is-active" : ""} border border-line-20 rounded-lg px-2 p-2`}>
                               <List className="w-6 h-6 text-black-80" />
                             </button>
                             <button
                               type="button"
                               onClick={() =>
-                                editor?.chain().focus().toggleOrderedList().run()
+                                editor
+                                  ?.chain()
+                                  .focus()
+                                  .toggleOrderedList()
+                                  .run()
                               }
                               className={`${editor?.isActive("orderedList") ? "is-active" : ""} border border-line-20 rounded-lg px-2 p-2`}>
                               <ListOrdered className="w-6 h-6 text-black-80" />
@@ -169,7 +193,11 @@ export default function TextEditorToogle() {
                             <button
                               type="button"
                               onClick={() =>
-                                editor?.chain().focus().toggleHeading({ level: 1 }).run()
+                                editor
+                                  ?.chain()
+                                  .focus()
+                                  .toggleHeading({ level: 1 })
+                                  .run()
                               }
                               className={`
                   ${editor?.isActive("heading", { level: 1 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 p-2
@@ -179,7 +207,11 @@ export default function TextEditorToogle() {
                             <button
                               type="button"
                               onClick={() =>
-                                editor?.chain().focus().toggleHeading({ level: 2 }).run()
+                                editor
+                                  ?.chain()
+                                  .focus()
+                                  .toggleHeading({ level: 2 })
+                                  .run()
                               }
                               className={`
                   ${editor?.isActive("heading", { level: 2 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2
@@ -189,7 +221,11 @@ export default function TextEditorToogle() {
                             <button
                               type="button"
                               onClick={() =>
-                                editor?.chain().focus().toggleHeading({ level: 3 }).run()
+                                editor
+                                  ?.chain()
+                                  .focus()
+                                  .toggleHeading({ level: 3 })
+                                  .run()
                               }
                               className={`
                   ${editor?.isActive("heading", { level: 3 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2
@@ -199,7 +235,11 @@ export default function TextEditorToogle() {
                             <button
                               type="button"
                               onClick={() =>
-                                editor?.chain().focus().toggleHeading({ level: 4 }).run()
+                                editor
+                                  ?.chain()
+                                  .focus()
+                                  .toggleHeading({ level: 4 })
+                                  .run()
                               }
                               className={`
                   ${editor?.isActive("heading", { level: 4 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2
@@ -209,7 +249,11 @@ export default function TextEditorToogle() {
                             <button
                               type="button"
                               onClick={() =>
-                                editor?.chain().focus().toggleHeading({ level: 5 }).run()
+                                editor
+                                  ?.chain()
+                                  .focus()
+                                  .toggleHeading({ level: 5 })
+                                  .run()
                               }
                               className={`
                   ${editor?.isActive("heading", { level: 5 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2
@@ -219,7 +263,11 @@ export default function TextEditorToogle() {
                             <button
                               type="button"
                               onClick={() =>
-                                editor?.chain().focus().toggleHeading({ level: 6 }).run()
+                                editor
+                                  ?.chain()
+                                  .focus()
+                                  .toggleHeading({ level: 6 })
+                                  .run()
                               }
                               className={`
                   ${editor?.isActive("heading", { level: 6 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2
@@ -238,12 +286,18 @@ export default function TextEditorToogle() {
                                 </div>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent className="w-full max-w-xl bg-line-10 flex flex-col">
-                                <DropdownMenuLabel>Pilih Warna</DropdownMenuLabel>
+                                <DropdownMenuLabel>
+                                  Pilih Warna
+                                </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 <div className="w-full flex flex-row flex-wrap gap-x-0.5">
                                   {colors.map(
                                     (
-                                      item: { id: number; color: string; name: string },
+                                      item: {
+                                        id: number;
+                                        color: string;
+                                        name: string;
+                                      },
                                       i: number
                                     ) => {
                                       const color = item.color.startsWith("#")
@@ -274,8 +328,14 @@ export default function TextEditorToogle() {
 
                             <input
                               type="color"
-                              onInput={(event: React.ChangeEvent<HTMLInputElement>) =>
-                                editor?.chain().focus().setColor(event?.target?.value).run()
+                              onInput={(
+                                event: React.ChangeEvent<HTMLInputElement>
+                              ) =>
+                                editor
+                                  ?.chain()
+                                  .focus()
+                                  .setColor(event?.target?.value)
+                                  .run()
                               }
                               value={editor?.getAttributes("textStyle")?.color}
                               data-testid="setColor"
@@ -308,7 +368,9 @@ export default function TextEditorToogle() {
 
                 <button
                   type="button"
-                  onClick={() => editor?.chain().focus().toggleUnderline().run()}
+                  onClick={() =>
+                    editor?.chain().focus().toggleUnderline().run()
+                  }
                   className={`${editor?.isActive("underline") ? "is-active" : ""} border border-line-20 rounded-lg px-3`}>
                   U
                 </button>
@@ -478,7 +540,9 @@ export default function TextEditorToogle() {
               <div className="w-full flex flex-row gap-x-3">
                 <button
                   type="button"
-                  onClick={() => editor?.chain().focus().toggleBulletList().run()}
+                  onClick={() =>
+                    editor?.chain().focus().toggleBulletList().run()
+                  }
                   className={`${editor?.isActive("bulletList") ? "is-active" : ""} border border-line-20 rounded-lg px-2`}>
                   <List className="w-6 h-6 text-black-80" />
                 </button>

@@ -23,6 +23,16 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -38,10 +48,13 @@ import { Trash } from "@phosphor-icons/react";
 import SuperStructureOrganizationMasterDataTablePages from "@/components/tables/master_datas/structure_organization_table";
 import Image from "next/image";
 import SuperStructureOrganizationMainMasterDataTablePages from "@/components/tables/master_datas/structure_organization_main_table";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import MobileStructureOrganizationMainMasterDataCard from "@/components/mobile_all_cards/mobileStructurOrganizationMainMasterDataCard";
 
 export default function StructureOrganizationMainScreen() {
   const router = useRouter();
   const dropRef = useRef<HTMLDivElement>(null);
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
@@ -225,7 +238,7 @@ export default function StructureOrganizationMainScreen() {
   return (
     <section className="w-full flex flex-col items-center px-5 mt-5">
       <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
-        <div className="w-full flex flex-row gap-x-5">
+        <div className="w-full flex flex-col md:flex-row gap-x-5 gap-y-5">
           <SearchPages
             search={search}
             setSearch={setSearch}
@@ -235,105 +248,210 @@ export default function StructureOrganizationMainScreen() {
             placeholder="Pencarian"
           />
 
-          <div className="w-3/12">
-            <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <AlertDialogTrigger
-                onClick={() => setIsDialogOpen(true)}
-                className="w-full">
-                <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                  Tambah
-                </div>
-              </AlertDialogTrigger>
-              <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
-                <AlertDialogHeader className="flex flex-col max-h-[500px]">
-                  <AlertDialogTitle className="text-center">
-                    Master Data Struktur Organisasi Inti
-                  </AlertDialogTitle>
-                  <AlertDialogDescription className="text-center">
-                    Input data yang diperlukan
-                  </AlertDialogDescription>
-                  <form
-                    onSubmit={handleCreateStructureOrganization}
-                    className="w-full flex flex-col gap-y-3 verticalScroll">
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-black-800 font-normal text-sm">
-                          Pilih Struktur Yang Akan Ditampilkan
-                        </Label>
+          <div className="w-full md:w-3/12">
+            {!isMobile ? (
+              <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <AlertDialogTrigger
+                  onClick={() => setIsDialogOpen(true)}
+                  className="w-full">
+                  <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
+                    Tambah
+                  </div>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
+                  <AlertDialogHeader className="flex flex-col max-h-[500px]">
+                    <AlertDialogTitle className="text-center">
+                      Master Data Struktur Organisasi Inti
+                    </AlertDialogTitle>
+                    <AlertDialogDescription className="text-center">
+                      Input data yang diperlukan
+                    </AlertDialogDescription>
+                    <form
+                      onSubmit={handleCreateStructureOrganization}
+                      className="w-full flex flex-col gap-y-3 verticalScroll">
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-black-800 font-normal text-sm">
+                            Pilih Struktur Yang Akan Ditampilkan
+                          </Label>
 
-                        <div className="w-full border border-line-20 rounded-lg">
-                          <Select onValueChange={handleSelectChange}>
-                            <SelectTrigger
-                              className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-                              <SelectValue
-                                placeholder="Pilih Jabatan"
-                                className="text-black-80 w-full"
-                              />
-                            </SelectTrigger>
-                            <SelectContent className="bg-line-10">
-                              <div className="pt-2">
-                                {organizations &&
-                                  organizations.length > 0 &&
-                                  organizations.map(
-                                    (
-                                      organization: StructureOrganizationInterface,
-                                      i: number
-                                    ) => {
-                                      return (
-                                        <SelectItem
-                                          key={i}
-                                          className={`w-full px-4`}
-                                          value={organization.id.toString()}>
-                                          {organization?.jabatan}
-                                        </SelectItem>
-                                      );
-                                    }
-                                  )}
-                              </div>
-                            </SelectContent>
-                          </Select>
+                          <div className="w-full border border-line-20 rounded-lg">
+                            <Select onValueChange={handleSelectChange}>
+                              <SelectTrigger
+                                className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                <SelectValue
+                                  placeholder="Pilih Jabatan"
+                                  className="text-black-80 w-full"
+                                />
+                              </SelectTrigger>
+                              <SelectContent className="bg-line-10">
+                                <div className="pt-2">
+                                  {organizations &&
+                                    organizations.length > 0 &&
+                                    organizations.map(
+                                      (
+                                        organization: StructureOrganizationInterface,
+                                        i: number
+                                      ) => {
+                                        return (
+                                          <SelectItem
+                                            key={i}
+                                            className={`w-full px-4`}
+                                            value={organization.id.toString()}>
+                                            {organization?.jabatan}
+                                          </SelectItem>
+                                        );
+                                      }
+                                    )}
+                                </div>
+                              </SelectContent>
+                            </Select>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="w-full flex flex-row justify-center items-center gap-x-5">
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <div className="w-full flex flex-row justify-center items-center gap-x-5">
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
 
-                      <Button
-                        type="submit"
-                        disabled={isLoading ? true : false}
-                        className="bg-primary-40 hover:bg-primary-70 text-line-10">
-                        {isLoading ? (
-                          <Loader className="animate-spin" />
-                        ) : (
-                          "Simpan"
-                        )}
-                      </Button>
-                    </div>
-                  </form>
-                </AlertDialogHeader>
-              </AlertDialogContent>
-            </AlertDialog>
+                        <Button
+                          type="submit"
+                          disabled={isLoading ? true : false}
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                          {isLoading ? (
+                            <Loader className="animate-spin" />
+                          ) : (
+                            "Simpan"
+                          )}
+                        </Button>
+                      </div>
+                    </form>
+                  </AlertDialogHeader>
+                </AlertDialogContent>
+              </AlertDialog>
+            ) : (
+              <Drawer open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DrawerTrigger
+                  onClick={() => setIsDialogOpen(true)}
+                  className="w-full min-h-[50px] md:min-h-[60px] text-line-10 text-[13px] md:text-lg bg-primary-40 hover:bg-primary-70 rounded-lg">
+                  <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
+                    Tambah
+                  </div>
+                </DrawerTrigger>
+                <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
+                  <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                    <DrawerTitle className="text-center">
+                      Master Data Struktur Organisasi
+                    </DrawerTitle>
+
+                    <DrawerDescription className="text-center">
+                      Input data yang diperlukan
+                    </DrawerDescription>
+
+                    <form
+                      onSubmit={handleCreateStructureOrganization}
+                      className="w-full flex flex-col gap-y-5 verticalScroll">
+                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                        <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-black-800 font-normal text-sm">
+                            Pilih Struktur Yang Akan Ditampilkan
+                          </Label>
+
+                          <div className="w-full border border-line-20 rounded-lg">
+                            <Select onValueChange={handleSelectChange}>
+                              <SelectTrigger
+                                className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                <SelectValue
+                                  placeholder="Pilih Jabatan"
+                                  className="text-black-80 w-full"
+                                />
+                              </SelectTrigger>
+                              <SelectContent className="bg-line-10">
+                                <div className="pt-2">
+                                  {organizations &&
+                                    organizations.length > 0 &&
+                                    organizations.map(
+                                      (
+                                        organization: StructureOrganizationInterface,
+                                        i: number
+                                      ) => {
+                                        return (
+                                          <SelectItem
+                                            key={i}
+                                            className={`w-full px-4`}
+                                            value={organization.id.toString()}>
+                                            {organization?.jabatan}
+                                          </SelectItem>
+                                        );
+                                      }
+                                    )}
+                                </div>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="w-full flex flex-row justify-between items-center gap-x-5">
+                        {/* <AlertDialogCancel>Cancel</AlertDialogCancel> */}
+
+                        <Button
+                          type="submit"
+                          disabled={isLoading ? true : false}
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                          {isLoading ? (
+                            <Loader className="animate-spin" />
+                          ) : (
+                            "Simpan"
+                          )}
+                        </Button>
+                      </div>
+                    </form>
+                  </div>
+                </DrawerContent>
+              </Drawer>
+            )}
           </div>
         </div>
 
         <div className="w-full">
-          {organizations && organizations.length > 0 && (
-            <SuperStructureOrganizationMainMasterDataTablePages
-              organizations={organizations}
-              // handleDeleteStructureOrganization={
-              //   handleDeleteStructureOrganization
-              // }
-              // isDeleteLoading={isDeleteLoading}
-              data={data}
-              setData={setData}
-              // isUpdateLoading={isUpdateLoading}
-              // isDialogEditOpen={isDialogEditOpen}
-              // setIsDialogEditOpen={setIsDialogEditOpen}
-              // handleUpdateStructureOrganization={
-              //   handleUpdateStructureOrganization
-              // }
-            />
+          {!isMobile ? (
+            <>
+              {organizations && organizations.length > 0 && (
+                <SuperStructureOrganizationMainMasterDataTablePages
+                  organizations={organizations}
+                  // handleDeleteStructureOrganization={
+                  //   handleDeleteStructureOrganization
+                  // }
+                  // isDeleteLoading={isDeleteLoading}
+                  data={data}
+                  setData={setData}
+                  // isUpdateLoading={isUpdateLoading}
+                  // isDialogEditOpen={isDialogEditOpen}
+                  // setIsDialogEditOpen={setIsDialogEditOpen}
+                  // handleUpdateStructureOrganization={
+                  //   handleUpdateStructureOrganization
+                  // }
+                />
+              )}
+            </>
+          ) : (
+            <>
+              {organizations &&
+                organizations.length > 0 &&
+                organizations?.map(
+                  (organization: StructureOrganizationInterface, i: number) => {
+                    return (
+                      <MobileStructureOrganizationMainMasterDataCard
+                        key={i}
+                        organization={organization}
+                        index={i}
+                        data={data}
+                        setData={setData}
+                      />
+                    );
+                  }
+                )}
+            </>
           )}
         </div>
       </div>
