@@ -223,6 +223,7 @@ export default function AreasScreen() {
   return (
     <section className="w-full flex flex-col items-center md:px-5 md:mt-5">
       <div className="bg-[#F6F6F6] md:bg-line-10 md:shadow-md md:rounded-lg w-full flex flex-col p-5 gap-y-5">
+        <h1 className="text-lg">Kelola Bidang</h1>
         {/* Mobile */}
         <div className="md:hidden">
           <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-4 gap-y-4 md:p-5 md:gap-y-5">
@@ -381,7 +382,7 @@ export default function AreasScreen() {
                     </AlertDialogTitle>
 
                     <div className="flex w-full justify-center">
-                      <TypingEffect text={["Input data yang diperlukan"]} />
+                      <TypingEffect className="text-xl" text={["Input data yang diperlukan"]} />
                     </div>
 
                     <form

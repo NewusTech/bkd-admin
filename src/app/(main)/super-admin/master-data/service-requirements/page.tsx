@@ -263,13 +263,12 @@ export default function ServiceRequiremnts() {
 
     return (
         <>
-
             {!isMobile ? (
                 <>
                     {/* Dekstop */}
                     <section className="w-full flex flex-col items-center px-5 mt-5">
                         <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
-                            <h1 className="text-lg font-semibold">Kelola Persyaratan</h1>
+                            <h1 className="text-lg">Kelola Persyaratan</h1>
                             <div className="w-full flex flex-row gap-x-5">
                                 <div className="w-[65%] border border-b rounded-lg z-50">
                                     <InputComponent
@@ -333,7 +332,7 @@ export default function ServiceRequiremnts() {
                     {/* mobile */}
                     <section className="w-full flex flex-col items-center px-5 mt-5">
                         <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
-                            <h1 className="text-lg font-semibold">Kelola Persyaratan</h1>
+                            <h1 className="text-lg">Kelola Persyaratan</h1>
 
                             <div className="w-full gap-x-5">
                                 <div className="w-full border border-b rounded-lg z-50">

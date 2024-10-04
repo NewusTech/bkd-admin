@@ -126,9 +126,9 @@ export default function LoginScreen() {
     <section className="relative flex justify-center items-center w-screen h-screen">
       <BackgroundImage />
 
-      <div className="relative z-50 flex flex-col w-5/12 items-center justify-center gap-y-8 bg-white p-12 shadow-lg rounded-lg">
+      <div className="relative z-50 flex flex-col w-full md:w-5/12 items-center justify-center gap-y-8 bg-white p-12 shadow-lg rounded-lg md:m-0 m-4">
         <div className="w-full flex flex-col items-center gap-y-2">
-          <h2 className="text-black-80 text-xl">
+          <h2 className="text-black-80 text-xl text-center">
             Selamat Datang Di Aplikasi BKD
           </h2>
 
@@ -225,7 +225,7 @@ export default function LoginScreen() {
                   <Button
                     type="submit"
                     disabled={isLoading ? true : false}
-                    className="w-full bg-primary-40 hover:bg-primary-70 text-line-10 text-sm py-4">
+                    className="w-full bg-primary-40 hover:bg-primary-70 text-line-10 text-sm py-4 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
                     {isLoading ? <Loader className="animate-spin" /> : "Masuk"}
                   </Button>
                 </div>

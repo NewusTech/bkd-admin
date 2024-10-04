@@ -376,7 +376,7 @@ export default function ServicesScreen() {
   return (
     <section className="w-full flex flex-col items-center md:px-5 md:mt-5">
       <div className="bg-[#F6F6F6] md:bg-line-10 md:shadow-md md:rounded-lg w-full flex flex-col p-5 gap-y-5">
-
+        <h1 className="text-lg">Kelola Layanan</h1>
         {/* Mobile */}
         <div className="md:hidden">
           <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-4 gap-y-4 md:p-5 md:gap-y-5">
@@ -398,12 +398,12 @@ export default function ServicesScreen() {
                 }} className="w-full">
                   <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
-                    Tambah Bidang
+                    Tambah Layanan
                   </div>
                 </DrawerTrigger>
                 <DrawerContent className="bg-white">
                   <DrawerHeader>
-                    <DrawerTitle>Master Data Bidang</DrawerTitle>
+                    <DrawerTitle>Master Data Layanan</DrawerTitle>
 
                     <form
                       onSubmit={handleCreateService}

@@ -42,6 +42,7 @@ import DatePages from "@/components/elements/date";
 import { Button } from "@/components/ui/button";
 import { Printer } from "@phosphor-icons/react";
 import DivitionVerificationAdminApplicationHistoryTablePages from "@/components/tables/division_application_history_table";
+import TypingEffect from "@/components/ui/TypingEffect";
 
 export default function DivisionVerificationAdminDashboardPages() {
   const [search, setSearch] = useState("");
@@ -136,7 +137,8 @@ export default function DivisionVerificationAdminDashboardPages() {
   return (
     <div className="w-full flex flex-col gap-y-5 mb-24">
       <div className="w-full flex flex-col md:flex-row gap-y-3 md:gap-x-3 items-center md:items-start bg-primary-40 bg-opacity-20 rounded-lg p-5">
-        <div className="w-4/12 md:w-2/12 h-full">
+
+        <div className="w-4/12 md:w-2/12 h-full transition-all animate-pulse">
           <Image
             src={dasboard}
             alt="dashboard"
@@ -147,15 +149,15 @@ export default function DivisionVerificationAdminDashboardPages() {
         </div>
 
         <div className="w-full flex flex-row items-center self-center">
-          <h3 className="w-full text-black-80 font-semibold text-lg md:text-3xl">
-            Super Admin
-          </h3>
+          <div className="w-full text-black-80 font-semibold text-lg md:text-3xl text-center  md:text-left">
+            <TypingEffect className="text-3xl" speed={250} deleteSpeed={50} text={["Super Admin"]} />
+          </div>
         </div>
       </div>
 
-      <div className="w-full flex flex-col mt-5">
-        <div className="w-full flex flex-row gap-x-5">
-          <Card className="bg-line-10 shadow-md rounded-lg border-none w-8/12">
+      <div className="w-full flex flex-col md:mt-5">
+        <div className="w-full md:flex md:flex-row gap-x-5">
+          <Card className="bg-line-10 shadow-md rounded-lg border-none w-full md:w-8/12 mb-4 md:mb-0">
             <div className="w-full flex flex-col p-3">
               <div className="w-full flex flex-col items-center p-2 gap-y-5">
                 <div className="w-full flex flex-col items-center">
@@ -244,8 +246,7 @@ export default function DivisionVerificationAdminDashboardPages() {
               </ChartContainer>
             </CardContent>
           </Card>
-
-          <Card className="bg-line-10 shadow-md rounded-lg border-none px-4 w-5/12">
+          <Card className="bg-line-10 shadow-md rounded-lg border-none px-4 md:w-5/12 w-full">
             <div className="w-full flex flex-row justify-between items-center p-3">
               <CardTitle className="text-[16px] font-normal">
                 Grafik Status
@@ -291,7 +292,7 @@ export default function DivisionVerificationAdminDashboardPages() {
             <CardContent className="flex-1 pb-0">
               <ChartContainer
                 config={chartConfigPie}
-                className="mx-auto aspect-square max-h-[250px]">
+                className="mx-auto aspect-square max-h-[200px] md:max-h-[250px]">
                 <PieChart>
                   <ChartTooltip
                     cursor={false}
@@ -315,7 +316,7 @@ export default function DivisionVerificationAdminDashboardPages() {
                               <tspan
                                 x={viewBox.cx}
                                 y={viewBox.cy}
-                                className="fill-foreground text-3xl font-bold">
+                                className="fill-foreground text-2xl md:text-3xl font-bold">
                                 {totalVisitors.toLocaleString()}
                               </tspan>
                               <tspan
@@ -346,21 +347,19 @@ export default function DivisionVerificationAdminDashboardPages() {
         </div>
       </div>
 
-      <div className="w-full grid grid-cols-4 gap-x-4">
-        <div className="w-full flex flex-col items-center bg-line-10 shadow-md rounded-lg p-4 gap-y-4">
-          <div className="w-3/12 h-full">
+      <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-x-4">
+        <div className="flex flex-col items-center bg-line-10 shadow-md rounded-lg p-6 md:p-4 gap-y-4 m-auto justify-center">
+          <div className="w-full md:w-3/12 h-full transition-all animate-pulse">
             <Image
               src={waiting}
               alt="Menunggu"
               width={1000}
               height={1000}
-              className="w-full h-full"
+              className="w-1/2 h-1/2 md:w-full md:h-full flex justify-center m-auto"
             />
           </div>
-
-          <p className="text-black-80 text-sm">Menunggu verifikasi</p>
-
-          <p className="text-primary-40 font-semibold text-4xl">65</p>
+          <p className="text-black-80 md:text-sm text-xs">Menunggu verifikasi</p>
+          <p className="text-primary-40 font-semibold text-xl md:text-4xl">65</p>
         </div>
       </div>
 
@@ -429,6 +428,7 @@ export default function DivisionVerificationAdminDashboardPages() {
               <span>Print</span>
             </Button>
           </div>
+
         </div>
 
         <div className="w-full">

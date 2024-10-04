@@ -286,6 +286,7 @@ export default function NewsScreen() {
   return (
     <section className="w-full flex flex-col items-center px-5 mt-5">
       <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
+        <h1 className="text-lg">Kelola Berita</h1>
         <div className="w-full flex flex-col md:flex-row gap-x-5 gap-y-5">
           <SearchPages
             search={search}
@@ -308,7 +309,7 @@ export default function NewsScreen() {
                       href="/super-admin/master-data/service-requirements/create"
                       className='bg-primary-40 h-10 text-xs md:text-sm px-3 rounded-lg text-white hover:bg-primary-70 border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300 py-2'>
                       <AddIcon />
-                      Tambah Persyaratan Layanan
+                      Tambah Berita
                     </Link>
                   </div>
                   {/* Tambah Data */}
@@ -452,9 +453,10 @@ export default function NewsScreen() {
               <Drawer open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DrawerTrigger
                   onClick={() => setIsDialogOpen(true)}
-                  className="w-full min-h-[50px] md:min-h-[60px] text-line-10 text-[13px] md:text-lg bg-primary-40 hover:bg-primary-70 rounded-lg">
-                  <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                    Tambah
+                  className="w-full">
+                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                    <AddIcon />
+                    Tambah Berita
                   </div>
                 </DrawerTrigger>
                 <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
@@ -500,22 +502,6 @@ export default function NewsScreen() {
                               }
                             />
                           </div>
-
-                          {/* <div className="w-full h-[250px] flex flex-col gap-y-2">
-             <div
-               className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
-               ref={quillAddRef}></div>
-           </div> */}
-
-                          {/* <Textarea
-           name="desc"
-           placeholder="Masukkan Deskripsi Berita"
-           value={data.desc}
-           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-             setData({ ...data, desc: e.target.value })
-           }
-           className="w-full rounded-lg h-[74px] border border-line-20 md:h-[122px] text-sm placeholder:opacity-[70%]"
-         /> */}
                         </div>
 
                         <div className="flex flex-col w-full">

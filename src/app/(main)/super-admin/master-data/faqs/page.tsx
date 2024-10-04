@@ -33,6 +33,7 @@ import { Loader } from "lucide-react";
 import SuperFaqsMasterDataTablePages from "@/components/tables/master_datas/faqs_table";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileFaqMasterDataCard from "@/components/mobile_all_cards/mobileFaqMasterDataCard";
+import AddIcon from "@/components/elements/add_button";
 
 export default function FaqsScreen() {
   const router = useRouter();
@@ -204,14 +205,15 @@ export default function FaqsScreen() {
                 <AlertDialogTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                    Tambah
+                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                    <AddIcon />
+                    Tambah FAQ
                   </div>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
                   <AlertDialogHeader className="flex flex-col max-h-[500px]">
                     <AlertDialogTitle className="text-center">
-                      Master Data Bidang
+                      Master Data FAQ
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
                       Input data yang diperlukan
@@ -273,9 +275,10 @@ export default function FaqsScreen() {
               <Drawer open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DrawerTrigger
                   onClick={() => setIsDialogOpen(true)}
-                  className="w-full min-h-[50px] md:min-h-[60px] text-line-10 text-[13px] md:text-lg bg-primary-40 hover:bg-primary-70 rounded-lg">
-                  <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                    Tambah
+                  className="w-full">
+                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                    <AddIcon />
+                    Tambah FAQ
                   </div>
                 </DrawerTrigger>
                 <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
