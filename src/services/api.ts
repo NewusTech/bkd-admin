@@ -436,10 +436,7 @@ export const getAboutVisionMision = async () => {
 };
 
 // update about visi misi
-export const updateAboutVisionMision = async (
-  id: number,
-  data: AboutUsVisionMisionUpdateInterface
-) => {
+export const updateAboutVisionMision = async (id: number, data: any) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
@@ -730,6 +727,25 @@ export const getManualBooks = async () => {
   return await response.json();
 };
 
+// update manual books
+export const updateManualBooks = async (data: FormData, id: number) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/manual/book/update/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: data,
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
 // get regulation
 export const getRegulations = async () => {
   const response = await fetch(
@@ -746,7 +762,26 @@ export const getRegulations = async () => {
   return await response.json();
 };
 
-// get regulation
+// create regulation
+export const createRegulations = async (formData: FormData) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/regulasi/create`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// update regulation
 export const updateRegulations = async (formData: FormData, id: number) => {
   const token = Cookies.get("Authorization");
 

@@ -12,6 +12,7 @@ import {
   getManualBooks,
   postAreas,
   updateAreas,
+  updateManualBooks,
 } from "@/services/api";
 import { AreasInterface } from "@/types/interface";
 import React, { useEffect, useState } from "react";
@@ -41,10 +42,7 @@ export default function ManualBookScreen() {
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
   const [books, setBooks] = useState([]);
   const [data, setData] = useState({
-    nama: "",
-    desc: "",
-    nip_pj: "",
-    pj: "",
+    dokumen: "",
   });
 
   const fetchManualBooks = async () => {
@@ -61,48 +59,49 @@ export default function ManualBookScreen() {
     fetchManualBooks();
   }, []);
 
-  // const handleUpdateArea = async (
-  //   e: React.FormEvent<HTMLFormElement>,
-  //   slug: string
-  // ) => {
-  //   e.preventDefault();
-  //   setIsUpdateLoading(true);
+  const handleUpdateManualBook = async (
+    e: React.FormEvent<HTMLFormElement>,
+    id: number
+  ) => {
+    e.preventDefault();
+    setIsUpdateLoading(true);
 
-  //   try {
-  //     const response = await updateAreas(slug, data);
+    const formData = new FormData();
 
-  //     if (response.status === 200) {
-  //       setData({
-  //         nama: "",
-  //         desc: "",
-  //         nip_pj: "",
-  //         pj: "",
-  //       });
-  //       Swal.fire({
-  //         icon: "success",
-  //         title: "Berhasil Mengupdate Bidang!",
-  //         timer: 2000,
-  //         showConfirmButton: false,
-  //         position: "center",
-  //       });
-  //       fetchAreas(pagination.currentPage, 10);
-  //       setIsDialogEditOpen(false);
-  //       router.push("/super-admin/master-data/areas");
-  //     } else {
-  //       Swal.fire({
-  //         icon: "error",
-  //         title: "Gagal Menagupdate Bidang!",
-  //         timer: 2000,
-  //         showConfirmButton: false,
-  //         position: "center",
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setIsUpdateLoading(false);
-  //   }
-  // };
+    formData.append("dokumen", data.dokumen);
+
+    try {
+      const response = await updateManualBooks(formData, id);
+
+      if (response.status === 200) {
+        setData({
+          dokumen: "",
+        });
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil Mengupdate Manual Book!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+        fetchManualBooks();
+        setIsDialogEditOpen(false);
+        router.push("/super-admin/master-data/manual-book");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal Mengupdate Manual Book!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsUpdateLoading(false);
+    }
+  };
 
   return (
     <section className="w-full flex flex-col items-center px-5 mt-5">

@@ -15,15 +15,28 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import SuperFaqsMasterDataTablePages from "@/components/tables/master_datas/faqs_table";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import MobileFaqMasterDataCard from "@/components/mobile_all_cards/mobileFaqMasterDataCard";
 
 export default function FaqsScreen() {
   const router = useRouter();
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
@@ -175,7 +188,7 @@ export default function FaqsScreen() {
   return (
     <section className="w-full flex flex-col items-center px-5 mt-5">
       <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
-        <div className="w-full flex flex-row gap-x-5">
+        <div className="w-full flex flex-col md:flex-row gap-x-5 gap-y-5">
           <SearchPages
             search={search}
             setSearch={setSearch}
@@ -185,92 +198,194 @@ export default function FaqsScreen() {
             placeholder="Pencarian"
           />
 
-          <div className="w-3/12">
-            <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <AlertDialogTrigger
-                onClick={() => setIsDialogOpen(true)}
-                className="w-full">
-                <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                  Tambah
-                </div>
-              </AlertDialogTrigger>
-              <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
-                <AlertDialogHeader className="flex flex-col max-h-[500px]">
-                  <AlertDialogTitle className="text-center">
-                    Master Data Bidang
-                  </AlertDialogTitle>
-                  <AlertDialogDescription className="text-center">
-                    Input data yang diperlukan
-                  </AlertDialogDescription>
-                  <form
-                    onSubmit={handleCreateFaqs}
-                    className="w-full flex flex-col gap-y-3 verticalScroll">
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
-                        Pertanyaan
-                      </Label>
+          <div className="w-full md:w-3/12">
+            {!isMobile ? (
+              <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <AlertDialogTrigger
+                  onClick={() => setIsDialogOpen(true)}
+                  className="w-full">
+                  <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
+                    Tambah
+                  </div>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
+                  <AlertDialogHeader className="flex flex-col max-h-[500px]">
+                    <AlertDialogTitle className="text-center">
+                      Master Data Bidang
+                    </AlertDialogTitle>
+                    <AlertDialogDescription className="text-center">
+                      Input data yang diperlukan
+                    </AlertDialogDescription>
+                    <form
+                      onSubmit={handleCreateFaqs}
+                      className="w-full flex flex-col gap-y-3 verticalScroll">
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          Pertanyaan
+                        </Label>
 
-                      <Input
-                        id="question"
-                        name="question"
-                        value={data.question}
-                        onChange={handleChange}
-                        type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Pertanyaan Anda"
-                      />
-                    </div>
+                        <Input
+                          id="question"
+                          name="question"
+                          value={data.question}
+                          onChange={handleChange}
+                          type="text"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          placeholder="Masukkan Pertanyaan Anda"
+                        />
+                      </div>
 
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
-                        Jawaban
-                      </Label>
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          Jawaban
+                        </Label>
 
-                      <Input
-                        id="answer"
-                        name="answer"
-                        value={data.answer}
-                        onChange={handleChange}
-                        type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Jawaban Anda"
-                      />
-                    </div>
+                        <Input
+                          id="answer"
+                          name="answer"
+                          value={data.answer}
+                          onChange={handleChange}
+                          type="text"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          placeholder="Masukkan Jawaban Anda"
+                        />
+                      </div>
 
-                    <div className="w-full flex flex-row justify-center items-center gap-x-5">
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <div className="w-full flex flex-row justify-center items-center gap-x-5">
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
 
-                      <Button
-                        type="submit"
-                        disabled={isLoading ? true : false}
-                        className="bg-primary-40 hover:bg-primary-70 text-line-10">
-                        {isLoading ? (
-                          <Loader className="animate-spin" />
-                        ) : (
-                          "Simpan"
-                        )}
-                      </Button>
-                    </div>
-                  </form>
-                </AlertDialogHeader>
-              </AlertDialogContent>
-            </AlertDialog>
+                        <Button
+                          type="submit"
+                          disabled={isLoading ? true : false}
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                          {isLoading ? (
+                            <Loader className="animate-spin" />
+                          ) : (
+                            "Simpan"
+                          )}
+                        </Button>
+                      </div>
+                    </form>
+                  </AlertDialogHeader>
+                </AlertDialogContent>
+              </AlertDialog>
+            ) : (
+              <Drawer open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DrawerTrigger
+                  onClick={() => setIsDialogOpen(true)}
+                  className="w-full min-h-[50px] md:min-h-[60px] text-line-10 text-[13px] md:text-lg bg-primary-40 hover:bg-primary-70 rounded-lg">
+                  <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
+                    Tambah
+                  </div>
+                </DrawerTrigger>
+                <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
+                  <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                    <DrawerTitle className="text-center">
+                      Master Data FAQ
+                    </DrawerTitle>
+
+                    <DrawerDescription className="text-center">
+                      Input data yang diperlukan
+                    </DrawerDescription>
+
+                    <form
+                      onSubmit={handleCreateFaqs}
+                      className="w-full flex flex-col gap-y-5 verticalScroll">
+                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                            Pertanyaan
+                          </Label>
+
+                          <Input
+                            id="question"
+                            name="question"
+                            value={data.question}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan Pertanyaan Anda"
+                          />
+                        </div>
+
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                            Jawaban
+                          </Label>
+
+                          <Input
+                            id="answer"
+                            name="answer"
+                            value={data.answer}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan Jawaban Anda"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="w-full flex flex-row justify-between items-center gap-x-5">
+                        {/* <AlertDialogCancel>Cancel</AlertDialogCancel> */}
+
+                        <Button
+                          type="submit"
+                          disabled={isLoading ? true : false}
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                          {isLoading ? (
+                            <Loader className="animate-spin" />
+                          ) : (
+                            "Simpan"
+                          )}
+                        </Button>
+                      </div>
+                    </form>
+                  </div>
+                </DrawerContent>
+              </Drawer>
+            )}
           </div>
         </div>
 
         <div className="w-full">
-          {faqs && faqs.length > 0 && (
-            <SuperFaqsMasterDataTablePages
-              faqs={faqs}
-              handleDeleteFaqs={handleDeleteFaqs}
-              isDeleteLoading={isDeleteLoading}
-              data={data}
-              setData={setData}
-              isUpdateLoading={isUpdateLoading}
-              isDialogEditOpen={isDialogEditOpen}
-              setIsDialogEditOpen={setIsDialogEditOpen}
-              handleUpdateFaqs={handleUpdateFaqs}
-            />
+          {!isMobile ? (
+            <>
+              {faqs && faqs.length > 0 && (
+                <SuperFaqsMasterDataTablePages
+                  faqs={faqs}
+                  handleDeleteFaqs={handleDeleteFaqs}
+                  isDeleteLoading={isDeleteLoading}
+                  data={data}
+                  setData={setData}
+                  isUpdateLoading={isUpdateLoading}
+                  isDialogEditOpen={isDialogEditOpen}
+                  setIsDialogEditOpen={setIsDialogEditOpen}
+                  handleUpdateFaqs={handleUpdateFaqs}
+                />
+              )}
+            </>
+          ) : (
+            <>
+              {faqs &&
+                faqs.length > 0 &&
+                faqs?.map((faq: FaqsInterface, i: number) => {
+                  return (
+                    <MobileFaqMasterDataCard
+                      key={i}
+                      faq={faq}
+                      index={i}
+                      handleDeleteFaqs={handleDeleteFaqs}
+                      isDeleteLoading={isDeleteLoading}
+                      data={data}
+                      setData={setData}
+                      isUpdateLoading={isUpdateLoading}
+                      handleUpdateFaqs={handleUpdateFaqs}
+                      isDialogEditOpen={isDialogEditOpen}
+                      setIsDialogEditOpen={setIsDialogEditOpen}
+                    />
+                  );
+                })}
+            </>
           )}
         </div>
       </div>

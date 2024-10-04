@@ -36,17 +36,11 @@ export default function SuperManualBookMasterDataCard({
   book: any;
   index: number;
   data: {
-    nama: string;
-    desc: string;
-    pj: string;
-    nip_pj: string;
+    dokumen: string;
   };
   setData: React.Dispatch<
     React.SetStateAction<{
-      nama: string;
-      desc: string;
-      pj: string;
-      nip_pj: string;
+      dokumen: string;
     }>
   >;
   isUpdateLoading: boolean;
