@@ -10,7 +10,7 @@ export default function BackgroundImage() {
         }}
       />
       <div
-        className="absolute bottom-0 left-0 w-full h-3/6 bg-no-repeat bg-contain"
+        className="absolute bottom-0 left-0 w-full h-screen md:h-3/6 bg-no-repeat bg-cover md:bg-contain"
         style={{
           backgroundImage: `url('/assets/images/bg-bottom.png')`,
         }}

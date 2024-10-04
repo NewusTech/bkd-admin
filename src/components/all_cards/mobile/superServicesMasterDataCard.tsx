@@ -1,21 +1,30 @@
 "use client";
 
 import React from "react";
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import { useQuill } from "react-quilljs";
 import { TableCell, TableRow } from "@/components/ui/table";
-import Link from "next/link";
-import { AreasInterface } from "@/types/interface";
-import { EllipsisVertical, Loader } from "lucide-react";
+import { AreasInterface, ServiceInterface } from "@/types/interface";
 import {
     AlertDialog,
-    AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
-    AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+
+import Link from "next/link";
+import { EllipsisVertical, Loader } from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -52,49 +61,93 @@ import {
 } from "@/components/ui/drawer"
 
 export default function MobileSuperServicesMasterDataCard({
-    area,
+    service,
+    areas,
     index,
-    handleDeleteArea,
+    handleDeleteService,
     isDeleteLoading,
     data,
     setData,
     isUpdateLoading,
-    handleUpdateArea,
+    handleUpdateService,
     isDrawerEditOpen,
     setIsDrawerEditOpen,
-
+    quillConditionEdit,
+    quillConditionEditRef,
+    quillTermEdit,
+    quillTermEditRef,
+    quillStepEdit,
+    quillStepEditRef,
+    quillDescEdit,
+    quillDescEditRef,
 }: {
-    area: AreasInterface;
+    service: ServiceInterface;
+    areas: AreasInterface[];
     index: number;
-    handleDeleteArea: (slug: string) => void;
+    handleDeleteService: (id: number) => void;
     isDeleteLoading: boolean;
     data: {
         nama: string;
         desc: string;
-        pj: string;
-        nip_pj: string;
+        syarat: string;
+        bidang_id: string;
+        penanggung_jawab: string;
+        ketentuan: string;
+        langkah: string;
     };
     setData: React.Dispatch<
         React.SetStateAction<{
             nama: string;
             desc: string;
-            pj: string;
-            nip_pj: string;
+            syarat: string;
+            bidang_id: string;
+            penanggung_jawab: string;
+            ketentuan: string;
+            langkah: string;
         }>
     >;
     isUpdateLoading: boolean;
-    handleUpdateArea: (e: React.FormEvent<HTMLFormElement>, slug: string) => void;
+    handleUpdateService: (
+        e: React.FormEvent<HTMLFormElement>,
+        id: number
+    ) => void;
     isDrawerEditOpen: boolean;
     setIsDrawerEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
-
+    quillConditionEdit: any;
+    quillConditionEditRef: any;
+    quillTermEdit: any;
+    quillTermEditRef: any;
+    quillStepEdit: any;
+    quillStepEditRef: any;
+    quillDescEdit: any;
+    quillDescEditRef: any;
 }) {
-    const handleSetArea = () => {
+    const handleSetService = () => {
         setData({
-            nama: area?.nama,
-            desc: area?.desc,
-            pj: area?.pj,
-            nip_pj: area?.nip_pj,
+            nama: service.nama,
+            desc: service.desc,
+            syarat: service.syarat,
+            bidang_id: service.bidang_id.toString(),
+            penanggung_jawab: service.penanggung_jawab,
+            ketentuan: service.ketentuan,
+            langkah: service.langkah,
         });
+
+        if (quillConditionEdit && service?.syarat) {
+            quillConditionEdit.clipboard.dangerouslyPasteHTML(service?.syarat);
+        }
+
+        if (quillTermEdit && service?.ketentuan) {
+            quillTermEdit.clipboard.dangerouslyPasteHTML(service?.ketentuan);
+        }
+
+        if (quillStepEdit && service?.langkah) {
+            quillStepEdit.clipboard.dangerouslyPasteHTML(service?.langkah);
+        }
+
+        if (quillDescEdit && service?.desc) {
+            quillDescEdit.clipboard.dangerouslyPasteHTML(service?.desc);
+        }
     };
 
     function truncateString(str: string, num: number): string {
@@ -131,7 +184,7 @@ export default function MobileSuperServicesMasterDataCard({
                                                     open={isDrawerEditOpen}
                                                     onOpenChange={setIsDrawerEditOpen}>
                                                     <DrawerTrigger onClick={() => {
-                                                        handleSetArea();
+                                                        handleSetService();
                                                         setIsDrawerEditOpen(true);
                                                     }} className="w-full">
                                                         <Button
@@ -143,12 +196,12 @@ export default function MobileSuperServicesMasterDataCard({
                                                     </DrawerTrigger>
                                                     <DrawerContent className="bg-white">
                                                         <DrawerHeader>
-                                                            <DrawerTitle>Master Data Bidang</DrawerTitle>
+                                                            <DrawerTitle>Master Data Layanan</DrawerTitle>
                                                             <form
                                                                 onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
-                                                                    handleUpdateArea(e, area?.slug)
+                                                                    handleUpdateService(e, service?.id)
                                                                 }
-                                                                className="w-full flex flex-col gap-y-3 max-h-full">
+                                                                className="w-full flex flex-col gap-y-3 max-h-full h-[600px]">
                                                                 <DrawerDescription>
                                                                     <div className="text-center mb-4">
                                                                         <TypingEffect text={["Edit data yang diperlukan...."]} />
@@ -157,19 +210,83 @@ export default function MobileSuperServicesMasterDataCard({
                                                                 <div className="w-full flex flex-col gap-y-3 verticalScroll">
                                                                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                                                                         <Label className="focus-within:text-primary-70 font-normal text-xs lg:text-sm text-left">
-                                                                            Nama Bidang
+                                                                            Nama Layanan
                                                                         </Label>
                                                                         <Input
-                                                                            id="nama-bidang"
+                                                                            id="nama-layanan"
                                                                             name="nama"
-                                                                            value={data?.nama}
+                                                                            value={data.nama}
                                                                             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                                                                                setData({ ...data, nama: e.target.value })
+                                                                                setData({
+                                                                                    ...data,
+                                                                                    nama: e.target.value,
+                                                                                })
                                                                             }
                                                                             type="text"
                                                                             className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                                                                             placeholder="Masukkan Nama Bidang"
                                                                         />
+                                                                    </div>
+
+                                                                    <div className="w-full flex flex-col gap-y-3">
+                                                                        <Label className="focus-within:text-primary-70 font-normal text-xs lg:text-sm text-left">
+                                                                            Syarat Layanan
+                                                                        </Label>
+                                                                        <div className="w-full h-[250px] border border-line-20 rounded-lg text-left">
+                                                                            <EditorProvide
+                                                                                content={data?.syarat}
+                                                                                onChange={(e: any) => setData({ ...data, desc: e })}
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
+                                                                        <Label className="focus-within:text-black-800 font-normal text-sm">
+                                                                            Pilih Bidang
+                                                                        </Label>
+
+                                                                        <div className="w-full border border-line-20 rounded-lg">
+                                                                            <Select value={data.bidang_id}
+                                                                                onValueChange={(value: string) =>
+                                                                                    setData({ ...data, bidang_id: value })
+                                                                                }>
+                                                                                <SelectTrigger
+                                                                                    className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                                                                    <SelectValue
+                                                                                        placeholder="Pilih Bidang"
+                                                                                        className="text-black-80 w-full"
+                                                                                    />
+                                                                                </SelectTrigger>
+                                                                                <SelectContent className="bg-line-10">
+                                                                                    <div className="pt-2">
+                                                                                        {areas &&
+                                                                                            areas.length > 0 &&
+                                                                                            areas.map((area: AreasInterface, i: number) => {
+                                                                                                return (
+                                                                                                    <SelectItem
+                                                                                                        key={i}
+                                                                                                        className={`w-full px-4`}
+                                                                                                        value={area.id.toString()}>
+                                                                                                        {area.nama}
+                                                                                                    </SelectItem>
+                                                                                                );
+                                                                                            })}
+                                                                                    </div>
+                                                                                </SelectContent>
+                                                                            </Select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                                                                        <Label className="focus-within:text-primary-70 font-normal text-xs lg:text-sm text-left">
+                                                                            Deskripsi Bidang
+                                                                        </Label>
+                                                                        <div className="w-full h-[250px] border border-line-20 rounded-lg text-left">
+                                                                            <EditorProvide
+                                                                                content={data?.bidang_id}
+                                                                                onChange={(e: any) => setData({ ...data, desc: e })}
+                                                                            />
+                                                                        </div>
                                                                     </div>
 
                                                                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
@@ -178,10 +295,13 @@ export default function MobileSuperServicesMasterDataCard({
                                                                         </Label>
                                                                         <Input
                                                                             id="pj"
-                                                                            name="pj"
-                                                                            value={data.pj}
+                                                                            name="penanggung_jawab"
+                                                                            value={data.penanggung_jawab}
                                                                             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                                                                                setData({ ...data, pj: e.target.value })
+                                                                                setData({
+                                                                                    ...data,
+                                                                                    penanggung_jawab: e.target.value,
+                                                                                })
                                                                             }
                                                                             type="text"
                                                                             className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
@@ -189,37 +309,30 @@ export default function MobileSuperServicesMasterDataCard({
                                                                         />
                                                                     </div>
 
-                                                                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                                                                        <Label
-                                                                            htmlFor="nip-pj"
-                                                                            className="focus-within:text-primary-70 font-normal text-xs lg:text-sm text-left">
-                                                                            NIP Penanggung Jawab
-                                                                        </Label>
-                                                                        <Input
-                                                                            id="nip-pj"
-                                                                            name="nip_pj"
-                                                                            value={data.nip_pj}
-                                                                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                                                                                setData({ ...data, nip_pj: e.target.value })
-                                                                            }
-                                                                            type="text"
-                                                                            inputMode="numeric"
-                                                                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                                                                            placeholder="Masukkan NIP Penanggung Jawab"
-                                                                        />
-                                                                    </div>
-
                                                                     <div className="w-full flex flex-col gap-y-3">
                                                                         <Label className="focus-within:text-primary-70 font-normal text-xs lg:text-sm text-left">
-                                                                            Deskripsi Bidang
+                                                                            Ketentuan
                                                                         </Label>
                                                                         <div className="w-full h-[250px] border border-line-20 rounded-lg text-left">
                                                                             <EditorProvide
-                                                                                content={data.desc}
+                                                                                content={data?.ketentuan}
                                                                                 onChange={(e: any) => setData({ ...data, desc: e })}
                                                                             />
                                                                         </div>
                                                                     </div>
+
+                                                                    <div className="w-full flex flex-col gap-y-3">
+                                                                        <Label className="focus-within:text-primary-70 font-normal text-xs lg:text-sm text-left">
+                                                                            Langkah
+                                                                        </Label>
+                                                                        <div className="w-full h-[250px] border border-line-20 rounded-lg text-left">
+                                                                            <EditorProvide
+                                                                                content={data?.langkah}
+                                                                                onChange={(e: any) => setData({ ...data, desc: e })}
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+
                                                                     <div className="flex gap-4 justify-center">
                                                                         <DrawerClose>
                                                                             <div className="text-xs md:text-sm">Batal</div>
@@ -247,7 +360,7 @@ export default function MobileSuperServicesMasterDataCard({
                                             <Button
                                                 title="Hapus Data"
                                                 disabled={isDeleteLoading ? true : false}
-                                                onClick={() => handleDeleteArea(area?.slug)}
+                                                onClick={() => handleDeleteService(service.id)}
                                                 className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 h-10 text-xs md:text-sm px-3 border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                                                 {isDeleteLoading ? (
                                                     <Loader className="animate-spin" />
@@ -272,63 +385,29 @@ export default function MobileSuperServicesMasterDataCard({
                     </div>
 
                     <div className="w-full grid grid-cols-3">
-                        <div className="w-full font-medium text-black">Nama Bidang</div>
+                        <div className="w-full font-medium text-black">Nama Layanan</div>
                         <div className="w-full col-span-2">
-                            : {area?.nama}
+                            : {service.nama}
                         </div>
                     </div>
 
                     <div className="w-full grid grid-cols-3">
-                        <div className="w-full font-medium text-black">Penanggung Jawab</div>
+                        <div className="w-full font-medium text-black">Bidang</div>
                         <div className="w-full col-span-2">
-                            : {area?.pj}
-                        </div>
-                    </div>
-
-                    <div className="w-full grid grid-cols-3">
-                        <div className="w-full font-medium text-black">NIP Penanggung Jawab</div>
-                        <div className="w-full col-span-2">
-                            : {area?.nip_pj}
+                            :
+                            <>
+                                {service.bidang_id}
+                            </>
                         </div>
                     </div>
 
                     <div className="w-full grid grid-cols-3">
                         <div className="w-full font-medium text-black">Deskripsi</div>
                         <div className="w-full col-span-2">
-                            : {area?.desc}
+                            : {service.desc}
                         </div>
                     </div>
                 </div>
-
-                {/* <div className="card-table text-[12px] p-4 rounded-2xl border border-primary bg-white shadow-sm">
-                        <div className="wrap-konten flex flex-col gap-2">
-                            <div className="flex justify-between gap-5">
-                                <div className="label font-medium text-black">No</div>
-                                <div className="konten text-black/80 text-end">
-                                    {index + 1}
-                                </div>
-                            </div>
-                            <div className="flex justify-between gap-5">
-                                <div className="label font-medium text-black">Tanggal</div>
-                                <div className="konten text-black/80 text-end">
-                                    {area?.nama}
-                                </div>
-                            </div>
-                            <div className="flex justify-between gap-5">
-                                <div className="label font-medium text-black">Nama Komoditas</div>
-                                <div className="konten text-black/80 text-end">
-                                    {area?.pj}
-                                </div>
-                            </div>
-                            <div className="flex justify-between gap-5">
-                                <div className="label font-medium text-black">Satuan Komoditas</div>
-                                <div className="konten text-black/80 text-end">
-                                    {area?.desc}
-                                </div>
-                            </div>
-                        </div>
-                        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-primary to-transparent transition-all animate-pulse my-3"></div>
-                    </div> */}
             </section>
         </>
     );

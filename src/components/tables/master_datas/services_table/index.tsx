@@ -78,7 +78,7 @@ export default function SuperServicesMasterDataTablePages({
   return (
     <>
       {/* mobile*/}
-      {/* <div className="md:hidden">
+      <div className="md:hidden">
         <>
           {services &&
             services.length > 0 &&
@@ -109,7 +109,7 @@ export default function SuperServicesMasterDataTablePages({
               );
             })}
         </>
-      </div> */}
+      </div>
       {/* mobile*/}
 
       {/* dekstop*/}

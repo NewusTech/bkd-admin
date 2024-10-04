@@ -122,6 +122,7 @@ export default function SuperNewsMasterDataCard({
         </div>
       </TableCell>
       <TableCell className="text-center flex items-center w-full">
+      
         <div className="w-full flex flex-row items-center justify-center gap-x-2">
           <div className="w-full">
             <AlertDialog

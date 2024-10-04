@@ -253,7 +253,6 @@ export default function ServicesScreen() {
 
     try {
       const response = await postCreateService(data);
-
       if (response.status === 201) {
         setData({
           nama: "",
@@ -377,7 +376,7 @@ export default function ServicesScreen() {
   return (
     <section className="w-full flex flex-col items-center md:px-5 md:mt-5">
       <div className="bg-[#F6F6F6] md:bg-line-10 md:shadow-md md:rounded-lg w-full flex flex-col p-5 gap-y-5">
-
+        <h1 className="text-lg">Kelola Layanan</h1>
         {/* Mobile */}
         <div className="md:hidden">
           <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-4 gap-y-4 md:p-5 md:gap-y-5">
@@ -399,12 +398,12 @@ export default function ServicesScreen() {
                 }} className="w-full">
                   <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
-                    Tambah Bidang
+                    Tambah Layanan
                   </div>
                 </DrawerTrigger>
                 <DrawerContent className="bg-white">
                   <DrawerHeader>
-                    <DrawerTitle>Master Data Bidang</DrawerTitle>
+                    <DrawerTitle>Master Data Layanan</DrawerTitle>
 
                     <form
                       onSubmit={handleCreateService}
@@ -415,11 +414,40 @@ export default function ServicesScreen() {
                         </div>
                       </DrawerDescription>
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
+
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-primary-70 font-normal text-xs md:text-sm text-left">
+                            Nama Layanan
+                          </Label>
+                          <Input
+                            id="nama-layanan"
+                            name="nama"
+                            value={data.nama}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan Nama Layanan"
+                          />
+                        </div>
+
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label
+                            htmlFor="syarat"
+                            className="focus-within:text-primary-70 font-normal text-xs md:text-sm text-left">
+                            Syarat Layanan
+                          </Label>
+                          <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
+                            <EditorProvide
+                              content={data.syarat}
+                              onChange={(e: any) => setData({ ...data, syarat: e })}
+                            />
+                          </div>
+                        </div>
+
                         <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-black-800 font-normal text-sm">
+                          <Label className="focus-within:text-black-800 font-normal text-xs md:text-sm text-left">
                             Pilih Bidang
                           </Label>
-
                           <div className="w-full border border-line-20 rounded-lg">
                             <Select onValueChange={handleSelectChange}>
                               <SelectTrigger
@@ -451,27 +479,22 @@ export default function ServicesScreen() {
                           </div>
                         </div>
 
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-xs md:text-sm text-left">
-                            Nama Layanan
+                        <div className="w-full flex flex-col gap-y-2">
+                          <Label className="text-black-70 font-normal text-xs md:text-sm text-left">
+                            Deskripsi Bidang
                           </Label>
-
-                          <Input
-                            id="nama-layanan"
-                            name="nama"
-                            value={data.nama}
-                            onChange={handleChange}
-                            type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                            placeholder="Masukkan Nama Layanan"
-                          />
+                          <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
+                            <EditorProvide
+                              content={data.desc}
+                              onChange={(e: any) => setData({ ...data, desc: e })}
+                            />
+                          </div>
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label className="focus-within:text-primary-70 font-normal text-xs md:text-sm text-left">
                             Penanggung Jawab
                           </Label>
-
                           <Input
                             id="pj"
                             name="penanggung_jawab"
@@ -485,34 +508,16 @@ export default function ServicesScreen() {
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label
-                            htmlFor="syarat"
-                            className="focus-within:text-primary-70 font-normal text-xs md:text-sm text-left">
-                            Syarat Layanan
-                          </Label>
-
-                          <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
-                            <EditorProvide
-                              content={data.desc}
-                              onChange={(e: any) => setData({ ...data, desc: e })}
-                            />
-                          </div>
-
-                        </div>
-
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label
                             htmlFor="ketentuan"
                             className="focus-within:text-primary-70 font-normal text-xs md:text-sm text-left">
                             Ketentuan
                           </Label>
-
                           <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
                             <EditorProvide
-                              content={data.desc}
-                              onChange={(e: any) => setData({ ...data, desc: e })}
+                              content={data.ketentuan}
+                              onChange={(e: any) => setData({ ...data, ketentuan: e })}
                             />
                           </div>
-
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
@@ -521,24 +526,10 @@ export default function ServicesScreen() {
                             className="focus-within:text-primary-70 font-normal text-xs md:text-sm text-left">
                             Langkah
                           </Label>
-
                           <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
                             <EditorProvide
-                              content={data.desc}
-                              onChange={(e: any) => setData({ ...data, desc: e })}
-                            />
-                          </div>
-                        </div>
-
-                        <div className="w-full flex flex-col gap-y-2">
-                          <Label className="text-xs md:text-sm text-left text-black-70 font-normal">
-                            Deskripsi Layanan
-                          </Label>
-
-                          <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
-                            <EditorProvide
-                              content={data.desc}
-                              onChange={(e: any) => setData({ ...data, desc: e })}
+                              content={data.langkah}
+                              onChange={(e: any) => setData({ ...data, langkah: e })}
                             />
                           </div>
                         </div>
@@ -548,7 +539,6 @@ export default function ServicesScreen() {
                         <DrawerClose>
                           <div className="text-xs md:text-sm">Batal</div>
                         </DrawerClose>
-
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
@@ -587,8 +577,9 @@ export default function ServicesScreen() {
                 <AlertDialogTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                    Tambah
+                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                    <AddIcon />
+                    Tambah Layanan
                   </div>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
@@ -603,11 +594,40 @@ export default function ServicesScreen() {
                       onSubmit={handleCreateService}
                       className="w-full flex flex-col gap-y-3 max-h-[500px]">
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
+
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                            Nama Layanan
+                          </Label>
+                          <Input
+                            id="nama-layanan"
+                            name="nama"
+                            value={data.nama}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan Nama Layanan"
+                          />
+                        </div>
+
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label
+                            htmlFor="syarat"
+                            className="focus-within:text-primary-70 font-normal text-sm">
+                            Syarat Layanan
+                          </Label>
+                          <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
+                            <EditorProvide
+                              content={data.syarat}
+                              onChange={(e: any) => setData({ ...data, syarat: e })}
+                            />
+                          </div>
+                        </div>
+
                         <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-black-800 font-normal text-sm">
+                          <Label className="focus-within:text-black-800 font-normal text-xs md:text-smtext-left">
                             Pilih Bidang
                           </Label>
-
                           <div className="w-full border border-line-20 rounded-lg">
                             <Select onValueChange={handleSelectChange}>
                               <SelectTrigger
@@ -639,27 +659,22 @@ export default function ServicesScreen() {
                           </div>
                         </div>
 
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-sm">
-                            Nama Layanan
+                        <div className="w-full flex flex-col gap-y-2">
+                          <Label className="text-sm text-black-70 font-normal">
+                            Deskripsi Bidang
                           </Label>
-
-                          <Input
-                            id="nama-layanan"
-                            name="nama"
-                            value={data.nama}
-                            onChange={handleChange}
-                            type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                            placeholder="Masukkan Nama Layanan"
-                          />
+                          <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
+                            <EditorProvide
+                              content={data.desc}
+                              onChange={(e: any) => setData({ ...data, desc: e })}
+                            />
+                          </div>
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label className="focus-within:text-primary-70 font-normal text-sm">
                             Penanggung Jawab
                           </Label>
-
                           <Input
                             id="pj"
                             name="penanggung_jawab"
@@ -673,30 +688,14 @@ export default function ServicesScreen() {
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label
-                            htmlFor="syarat"
-                            className="focus-within:text-primary-70 font-normal text-sm">
-                            Syarat Layanan
-                          </Label>
-
-                          <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
-                            <EditorProvide
-                              content={data.desc}
-                              onChange={(e: any) => setData({ ...data, desc: e })}
-                            />
-                          </div>
-                        </div>
-
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label
                             htmlFor="ketentuan"
                             className="focus-within:text-primary-70 font-normal text-sm">
                             Ketentuan
                           </Label>
-
                           <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
                             <EditorProvide
-                              content={data.desc}
-                              onChange={(e: any) => setData({ ...data, desc: e })}
+                              content={data.ketentuan}
+                              onChange={(e: any) => setData({ ...data, ketentuan: e })}
                             />
                           </div>
                         </div>
@@ -707,32 +706,16 @@ export default function ServicesScreen() {
                             className="focus-within:text-primary-70 font-normal text-sm">
                             Langkah
                           </Label>
-
                           <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
                             <EditorProvide
-                              content={data.desc}
-                              onChange={(e: any) => setData({ ...data, desc: e })}
-                            />
-                          </div>
-                        </div>
-
-                        <div className="w-full flex flex-col gap-y-2">
-                          <Label className="text-sm text-black-70 font-normal">
-                            Deskripsi Layanan
-                          </Label>
-
-                          <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
-                            <EditorProvide
-                              content={data.desc}
-                              onChange={(e: any) => setData({ ...data, desc: e })}
+                              content={data.langkah}
+                              onChange={(e: any) => setData({ ...data, langkah: e })}
                             />
                           </div>
                         </div>
                       </div>
-
                       <div className="w-full flex flex-row justify-between items-center gap-x-5">
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
@@ -764,9 +747,9 @@ export default function ServicesScreen() {
               setData={setData}
               isUpdateLoading={isUpdateLoading}
               isDialogEditOpen={isDialogEditOpen}
+              setIsDialogEditOpen={setIsDialogEditOpen}
               isDrawerEditOpen={isDrawerEditOpen}
               setIsDrawerEditOpen={setIsDrawerEditOpen}
-              setIsDialogEditOpen={setIsDialogEditOpen}
               handleUpdateService={handleUpdateService}
               quillConditionEdit={quillConditionEdit}
               quillConditionEditRef={quillConditionEditRef}

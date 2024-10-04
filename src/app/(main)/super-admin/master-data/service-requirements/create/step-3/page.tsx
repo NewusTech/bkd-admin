@@ -189,7 +189,7 @@ export default function ServiceRequirementsCreate() {
                 />
               </svg>
             </Link>
-            <h1 className="text-sm md:text-lg">Persyaratan Layanan</h1>
+            <h1 className="text-lg md:text-lg">Persyaratan Layanan</h1>
           </div>
           <div className="w-full">
             <div className="text-center mb-4 text-sm md:text-lg">Dokumen</div>

@@ -27,6 +27,7 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
+import EditorProvide from "../pages/areas";
 
 export default function SuperServicesMasterDataCard({
   service,
@@ -157,7 +158,6 @@ export default function SuperServicesMasterDataCard({
                       <Label className="focus-within:text-primary-70 font-normal text-sm">
                         Nama Layanan
                       </Label>
-
                       <Input
                         id="nama-layanan"
                         name="nama"
@@ -175,112 +175,17 @@ export default function SuperServicesMasterDataCard({
                     </div>
 
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
-                        Penanggung Jawab
-                      </Label>
-
-                      <Input
-                        id="pj"
-                        name="penanggung_jawab"
-                        value={data.penanggung_jawab}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setData({
-                            ...data,
-                            penanggung_jawab: e.target.value,
-                          })
-                        }
-                        type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Nama Penanggung Jawab"
-                      />
-                    </div>
-
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                       <Label
                         htmlFor="syarat"
                         className="focus-within:text-primary-70 font-normal text-sm">
                         Syarat Layanan
                       </Label>
-
-                      <div className="w-full h-[250px] flex flex-col gap-y-2">
-                        <div
-                          className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
-                          ref={quillConditionEditRef}></div>
+                      <div className="w-full h-[250px] border border-line-20 rounded-lg text-left">
+                        <EditorProvide
+                          content={data.syarat}
+                          onChange={(e: any) => setData({ ...data, syarat: e })}
+                        />
                       </div>
-
-                      {/* <Input
-                        id="syarat"
-                        name="syarat"
-                        value={data.syarat}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setData({
-                            ...data,
-                            syarat: e.target.value,
-                          })
-                        }
-                        type="text"
-                        inputMode="numeric"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Syarat"
-                      /> */}
-                    </div>
-
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label
-                        htmlFor="ketentuan"
-                        className="focus-within:text-primary-70 font-normal text-sm">
-                        Ketentuan
-                      </Label>
-
-                      <div className="w-full h-[250px] flex flex-col gap-y-2">
-                        <div
-                          className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
-                          ref={quillTermEditRef}></div>
-                      </div>
-
-                      {/* <Input
-                        id="ketentuan"
-                        name="ketentuan"
-                        value={data.ketentuan}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setData({
-                            ...data,
-                            ketentuan: e.target.value,
-                          })
-                        }
-                        type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Ketentuan"
-                      /> */}
-                    </div>
-
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label
-                        htmlFor="langkah"
-                        className="focus-within:text-primary-70 font-normal text-sm">
-                        Langkah
-                      </Label>
-
-                      <div className="w-full h-[250px] flex flex-col gap-y-2">
-                        <div
-                          className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
-                          ref={quillStepEditRef}></div>
-                      </div>
-
-                      {/* <Input
-                        id="langkah"
-                        name="langkah"
-                        value={data.langkah}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setData({
-                            ...data,
-                            langkah: e.target.value,
-                          })
-                        }
-                        type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Langkah"
-                      /> */}
                     </div>
 
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
@@ -289,7 +194,6 @@ export default function SuperServicesMasterDataCard({
                         className="focus-within:text-primary-70 font-normal text-sm">
                         Pilih Bidang
                       </Label>
-
                       <div className="w-full border border-line-20 rounded-lg">
                         <Select
                           value={data.bidang_id}
@@ -324,25 +228,63 @@ export default function SuperServicesMasterDataCard({
                     </div>
 
                     <div className="w-full flex flex-col gap-y-2">
-                      <Label className="text-sm text-black-70 font-normal">
+                      <Label className="text-black-70 font-normal text-xs md:text-sm text-left">
                         Deskripsi Bidang
                       </Label>
-
-                      <div className="w-full h-[250px] flex flex-col gap-y-2">
-                        <div
-                          className="flex flex-col h-[250px] mt-2 w-full border border-line-20 rounded-b-lg"
-                          ref={quillDescEditRef}></div>
+                      <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
+                        <EditorProvide
+                          content={data.desc}
+                          onChange={(e: any) => setData({ ...data, desc: e })}
+                        />
                       </div>
+                    </div>
 
-                      {/* <Textarea
-                        name="desc"
-                        placeholder="Masukkan Deskripsi Bidang"
-                        value={data.desc}
-                        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                          setData({ ...data, desc: e.target.value })
+                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                      <Label className="focus-within:text-primary-70 font-normal text-sm">
+                        Penanggung Jawab
+                      </Label>
+                      <Input
+                        id="pj"
+                        name="penanggung_jawab"
+                        value={data.penanggung_jawab}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          setData({
+                            ...data,
+                            penanggung_jawab: e.target.value,
+                          })
                         }
-                        className="w-full rounded-lg h-[74px] border border-line-20 md:h-[122px] text-sm placeholder:opacity-[70%]"
-                      /> */}
+                        type="text"
+                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                        placeholder="Masukkan Nama Penanggung Jawab"
+                      />
+                    </div>
+
+                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                      <Label
+                        htmlFor="ketentuan"
+                        className="focus-within:text-primary-70 font-normal text-sm">
+                        Ketentuan
+                      </Label>
+                      <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
+                        <EditorProvide
+                          content={data.ketentuan}
+                          onChange={(e: any) => setData({ ...data, ketentuan: e })}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                      <Label
+                        htmlFor="langkah"
+                        className="focus-within:text-primary-70 font-normal text-sm">
+                        Langkah
+                      </Label>
+                      <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
+                        <EditorProvide
+                          content={data.langkah}
+                          onChange={(e: any) => setData({ ...data, langkah: e })}
+                        />
+                      </div>
                     </div>
 
                     <div className="w-full flex flex-row justify-center items-center gap-x-5">

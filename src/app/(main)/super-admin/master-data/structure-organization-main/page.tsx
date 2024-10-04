@@ -50,6 +50,7 @@ import Image from "next/image";
 import SuperStructureOrganizationMainMasterDataTablePages from "@/components/tables/master_datas/structure_organization_main_table";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileStructureOrganizationMainMasterDataCard from "@/components/mobile_all_cards/mobileStructurOrganizationMainMasterDataCard";
+import AddIcon from "@/components/elements/add_button";
 
 export default function StructureOrganizationMainScreen() {
   const router = useRouter();
@@ -254,8 +255,9 @@ export default function StructureOrganizationMainScreen() {
                 <AlertDialogTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                    Tambah
+                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                    <AddIcon />
+                    Tambah Data
                   </div>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
@@ -332,9 +334,10 @@ export default function StructureOrganizationMainScreen() {
               <Drawer open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DrawerTrigger
                   onClick={() => setIsDialogOpen(true)}
-                  className="w-full min-h-[50px] md:min-h-[60px] text-line-10 text-[13px] md:text-lg bg-primary-40 hover:bg-primary-70 rounded-lg">
-                  <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                    Tambah
+                  className="w-full">
+                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                    <AddIcon />
+                    Tambah Data
                   </div>
                 </DrawerTrigger>
                 <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
@@ -425,12 +428,12 @@ export default function StructureOrganizationMainScreen() {
                   // isDeleteLoading={isDeleteLoading}
                   data={data}
                   setData={setData}
-                  // isUpdateLoading={isUpdateLoading}
-                  // isDialogEditOpen={isDialogEditOpen}
-                  // setIsDialogEditOpen={setIsDialogEditOpen}
-                  // handleUpdateStructureOrganization={
-                  //   handleUpdateStructureOrganization
-                  // }
+                // isUpdateLoading={isUpdateLoading}
+                // isDialogEditOpen={isDialogEditOpen}
+                // setIsDialogEditOpen={setIsDialogEditOpen}
+                // handleUpdateStructureOrganization={
+                //   handleUpdateStructureOrganization
+                // }
                 />
               )}
             </>

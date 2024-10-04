@@ -38,6 +38,18 @@ import InputComponent from "@/components/InputComponent";
 import SuperServiceRequirementsMasterDataTablePages from "@/components/tables/master_datas/service-requirements-table";
 import Link from "next/link";
 import AddIcon from "@/components/elements/add_button";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from "@/components/ui/drawer";
+import MobileSuperServiceRequirementsMasterDataTablePages from "@/components/mobile_all_cards/mobileSuperServiceRequirementsMasterDataTablePages";
 
 export default function ServiceRequiremnts() {
     const [instance, setInstance] = useState<string>("");
@@ -47,11 +59,13 @@ export default function ServiceRequiremnts() {
     const [instansiId, setInstansiId] = useState<any>(0);
     const [searchInputInstance, setSearchInputInstance] = useState(""); // State for search input
     const [permission, setPermission] = useState<string[]>([]);
-
+    const isMobile = useMediaQuery("(max-width: 768px)");
     const router = useRouter();
     const [search, setSearch] = useState("");
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [isDrawerEditOpen, setIsDrawerEditOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [isDeleteLoading, setIsDeleteLoading] = useState(false);
     const [isUpdateLoading, setIsUpdateLoading] = useState(false);
@@ -248,71 +262,135 @@ export default function ServiceRequiremnts() {
     };
 
     return (
-        <section className="w-full flex flex-col items-center px-5 mt-5">
-            <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
-                <h1 className="text-lg font-semibold">Kelola Persyaratan</h1>
-                <div className="w-full flex flex-row gap-x-5">
-                    <div className="w-[65%] border border-b rounded-lg z-50">
-                        <InputComponent
-                            typeInput="selectSearch"
-                            valueInput={searchInputInstance}
-                            onChangeInputSearch={(e) =>
-                                setSearchInputInstance(e.target.value)
-                            }
-                            // items={result}
-                            label="Instansi"
-                            placeholder="Pilih Instansi"
-                            value={instance}
-                            onChange={(e: any) => setInstance(e)}
-                        />
-                    </div>
-                    <div className="w-[35%]">
-                        <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                            <AlertDialogTrigger
-                                onClick={() => {
-                                    setIsDialogOpen(true);
-                                }}
-                                className="w-full">
-                                {/* Add Data */}
-                                <div className="flex justify-end items-center w-full">
-                                    <Link
-                                        href="/super-admin/master-data/service-requirements/create"
-                                        className='bg-primary-40 h-10 text-xs md:text-sm px-3 rounded-lg text-white hover:bg-primary-70 border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300 py-2'>
-                                        <AddIcon />
-                                        Add Persyaratan Layanan
-                                    </Link>
+        <>
+            {!isMobile ? (
+                <>
+                    {/* Dekstop */}
+                    <section className="w-full flex flex-col items-center px-5 mt-5">
+                        <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
+                            <h1 className="text-lg">Kelola Persyaratan</h1>
+                            <div className="w-full flex flex-row gap-x-5">
+                                <div className="w-[65%] border border-b rounded-lg z-50">
+                                    <InputComponent
+                                        typeInput="selectSearch"
+                                        valueInput={searchInputInstance}
+                                        onChangeInputSearch={(e) =>
+                                            setSearchInputInstance(e.target.value)
+                                        }
+                                        // items={result}
+                                        label="layanan"
+                                        placeholder="Pilih Layanan"
+                                        value={instance}
+                                        onChange={(e: any) => setInstance(e)}
+                                    />
                                 </div>
-                                {/* Tambah Data */}
-                            </AlertDialogTrigger>
-                        </AlertDialog>
-                    </div>
-                </div>
+                                <div className="w-[35%]">
+                                    <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                                        <AlertDialogTrigger
+                                            onClick={() => {
+                                                setIsDialogOpen(true);
+                                            }}
+                                            className="w-full">
+                                            {/* Add Data */}
+                                            <div className="flex justify-end items-center w-full">
+                                                <Link
+                                                    href="/super-admin/master-data/service-requirements/create"
+                                                    className='bg-primary-40 h-10 text-xs md:text-sm px-3 rounded-lg text-white hover:bg-primary-70 border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300 py-2'>
+                                                    <AddIcon />
+                                                    Tambah Persyaratan Layanan
+                                                </Link>
+                                            </div>
+                                            {/* Tambah Data */}
+                                        </AlertDialogTrigger>
+                                    </AlertDialog>
+                                </div>
+                            </div>
 
-                <div className="w-full">
-                    {areas && areas.length > 0 && (
-                        <SuperServiceRequirementsMasterDataTablePages
-                            areas={areas}
-                            handleDeleteArea={handleDeleteAreas}
-                            isDeleteLoading={isDeleteLoading}
-                            data={data}
-                            setData={setData}
-                            isUpdateLoading={isUpdateLoading}
-                            isDialogEditOpen={isDialogEditOpen}
-                            setIsDialogEditOpen={setIsDialogEditOpen}
-                            handleUpdateArea={handleUpdateArea}
-                            quillEdit={quillEdit}
-                            quillEditRef={quillEditRef}
-                        />
-                    )}
-                </div>
-                <div className="w-full">
-                    <PaginationComponent
-                        currentPage={pagination.currentPage}
-                        totalPages={pagination.totalPages}
-                        onPageChange={handlePageChange}
-                    />
-                </div>
+                            <div className="w-full">
+                                {areas && areas.length > 0 && (
+                                    <SuperServiceRequirementsMasterDataTablePages
+                                        areas={areas}
+                                        handleDeleteArea={handleDeleteAreas}
+                                        isDeleteLoading={isDeleteLoading}
+                                        data={data}
+                                        setData={setData}
+                                        isUpdateLoading={isUpdateLoading}
+                                        isDialogEditOpen={isDialogEditOpen}
+                                        setIsDialogEditOpen={setIsDialogEditOpen}
+                                        handleUpdateArea={handleUpdateArea}
+                                        quillEdit={quillEdit}
+                                        quillEditRef={quillEditRef}
+                                    />
+                                )}
+                            </div>
+                        </div>
+                    </section>
+                    {/* Desktop */}
+                </>
+            ) : (
+                <>
+                    {/* mobile */}
+                    <section className="w-full flex flex-col items-center px-5 mt-5">
+                        <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
+                            <h1 className="text-lg">Kelola Persyaratan</h1>
+
+                            <div className="w-full gap-x-5">
+                                <div className="w-full border border-b rounded-lg z-50">
+                                    <InputComponent
+                                        typeInput="selectSearch"
+                                        valueInput={searchInputInstance}
+                                        onChangeInputSearch={(e) =>
+                                            setSearchInputInstance(e.target.value)
+                                        }
+                                        // items={result}
+                                        label="Instansi"
+                                        placeholder="Pilih Instansi"
+                                        value={instance}
+                                        onChange={(e: any) => setInstance(e)}
+                                    />
+                                </div>
+                                <div className="w-full mt-2">
+                                    <div className="flex justify-end items-center w-full">
+                                        <Link className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2"
+                                            href="/super-admin/master-data/service-requirements/create">
+                                            <AddIcon />
+                                            Tambah Persyaratan
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5 mt-2">
+                            <div className="w-full">
+                                {/* {areas && areas.length > 0 && (
+                                    <MobileSuperServiceRequirementsMasterDataTablePages
+                                        areas={areas}
+                                        handleDeleteArea={handleDeleteAreas}
+                                        isDeleteLoading={isDeleteLoading}
+                                        data={data}
+                                        setData={setData}
+                                        isUpdateLoading={isUpdateLoading}
+                                        isDialogEditOpen={isDialogEditOpen}
+                                        setIsDialogEditOpen={setIsDialogEditOpen}
+                                        handleUpdateArea={handleUpdateArea}
+                                        quillEdit={quillEdit}
+                                        quillEditRef={quillEditRef}
+                                    />
+                                )} */}
+                            </div>
+                        </div>
+                    </section>
+                    {/* Mobile */}
+                </>
+            )}
+
+            <div className="w-full">
+                <PaginationComponent
+                    currentPage={pagination.currentPage}
+                    totalPages={pagination.totalPages}
+                    onPageChange={handlePageChange}
+                />
             </div>
-        </section>
+        </>
     );
 }
