@@ -275,7 +275,8 @@ export default function DashBoardSidebarPages() {
               <AccordionItem
                 className="w-full border-none flex flex-col"
                 value={`item-1`}>
-                <AccordionTrigger className="px-4 py-2 bg-white font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4">
+                <AccordionTrigger
+                  className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}>
                   <div className="w-full flex flex-row items-center gap-x-2">
                     <p className="text-black-80 text-[16px]">
                       Riwayat Permohonan
@@ -291,11 +292,16 @@ export default function DashBoardSidebarPages() {
                           return (
                             <Link
                               key={i}
-                              href={`${bar?.name === "Riwayat Pengajuan" ? "/verification-admin/verification-user-application-histories" : "/verification-admin/verification-user-application-revition-histories"}`}
+                              href={`${bar?.name === "Riwayat Pengajuan" ? "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" : "/verification-admin/verification-user-application-histories/verification-user-revision-application-history"}`}
                               className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
                               <div className="w-10/12 flex flex-row items-center gap-x-2">
-                                <DotIcon className={`w-5 h-5 text-black-80`} />
-                                <p>{bar?.name}</p>
+                                <DotIcon
+                                  className={`w-5 h-5 ${pathName == "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" ? "text-primary-40" : pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "text-primary-40" : "text-black-80"}`}
+                                />
+                                <p
+                                  className={`text-[14px] ${pathName == "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" ? "text-primary-40" : pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "text-primary-40" : "text-black-80"}`}>
+                                  {bar?.name}
+                                </p>
                               </div>
                             </Link>
                           );

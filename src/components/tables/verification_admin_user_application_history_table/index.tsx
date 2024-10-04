@@ -9,8 +9,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import VerificationUserApplicationHistoryCard from "@/components/all_cards/verificationUserApplicationHistoryCard";
+import { UserApplicationHistoryInterface } from "@/types/interface";
 
-export default function VerificationUserApplicationHistoryTablePages() {
+export default function VerificationUserApplicationHistoryTablePages({
+  users,
+}: {
+  users: UserApplicationHistoryInterface[];
+}) {
   return (
     <>
       <Table className="w-full border border-line-20">
@@ -33,7 +38,17 @@ export default function VerificationUserApplicationHistoryTablePages() {
               );
             }
           )} */}
-          <VerificationUserApplicationHistoryCard />
+          {users &&
+            users.length > 0 &&
+            users.map((user: UserApplicationHistoryInterface, i: number) => {
+              return (
+                <VerificationUserApplicationHistoryCard
+                  key={i}
+                  user={user}
+                  index={i}
+                />
+              );
+            })}
         </TableBody>
       </Table>
     </>
