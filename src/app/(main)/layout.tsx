@@ -20,7 +20,7 @@ export default function MainLayout({
     <main
       className={`${poppins.className} w-full relative flex flex-col min-h-screen`}>
       <Suspense fallback={<div>Loading...</div>}>
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto bg-[#F6F6F6]">
           {!isMobile ? (
             <div className="w-full flex flex-row">
               <DashBoardSidebarPages />

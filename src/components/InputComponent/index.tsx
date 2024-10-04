@@ -82,7 +82,7 @@ const InputComponent = ({
                     </div>
                     <SelectGroup>
                         <SelectLabel>{label}</SelectLabel>
-                        {items?.map((item) => (
+                        {items?.map((item: any) => (
                             <SelectItem key={item.id} value={item.id}>
                                 {item.name}
                             </SelectItem>
@@ -172,7 +172,7 @@ const InputComponent = ({
             <Input
                 type="text"
                 placeholder="Judul / Pertanyaan"
-                className="rounded-none border-r-0 border-t-0 border-l-0 bg-transparent"
+                className="rounded-none border-r-0 border-t-0 border-l-0 bg-transparent text-xs ml:text-sm"
                 value={value}
                 onChange={onChange}
             />

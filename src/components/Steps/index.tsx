@@ -5,10 +5,10 @@ const Step = ({ isLastStep, isActive, isCompleted, desk }: CardStepProps) => {
         <div className="flex flex-col items-center w-full">
             <div className="relative flex items-center justify-center w-full">
                 <div
-                    className={`h-12 w-12 rounded-full flex items-center justify-center border-2 transition-all duration-300  z-50
+                    className={`h-6 w-6 md:h-12 md:w-12 rounded-full flex items-center justify-center border-2 transition-all duration-300 z-50
                     ${isActive || isCompleted ? "bg-blue-500 text-white border-blue-500 shadow-lg" : "bg-gray-200 text-gray-500 border-gray-300"}`}
                 >
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-2 h-2 md:w-4 md:h-4" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="6" cy="6" r="6" fill="white" />
                     </svg>
                 </div>

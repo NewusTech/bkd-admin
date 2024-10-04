@@ -92,13 +92,13 @@ export default function ServiceRequiremntsCreate() {
     dataStep2.length > 0
       ? dataStep2
       : [
-          {
-            id: Date.now(),
-            field: "",
-            tipedata: "text",
-            isrequired: "",
-          },
-        ]
+        {
+          id: Date.now(),
+          field: "",
+          tipedata: "text",
+          isrequired: "",
+        },
+      ]
   );
   const [lastOptionId, setLastOptionId] = useState<number>(0); // State for incremental option ID
 
@@ -134,14 +134,14 @@ export default function ServiceRequiremntsCreate() {
   const addOption = (cardId: number) => {
     const updatedCards = cards.map((card) =>
       card.id === cardId &&
-      (card.tipedata === "radio" || card.tipedata === "checkbox")
+        (card.tipedata === "radio" || card.tipedata === "checkbox")
         ? {
-            ...card,
-            options: [
-              ...(card.options || []),
-              { id: (card.options?.length || 0) + 1, key: "" },
-            ],
-          }
+          ...card,
+          options: [
+            ...(card.options || []),
+            { id: (card.options?.length || 0) + 1, key: "" },
+          ],
+        }
         : card
     );
     setCards(updatedCards);
@@ -151,11 +151,11 @@ export default function ServiceRequiremntsCreate() {
     const updatedCards = cards.map((card) =>
       card.id === cardId
         ? {
-            ...card,
-            options: card.options
-              ?.filter((option) => option.id !== optionId)
-              ?.map((option, index) => ({ ...option, id: index + 1 })), // Reassign IDs starting from 1
-          }
+          ...card,
+          options: card.options
+            ?.filter((option) => option.id !== optionId)
+            ?.map((option, index) => ({ ...option, id: index + 1 })), // Reassign IDs starting from 1
+        }
         : card
     );
     setCards(updatedCards);
@@ -169,11 +169,11 @@ export default function ServiceRequiremntsCreate() {
     const updatedCards = cards.map((card) =>
       card.id === cardId
         ? {
-            ...card,
-            options: card.options?.map((option) =>
-              option.id === optionId ? { ...option, key: value } : option
-            ),
-          }
+          ...card,
+          options: card.options?.map((option) =>
+            option.id === optionId ? { ...option, key: value } : option
+          ),
+        }
         : card
     );
     setCards(updatedCards);
@@ -203,10 +203,6 @@ export default function ServiceRequiremntsCreate() {
 
       return formattedCard;
     });
-
-    // console.log('====================================');
-    // console.log(formattedData, "ini data");
-    // console.log('====================================');
 
     const token = Cookies.get("Authorization");
 
@@ -282,7 +278,7 @@ export default function ServiceRequiremntsCreate() {
                 />
               </svg>
             </Link>
-            <h1 className="text-sm md:text-lg">Persyaratan Layanan</h1>
+            <h1 className="text-lg md:text-lg">Persyaratan Layanan</h1>
           </div>
           <div className="w-full">
             <div className="text-center mb-4 text-sm md:text-lg">Formulir</div>
@@ -301,9 +297,9 @@ export default function ServiceRequiremntsCreate() {
           {cards.map((card) => (
             <div
               key={card.id}
-              className="bg-white border border-[#E4E4E7] p-10">
-              <div className="flex text-xs md:text-sm gap-8">
-                <div className="w-[70%]">
+              className="bg-white border border-[#E4E4E7] p-4 md:p-10">
+              <div className="flex-none md:flex text-xs md:text-sm gap-8">
+                <div className="w-full md:w-[70%]">
                   {/* Apakah kamu bersedia melakukan pendaftaran? */}
                   <InputComponent
                     typeInput="formInput"
@@ -314,32 +310,34 @@ export default function ServiceRequiremntsCreate() {
                   />
                   {/* <hr className="border-t-1 border-[#E4E4E7] my-2 w-full" /> */}
                 </div>
-                <div className="w-[30%]">
-                  <div className="div">Tipe Pertanyaan</div>
-                  <div className="border border-[#E4E4E7] mt-2">
-                    <Select
-                      value={card.tipedata}
-                      onValueChange={(e: string) =>
-                        handleCardChange(card.id, "tipedata", e)
-                      }>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Pilih Tipe Pertanyaan" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Tipe Pertanyaan</SelectLabel>
-                          {selectDataTypeForm?.map((item: any) => (
-                            <SelectItem key={item.id} value={item.value}>
-                              {item.name}
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
+                <div className="w-full mt-2 md:w-[30%]">
+                  <div className="p-2">
+                    <div className="div">Tipe Pertanyaan</div>
+                    <div className="border border-[#E4E4E7] mt-2">
+                      <Select
+                        value={card.tipedata}
+                        onValueChange={(e: string) =>
+                          handleCardChange(card.id, "tipedata", e)
+                        }>
+                        <SelectTrigger className="w-full text-xs md:text-sm">
+                          <SelectValue className="text-xs md:text-sm" placeholder="Pilih Tipe Pertanyaan" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-line-10">
+                          <SelectGroup>
+                            <SelectLabel>Tipe Pertanyaan</SelectLabel>
+                            {selectDataTypeForm?.map((item: any) => (
+                              <SelectItem key={item.id} value={item.value}>
+                                {item.name}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="flex justify-between mt-3">
+              <div className="flex-none justify-start md:flex md:justify-between mt-3">
                 <div className="space-y-2 text-sm text-neutral-900">
                   {/* <p>Apakah wajib diisi?</p> */}
                   <RadioGroup
@@ -347,13 +345,13 @@ export default function ServiceRequiremntsCreate() {
                       handleCardChange(card.id, "isrequired", parseInt(e))
                     }
                     defaultValue={card.isrequired.toString()}
-                    className="flex space-x-1">
+                    className="flex-none md:flex space-x-4 md:space-x-1">
                     <div className="flex items-center space-x-2 space-y-0">
-                      <RadioGroupItem value="1" className="border" />
+                      <RadioGroupItem value="1" className="border border-[#E4E4E7]" />
                       <p className="font-normal">Ya</p>
                     </div>
                     <div className="flex items-center space-x-2 space-y-0">
-                      <RadioGroupItem value="0" />
+                      <RadioGroupItem value="0" className="border border-[#E4E4E7]" />
                       <p className="font-normal">Tidak</p>
                     </div>
                   </RadioGroup>

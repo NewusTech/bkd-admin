@@ -46,6 +46,8 @@ import PaginationComponent from "@/components/elements/pagination";
 import EditorProvide from "@/components/pages/areas";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileNewsMasterDataCard from "@/components/mobile_all_cards/mobileNewsMasterDataCard";
+import Link from "next/link";
+import AddIcon from "@/components/elements/add_button";
 
 export default function NewsScreen() {
   const router = useRouter();
@@ -300,9 +302,16 @@ export default function NewsScreen() {
                 <AlertDialogTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                    Tambah
+                  {/* Add Data */}
+                  <div className="flex justify-end items-center w-full">
+                    <Link
+                      href="/super-admin/master-data/service-requirements/create"
+                      className='bg-primary-40 h-10 text-xs md:text-sm px-3 rounded-lg text-white hover:bg-primary-70 border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300 py-2'>
+                      <AddIcon />
+                      Tambah Persyaratan Layanan
+                    </Link>
                   </div>
+                  {/* Tambah Data */}
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
                   <AlertDialogHeader className="flex flex-col">
@@ -374,11 +383,10 @@ export default function NewsScreen() {
                               onDragOver={handleDragOver}
                               onDragLeave={handleDragLeave}
                               onDrop={handleDropImage}
-                              className={`w-full ${
-                                data?.image || previewImage
-                                  ? "md:w-8/12"
-                                  : "w-full"
-                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              className={`w-full ${data?.image || previewImage
+                                ? "md:w-8/12"
+                                : "w-full"
+                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                               <>
                                 <input
                                   type="file"
@@ -521,11 +529,10 @@ export default function NewsScreen() {
                               onDragOver={handleDragOver}
                               onDragLeave={handleDragLeave}
                               onDrop={handleDropImage}
-                              className={`w-full ${
-                                data?.image || previewImage
-                                  ? "md:w-8/12"
-                                  : "w-full"
-                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              className={`w-full ${data?.image || previewImage
+                                ? "md:w-8/12"
+                                : "w-full"
+                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                               <>
                                 <input
                                   type="file"
