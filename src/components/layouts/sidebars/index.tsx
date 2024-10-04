@@ -291,7 +291,7 @@ export default function DashBoardSidebarPages() {
                           return (
                             <Link
                               key={i}
-                              href={`${bar?.name === "Riwayat Pengajuan" ? "/verified-admin/user-application-histories" : "/verified-admin/user-application-revition-histories"}`}
+                              href={`${bar?.name === "Riwayat Pengajuan" ? "/verification-admin/verification-user-application-histories" : "/verification-admin/verification-user-application-revition-histories"}`}
                               className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
                               <div className="w-10/12 flex flex-row items-center gap-x-2">
                                 <DotIcon className={`w-5 h-5 text-black-80`} />
