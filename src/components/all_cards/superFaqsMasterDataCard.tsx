@@ -57,10 +57,10 @@ export default function SuperFaqsMasterDataCard({
 
   return (
     <TableRow className="border border-line-20">
-      <TableCell className="text-center">{index + 1}</TableCell>
-      <TableCell className="text-center">{faq?.question}</TableCell>
-      <TableCell className="text-center">{faq?.answer}</TableCell>
-      <TableCell className="text-center flex items-center w-full">
+      <TableCell className="text-left">{index + 1}</TableCell>
+      <TableCell className="text-left">{faq?.question}</TableCell>
+      <TableCell className="text-left">{faq?.answer}</TableCell>
+      <TableCell className="text-left flex items-center w-full">
         <div className="w-full flex flex-row items-center justify-center gap-x-2">
           <div className="w-full">
             <AlertDialog

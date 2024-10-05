@@ -31,6 +31,7 @@ import EditorProvide from "../pages/areas";
 import { Input } from "../ui/input";
 import { Loader } from "lucide-react";
 import { Trash } from "@phosphor-icons/react";
+import CombinedReadMoreRichTextDisplay from "../ui/CombinedReadMoreRichTextDisplay";
 
 export default function MobileNewsMasterDataCard({
   item,
@@ -113,7 +114,9 @@ export default function MobileNewsMasterDataCard({
         <div className="w-full text-[14px] md:text-[16px]">Deskripsi</div>
 
         <div className="w-full col-span-2 text-[14px] md:text-[16px]">
-          : {item?.desc && item?.desc}
+          :{item.desc && (
+            <CombinedReadMoreRichTextDisplay content={item.desc} keys={true} />
+          )}
         </div>
       </div>
 
@@ -246,9 +249,8 @@ export default function MobileNewsMasterDataCard({
                       onDragOver={handleDragOver}
                       onDragLeave={handleDragLeave}
                       onDrop={handleDropImage}
-                      className={`w-full ${
-                        data?.image || previewImage ? "md:w-8/12" : "w-full"
-                      }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                      className={`w-full ${data?.image || previewImage ? "md:w-8/12" : "w-full"
+                        }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                       <div>
                         <input
                           type="file"

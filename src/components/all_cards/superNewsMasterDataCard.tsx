@@ -25,6 +25,8 @@ import { Trash } from "@phosphor-icons/react";
 import Image from "next/image";
 import EditorProvide from "../pages/areas";
 import { RichTextDisplay } from "../ui/RichTextDisplay";
+import ReadMore from "../ui/ReadMore";
+import CombinedReadMoreRichTextDisplay from "../ui/CombinedReadMoreRichTextDisplay";
 
 export default function SuperNewsMasterDataCard({
   item,
@@ -82,15 +84,16 @@ export default function SuperNewsMasterDataCard({
 
   return (
     <TableRow className="border border-line-20">
-      <TableCell className="text-center">{index + 1}</TableCell>
-      <TableCell className="text-center">{item.title}</TableCell>
-      <TableCell className="text-center">
+      <TableCell className="text-start">{index + 1}</TableCell>
+      <TableCell className="text-start">{item.title}</TableCell>
+      <TableCell className="text-start">
         {item.desc && (
-          <RichTextDisplay content={item.desc} />
+          // <ReadMore text={item.desc}/>
+          // <RichTextDisplay content={item.desc} />
+          <CombinedReadMoreRichTextDisplay content={item.desc} keys={true} />
         )}
-
       </TableCell>
-      <TableCell className="text-center">
+      <TableCell className="text-start">
         <div className="w-full">
           <AlertDialog>
             <AlertDialogTrigger className="w-full">
@@ -119,7 +122,7 @@ export default function SuperNewsMasterDataCard({
                 )}
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel className="hover:bg-line-70 hover:text-line-10">
+                <AlertDialogCancel className="hover:bg-line-70 hover:text-line-10 text-center w-fit flex m-auto">
                   Cancel
                 </AlertDialogCancel>
               </AlertDialogFooter>

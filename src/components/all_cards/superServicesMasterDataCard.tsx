@@ -28,6 +28,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import EditorProvide from "../pages/areas";
+import CombinedReadMoreRichTextDisplay from "../ui/CombinedReadMoreRichTextDisplay";
 
 export default function SuperServicesMasterDataCard({
   service,
@@ -121,10 +122,14 @@ export default function SuperServicesMasterDataCard({
 
   return (
     <TableRow className="border border-line-20">
-      <TableCell className="text-center">{index + 1}</TableCell>
-      <TableCell className="text-center">{service.nama}</TableCell>
-      <TableCell className="text-center">{service.penanggung_jawab}</TableCell>
-      <TableCell className="text-center">{service.desc}</TableCell>
+      <TableCell className="text-left">{index + 1}</TableCell>
+      <TableCell className="text-left">{service.nama}</TableCell>
+      <TableCell className="text-left">{service.penanggung_jawab}</TableCell>
+      <TableCell className="text-left">
+        {service.desc && (
+          <CombinedReadMoreRichTextDisplay content={service.desc} keys={true} />
+        )}
+      </TableCell>
       <TableCell className="text-center flex items-center w-full">
         <div className="w-full flex flex-row items-center justify-center gap-x-2">
           <div className="w-full">
@@ -141,7 +146,7 @@ export default function SuperServicesMasterDataCard({
                   Edit
                 </div>
               </AlertDialogTrigger>
-              <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
+              <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
                 <AlertDialogHeader className="flex flex-col max-h-[500px]">
                   <AlertDialogTitle className="text-center">
                     Master Data Layanan
