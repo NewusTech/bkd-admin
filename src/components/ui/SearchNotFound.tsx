@@ -12,6 +12,7 @@ const NotFoundSearch = () => {
                     width={170}
                     height={170}
                     unoptimized
+                    priority
                     className="object-contain animate-pulse hover:animate-spin hover:transition-all transition-all"
                 />
                 <div className="min-h-[40px] flex items-center">

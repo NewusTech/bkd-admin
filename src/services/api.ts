@@ -275,9 +275,9 @@ export const updateService = async (
 };
 
 // get news / berita
-export const getNews = async (page: number, limit: number) => {
+export const getNews = async (page: number, limit: number, search: string) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/berita/get?page=${page}&limit=${limit}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/berita/get?page=${page}&limit=${limit}&search=${search}`,
     {
       method: "GET",
       headers: {
