@@ -1,6 +1,5 @@
 // components/ui/TypingEffect.tsx
 import React, { useEffect, useState } from 'react';
-import { StringValidation } from 'zod';
 
 interface TypingEffectProps {
     text: string[];
@@ -32,11 +31,11 @@ const TypingEffect: React.FC<TypingEffectProps> = ({ text, speed = 120, deleteSp
         }, isDeleting ? deleteSpeed : speed);
 
         return () => clearTimeout(timeout);
-    }, [displayText, isDeleting, text, textIndex, speed, deleteSpeed, className]);
+    }, [displayText, isDeleting, text, textIndex, speed, deleteSpeed]);
 
     return (
-        <div className="h-5">
-            <div className="text-sm md:text-xl text-primary">{displayText}</div>
+        <div className={`h-5 ${className}`}>
+            <div className="text-primary">{displayText}</div>
         </div>
     );
 };

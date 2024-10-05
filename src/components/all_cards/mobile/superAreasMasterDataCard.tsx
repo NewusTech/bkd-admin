@@ -148,7 +148,7 @@ export default function MobileSuperAreasMasterDataCard({
                                 ) => handleUpdateArea(e, area?.slug)}
                                 className="w-full flex flex-col gap-y-3 max-h-full">
                                 <div className="text-center mb-4">
-                                  <TypingEffect
+                                  <TypingEffect className="custom-class md:text-sm text-xs"
                                     text={["Edit data yang diperlukan...."]}
                                   />
                                 </div>

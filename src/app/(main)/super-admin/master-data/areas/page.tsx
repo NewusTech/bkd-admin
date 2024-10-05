@@ -8,7 +8,7 @@ import SuperAreasMasterDataTablePages from "@/components/tables/master_datas/are
 import { Button } from "@/components/ui/button";
 import { deleteAreas, getAreas, postAreas, updateAreas } from "@/services/api";
 import { AreasInterface } from "@/types/interface";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -40,10 +40,17 @@ import Editor from "@/components/elements/toolbar_editors";
 import EditorProvide from "@/components/pages/areas";
 import AddIcon from "@/components/elements/add_button";
 import TypingEffect from "@/components/ui/TypingEffect";
+import { useDebounce } from "@/hooks/useDebounce";
+import NotFoundSearch from "@/components/ui/SearchNotFound";
 
 export default function AreasScreen() {
   const router = useRouter();
+  // serach
   const [search, setSearch] = useState("");
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
+  // serach
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -65,10 +72,11 @@ export default function AreasScreen() {
     totalPages: 1,
     totalCount: 0,
   });
+  const debounceSearch = useDebounce(search);
 
-  const fetchAreas = async (page: number, limit: number) => {
+  const fetchAreas = async (page: number, limit: number, search: string) => {
     try {
-      const response = await getAreas(page, limit);
+      const response = await getAreas(page, limit, search);
 
       setAreas(response.data);
       setPagination((prev) => ({
@@ -83,12 +91,12 @@ export default function AreasScreen() {
   };
 
   useEffect(() => {
-    fetchAreas(1, 10);
-  }, []);
+    fetchAreas(1, 10, search);
+  }, [search]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchAreas(newPage, 10);
+      fetchAreas(newPage, 10, "");
     }
   };
 
@@ -120,7 +128,7 @@ export default function AreasScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchAreas(pagination.currentPage, 10);
+        fetchAreas(pagination.currentPage, 10, "");
         setIsDialogOpen(false);
         setIsDrawerOpen(false);
         router.push("/super-admin/master-data/areas");
@@ -166,7 +174,7 @@ export default function AreasScreen() {
             position: "center",
           });
           setIsDeleteLoading(false);
-          fetchAreas(pagination.currentPage, 10);
+          fetchAreas(pagination.currentPage, 10, "");
         }
       }
     } catch (error) {
@@ -200,7 +208,7 @@ export default function AreasScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchAreas(pagination.currentPage, 10);
+        fetchAreas(pagination.currentPage, 10, "");
         setIsDialogEditOpen(false);
         setIsDrawerEditOpen(false);
         router.push("/super-admin/master-data/areas");
@@ -231,6 +239,8 @@ export default function AreasScreen() {
               <SearchPages
                 search={search}
                 setSearch={setSearch}
+                value={search}
+                onChange={handleSearchChange}
                 change={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setSearch(e.target.value)
                 }
@@ -382,7 +392,7 @@ export default function AreasScreen() {
                     </AlertDialogTitle>
 
                     <div className="flex w-full justify-center">
-                      <TypingEffect className="text-xl" text={["Input data yang diperlukan"]} />
+                      <TypingEffect className="custom-class md:text-sm text-xs" text={["Input data yang diperlukan"]} />
                     </div>
 
                     <form
@@ -480,7 +490,7 @@ export default function AreasScreen() {
         {/* dekstop*/}
 
         <div className="w-full">
-          {areas && areas.length > 0 && (
+          {areas && areas.length > 0 ? (
             <SuperAreasMasterDataTablePages
               areas={areas}
               handleDeleteArea={handleDeleteAreas}
@@ -494,6 +504,10 @@ export default function AreasScreen() {
               setIsDrawerEditOpen={setIsDrawerEditOpen}
               handleUpdateArea={handleUpdateArea}
             />
+          ) : (
+            <>
+              <NotFoundSearch />
+            </>
           )}
         </div>
 
