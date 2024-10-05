@@ -134,7 +134,7 @@ export default function SuperAreasMasterDataCard({
                     </AlertDialogTitle>
 
                     <div className="w-full flex justify-center gap-y-3">
-                      <TypingEffect text={["Edit data yang diperlukan"]} />
+                      <TypingEffect className="custom-class md:text-sm text-xs" text={["Edit data yang diperlukan"]} />
                     </div>
 
                     <form

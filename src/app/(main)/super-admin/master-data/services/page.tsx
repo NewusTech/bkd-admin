@@ -52,10 +52,17 @@ import {
 import TypingEffect from "@/components/ui/TypingEffect";
 import AddIcon from "@/components/elements/add_button";
 import EditorProvide from "@/components/pages/areas";
+import { useDebounce } from "@/hooks/useDebounce";
+import NotFoundSearch from "@/components/ui/SearchNotFound";
 
 export default function ServicesScreen() {
   const router = useRouter();
+  // serach
   const [search, setSearch] = useState("");
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
+  // serach
   const { quill: quillCondition, quillRef: quillConditionRef } = useQuill();
   const { quill: quillTerm, quillRef: quillTermRef } = useQuill();
   const { quill: quillStep, quillRef: quillStepRef } = useQuill();
@@ -90,6 +97,7 @@ export default function ServicesScreen() {
     totalPages: 1,
     totalCount: 0,
   });
+  const debounceSearch = useDebounce(search);
 
   useEffect(() => {
     if (quillCondition && isDialogOpen) {
@@ -196,9 +204,9 @@ export default function ServicesScreen() {
     data?.desc,
   ]);
 
-  const fetchAreas = async (page: number, limit: number) => {
+  const fetchAreas = async (page: number, limit: number, search: string) => {
     try {
-      const response = await getAreas(page, limit);
+      const response = await getAreas(page, limit, search);
 
       setAreas(response.data);
     } catch (error) {
@@ -206,9 +214,9 @@ export default function ServicesScreen() {
     }
   };
 
-  const fetchService = async (page: number, limit: number) => {
+  const fetchService = async (page: number, limit: number, search: string) => {
     try {
-      const response = await getService(page, limit);
+      const response = await getService(page, limit, search);
 
       setServices(response.data);
       setPagination((prev) => ({
@@ -223,13 +231,13 @@ export default function ServicesScreen() {
   };
 
   useEffect(() => {
-    fetchAreas(1, limitItem);
-    fetchService(1, 10);
-  }, [limitItem]);
+    fetchAreas(1, limitItem, search);
+    fetchService(1, 10, search);
+  }, [limitItem, search]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchService(newPage, 10);
+      fetchService(newPage, 10, "");
     }
   };
 
@@ -270,7 +278,7 @@ export default function ServicesScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchService(pagination.currentPage, 10);
+        fetchService(pagination.currentPage, 10, "");
         setIsDialogOpen(false);
         setIsDrawerOpen(false);
         router.push("/super-admin/master-data/services");
@@ -316,7 +324,7 @@ export default function ServicesScreen() {
             position: "center",
           });
           setIsDeleteLoading(false);
-          fetchService(pagination.currentPage, 10);
+          fetchService(pagination.currentPage, 10, "");
         }
       }
     } catch (error) {
@@ -353,7 +361,7 @@ export default function ServicesScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchService(pagination.currentPage, 10);
+        fetchService(pagination.currentPage, 10, "");
         setIsDialogEditOpen(false);
         setIsDrawerEditOpen(false);
         router.push("/super-admin/master-data/services");
@@ -737,7 +745,7 @@ export default function ServicesScreen() {
         </div>
 
         <div className="w-full">
-          {services && services.length > 0 && (
+          {services && services.length > 0 ? (
             <SuperServicesMasterDataTablePages
               services={services}
               areas={areas}
@@ -760,6 +768,10 @@ export default function ServicesScreen() {
               quillDescEdit={quillDescEdit}
               quillDescEditRef={quillDescEditRef}
             />
+          ) : (
+            <>
+              <NotFoundSearch />
+            </>
           )}
         </div>
 

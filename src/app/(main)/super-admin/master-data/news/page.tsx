@@ -48,6 +48,8 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileNewsMasterDataCard from "@/components/mobile_all_cards/mobileNewsMasterDataCard";
 import Link from "next/link";
 import AddIcon from "@/components/elements/add_button";
+import { useDebounce } from "@/hooks/useDebounce";
+import NotFoundSearch from "@/components/ui/SearchNotFound";
 
 export default function NewsScreen() {
   const router = useRouter();
@@ -73,17 +75,18 @@ export default function NewsScreen() {
     totalPages: 1,
     totalCount: 0,
   });
+  const debounceSearch = useDebounce(search);
 
-  const fetchNews = async (page: number, limit: number) => {
+  const fetchNews = async (page: number, limit: number, search: string) => {
     try {
-      const response = await getNews(page, limit);
+      const response = await getNews(page, limit, search);
 
       setNews(response.data);
       setPagination((prev) => ({
         ...prev,
         currentPage: page,
-        totalPages: response.pagination.totalPages,
-        totalCount: response.pagination.totalCount,
+        totalPages: response?.pagination?.totalPages,
+        totalCount: response?.pagination?.totalCount,
       }));
     } catch (error) {
       console.log(error);
@@ -91,12 +94,12 @@ export default function NewsScreen() {
   };
 
   useEffect(() => {
-    fetchNews(1, 10);
-  }, []);
+    fetchNews(1, 10, search);
+  }, [search]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchNews(newPage, 10);
+      fetchNews(newPage, 10, "");
     }
   };
 
@@ -180,7 +183,7 @@ export default function NewsScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchNews(pagination.currentPage, 10);
+        fetchNews(pagination.currentPage, 10, "");
         setIsDialogOpen(false);
         router.push("/super-admin/master-data/news");
       } else {
@@ -224,7 +227,7 @@ export default function NewsScreen() {
             position: "center",
           });
           setIsDeleteLoading(false);
-          fetchNews(pagination.currentPage, 10);
+          fetchNews(pagination.currentPage, 10, "");
         }
       }
     } catch (error) {
@@ -264,7 +267,7 @@ export default function NewsScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchNews(pagination.currentPage, 10);
+        fetchNews(pagination.currentPage, 10, "");
         setIsDialogEditOpen(false);
         router.push("/super-admin/master-data/news");
       } else {
@@ -306,7 +309,7 @@ export default function NewsScreen() {
                   {/* Add Data */}
                   <div className="flex justify-end items-center w-full">
                     <Link
-                      href="/super-admin/master-data/service-requirements/create"
+                      href="/super-admin/master-data/news"
                       className='bg-primary-40 h-10 text-xs md:text-sm px-3 rounded-lg text-white hover:bg-primary-70 border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300 py-2'>
                       <AddIcon />
                       Tambah Berita
@@ -587,7 +590,7 @@ export default function NewsScreen() {
         <div className="w-full">
           {!isMobile ? (
             <>
-              {news && news.length > 0 && (
+              {news && news.length > 0 ? (
                 <SuperNewsMasterDataTablePages
                   news={news}
                   previewImage={previewImage}
@@ -605,13 +608,16 @@ export default function NewsScreen() {
                   setIsDialogEditOpen={setIsDialogEditOpen}
                   handleUpdateNews={handleUpdateNews}
                 />
+              ) : (
+                <>
+                  <NotFoundSearch />
+                </>
               )}
             </>
           ) : (
             <>
-              {news &&
-                news.length > 0 &&
-                news?.map((item: NewsInterface, i: number) => {
+              {news && news.length > 0 ? (
+                news.map((item: NewsInterface, i: number) => {
                   return (
                     <MobileNewsMasterDataCard
                       key={i}
@@ -633,7 +639,10 @@ export default function NewsScreen() {
                       setIsDialogEditOpen={setIsDialogEditOpen}
                     />
                   );
-                })}
+                })
+              ) : (
+                <NotFoundSearch />
+              )}
             </>
           )}
         </div>
