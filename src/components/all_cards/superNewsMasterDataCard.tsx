@@ -24,6 +24,7 @@ import { Textarea } from "../ui/textarea";
 import { Trash } from "@phosphor-icons/react";
 import Image from "next/image";
 import EditorProvide from "../pages/areas";
+import { RichTextDisplay } from "../ui/RichTextDisplay";
 
 export default function SuperNewsMasterDataCard({
   item,
@@ -83,7 +84,12 @@ export default function SuperNewsMasterDataCard({
     <TableRow className="border border-line-20">
       <TableCell className="text-center">{index + 1}</TableCell>
       <TableCell className="text-center">{item.title}</TableCell>
-      <TableCell className="text-center">{item?.desc}</TableCell>
+      <TableCell className="text-center">
+        {item.desc && (
+          <RichTextDisplay content={item.desc} />
+        )}
+
+      </TableCell>
       <TableCell className="text-center">
         <div className="w-full">
           <AlertDialog>
@@ -92,7 +98,7 @@ export default function SuperNewsMasterDataCard({
                 Lihat Foto Berita
               </div>
             </AlertDialogTrigger>
-            <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
+            <AlertDialogContent className="w-full max-w-full bg-line-10 rounded-lg shadow-md">
               <AlertDialogHeader className="flex flex-col max-h-[500px]">
                 <AlertDialogTitle className="text-center">
                   Master Data
@@ -122,7 +128,7 @@ export default function SuperNewsMasterDataCard({
         </div>
       </TableCell>
       <TableCell className="text-center flex items-center w-full">
-      
+
         <div className="w-full flex flex-row items-center justify-center gap-x-2">
           <div className="w-full">
             <AlertDialog
@@ -138,7 +144,7 @@ export default function SuperNewsMasterDataCard({
                   Edit
                 </div>
               </AlertDialogTrigger>
-              <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
+              <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
                 <AlertDialogHeader className="flex flex-col max-h-[500px]">
                   <AlertDialogTitle className="text-center">
                     Master Data Berita
@@ -177,7 +183,7 @@ export default function SuperNewsMasterDataCard({
                         Deskripsi Berita
                       </Label>
 
-                      <div className="w-full h-[250px] border border-line-20 rounded-lg">
+                      <div className="w-full h-full border border-line-20 rounded-lg">
                         <EditorProvide
                           content={data.desc}
                           onChange={(e: any) => setData({ ...data, desc: e })}
@@ -212,9 +218,8 @@ export default function SuperNewsMasterDataCard({
                           onDragOver={handleDragOver}
                           onDragLeave={handleDragLeave}
                           onDrop={handleDropImage}
-                          className={`w-full ${
-                            data?.image || previewImage ? "md:w-8/12" : "w-full"
-                          }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                          className={`w-full ${data?.image || previewImage ? "md:w-8/12" : "w-full"
+                            }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                           <>
                             <input
                               type="file"

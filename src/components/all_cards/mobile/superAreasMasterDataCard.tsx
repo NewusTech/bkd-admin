@@ -224,7 +224,7 @@ export default function MobileSuperAreasMasterDataCard({
                                     <Label className="focus-within:text-primary-70 font-normal text-xs lg:text-sm text-left">
                                       Deskripsi Bidang
                                     </Label>
-                                    <div className="w-full h-[250px] border border-line-20 rounded-lg text-left">
+                                    <div className="w-full h-full border border-line-20 rounded-lg text-left">
                                       <EditorProvide
                                         content={data.desc}
                                         onChange={(e: any) =>

@@ -232,7 +232,7 @@ export default function MobileSuperServicesMasterDataCard({
                                                                         <Label className="focus-within:text-primary-70 font-normal text-xs lg:text-sm text-left">
                                                                             Syarat Layanan
                                                                         </Label>
-                                                                        <div className="w-full h-[250px] border border-line-20 rounded-lg text-left">
+                                                                        <div className="w-full h-full border border-line-20 rounded-lg text-left">
                                                                             <EditorProvide
                                                                                 content={data?.syarat}
                                                                                 onChange={(e: any) => setData({ ...data, desc: e })}
@@ -281,7 +281,7 @@ export default function MobileSuperServicesMasterDataCard({
                                                                         <Label className="focus-within:text-primary-70 font-normal text-xs lg:text-sm text-left">
                                                                             Deskripsi Bidang
                                                                         </Label>
-                                                                        <div className="w-full h-[250px] border border-line-20 rounded-lg text-left">
+                                                                        <div className="w-full h-full border border-line-20 rounded-lg text-left">
                                                                             <EditorProvide
                                                                                 content={data?.bidang_id}
                                                                                 onChange={(e: any) => setData({ ...data, desc: e })}
@@ -313,7 +313,7 @@ export default function MobileSuperServicesMasterDataCard({
                                                                         <Label className="focus-within:text-primary-70 font-normal text-xs lg:text-sm text-left">
                                                                             Ketentuan
                                                                         </Label>
-                                                                        <div className="w-full h-[250px] border border-line-20 rounded-lg text-left">
+                                                                        <div className="w-full h-full border border-line-20 rounded-lg text-left">
                                                                             <EditorProvide
                                                                                 content={data?.ketentuan}
                                                                                 onChange={(e: any) => setData({ ...data, desc: e })}
@@ -325,7 +325,7 @@ export default function MobileSuperServicesMasterDataCard({
                                                                         <Label className="focus-within:text-primary-70 font-normal text-xs lg:text-sm text-left">
                                                                             Langkah
                                                                         </Label>
-                                                                        <div className="w-full h-[250px] border border-line-20 rounded-lg text-left">
+                                                                        <div className="w-full h-full border border-line-20 rounded-lg text-left">
                                                                             <EditorProvide
                                                                                 content={data?.langkah}
                                                                                 onChange={(e: any) => setData({ ...data, desc: e })}
