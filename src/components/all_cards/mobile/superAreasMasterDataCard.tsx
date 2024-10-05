@@ -50,6 +50,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import CombinedReadMoreRichTextDisplay from "@/components/ui/CombinedReadMoreRichTextDisplay";
 
 export default function MobileSuperAreasMasterDataCard({
   area,
@@ -307,11 +308,14 @@ export default function MobileSuperAreasMasterDataCard({
 
           <div className="w-full grid grid-cols-3">
             <div className="w-full font-medium text-black">Deskripsi</div>
-            <div className="w-full col-span-2">: {area?.desc}</div>
+            <div className="w-full col-span-2">:
+              {area?.desc && (
+                <CombinedReadMoreRichTextDisplay content={area?.desc} keys={true} />
+              )}
+            </div>
           </div>
-        </div>
 
-        {/* <div className="card-table text-[12px] p-4 rounded-2xl border border-primary bg-white shadow-sm">
+          {/* <div className="card-table text-[12px] p-4 rounded-2xl border border-primary bg-white shadow-sm">
                         <div className="wrap-konten flex flex-col gap-2">
                             <div className="flex justify-between gap-5">
                                 <div className="label font-medium text-black">No</div>
@@ -340,6 +344,7 @@ export default function MobileSuperAreasMasterDataCard({
                         </div>
                         <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-primary to-transparent transition-all animate-pulse my-3"></div>
                     </div> */}
+        </div>
       </section>
     </>
   );

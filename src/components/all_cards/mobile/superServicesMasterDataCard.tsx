@@ -59,6 +59,7 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer"
+import CombinedReadMoreRichTextDisplay from "@/components/ui/CombinedReadMoreRichTextDisplay";
 
 export default function MobileSuperServicesMasterDataCard({
     service,
@@ -404,7 +405,11 @@ export default function MobileSuperServicesMasterDataCard({
                     <div className="w-full grid grid-cols-3">
                         <div className="w-full font-medium text-black">Deskripsi</div>
                         <div className="w-full col-span-2">
-                            : {service.desc}
+                            : {service.desc && (
+                                // <ReadMore text={service.desc}/>
+                                // <RichTextDisplay content={service.desc} />
+                                <CombinedReadMoreRichTextDisplay content={service.desc} keys={true} />
+                            )}
                         </div>
                     </div>
                 </div>

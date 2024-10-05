@@ -76,9 +76,9 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
 
   return (
     <TableRow className="border border-line-20">
-      <TableCell className="text-center">{index + 1}</TableCell>
-      <TableCell className="text-center">{gallery.title}</TableCell>
-      <TableCell className="text-center">
+      <TableCell className="text-left">{index + 1}</TableCell>
+      <TableCell className="text-left">{gallery.title}</TableCell>
+      <TableCell className="text-left">
         <div className="w-full">
           <AlertDialog>
             <AlertDialogTrigger className="w-full">

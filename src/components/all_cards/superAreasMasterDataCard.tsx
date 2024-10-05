@@ -41,6 +41,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import CombinedReadMoreRichTextDisplay from "../ui/CombinedReadMoreRichTextDisplay";
 
 export default function SuperAreasMasterDataCard({
   area,
@@ -101,7 +102,9 @@ export default function SuperAreasMasterDataCard({
         <TableCell className="text-sm">{area?.pj}</TableCell>
         <TableCell className="text-sm">{area?.nip_pj}</TableCell>
         <TableCell className="text-sm">
-          {truncateString(area?.desc, 30)}
+          {area?.desc && (
+            <CombinedReadMoreRichTextDisplay content={area?.desc} keys={true} />
+          )}
         </TableCell>
         <TableCell className="text-center flex items-center w-full">
           <div className="w-full flex flex-row items-center justify-center gap-x-2">
