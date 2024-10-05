@@ -309,7 +309,7 @@ export default function NewsScreen() {
                   {/* Add Data */}
                   <div className="flex justify-end items-center w-full">
                     <Link
-                      href="/super-admin/master-data/service-requirements/create"
+                      href="/super-admin/master-data/news"
                       className='bg-primary-40 h-10 text-xs md:text-sm px-3 rounded-lg text-white hover:bg-primary-70 border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300 py-2'>
                       <AddIcon />
                       Tambah Berita

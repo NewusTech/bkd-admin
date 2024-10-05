@@ -42,6 +42,8 @@ import PaginationComponent from "@/components/elements/pagination";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileBkdGalleryActivitiesMasterDataCard from "@/components/mobile_all_cards/mobileBkdGalleryActivitiesMasterDataCard";
 import AddIcon from "@/components/elements/add_button";
+import { useDebounce } from "@/hooks/useDebounce";
+import NotFoundSearch from "@/components/ui/SearchNotFound";
 
 export default function BKDGalleryActivitiesScreen() {
   const router = useRouter();
@@ -69,10 +71,11 @@ export default function BKDGalleryActivitiesScreen() {
     totalPages: 1,
     totalCount: 0,
   });
+  const debounceSearch = useDebounce(search);
 
-  const fetchGalleries = async (page: number, limit: number) => {
+  const fetchGalleries = async (page: number, limit: number, search: string) => {
     try {
-      const response = await getBKDGalleryActivities(page, limit);
+      const response = await getBKDGalleryActivities(page, limit, search);
 
       setGalleries(response.data);
       setPagination((prev) => ({
@@ -87,12 +90,12 @@ export default function BKDGalleryActivitiesScreen() {
   };
 
   useEffect(() => {
-    fetchGalleries(1, 10);
-  }, []);
+    fetchGalleries(1, 10, search);
+  }, [search]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchGalleries(newPage, 10);
+      fetchGalleries(newPage, 10, "");
     }
   };
 
@@ -170,7 +173,7 @@ export default function BKDGalleryActivitiesScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchGalleries(pagination.currentPage, 10);
+        fetchGalleries(pagination.currentPage, 10, "");
         setIsDialogOpen(false);
         router.push("/super-admin/master-data/bkd-gallery-activities");
       } else {
@@ -214,7 +217,7 @@ export default function BKDGalleryActivitiesScreen() {
             position: "center",
           });
           setIsDeleteLoading(false);
-          fetchGalleries(pagination.currentPage, 10);
+          fetchGalleries(pagination.currentPage, 10, "");
         }
       }
     } catch (error) {
@@ -252,7 +255,7 @@ export default function BKDGalleryActivitiesScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchGalleries(pagination.currentPage, 10);
+        fetchGalleries(pagination.currentPage, 10, "");
         setIsDialogEditOpen(false);
         router.push("/super-admin/master-data/bkd-gallery-activities");
       } else {
@@ -516,7 +519,7 @@ export default function BKDGalleryActivitiesScreen() {
         <div className="w-full">
           {!isMobile ? (
             <>
-              {galleries && galleries.length > 0 && (
+              {galleries && galleries.length > 0 ? (
                 <SuperBKDGalleryActivitiesMasterDataTablePages
                   galleries={galleries}
                   previewImage={previewImage}
@@ -534,12 +537,16 @@ export default function BKDGalleryActivitiesScreen() {
                   setIsDialogEditOpen={setIsDialogEditOpen}
                   handleUpdateGallery={handleUpdateGallery}
                 />
+              ) : (
+                <>
+                  <NotFoundSearch />
+                </>
               )}
             </>
           ) : (
             <>
               {galleries &&
-                galleries.length > 0 &&
+                galleries.length > 0 ?
                 galleries?.map(
                   (gallery: BKDGalleryActivitiesInterface, i: number) => {
                     return (
@@ -564,7 +571,12 @@ export default function BKDGalleryActivitiesScreen() {
                       />
                     );
                   }
-                )}
+                ) : (
+                  <>
+                    <NotFoundSearch />
+                  </>
+                )
+              }
             </>
           )}
         </div>

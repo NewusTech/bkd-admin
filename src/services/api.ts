@@ -348,9 +348,9 @@ export const updateNews = async (slug: string, data: any) => {
 };
 
 // get bkd gallery activities
-export const getBKDGalleryActivities = async (page: number, limit: number) => {
+export const getBKDGalleryActivities = async (page: number, limit: number, search: string) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/galeri/get?page=${page}&limit=${limit}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/galeri/get?page=${page}&limit=${limit}&search=${search}`,
     {
       method: "GET",
       headers: {
