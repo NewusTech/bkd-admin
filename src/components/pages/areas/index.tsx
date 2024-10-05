@@ -38,6 +38,7 @@ const extensions = [
   Highlight.configure({ multicolor: true }),
   Heading.configure({ levels: [1, 2, 3, 4, 5, 6] }),
   Underline.configure({}),
+  Paragraph.configure({})
 ];
 
 export default function EditorProvide({

@@ -325,7 +325,7 @@ export default function AreasScreen() {
                           <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
                             Deskripsi Bidang
                           </Label>
-                          <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
+                          <div className="w-full h-full border border-line-20 rounded-lg text-left">
                             <EditorProvide
                               content={data.desc}
                               onChange={(e: any) =>
@@ -451,7 +451,7 @@ export default function AreasScreen() {
                           <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
                             Deskripsi Bidang
                           </Label>
-                          <div className="w-full h-full md:h-[250px] border border-line-20 rounded-lg text-left">
+                          <div className="w-full h-full border border-line-20 rounded-lg text-left">
                             <EditorProvide
                               content={data.desc}
                               onChange={(e: any) =>

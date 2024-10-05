@@ -350,7 +350,7 @@ export default function NewsScreen() {
                             Deskripsi Berita
                           </Label>
 
-                          <div className="w-full h-[250px] border border-line-20 rounded-lg">
+                          <div className="w-full h-full border border-line-20 rounded-lg">
                             <EditorProvide
                               content={data.desc}
                               onChange={(e: any) =>
@@ -497,7 +497,7 @@ export default function NewsScreen() {
                             Deskripsi Berita
                           </Label>
 
-                          <div className="w-full h-[250px] border border-line-20 rounded-lg">
+                          <div className="w-full h-full border border-line-20 rounded-lg">
                             <EditorProvide
                               content={data.desc}
                               onChange={(e: any) =>

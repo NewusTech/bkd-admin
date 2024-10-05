@@ -151,7 +151,7 @@ export default function TermConditionScreen() {
                               </Label>
                             </div>
 
-                            <div className="w-full h-[250px] verticalScroll border border-line-20 rounded-lg">
+                            <div className="w-full h-full verticalScroll border border-line-20 rounded-lg">
                               <EditorProvide
                                 content={data.desc}
                                 onChange={(e: any) =>
@@ -168,7 +168,7 @@ export default function TermConditionScreen() {
                               </Label>
                             </div>
 
-                            <div className="w-full h-[250px] verticalScroll border border-line-20 rounded-lg">
+                            <div className="w-full h-full verticalScroll border border-line-20 rounded-lg">
                               <EditorProvide
                                 content={data.privacy_policy}
                                 onChange={(e: any) =>
@@ -231,7 +231,7 @@ export default function TermConditionScreen() {
                               </Label>
                             </div>
 
-                            <div className="w-full h-[250px] verticalScroll border border-line-20 rounded-lg">
+                            <div className="w-full h-full verticalScroll border border-line-20 rounded-lg">
                               <EditorProvide
                                 content={data.desc}
                                 onChange={(e: any) =>
@@ -248,7 +248,7 @@ export default function TermConditionScreen() {
                               </Label>
                             </div>
 
-                            <div className="w-full h-[250px] verticalScroll border border-line-20 rounded-lg">
+                            <div className="w-full h-full verticalScroll border border-line-20 rounded-lg">
                               <EditorProvide
                                 content={data.privacy_policy}
                                 onChange={(e: any) =>

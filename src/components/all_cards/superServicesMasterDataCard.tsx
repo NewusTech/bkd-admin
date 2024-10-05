@@ -180,7 +180,7 @@ export default function SuperServicesMasterDataCard({
                         className="focus-within:text-primary-70 font-normal text-sm">
                         Syarat Layanan
                       </Label>
-                      <div className="w-full h-[250px] border border-line-20 rounded-lg text-left">
+                      <div className="w-full h-full border border-line-20 rounded-lg text-left">
                         <EditorProvide
                           content={data.syarat}
                           onChange={(e: any) => setData({ ...data, syarat: e })}
@@ -231,7 +231,7 @@ export default function SuperServicesMasterDataCard({
                       <Label className="text-black-70 font-normal text-xs md:text-sm text-left">
                         Deskripsi Bidang
                       </Label>
-                      <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
+                      <div className="w-full h-full border border-line-20 rounded-lg text-left">
                         <EditorProvide
                           content={data.desc}
                           onChange={(e: any) => setData({ ...data, desc: e })}
@@ -265,7 +265,7 @@ export default function SuperServicesMasterDataCard({
                         className="focus-within:text-primary-70 font-normal text-sm">
                         Ketentuan
                       </Label>
-                      <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
+                      <div className="w-full h-full border border-line-20 rounded-lg text-left">
                         <EditorProvide
                           content={data.ketentuan}
                           onChange={(e: any) => setData({ ...data, ketentuan: e })}
@@ -279,7 +279,7 @@ export default function SuperServicesMasterDataCard({
                         className="focus-within:text-primary-70 font-normal text-sm">
                         Langkah
                       </Label>
-                      <div className="w-full h-[250px] md:h-[250px] border border-line-20 rounded-lg text-left">
+                      <div className="w-full h-full border border-line-20 rounded-lg text-left">
                         <EditorProvide
                           content={data.langkah}
                           onChange={(e: any) => setData({ ...data, langkah: e })}
