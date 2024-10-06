@@ -304,8 +304,8 @@ export default function ServicesScreen() {
     setIsDeleteLoading(true);
     try {
       const result = await Swal.fire({
-        title: "Apakah Anda Yakin Menghapus Bidang?",
-        text: "Bidang yang telah dihapus tidak dapat dipulihkan!",
+        title: "Apakah Anda Yakin Menghapus Layanan?",
+        text: "Layanan yang telah dihapus tidak dapat dipulihkan!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#0000FF",
@@ -319,7 +319,7 @@ export default function ServicesScreen() {
         if (response.status === 200) {
           await Swal.fire({
             icon: "success",
-            title: `Bidang berhasil dihapus!`,
+            title: `Layanan berhasil dihapus!`,
             timer: 2000,
             position: "center",
           });
@@ -356,7 +356,7 @@ export default function ServicesScreen() {
         });
         Swal.fire({
           icon: "success",
-          title: "Berhasil Mengupdate Bidang!",
+          title: "Berhasil Mengupdate Layanan!",
           timer: 2000,
           showConfirmButton: false,
           position: "center",
@@ -368,7 +368,7 @@ export default function ServicesScreen() {
       } else {
         Swal.fire({
           icon: "error",
-          title: "Gagal Mengupdate Bidang!",
+          title: "Gagal Mengupdate Layanan!",
           timer: 2000,
           showConfirmButton: false,
           position: "center",
