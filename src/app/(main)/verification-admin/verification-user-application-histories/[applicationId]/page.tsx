@@ -73,13 +73,14 @@ export default function VerificationUserApplicationHistoryDetailScreen({
     setIsLoading(true);
 
     try {
-      const response = await updateUserApplicationHistoryDetail(
-        {
-          ...data,
-          status: 7,
-        },
-        id
-      );
+      const response: { status: number } =
+        await updateUserApplicationHistoryDetail(
+          {
+            ...data,
+            status: 7,
+          },
+          id
+        );
 
       if (response.status === 200) {
         setData({

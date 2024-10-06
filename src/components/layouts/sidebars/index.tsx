@@ -614,7 +614,7 @@ export default function DashBoardSidebarPages() {
               <div
                 className={`${pathName === "/super-admin/settings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
                 <Link
-                  href={"/department-secretary/department-signature-validation"}
+                  href={"/super-admin/settings"}
                   className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
                   Pengaturan
                 </Link>
