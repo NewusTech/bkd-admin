@@ -26,8 +26,8 @@ export default function VerificationUserApplicationHistoryTablePages({
             <TableHead className="text-center">NIP</TableHead>
             <TableHead className="text-center">Layanan</TableHead>
             <TableHead className="text-center">Tanggal</TableHead>
-            <TableHead className="text-center">Jam</TableHead>
             <TableHead className="text-center">Status</TableHead>
+            <TableHead className="text-center">Aksi</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

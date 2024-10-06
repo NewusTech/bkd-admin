@@ -107,7 +107,11 @@ export const getServices = async () => {
 };
 
 // get areas / bidang
-export const getAreas = async (page?: number, limit?: number, search?: string) => {
+export const getAreas = async (
+  page?: number,
+  limit?: number,
+  search?: string
+) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/user/bidang/get?page=${page}&limit=${limit}&search=${search}`,
     {
@@ -198,7 +202,11 @@ export const getServiceByAreas = async (bidang_id: number) => {
 };
 
 // get detail area by service
-export const getService = async (page?: number, limit?: number, search?: string) => {
+export const getService = async (
+  page?: number,
+  limit?: number,
+  search?: string
+) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/user/layanan/get?page=${page}&limit=${limit}&search=${search}`,
     {
@@ -348,7 +356,11 @@ export const updateNews = async (slug: string, data: any) => {
 };
 
 // get bkd gallery activities
-export const getBKDGalleryActivities = async (page: number, limit: number, search: string) => {
+export const getBKDGalleryActivities = async (
+  page: number,
+  limit: number,
+  search: string
+) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/user/galeri/get?page=${page}&limit=${limit}&search=${search}`,
     {
@@ -801,11 +813,18 @@ export const updateRegulations = async (formData: FormData, id: number) => {
 };
 
 // get user complaint
-export const getUserComplaints = async () => {
+export const getUserComplaints = async (
+  page: number,
+  limit: number,
+  search?: string,
+  start_date?: string,
+  end_date?: string,
+  status?: number
+) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/pengaduan/get`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/pengaduan/get?page=${page}&limit=${limit}&search=${search}&start_date=${start_date}&end_date=${end_date}&${status != undefined && `status=${status}`}`,
     {
       method: "GET",
       headers: {
@@ -942,11 +961,86 @@ export const serviceRequirementStep2 = async (data: any) => {
 };
 
 // get application user histories
-export const getApplicationUserHistories = async (status?: number) => {
+export const getApplicationUserHistories = async (
+  page: number,
+  limit: number,
+  status?: number,
+  search?: string,
+  start_date?: string,
+  end_date?: string,
+  layanan_id?: number
+) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/history/form?status=${status}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/history/form?page=${page}&limit=${limit}&status=${status}&search=${search}&start_date=${start_date}&end_date=${end_date}&layanan_id=${layanan_id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// get user application history detail
+export const getUserApplicationHistoryDetail = async (id: number) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/input/form/detail/${id}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// update user application history detail
+export const updateUserApplicationHistoryDetail = async (
+  data: any,
+  id: number
+) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/input/form/updatestatus/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// get Indeks Kepuasan
+export const getSatisfactionUser = async (
+  page?: number,
+  limit?: number,
+  search?: string,
+  start_date?: string,
+  end_date?: string
+) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/get/history/feedback?page=${page}&limit=${limit}&search=${search}&start_date=${start_date}&end_date=${end_date}`,
     {
       method: "GET",
       headers: {

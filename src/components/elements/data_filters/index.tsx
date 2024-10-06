@@ -34,11 +34,11 @@ export default function FilterDataPages({
           // onValueChange={handleSelectStatusChange}
           >
             <SelectTrigger
-              className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+              className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
               {/* <Checks className="w-6 h-6 text-black-80" /> */}
               <SelectValue
                 placeholder="Pilih Layanan"
-                className="text-black-80 w-full"
+                className="text-black-80 tex-[14px] w-full"
               />
             </SelectTrigger>
             <SelectContent className="bg-line-10">
@@ -89,11 +89,11 @@ export default function FilterDataPages({
             // onValueChange={handleSelectStatusChange}
             >
               <SelectTrigger
-                className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                className={`w-full text-[14px] gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                 {/* <Checks className="w-6 h-6 text-black-80" /> */}
                 <SelectValue
                   placeholder="Status"
-                  className="text-black-80 w-full"
+                  className="text-black-80 text-[14px] w-full"
                 />
               </SelectTrigger>
               <SelectContent className="bg-line-10">
