@@ -49,12 +49,18 @@ import { getAreas, getServiceByAreas, getUserComplaints } from "@/services/api";
 import Swal from "sweetalert2";
 import { Button } from "@/components/ui/button";
 import VerificationUserComplaintTablePages from "@/components/tables/verification_admin_user_compaint_table";
+import { userComplaintStatus } from "@/constants/main";
+import { useDebounce } from "@/hooks/useDebounce";
+import PaginationComponent from "@/components/elements/pagination";
+import DataNotFound from "@/components/elements/data_not_found";
 
 export default function VerificationUserComplaintScreen() {
   const router = useRouter();
   const dropRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
+  const deboucedSearch = useDebounce(search, 500);
+  const [status, setStatus] = useState<number | undefined>(undefined);
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
   const [startDate, setStartDate] = useState<Date | undefined>(firstDayOfMonth);
@@ -78,20 +84,64 @@ export default function VerificationUserComplaintScreen() {
     image: "",
     status: 0,
   });
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    perPage: 10,
+    totalPages: 1,
+    totalCount: 0,
+  });
 
-  const fetchUserComplaints = async () => {
+  const startDateFormatted = startDate
+    ? formatDate(new Date(startDate))
+    : undefined;
+  const endDateFormatted = endDate ? formatDate(new Date(endDate)) : undefined;
+
+  const fetchUserComplaints = async (
+    page: number,
+    limit: number,
+    search?: string,
+    start_date?: string,
+    end_date?: string,
+    status?: number
+  ) => {
     try {
-      const response = await getUserComplaints();
+      const response = await getUserComplaints(
+        page,
+        limit,
+        search,
+        start_date,
+        end_date,
+        status
+      );
 
       setComplaints(response.data);
+      setPagination((prev) => ({
+        ...prev,
+        currentPage: page,
+        totalPages: response?.pagination?.totalPages,
+        totalCount: response?.pagination?.totalCount,
+      }));
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchUserComplaints();
-  }, []);
+    fetchUserComplaints(
+      1,
+      10,
+      deboucedSearch,
+      startDateFormatted,
+      endDateFormatted,
+      status
+    );
+  }, [deboucedSearch, startDateFormatted, endDateFormatted, status]);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage !== pagination.currentPage) {
+      fetchUserComplaints(newPage, 10, "", "", "", status);
+    }
+  };
 
   const fetchAreas = async (page: number, limit: number) => {
     try {
@@ -171,34 +221,37 @@ export default function VerificationUserComplaintScreen() {
 
           <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
             <Select
-            // onValueChange={handleSelectStatusChange}
-            >
+              onValueChange={(value) =>
+                setStatus(value === "all" ? undefined : Number(value))
+              }>
               <SelectTrigger
-                className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-                {/* <Checks className="w-6 h-6 text-black-80" /> */}
+                className={`w-full text-[14px] px-2 gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                 <SelectValue
                   placeholder="Status"
-                  className="text-black-80 w-full"
+                  className="text-black-80 text-[14px] w-full"
                 />
               </SelectTrigger>
               <SelectContent className="bg-line-10">
                 <div className="pt-2">
-                  {/* {statusDatas &&
-                  statusDatas.map(
-                    (status: { id: number; value: string }, i: number) => {
-                      return (
-                        <SelectItem
-                          key={i}
-                          className={`w-full px-4`}
-                          value={status.id.toString()}>
-                          {status.value}
-                        </SelectItem>
-                      );
-                    }
-                  )} */}
-                  <SelectItem className="w-full px-4 pl-8" value="1">
-                    Hello World
+                  <SelectItem className="w-full px-4" value="all">
+                    Semua Status
                   </SelectItem>
+                  {userComplaintStatus &&
+                    userComplaintStatus.map(
+                      (
+                        status: { id: number; name: string; key: number },
+                        i: number
+                      ) => {
+                        return (
+                          <SelectItem
+                            key={i}
+                            className={`w-full px-4`}
+                            value={status.key.toString()}>
+                            {status.name}
+                          </SelectItem>
+                        );
+                      }
+                    )}
                 </div>
               </SelectContent>
             </Select>
@@ -215,6 +268,20 @@ export default function VerificationUserComplaintScreen() {
           {/* ) : (
             <MobileUserComplaintCardPages />
           )} */}
+        </div>
+
+        {complaints && complaints.length > 10 && (
+          <div className="w-full">
+            <PaginationComponent
+              currentPage={pagination.currentPage}
+              totalPages={pagination.totalPages}
+              onPageChange={handlePageChange}
+            />
+          </div>
+        )}
+
+        <div className="w-full">
+          {complaints && complaints.length === 0 && <DataNotFound />}
         </div>
       </div>
     </section>

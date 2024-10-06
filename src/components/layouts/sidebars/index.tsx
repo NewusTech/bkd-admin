@@ -289,18 +289,39 @@ export default function DashBoardSidebarPages() {
                       adminBars.length > 0 &&
                       adminBars?.map(
                         (bar: { id: number; name: string }, i: number) => {
+                          const isWaitingPath =
+                            bar.name === "Riwayat Pengajuan" &&
+                            pathName ===
+                              "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history";
+                          const isRevisionPath =
+                            bar.name !== "Riwayat Pengajuan" &&
+                            pathName ===
+                              "/verification-admin/verification-user-application-histories/verification-user-revision-application-history";
+
                           return (
                             <Link
                               key={i}
-                              href={`${bar?.name === "Riwayat Pengajuan" ? "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" : "/verification-admin/verification-user-application-histories/verification-user-revision-application-history"}`}
+                              href={`${
+                                bar.name === "Riwayat Pengajuan"
+                                  ? "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history"
+                                  : "/verification-admin/verification-user-application-histories/verification-user-revision-application-history"
+                              }`}
                               className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
                               <div className="w-10/12 flex flex-row items-center gap-x-2">
                                 <DotIcon
-                                  className={`w-5 h-5 ${pathName == "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" ? "text-primary-40" : pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "text-primary-40" : "text-black-80"}`}
+                                  className={`w-5 h-5 ${
+                                    isWaitingPath || isRevisionPath
+                                      ? "text-primary-40"
+                                      : "text-black-80"
+                                  }`}
                                 />
                                 <p
-                                  className={`text-[14px] ${pathName == "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" ? "text-primary-40" : pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "text-primary-40" : "text-black-80"}`}>
-                                  {bar?.name}
+                                  className={`text-[14px] ${
+                                    isWaitingPath || isRevisionPath
+                                      ? "text-primary-40"
+                                      : "text-black-80"
+                                  }`}>
+                                  {bar.name}
                                 </p>
                               </div>
                             </Link>
@@ -372,9 +393,11 @@ export default function DashBoardSidebarPages() {
 
             {/* {user && user?.role_id && user?.role_id == 3 && ( */}
             <div
-              className={`${pathName === "/verified-admin/user-application-histories" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+              className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
               <Link
-                href={"/verified-admin/user-application-histories"}
+                href={
+                  "/verification-admin/verification-satisfaction-index-history"
+                }
                 className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
                 Indeks Kepuasan
               </Link>

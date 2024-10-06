@@ -426,3 +426,16 @@ export const headings = [
     name: "Heading 6",
   },
 ];
+
+export const userComplaintStatus = [
+  {
+    id: 1,
+    name: "Menunggu",
+    key: 0,
+  },
+  {
+    id: 2,
+    name: "Selesai",
+    key: 1,
+  },
+];

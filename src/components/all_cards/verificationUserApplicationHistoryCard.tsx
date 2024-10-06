@@ -5,6 +5,8 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 import { UserApplicationHistoryInterface } from "@/types/interface";
 import { formatDateString, formatToWIB } from "@/lib/utils";
+import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 
 export default function VerificationUserApplicationHistoryCard({
   index,
@@ -13,6 +15,8 @@ export default function VerificationUserApplicationHistoryCard({
   index: number;
   user: UserApplicationHistoryInterface;
 }) {
+  const router = useRouter();
+
   return (
     <TableRow className="border border-line-20">
       <TableCell className="text-center">{index + 1}</TableCell>
@@ -23,9 +27,6 @@ export default function VerificationUserApplicationHistoryCard({
       </TableCell>
       <TableCell className="text-center">
         {user?.createdAt && formatDateString(user?.createdAt)}
-      </TableCell>
-      <TableCell className="text-center">
-        {user?.createdAt && formatToWIB(user?.createdAt)}
       </TableCell>
       <TableCell className={`text-center`}>
         <div
@@ -49,6 +50,19 @@ export default function VerificationUserApplicationHistoryCard({
                           : user?.status === 9
                             ? "Selesai"
                             : "Ditolak"}
+        </div>
+      </TableCell>
+      <TableCell className="text-center">
+        <div className="w-full flex flex-roe items-center justify-center">
+          <Button
+            onClick={() =>
+              router.push(
+                `/verification-admin/verification-user-application-histories/${user?.id}`
+              )
+            }
+            className="w-full h-[45px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 rounded-lg">
+            Detail
+          </Button>
         </div>
       </TableCell>
     </TableRow>

@@ -8,13 +8,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import HeadManageApprovalsCard from "@/components/all_cards/headManageApprovalsCard";
-import { UserApplicationHistoryInterface } from "@/types/interface";
 
-export default function HeadManageApprovalsTablePages({
-  users,
+import { SatisfactionHistoryInterface } from "@/types/interface";
+import VerificationSatisfactionIndexCard from "@/components/all_cards/verificationSatisfactionIndexCard";
+
+export default function VerificationSatisfactionIndexTablePages({
+  indexes,
 }: {
-  users: UserApplicationHistoryInterface[];
+  indexes: SatisfactionHistoryInterface[];
 }) {
   return (
     <>
@@ -22,11 +23,11 @@ export default function HeadManageApprovalsTablePages({
         <TableHeader className="bg-primary-40 text-line-10">
           <TableRow className="">
             <TableHead className="">No.</TableHead>
-            <TableHead className="text-center">Nama</TableHead>
-            <TableHead className="text-center">NIP</TableHead>
+            <TableHead className="text-center">Bidang</TableHead>
             <TableHead className="text-center">Layanan</TableHead>
             <TableHead className="text-center">Tanggal</TableHead>
-            <TableHead className="text-center">Status</TableHead>
+            <TableHead className="text-center">Waktu</TableHead>
+            <TableHead className="text-center">Kritik dan Saran</TableHead>
             <TableHead className="text-center">Aksi</TableHead>
           </TableRow>
         </TableHeader>
@@ -38,10 +39,16 @@ export default function HeadManageApprovalsTablePages({
               );
             }
           )} */}
-          {users &&
-            users.length > 0 &&
-            users.map((user: UserApplicationHistoryInterface, i: number) => {
-              return <HeadManageApprovalsCard key={i} user={user} index={i} />;
+          {indexes &&
+            indexes.length > 0 &&
+            indexes.map((item: SatisfactionHistoryInterface, i: number) => {
+              return (
+                <VerificationSatisfactionIndexCard
+                  key={i}
+                  index={i}
+                  item={item}
+                />
+              );
             })}
         </TableBody>
       </Table>

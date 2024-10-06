@@ -300,7 +300,7 @@ export default function StructureOrganizationMainScreen() {
                                             key={i}
                                             className={`w-full px-4`}
                                             value={organization.id.toString()}>
-                                            {organization?.jabatan}
+                                            {organization?.nama}
                                           </SelectItem>
                                         );
                                       }
@@ -428,12 +428,12 @@ export default function StructureOrganizationMainScreen() {
                   // isDeleteLoading={isDeleteLoading}
                   data={data}
                   setData={setData}
-                // isUpdateLoading={isUpdateLoading}
-                // isDialogEditOpen={isDialogEditOpen}
-                // setIsDialogEditOpen={setIsDialogEditOpen}
-                // handleUpdateStructureOrganization={
-                //   handleUpdateStructureOrganization
-                // }
+                  // isUpdateLoading={isUpdateLoading}
+                  // isDialogEditOpen={isDialogEditOpen}
+                  // setIsDialogEditOpen={setIsDialogEditOpen}
+                  // handleUpdateStructureOrganization={
+                  //   handleUpdateStructureOrganization
+                  // }
                 />
               )}
             </>

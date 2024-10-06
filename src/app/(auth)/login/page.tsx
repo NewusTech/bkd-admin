@@ -127,7 +127,7 @@ export default function LoginScreen() {
     <section className="relative flex justify-center items-center w-screen h-screen">
       <BackgroundImage />
 
-      <div className="relative z-50 flex flex-col w-full md:w-5/12 items-center justify-center gap-y-8 bg-white p-12 shadow-lg rounded-lg md:m-0 m-4">
+      <div className="relative z-50 flex flex-col w-11/12 md:w-6/12 items-center justify-center gap-y-8 bg-white p-4 py-8 md:p-12 md:py-12 shadow-lg rounded-lg">
         <div className="w-full flex flex-col items-center gap-y-2">
           <h2 className="text-black-80 text-xl text-center">
             Selamat Datang Di Aplikasi BKD
