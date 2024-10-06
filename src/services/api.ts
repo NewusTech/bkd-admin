@@ -1053,3 +1053,23 @@ export const getSatisfactionUser = async (
 
   return await response.json();
 };
+
+// update output Letter
+export const updateOutputLetter = async (data: any, id: number) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/edit/surat/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
