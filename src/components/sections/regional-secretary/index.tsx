@@ -23,6 +23,7 @@ import {
   PieChart,
   YAxis,
 } from "recharts";
+import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts";
 import {
   Card,
   CardContent,
@@ -34,6 +35,8 @@ import {
 import {
   ChartConfig,
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
@@ -41,26 +44,25 @@ import SearchPages from "@/components/elements/search";
 import DatePages from "@/components/elements/date";
 import { Button } from "@/components/ui/button";
 import { Printer } from "@phosphor-icons/react";
-import DivitionVerificationAdminApplicationHistoryTablePages from "@/components/tables/division_application_history_table";
 import TypingEffect from "@/components/ui/TypingEffect";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useDebounce } from "@/hooks/useDebounce";
-import {
-  getApplicationUserHistories,
-  getService,
-  getUserProfile,
-} from "@/services/api";
-import { formatDate } from "@/lib/utils";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import {
   AdminProfileInterface,
   ServiceInterface,
   UserApplicationHistoryInterface,
 } from "@/types/interface";
+import { formatDate } from "@/lib/utils";
+import {
+  getApplicationUserHistories,
+  getService,
+  getUserProfile,
+} from "@/services/api";
 import PaginationComponent from "@/components/elements/pagination";
-import VerificationUserApplicationHistoryTablePages from "@/components/tables/verification_admin_user_application_history_table";
 import DataNotFound from "@/components/elements/data_not_found";
+import VerificationUserApplicationHistoryTablePages from "@/components/tables/verification_admin_user_application_history_table";
 
-export default function DivisionVerificationAdminDashboardPages() {
+export default function RegionalSecretaryDashboardPages() {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
@@ -130,21 +132,31 @@ export default function DivisionVerificationAdminDashboardPages() {
   };
 
   useEffect(() => {
-    if (user && user?.role_name === "Kepala Bidang") {
+    if (user && user?.role_name === "Sekretaris Daerah") {
       fetchApplicationHistoryUser(
         1,
         10,
-        5,
+        8,
         debounceSearch,
         startDateFormatted,
         endDateFormatted,
         layananId
       );
-    } else if (user && user?.role_name === "Admin Verifikasi") {
+    } else if (user && user?.role_name === "Kepala Dinas") {
       fetchApplicationHistoryUser(
         1,
         10,
-        2,
+        7,
+        debounceSearch,
+        startDateFormatted,
+        endDateFormatted,
+        layananId
+      );
+    } else if (user && user?.role_name === "Sekretaris Dinas") {
+      fetchApplicationHistoryUser(
+        1,
+        10,
+        6,
         debounceSearch,
         startDateFormatted,
         endDateFormatted,
@@ -217,46 +229,69 @@ export default function DivisionVerificationAdminDashboardPages() {
     // },
   } satisfies ChartConfig;
 
-  const chartDataPie = useMemo(
+  const chartDataLegend = useMemo(
     () => [
-      { browser: "chrome", visitors: 275, fill: "#1947BC" },
-      { browser: "safari", visitors: 200, fill: "#1947BC" },
-      { browser: "firefox", visitors: 287, fill: "#BC6D19" },
-      { browser: "edge", visitors: 173, fill: "#D51C7F" },
-      { browser: "other", visitors: 190, fill: "#4D56B7" },
+      {
+        bidang: "Bidang Mutasi",
+        selesai: 275,
+        ditolak: 255,
+        direvisi: 235,
+        fill: "#1947BC",
+      },
+      {
+        bidang: "Bidang Kenaikan",
+        selesai: 265,
+        ditolak: 245,
+        direvisi: 225,
+        fill: "#D51C7F",
+      },
+      {
+        bidang: "Bidang Pensiun",
+        selesai: 185,
+        ditolak: 165,
+        direvisi: 145,
+        fill: "#BC6D19",
+      },
+      {
+        bidang: "Bidang Cuti",
+        selesai: 175,
+        ditolak: 155,
+        direvisi: 135,
+        fill: "#4D56B7",
+      },
     ],
     []
   );
 
-  const chartConfigPie = {
-    visitors: {
-      label: "Visitors",
-    },
-    chrome: {
-      label: "Chrome",
+  const chartConfigLegend = {
+    // visitors: {
+    //   label: "Visitors",
+    // },
+    selesai: {
+      label: "Selesai",
       color: "#1947BC",
     },
-    safari: {
-      label: "Safari",
-      color: "#1947BC",
-    },
-    firefox: {
-      label: "Firefox",
-      color: "#BC6D19",
-    },
-    edge: {
-      label: "Edge",
+    ditolak: {
+      label: "Ditolak",
       color: "#D51C7F",
     },
-    other: {
-      label: "Other",
-      color: "#4D56B7",
+    direvisi: {
+      label: "Direvisi",
+      color: "#BC6D19",
     },
+    // edge: {
+    //   label: "Edge",
+    //   color: "#D51C7F",
+    // },
+    // other: {
+    //   label: "Other",
+    //   color: "#4D56B7",
+    // },
   } satisfies ChartConfig;
 
-  const totalVisitors = useMemo(() => {
-    return chartDataPie?.reduce((acc, curr) => acc + curr.visitors, 0);
-  }, [chartDataPie]);
+  // const totalVisitors = useMemo(() => {
+  //   return chartDataLegend?.reduce((acc, curr) => acc + curr.visitors, 0);
+  // }, [chartDataLegend]);
 
   return (
     <div className="w-full flex flex-col gap-y-5 mb-24">
@@ -272,13 +307,33 @@ export default function DivisionVerificationAdminDashboardPages() {
         </div>
 
         <div className="w-full flex flex-row items-center self-center">
-          {user && user?.role_name && user.role_name === "Kepala Bidang" ? (
+          {user && user.role_name && user.role_name === "Sekretaris Daerah" ? (
             <div className="w-full text-black-80 font-semibold text-lg md:text-3xl text-center  md:text-left">
               <TypingEffect
                 className="text-3xl"
                 speed={250}
                 deleteSpeed={50}
-                text={["Kepala Bidang"]}
+                text={["Sekretaris Daerah"]}
+              />
+            </div>
+          ) : user && user.role_name && user.role_name === "Kepala Dinas" ? (
+            <div className="w-full text-black-80 font-semibold text-lg md:text-3xl text-center  md:text-left">
+              <TypingEffect
+                className="text-3xl"
+                speed={250}
+                deleteSpeed={50}
+                text={["Kepala Dinas"]}
+              />
+            </div>
+          ) : user &&
+            user?.role_name &&
+            user.role_name === "Sekretaris Dinas" ? (
+            <div className="w-full text-black-80 font-semibold text-lg md:text-3xl text-center  md:text-left">
+              <TypingEffect
+                className="text-3xl"
+                speed={250}
+                deleteSpeed={50}
+                text={["Sekretaris Dinas"]}
               />
             </div>
           ) : (
@@ -287,7 +342,7 @@ export default function DivisionVerificationAdminDashboardPages() {
                 className="text-3xl"
                 speed={250}
                 deleteSpeed={50}
-                text={["Admin Verifikasi"]}
+                text={["Super Admin"]}
               />
             </div>
           )}
@@ -430,50 +485,31 @@ export default function DivisionVerificationAdminDashboardPages() {
 
             <CardContent className="flex-1 pb-0">
               <ChartContainer
-                config={chartConfigPie}
-                className="mx-auto aspect-square max-h-[200px] md:max-h-[250px]">
-                <PieChart>
+                config={chartConfigLegend}
+                className="mx-auto aspect-square max-h-[250px]">
+                <RadarChart
+                  data={chartDataLegend}
+                  margin={{
+                    top: -40,
+                    bottom: -10,
+                  }}>
                   <ChartTooltip
                     cursor={false}
-                    content={<ChartTooltipContent hideLabel />}
+                    content={<ChartTooltipContent indicator="line" />}
                   />
-                  <Pie
-                    data={chartDataPie}
-                    dataKey="visitors"
-                    nameKey="browser"
-                    innerRadius={60}
-                    strokeWidth={5}>
-                    <Label
-                      content={({ viewBox }) => {
-                        if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                          return (
-                            <text
-                              x={viewBox.cx}
-                              y={viewBox.cy}
-                              textAnchor="middle"
-                              dominantBaseline="middle">
-                              <tspan
-                                x={viewBox.cx}
-                                y={viewBox.cy}
-                                className="fill-foreground text-2xl md:text-3xl font-bold">
-                                {totalVisitors.toLocaleString()}
-                              </tspan>
-                              <tspan
-                                x={viewBox.cx}
-                                y={(viewBox.cy || 0) + 24}
-                                className="fill-muted-foreground">
-                                Visitors
-                              </tspan>
-                            </text>
-                          );
-                        }
-                      }}
-                    />
-                  </Pie>
-                </PieChart>
+                  <PolarAngleAxis dataKey="bidang" />
+                  <PolarGrid />
+                  <Radar dataKey="selesai" fill="#1947BC" fillOpacity={0.6} />
+                  <Radar dataKey="ditolak" fill="#BC6D19" />
+                  <Radar dataKey="direvisi" fill="#4D56B7" />
+                  <ChartLegend
+                    className="mt-8"
+                    content={<ChartLegendContent />}
+                  />
+                </RadarChart>
               </ChartContainer>
             </CardContent>
-            <CardFooter className="flex-col gap-2 text-sm">
+            {/* <CardFooter className="flex-col gap-2 text-sm">
               <div className="flex items-center gap-2 font-medium leading-none">
                 Trending up by 5.2% this month{" "}
                 <TrendingUp className="h-4 w-4" />
@@ -481,7 +517,7 @@ export default function DivisionVerificationAdminDashboardPages() {
               <div className="leading-none text-muted-foreground">
                 Showing total visitors for the last 6 months
               </div>
-            </CardFooter>
+            </CardFooter> */}
           </Card>
         </div>
       </div>

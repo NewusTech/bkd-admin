@@ -27,6 +27,10 @@ body {
   display: none;
 }
 
+.horizontalScroll::-webkit-scrollbar {
+  display: none;
+}
+
 .background-about-us {
   background-color: rgba(53, 114, 239);
 }

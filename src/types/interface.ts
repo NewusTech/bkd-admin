@@ -439,3 +439,20 @@ export interface SatisfactionHistoryInterface {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface SuperAdminDashboardMonthInterface {
+  month: string;
+  permohonanCount: number;
+}
+
+export interface SuperAdminDashboardAreasInterface {
+  id: number;
+  name: string;
+  permohonan_count: number;
+}
+
+export interface SuperAdminDashboardInterface {
+  permohonanCount: number;
+  monthlyCounts: SuperAdminDashboardMonthInterface[];
+  countbyBidang: SuperAdminDashboardAreasInterface[];
+}
