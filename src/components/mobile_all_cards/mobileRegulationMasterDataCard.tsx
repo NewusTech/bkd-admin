@@ -127,8 +127,7 @@ export default function MobileRegulationMasterDataCard({
               handleSetRegulation();
               setIsDialogEditOpen(true);
             }}
-            className="w-full py-3 text-[14px] bg-line-40 bg-opacity-20 border border-black-80 hover:bg-black-80 hover:bg-opacity-20 hover:text-line-10 rounded-lg">
-            <div className="w-full text-[14px]">Edit</div>
+            className="h-10 text-xs md:text-sm rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-full">Edit
           </DrawerTrigger>
           <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
             <div className="w-full flex flex-col gap-y-3 verticalScroll">
@@ -173,9 +172,8 @@ export default function MobileRegulationMasterDataCard({
                       onDragOver={handleDragOver}
                       onDragLeave={handleDragLeave}
                       onDrop={handleDropImage}
-                      className={`w-full ${
-                        previewImage ? "md:w-8/12" : "w-full"
-                      }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                      className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
+                        }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                       <div>
                         <input
                           type="file"
@@ -215,17 +213,19 @@ export default function MobileRegulationMasterDataCard({
                   </div>
                 </div>
 
-                <div className="w-full flex flex-row justify-center items-center gap-x-5">
-                  {/* <AlertDialogCancel>Cancel</AlertDialogCancel> */}
-
+                <div className="flex gap-4 justify-between">
+                  <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-xs">
+                    <DrawerDescription className="text-xs md:text-sm">Batal</DrawerDescription>
+                  </DrawerClose>
                   <Button
+                    title="Simpan Data"
                     type="submit"
                     disabled={isUpdateLoading ? true : false}
-                    className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                    className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                     {isUpdateLoading ? (
                       <Loader className="animate-spin" />
                     ) : (
-                      "Update"
+                      "Simpan"
                     )}
                   </Button>
                 </div>

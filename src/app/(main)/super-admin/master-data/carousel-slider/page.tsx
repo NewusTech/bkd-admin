@@ -39,6 +39,7 @@ import Image from "next/image";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileCarouselSliderMasterDataCard from "@/components/mobile_all_cards/mobileCarouselSliderMasterDataCard";
 import AddIcon from "@/components/elements/add_button";
+import TypingEffect from "@/components/ui/TypingEffect";
 
 export default function CarouselSliderScreen() {
   const router = useRouter();
@@ -252,67 +253,69 @@ export default function CarouselSliderScreen() {
                   </div>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
-                  <AlertDialogHeader className="flex flex-col max-h-[500px]">
+                  <AlertDialogHeader className="flex flex-col">
                     <AlertDialogTitle className="text-center">
                       Master Data Slider
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
-                      Input data yang diperlukan
+                      <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
                     </AlertDialogDescription>
                     <form
                       onSubmit={handleCreateSlider}
-                      className="w-full flex flex-col gap-y-3 verticalScroll">
-                      <div className="flex flex-col w-full">
-                        <Label className="text-[16px] text-neutral-700 font-normal mb-2">
-                          Slider
-                        </Label>
+                      className="w-full flex flex-col gap-y-3 max-h-[500px]">
+                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                        <div className="flex flex-col w-full">
+                          <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                            Slider
+                          </Label>
 
-                        <div className="flex flex-col md:flex-row w-full">
-                          <div
-                            ref={dropRef}
-                            onDragOver={handleDragOver}
-                            onDragLeave={handleDragLeave}
-                            onDrop={handleDropImage}
-                            className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
-                            <>
-                              <input
-                                type="file"
-                                id="file-input-image"
-                                name="image"
-                                accept="image/*"
-                                onChange={handleImageChange}
-                                className="hidden"
-                              />
-                              <label
-                                htmlFor="file-input-image"
-                                className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
-                                Drag and drop file here or click to select file
-                              </label>
-                            </>
-                          </div>
-
-                          {previewImage && (
-                            <div className="relative md:ml-4 w-full mt-1">
-                              <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
-                                <div className="w-full h-full">
-                                  <Image
-                                    src={previewImage}
-                                    width={1000}
-                                    height={1000}
-                                    alt="Preview"
-                                    className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
-                                  />
-                                </div>
-                                <button
-                                  type="button"
-                                  onClick={handleRemoveImage}
-                                  className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
-                                  <Trash />
-                                </button>
-                              </div>
+                          <div className="flex flex-col md:flex-row w-full">
+                            <div
+                              ref={dropRef}
+                              onDragOver={handleDragOver}
+                              onDragLeave={handleDragLeave}
+                              onDrop={handleDropImage}
+                              className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
+                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              <>
+                                <input
+                                  type="file"
+                                  id="file-input-image"
+                                  name="image"
+                                  accept="image/*"
+                                  onChange={handleImageChange}
+                                  className="hidden"
+                                />
+                                <label
+                                  htmlFor="file-input-image"
+                                  className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                  Drag and drop file here or click to select file
+                                </label>
+                              </>
                             </div>
-                          )}
+
+                            {previewImage && (
+                              <div className="relative md:ml-4 w-full mt-1">
+                                <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
+                                  <div className="w-full h-full">
+                                    <Image
+                                      src={previewImage}
+                                      width={1000}
+                                      height={1000}
+                                      alt="Preview"
+                                      className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                    />
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={handleRemoveImage}
+                                    className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
+                                    <Trash />
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
 
@@ -414,13 +417,15 @@ export default function CarouselSliderScreen() {
                         </div>
                       </div>
 
-                      <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                        {/* <AlertDialogCancel>Cancel</AlertDialogCancel> */}
-
+                      <div className="flex gap-4 justify-between">
+                        <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
+                          <DrawerDescription>Batal</DrawerDescription>
+                        </DrawerClose>
                         <Button
+                          title="Simpan Data"
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] md:text-[16px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (

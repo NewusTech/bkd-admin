@@ -467,6 +467,45 @@ export const updateAboutVisionMision = async (id: number, data: any) => {
   return await response.json();
 };
 
+// get logo
+export const getLogo = async () => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/bkd/profile/get`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// update about visi misi
+export const updateLogo = async (id: number, data: any) => {
+  const token = Cookies.get("Authorization");
+
+  const formData = new FormData()
+
+  formData.append("logo", data.logo)
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/bkd/profile/update/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
 // get struktur organisasi
 export const getStructureOrganizations = async (limit: number) => {
   const response = await fetch(
