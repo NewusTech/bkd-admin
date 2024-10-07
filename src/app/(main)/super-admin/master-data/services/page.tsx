@@ -433,7 +433,7 @@ export default function ServicesScreen() {
                             value={data.nama}
                             onChange={handleChange}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-xs md:text-sm"
                             placeholder="Masukkan Nama Layanan"
                           />
                         </div>
@@ -509,7 +509,7 @@ export default function ServicesScreen() {
                             value={data.penanggung_jawab}
                             onChange={handleChange}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-xs md:text-sm"
                             placeholder="Masukkan Nama Penanggung Jawab"
                           />
                         </div>
@@ -543,14 +543,15 @@ export default function ServicesScreen() {
                         </div>
                       </div>
 
-                      <div className="w-full flex flex-row justify-center items-center gap-x-5">
-                        <DrawerClose>
-                          <div className="text-xs md:text-sm">Batal</div>
+                      <div className="flex gap-4 justify-between">
+                        <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
+                          <DrawerDescription>Batal</DrawerDescription>
                         </DrawerClose>
                         <Button
+                          title="Simpan Data"
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] md:text-[16px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (
@@ -596,7 +597,7 @@ export default function ServicesScreen() {
                       Master Data Layanan
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
-                      Input data yang diperlukan
+                      <TypingEffect className="custom-class md:text-sm text-xs" text={["Input data yang diperlukan"]} />
                     </AlertDialogDescription>
                     <form
                       onSubmit={handleCreateService}

@@ -27,6 +27,7 @@ import EditorProvide from "../pages/areas";
 import { RichTextDisplay } from "../ui/RichTextDisplay";
 import ReadMore from "../ui/ReadMore";
 import CombinedReadMoreRichTextDisplay from "../ui/CombinedReadMoreRichTextDisplay";
+import TypingEffect from "../ui/TypingEffect";
 
 export default function SuperNewsMasterDataCard({
   item,
@@ -143,63 +144,64 @@ export default function SuperNewsMasterDataCard({
                   setIsDialogEditOpen(true);
                 }}
                 className="w-full">
-                <div className="w-full text-sm bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg">
+                <div className="w-full text-sm bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                   Edit
                 </div>
               </AlertDialogTrigger>
               <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
-                <AlertDialogHeader className="flex flex-col max-h-[500px]">
+                <AlertDialogHeader className="flex flex-col">
                   <AlertDialogTitle className="text-center">
                     Master Data Berita
                   </AlertDialogTitle>
                   <AlertDialogDescription className="text-center">
-                    Input data yang diperlukan
+                    <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                   </AlertDialogDescription>
                   <form
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                       handleUpdateNews(e, item?.slug)
                     }
-                    className="w-full flex flex-col gap-y-3 verticalScroll">
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
-                        Judul Berita
-                      </Label>
+                    className="w-full flex flex-col gap-y-3 max-h-[500px]">
+                    <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          Judul Berita
+                        </Label>
 
-                      <Input
-                        id="nama-bidang"
-                        name="title"
-                        value={data.title}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setData({
-                            ...data,
-                            title: e.target.value,
-                          })
-                        }
-                        type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Judul Berita"
-                      />
-                    </div>
-
-                    <div className="w-full flex flex-col gap-y-2">
-                      <Label className="text-sm text-black-70 font-normal">
-                        Deskripsi Berita
-                      </Label>
-
-                      <div className="w-full h-full border border-line-20 rounded-lg">
-                        <EditorProvide
-                          content={data.desc}
-                          onChange={(e: any) => setData({ ...data, desc: e })}
+                        <Input
+                          id="nama-bidang"
+                          name="title"
+                          value={data.title}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setData({
+                              ...data,
+                              title: e.target.value,
+                            })
+                          }
+                          type="text"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          placeholder="Masukkan Judul Berita"
                         />
                       </div>
 
-                      {/* <div className="w-full h-[250px] flex flex-col gap-y-2">
+                      <div className="w-full flex flex-col gap-y-2">
+                        <Label className="text-sm text-black-70 font-normal">
+                          Deskripsi Berita
+                        </Label>
+
+                        <div className="w-full h-full border border-line-20 rounded-lg">
+                          <EditorProvide
+                            content={data.desc}
+                            onChange={(e: any) => setData({ ...data, desc: e })}
+                          />
+                        </div>
+
+                        {/* <div className="w-full h-[250px] flex flex-col gap-y-2">
                         <div
                           className="flex flex-col h-[250px] w-full border border-line-20 rounded-b-lg"
                           ref={quillEditRef}></div>
                       </div> */}
 
-                      {/* <Textarea
+                        {/* <Textarea
                         name="desc"
                         placeholder="Masukkan Deskripsi Berita"
                         value={data.desc}
@@ -208,69 +210,70 @@ export default function SuperNewsMasterDataCard({
                         }
                         className="w-full rounded-lg h-[74px] border border-line-20 md:h-[122px] text-sm placeholder:opacity-[70%]"
                       /> */}
-                    </div>
+                      </div>
 
-                    <div className="flex flex-col w-full">
-                      <Label className="text-[16px] text-neutral-700 font-normal mb-2">
-                        Foto Berita
-                      </Label>
+                      <div className="flex flex-col w-full">
+                        <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                          Foto Berita
+                        </Label>
 
-                      <div className="flex flex-col md:flex-row w-full">
-                        <div
-                          ref={dropRef}
-                          onDragOver={handleDragOver}
-                          onDragLeave={handleDragLeave}
-                          onDrop={handleDropImage}
-                          className={`w-full ${data?.image || previewImage ? "md:w-8/12" : "w-full"
-                            }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
-                          <>
-                            <input
-                              type="file"
-                              id="file-input-image"
-                              name="image"
-                              accept="image/*"
-                              onChange={handleImageChange}
-                              className="hidden"
-                            />
-                            <label
-                              htmlFor="file-input-image"
-                              className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
-                              Drag and drop file here or click to select file
-                            </label>
-                          </>
-                        </div>
-
-                        {(data?.image || previewImage) && (
-                          <div className="relative md:ml-4 w-full mt-1">
-                            <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
-                              <div className="w-full h-full">
-                                <Image
-                                  src={data?.image || previewImage}
-                                  width={1000}
-                                  height={1000}
-                                  alt="Preview"
-                                  className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
-                                />
-                              </div>
-                              <button
-                                type="button"
-                                onClick={handleRemoveImage}
-                                className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
-                                <Trash />
-                              </button>
-                            </div>
+                        <div className="flex flex-col md:flex-row w-full">
+                          <div
+                            ref={dropRef}
+                            onDragOver={handleDragOver}
+                            onDragLeave={handleDragLeave}
+                            onDrop={handleDropImage}
+                            className={`w-full ${data?.image || previewImage ? "md:w-8/12" : "w-full"
+                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                            <>
+                              <input
+                                type="file"
+                                id="file-input-image"
+                                name="image"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                className="hidden"
+                              />
+                              <label
+                                htmlFor="file-input-image"
+                                className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                Drag and drop file here or click to select file
+                              </label>
+                            </>
                           </div>
-                        )}
+
+                          {(data?.image || previewImage) && (
+                            <div className="relative md:ml-4 w-full mt-1">
+                              <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
+                                <div className="w-full h-full">
+                                  <Image
+                                    src={data?.image || previewImage}
+                                    width={1000}
+                                    height={1000}
+                                    alt="Preview"
+                                    className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                  />
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={handleRemoveImage}
+                                  className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
+                                  <Trash />
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
 
-                    <div className="w-full flex flex-row justify-center items-center gap-x-5">
+                    <div className="w-full flex flex-row justify-center md:justify-between items-center gap-x-5">
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
 
                       <Button
                         type="submit"
                         disabled={isUpdateLoading ? true : false}
-                        className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                        className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                         {isUpdateLoading ? (
                           <Loader className="animate-spin" />
                         ) : (
@@ -288,7 +291,7 @@ export default function SuperNewsMasterDataCard({
             <Button
               disabled={isDeleteLoading ? true : false}
               onClick={() => handleDeleteNews(item?.slug)}
-              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10">
+              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
               {isDeleteLoading ? (
                 <Loader className="animate-spin" />
               ) : isDeleteLoading ? (

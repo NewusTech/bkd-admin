@@ -147,7 +147,7 @@ export default function SuperServicesMasterDataCard({
                 </div>
               </AlertDialogTrigger>
               <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
-                <AlertDialogHeader className="flex flex-col max-h-[500px]">
+                <AlertDialogHeader className="flex flex-col">
                   <AlertDialogTitle className="text-center">
                     Master Data Layanan
                   </AlertDialogTitle>
@@ -158,141 +158,143 @@ export default function SuperServicesMasterDataCard({
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                       handleUpdateService(e, service?.id)
                     }
-                    className="w-full flex flex-col gap-y-3 verticalScroll">
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
-                        Nama Layanan
-                      </Label>
-                      <Input
-                        id="nama-layanan"
-                        name="nama"
-                        value={data.nama}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setData({
-                            ...data,
-                            nama: e.target.value,
-                          })
-                        }
-                        type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Nama Layanan"
-                      />
-                    </div>
-
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label
-                        htmlFor="syarat"
-                        className="focus-within:text-primary-70 font-normal text-sm">
-                        Syarat Layanan
-                      </Label>
-                      <div className="w-full h-full border border-line-20 rounded-lg text-left">
-                        <EditorProvide
-                          content={data.syarat}
-                          onChange={(e: any) => setData({ ...data, syarat: e })}
+                    className="w-full flex flex-col gap-y-3 max-h-[500px]">
+                    <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          Nama Layanan
+                        </Label>
+                        <Input
+                          id="nama-layanan"
+                          name="nama"
+                          value={data.nama}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setData({
+                              ...data,
+                              nama: e.target.value,
+                            })
+                          }
+                          type="text"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          placeholder="Masukkan Nama Layanan"
                         />
                       </div>
-                    </div>
 
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label
-                        htmlFor="ketentuan"
-                        className="focus-within:text-primary-70 font-normal text-sm">
-                        Pilih Bidang
-                      </Label>
-                      <div className="w-full border border-line-20 rounded-lg">
-                        <Select
-                          value={data.bidang_id}
-                          onValueChange={(value: string) =>
-                            setData({ ...data, bidang_id: value })
-                          }>
-                          <SelectTrigger
-                            className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-                            <SelectValue
-                              placeholder="Pilih Bidang"
-                              className="text-black-80 w-full"
-                            />
-                          </SelectTrigger>
-                          <SelectContent className="bg-line-10">
-                            <div className="pt-2">
-                              {areas &&
-                                areas.length > 0 &&
-                                areas.map((area: AreasInterface, i: number) => {
-                                  return (
-                                    <SelectItem
-                                      key={i}
-                                      className={`w-full px-4`}
-                                      value={area.id.toString()}>
-                                      {area.nama}
-                                    </SelectItem>
-                                  );
-                                })}
-                            </div>
-                          </SelectContent>
-                        </Select>
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label
+                          htmlFor="syarat"
+                          className="focus-within:text-primary-70 font-normal text-sm">
+                          Syarat Layanan
+                        </Label>
+                        <div className="w-full h-full border border-line-20 rounded-lg text-left">
+                          <EditorProvide
+                            content={data.syarat}
+                            onChange={(e: any) => setData({ ...data, syarat: e })}
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="w-full flex flex-col gap-y-2">
-                      <Label className="text-black-70 font-normal text-xs md:text-sm text-left">
-                        Deskripsi Bidang
-                      </Label>
-                      <div className="w-full h-full border border-line-20 rounded-lg text-left">
-                        <EditorProvide
-                          content={data.desc}
-                          onChange={(e: any) => setData({ ...data, desc: e })}
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label
+                          htmlFor="ketentuan"
+                          className="focus-within:text-primary-70 font-normal text-sm">
+                          Pilih Bidang
+                        </Label>
+                        <div className="w-full border border-line-20 rounded-lg">
+                          <Select
+                            value={data.bidang_id}
+                            onValueChange={(value: string) =>
+                              setData({ ...data, bidang_id: value })
+                            }>
+                            <SelectTrigger
+                              className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                              <SelectValue
+                                placeholder="Pilih Bidang"
+                                className="text-black-80 w-full"
+                              />
+                            </SelectTrigger>
+                            <SelectContent className="bg-line-10">
+                              <div className="pt-2">
+                                {areas &&
+                                  areas.length > 0 &&
+                                  areas.map((area: AreasInterface, i: number) => {
+                                    return (
+                                      <SelectItem
+                                        key={i}
+                                        className={`w-full px-4`}
+                                        value={area.id.toString()}>
+                                        {area.nama}
+                                      </SelectItem>
+                                    );
+                                  })}
+                              </div>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+
+                      <div className="w-full flex flex-col gap-y-2">
+                        <Label className="text-black-70 font-normal text-xs md:text-sm text-left">
+                          Deskripsi Bidang
+                        </Label>
+                        <div className="w-full h-full border border-line-20 rounded-lg text-left">
+                          <EditorProvide
+                            content={data.desc}
+                            onChange={(e: any) => setData({ ...data, desc: e })}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          Penanggung Jawab
+                        </Label>
+                        <Input
+                          id="pj"
+                          name="penanggung_jawab"
+                          value={data.penanggung_jawab}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setData({
+                              ...data,
+                              penanggung_jawab: e.target.value,
+                            })
+                          }
+                          type="text"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          placeholder="Masukkan Nama Penanggung Jawab"
                         />
                       </div>
-                    </div>
 
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
-                        Penanggung Jawab
-                      </Label>
-                      <Input
-                        id="pj"
-                        name="penanggung_jawab"
-                        value={data.penanggung_jawab}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setData({
-                            ...data,
-                            penanggung_jawab: e.target.value,
-                          })
-                        }
-                        type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Nama Penanggung Jawab"
-                      />
-                    </div>
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label
+                          htmlFor="ketentuan"
+                          className="focus-within:text-primary-70 font-normal text-sm">
+                          Ketentuan
+                        </Label>
+                        <div className="w-full h-full border border-line-20 rounded-lg text-left">
+                          <EditorProvide
+                            content={data.ketentuan}
+                            onChange={(e: any) => setData({ ...data, ketentuan: e })}
+                          />
+                        </div>
+                      </div>
 
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label
-                        htmlFor="ketentuan"
-                        className="focus-within:text-primary-70 font-normal text-sm">
-                        Ketentuan
-                      </Label>
-                      <div className="w-full h-full border border-line-20 rounded-lg text-left">
-                        <EditorProvide
-                          content={data.ketentuan}
-                          onChange={(e: any) => setData({ ...data, ketentuan: e })}
-                        />
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label
+                          htmlFor="langkah"
+                          className="focus-within:text-primary-70 font-normal text-sm">
+                          Langkah
+                        </Label>
+                        <div className="w-full h-full border border-line-20 rounded-lg text-left">
+                          <EditorProvide
+                            content={data.langkah}
+                            onChange={(e: any) => setData({ ...data, langkah: e })}
+                          />
+                        </div>
                       </div>
                     </div>
 
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label
-                        htmlFor="langkah"
-                        className="focus-within:text-primary-70 font-normal text-sm">
-                        Langkah
-                      </Label>
-                      <div className="w-full h-full border border-line-20 rounded-lg text-left">
-                        <EditorProvide
-                          content={data.langkah}
-                          onChange={(e: any) => setData({ ...data, langkah: e })}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="w-full flex flex-row justify-center items-center gap-x-5">
+                    <div className="w-full flex flex-row justify-between items-center gap-x-5">
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
 
                       <Button

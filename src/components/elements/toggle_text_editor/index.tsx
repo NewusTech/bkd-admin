@@ -98,7 +98,7 @@ export default function TextEditorToogle() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300 border border-line-20 rounded-lg px-4">
-                    <ListCollapse className="text-primary w-5 h-5" />
+                    <ListCollapse className="text-primary w-4 h-4" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
