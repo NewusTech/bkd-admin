@@ -25,6 +25,7 @@ import {
   AccountManagement,
   adminBars,
   areasHeadBars,
+  masterDataAreasHeads,
   masterDataSupers,
   SatisfactionIndexs,
 } from "@/constants/main";
@@ -63,7 +64,7 @@ export default function DashBoardSidebarPages() {
         showConfirmButton: false,
         position: "center",
       });
-      router.push("/");
+      router.push("/login");
     }, 1000);
   };
 
@@ -80,7 +81,7 @@ export default function DashBoardSidebarPages() {
     fetchUserProfile();
   }, []);
 
-  // console.log(user, "ini user");
+  console.log(user, "ini user");
 
   return (
     <section className="flex flex-col w-10/12 md:w-[23%] h-full justify-center items-center fixed">
@@ -104,522 +105,1257 @@ export default function DashBoardSidebarPages() {
             </p>
           </Link>
 
-          {/* render admin verified */}
-          {/* <div className="w-full flex flex-col">
-            <Accordion
-              className="w-full flex flex-col gap-y-4"
-              type="single"
-              collapsible
-              value={activeAccordionValue}
-              onValueChange={(value) => {
-                setActiveAccordionValue(value);
-              }}>
-              <AccordionItem
-                className="w-full border-none flex flex-col"
-                value={`item-1`}>
-                <AccordionTrigger className="px-4 py-2 bg-white font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4">
-                  <div className="w-full flex flex-row items-center gap-x-2">
-                    <p className="text-black-80 text-[16px]">
-                      Riwayat Permohonan
-                    </p>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
-                  <div className="w-full flex flex-col">
-                    {adminBars &&
-                      adminBars.length > 0 &&
-                      adminBars?.map(
-                        (bar: { id: number; name: string }, i: number) => {
-                          return (
-                            <Link
-                              key={i}
-                              href={`${bar?.name === "Riwayat Pengajuan" ? "/verified-admin/user-application-histories" : "/verified-admin/user-application-revition-histories"}`}
-                              className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
-                              <div className="w-10/12 flex flex-row items-center gap-x-2">
-                                <DotIcon className={`w-5 h-5 text-black-80`} />
-                                <p>{bar?.name}</p>
-                              </div>
-                            </Link>
-                          );
-                        }
-                      )}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div> */}
+          {/* render verification admin */}
+          {user?.role_name && user?.role_name === "Admin Verifikasi" && (
+            <>
+              <div className="w-full flex flex-col">
+                <Accordion
+                  className="w-full flex flex-col gap-y-4"
+                  type="single"
+                  collapsible
+                  value={activeAccordionValue}
+                  onValueChange={(value) => {
+                    setActiveAccordionValue(value);
+                  }}>
+                  <AccordionItem
+                    className="w-full border-none flex flex-col"
+                    value={`item-1`}>
+                    <AccordionTrigger
+                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}>
+                      <div className="w-full flex flex-row items-center gap-x-2">
+                        <p className="text-black-80 text-[16px]">
+                          Riwayat Permohonan
+                        </p>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                      <div className="w-full flex flex-col">
+                        {adminBars &&
+                          adminBars.length > 0 &&
+                          adminBars?.map(
+                            (bar: { id: number; name: string }, i: number) => {
+                              const isWaitingPath =
+                                bar.name === "Riwayat Pengajuan" &&
+                                pathName ===
+                                  "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history";
+                              const isRevisionPath =
+                                bar.name !== "Riwayat Pengajuan" &&
+                                pathName ===
+                                  "/verification-admin/verification-user-application-histories/verification-user-revision-application-history";
 
-          {/* admin verified */}
-          {/* <div className="w-full flex flex-col gap-y-3">
-            <div
-              className={`${pathName === "/application-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
-              <Link
-                href={"/verification-admin/verification-reportings"}
-                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
-                Laporan
-              </Link>
-            </div>
-          </div> */}
+                              return (
+                                <Link
+                                  key={i}
+                                  href={`${
+                                    bar.name === "Riwayat Pengajuan"
+                                      ? "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history"
+                                      : "/verification-admin/verification-user-application-histories/verification-user-revision-application-history"
+                                  }`}
+                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                                  <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                    <DotIcon
+                                      className={`w-5 h-5 ${
+                                        isWaitingPath || isRevisionPath
+                                          ? "text-primary-40"
+                                          : "text-black-80"
+                                      }`}
+                                    />
+                                    <p
+                                      className={`text-[14px] ${
+                                        isWaitingPath || isRevisionPath
+                                          ? "text-primary-40"
+                                          : "text-black-80"
+                                      }`}>
+                                      {bar.name}
+                                    </p>
+                                  </div>
+                                </Link>
+                              );
+                            }
+                          )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
 
-          {/* render areas lead */}
-          {/* <div className="w-full flex flex-col gap-y-3">
-            <div
-              className={`${pathName === "/application-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
-              <Link
-                href={"/areas-head/head-manage-approvals"}
-                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
-                Kelola Persetujuan
-              </Link>
-            </div>
-          </div> */}
+              <div className="w-full flex flex-col gap-y-4">
+                <div
+                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={
+                      "/verification-admin/verification-user-complaint-history"
+                    }
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Pengaduan
+                  </Link>
+                </div>
 
-          {/* render areas lead */}
-          {/* <div className="w-full flex flex-col">
-            <Accordion
-              className="w-full flex flex-col gap-y-4"
-              type="single"
-              collapsible
-              value={activeAccordionValue}
-              onValueChange={(value) => {
-                setActiveAccordionValue(value);
-              }}>
-              <AccordionItem
-                className="w-full border-none flex flex-col"
-                value={`item-1`}>
-                <AccordionTrigger className="px-4 py-2 bg-white font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4">
-                  <div className="w-full flex flex-row items-center gap-x-2">
-                    <p className="text-black-80 text-[16px]">Data Master</p>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
-                  <div className="w-full flex flex-col">
-                    {areasHeadBars &&
-                      areasHeadBars.length > 0 &&
-                      areasHeadBars?.map(
-                        (area: { id: number; name: string }, i: number) => {
-                          return (
-                            <Link
-                              key={i}
-                              href={`${area?.name === "Riwayat Pengajuan" ? "/verified-admin/user-application-histories" : "/verified-admin/user-application-revition-histories"}`}
-                              className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
-                              <div className="w-10/12 flex flex-row items-center gap-x-2">
-                                <DotIcon className={`w-5 h-5 text-black-80`} />
-                                <p>{area?.name}</p>
-                              </div>
-                            </Link>
-                          );
-                        }
-                      )}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div> */}
+                <div
+                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={"/department-secretary/department-reportings"}
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Laporan
+                  </Link>
+                </div>
 
-          {/* render areas lead */}
-          {/* <div className="w-full flex flex-col gap-y-3">
-            <div
-              className={`${pathName === "/application-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
-              <Link
-                href={"/areas-head/head-reporting"}
-                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
-                Laporan
-              </Link>
-            </div>
+                <div
+                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={
+                      "/verification-admin/verification-satisfaction-index-history"
+                    }
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Indeks Kepuasan
+                  </Link>
+                </div>
+              </div>
+            </>
+          )}
 
-            <div
-              className={`${pathName === "/application-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
-              <Link
-                href={"/areas-head/head-settings"}
-                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
-                Pengaturan
-              </Link>
-            </div>
-          </div> */}
+          {/* render areas head */}
+          {user?.role_name && user?.role_name === "Kepala Bidang" && (
+            <>
+              <div className="w-full flex flex-col">
+                <Accordion
+                  className="w-full flex flex-col gap-y-4"
+                  type="single"
+                  collapsible
+                  value={activeAccordionValue}
+                  onValueChange={(value) => {
+                    setActiveAccordionValue(value);
+                  }}>
+                  <AccordionItem
+                    className="w-full border-none flex flex-col"
+                    value={`item-1`}>
+                    <AccordionTrigger
+                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}>
+                      <div className="w-full flex flex-row items-center gap-x-2">
+                        <p className="text-black-80 text-[16px]">
+                          Riwayat Permohonan
+                        </p>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                      <div className="w-full flex flex-col">
+                        {adminBars &&
+                          adminBars.length > 0 &&
+                          adminBars?.map(
+                            (bar: { id: number; name: string }, i: number) => {
+                              const isWaitingPath =
+                                bar.name === "Riwayat Pengajuan" &&
+                                pathName ===
+                                  "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history";
+                              const isRevisionPath =
+                                bar.name !== "Riwayat Pengajuan" &&
+                                pathName ===
+                                  "/verification-admin/verification-user-application-histories/verification-user-revision-application-history";
 
-          {/* render secretary department */}
-          {/* <div className="w-full flex flex-col gap-y-3">
-            <div
-              className={`${pathName === "/application-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
-              <Link
-                href={"/department-secretary/department-signature-validation"}
-                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
-                Pengesahan Tanda Tangan
-              </Link>
-            </div>
-          </div> */}
+                              return (
+                                <Link
+                                  key={i}
+                                  href={`${
+                                    bar.name === "Riwayat Pengajuan"
+                                      ? "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history"
+                                      : "/verification-admin/verification-user-application-histories/verification-user-revision-application-history"
+                                  }`}
+                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                                  <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                    <DotIcon
+                                      className={`w-5 h-5 ${
+                                        isWaitingPath || isRevisionPath
+                                          ? "text-primary-40"
+                                          : "text-black-80"
+                                      }`}
+                                    />
+                                    <p
+                                      className={`text-[14px] ${
+                                        isWaitingPath || isRevisionPath
+                                          ? "text-primary-40"
+                                          : "text-black-80"
+                                      }`}>
+                                      {bar.name}
+                                    </p>
+                                  </div>
+                                </Link>
+                              );
+                            }
+                          )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
 
-          {/* render secretary department */}
-          {/* <div className="w-full flex flex-col gap-y-3">
-            <div
-              className={`${pathName === "/application-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
-              <Link
-                href={"/department-secretary/department-reportings"}
-                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
-                Laporan
-              </Link>
-            </div>
-          </div> */}
+              <div className="w-full flex flex-col gap-y-4">
+                <div
+                  className={`${pathName === "/areas-head/head-manage-approvals" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={"/areas-head/head-manage-approvals"}
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Kelola Persetujuan
+                  </Link>
+                </div>
+
+                <div
+                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={
+                      "/verification-admin/verification-user-complaint-history"
+                    }
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Pengaduan
+                  </Link>
+                </div>
+
+                <div
+                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={"/department-secretary/department-reportings"}
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Laporan
+                  </Link>
+                </div>
+
+                <div
+                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={
+                      "/verification-admin/verification-satisfaction-index-history"
+                    }
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Indeks Kepuasan
+                  </Link>
+                </div>
+              </div>
+
+              <div className="w-full flex flex-col">
+                <Accordion
+                  className="w-full flex flex-col gap-y-4"
+                  type="single"
+                  collapsible
+                  value={activeAccordionValue}
+                  onValueChange={(value) => {
+                    setActiveAccordionValue(value);
+                  }}>
+                  <AccordionItem
+                    className="w-full border-none flex flex-col"
+                    value={`item-3`}>
+                    <AccordionTrigger
+                      className={`${pathName === "/super-admin/master-data/areas" || pathName === "/super-admin/master-data/services" || pathName === "/super-admin/master-data/service-requirements" || pathName === "/super-admin/master-data/news" || pathName === "/super-admin/master-data/bkd-gallery-activities" || pathName === "/super-admin/master-data/about-us-vision-mission" || pathName === "/super-admin/master-data/structure-organization" || pathName === "/super-admin/master-data/structure-organization-main" || pathName === "/super-admin/master-data/faqs" || pathName === "/super-admin/master-data/terms-and-conditions" || pathName === "/super-admin/master-data/manual-book" || pathName === "/super-admin/master-data/logo" || pathName === "/super-admin/master-data/carousel-slider" || pathName === "/super-admin/master-data/location-maps" ? "bg-primary-40 bg-opacity-20 text-primary-40" : "text-black-80"} px-4 py-3 font-normal text-sm text-start h-[50px] md:h-full pr-4`}>
+                      <div className="w-full flex flex-row items-center gap-x-2">
+                        <p className="text-[16px]">Data Master</p>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                      <div className="w-full flex flex-col">
+                        {masterDataAreasHeads &&
+                          masterDataAreasHeads?.length > 0 &&
+                          masterDataAreasHeads?.map(
+                            (
+                              master: { id: number; name: string },
+                              i: number
+                            ) => {
+                              let linking;
+
+                              switch (master?.name) {
+                                case "Layanan":
+                                  linking = "/super-admin/master-data/services";
+                                  break;
+                                case "Persyaratan Layanan":
+                                  linking =
+                                    "/super-admin/master-data/service-requirements";
+                                  break;
+                                default:
+                                  break;
+                              }
+
+                              return (
+                                <Link
+                                  key={i}
+                                  href={`${linking}`}
+                                  className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50`}>
+                                  <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                    <DotIcon
+                                      className={`w-5 h-5 ${pathName === linking ? "text-primary-40" : "text-black-80"}`}
+                                    />
+                                    <p>{master?.name}</p>
+                                  </div>
+                                </Link>
+                              );
+                            }
+                          )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+
+              <div className="w-full flex flex-col gap-y-3">
+                <div
+                  className={`${pathName === "/super-admin/settings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={"/super-admin/settings"}
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Pengaturan
+                  </Link>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* render department secretary */}
+          {user?.role_name && user?.role_name === "Sekretaris Dinas" && (
+            <>
+              <div className="w-full flex flex-col">
+                <Accordion
+                  className="w-full flex flex-col gap-y-4"
+                  type="single"
+                  collapsible
+                  value={activeAccordionValue}
+                  onValueChange={(value) => {
+                    setActiveAccordionValue(value);
+                  }}>
+                  <AccordionItem
+                    className="w-full border-none flex flex-col"
+                    value={`item-1`}>
+                    <AccordionTrigger
+                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}>
+                      <div className="w-full flex flex-row items-center gap-x-2">
+                        <p className="text-black-80 text-[16px]">
+                          Riwayat Permohonan
+                        </p>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                      <div className="w-full flex flex-col">
+                        {adminBars &&
+                          adminBars.length > 0 &&
+                          adminBars?.map(
+                            (bar: { id: number; name: string }, i: number) => {
+                              const isWaitingPath =
+                                bar.name === "Riwayat Pengajuan" &&
+                                pathName ===
+                                  "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history";
+                              const isRevisionPath =
+                                bar.name !== "Riwayat Pengajuan" &&
+                                pathName ===
+                                  "/verification-admin/verification-user-application-histories/verification-user-revision-application-history";
+
+                              return (
+                                <Link
+                                  key={i}
+                                  href={`${
+                                    bar.name === "Riwayat Pengajuan"
+                                      ? "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history"
+                                      : "/verification-admin/verification-user-application-histories/verification-user-revision-application-history"
+                                  }`}
+                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                                  <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                    <DotIcon
+                                      className={`w-5 h-5 ${
+                                        isWaitingPath || isRevisionPath
+                                          ? "text-primary-40"
+                                          : "text-black-80"
+                                      }`}
+                                    />
+                                    <p
+                                      className={`text-[14px] ${
+                                        isWaitingPath || isRevisionPath
+                                          ? "text-primary-40"
+                                          : "text-black-80"
+                                      }`}>
+                                      {bar.name}
+                                    </p>
+                                  </div>
+                                </Link>
+                              );
+                            }
+                          )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+
+              <div className="w-full flex flex-col gap-y-4">
+                <div
+                  className={`${pathName === "/department-secretary/department-signature-validation" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-detail" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-upload" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={
+                      "/department-secretary/department-signature-validation"
+                    }
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Pengesahan Tanda Tangan
+                  </Link>
+                </div>
+
+                <div
+                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={
+                      "/verification-admin/verification-user-complaint-history"
+                    }
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Pengaduan
+                  </Link>
+                </div>
+
+                {/* <div
+                  className={`${pathName === "/department-head/lead-bkd-staff" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={"/department-secretary/department-reportings"}
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Staff BKD
+                  </Link>
+                </div> */}
+
+                <div
+                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={"/department-secretary/department-reportings"}
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Laporan
+                  </Link>
+                </div>
+
+                <div
+                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={
+                      "/verification-admin/verification-satisfaction-index-history"
+                    }
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Indeks Kepuasan
+                  </Link>
+                </div>
+              </div>
+
+              {/* <div className="w-full flex flex-col">
+                <Accordion
+                  className="w-full flex flex-col gap-y-4"
+                  type="single"
+                  collapsible
+                  value={activeAccordionValue}
+                  onValueChange={(value) => {
+                    setActiveAccordionValue(value);
+                  }}>
+                  <AccordionItem
+                    className="w-full border-none flex flex-col"
+                    value={`item-3`}>
+                    <AccordionTrigger
+                      className={`${pathName === "/super-admin/master-data/areas" || pathName === "/super-admin/master-data/services" || pathName === "/super-admin/master-data/service-requirements" || pathName === "/super-admin/master-data/news" || pathName === "/super-admin/master-data/bkd-gallery-activities" || pathName === "/super-admin/master-data/about-us-vision-mission" || pathName === "/super-admin/master-data/structure-organization" || pathName === "/super-admin/master-data/structure-organization-main" || pathName === "/super-admin/master-data/faqs" || pathName === "/super-admin/master-data/terms-and-conditions" || pathName === "/super-admin/master-data/manual-book" || pathName === "/super-admin/master-data/logo" || pathName === "/super-admin/master-data/carousel-slider" || pathName === "/super-admin/master-data/location-maps" ? "bg-primary-40 bg-opacity-20 text-primary-40" : "text-black-80"} px-4 py-3 font-normal text-sm text-start h-[50px] md:h-full pr-4`}>
+                      <div className="w-full flex flex-row items-center gap-x-2">
+                        <p className="text-[16px]">Data Master</p>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                      <div className="w-full flex flex-col">
+                        {masterDataSupers &&
+                          masterDataSupers?.length > 0 &&
+                          masterDataSupers?.map(
+                            (
+                              master: { id: number; name: string },
+                              i: number
+                            ) => {
+                              let linking;
+
+                              switch (master?.name) {
+                                case "Bidang":
+                                  linking = "/super-admin/master-data/areas";
+                                  break;
+                                case "Layanan":
+                                  linking = "/super-admin/master-data/services";
+                                  break;
+                                case "Persyaratan Layanan":
+                                  linking =
+                                    "/super-admin/master-data/service-requirements";
+                                  break;
+                                case "Berita":
+                                  linking = "/super-admin/master-data/news";
+                                  break;
+                                case "Foto Kegiatan":
+                                  linking =
+                                    "/super-admin/master-data/bkd-gallery-activities";
+                                  break;
+                                case "Tentang, Visi, & Misi":
+                                  linking =
+                                    "/super-admin/master-data/about-us-vision-mission";
+                                  break;
+                                case "Struktur Organisasi":
+                                  linking =
+                                    "/super-admin/master-data/structure-organization";
+                                  break;
+                                case "Struktur Organisasi Inti":
+                                  linking =
+                                    "/super-admin/master-data/structure-organization-main";
+                                  break;
+                                case "FAQ":
+                                  linking = "/super-admin/master-data/faqs";
+                                  break;
+                                case "Syarat dan Ketentuan":
+                                  linking =
+                                    "/super-admin/master-data/terms-and-conditions";
+                                  break;
+                                case "Manual Book":
+                                  linking =
+                                    "/super-admin/master-data/manual-book";
+                                  break;
+                                case "Regulasi":
+                                  linking =
+                                    "/super-admin/master-data/regulations";
+                                  break;
+                                case "Logo":
+                                  linking = "/super-admin/master-data/logo";
+                                  break;
+                                case "Carousel - Slider":
+                                  linking =
+                                    "/super-admin/master-data/carousel-slider";
+                                  break;
+                                case "Lokasi - Maps":
+                                  linking =
+                                    "/super-admin/master-data/location-maps";
+                                  break;
+                                default:
+                                  break;
+                              }
+
+                              return (
+                                <Link
+                                  key={i}
+                                  href={`${linking}`}
+                                  className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50`}>
+                                  <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                    <DotIcon
+                                      className={`w-5 h-5 ${pathName === linking ? "text-primary-40" : "text-black-80"}`}
+                                    />
+                                    <p>{master?.name}</p>
+                                  </div>
+                                </Link>
+                              );
+                            }
+                          )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div> */}
+
+              {/* <div className="w-full flex flex-col">
+                <Accordion
+                  className="w-full flex flex-col gap-y-4"
+                  type="single"
+                  collapsible
+                  value={activeAccordionValue}
+                  onValueChange={(value) => {
+                    setActiveAccordionValue(value);
+                  }}>
+                  <AccordionItem
+                    className="w-full border-none flex flex-col"
+                    value={`item-4`}>
+                    <AccordionTrigger className="px-4 py-2 bg-white font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4">
+                      <div className="w-full flex flex-row items-center gap-x-2">
+                        <p className="text-black-80 text-[16px]">Kelola Akun</p>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                      <div className="w-full flex flex-col">
+                        {AccountManagement &&
+                          AccountManagement.length > 0 &&
+                          AccountManagement?.map(
+                            (
+                              bar: { id: number; name: string; value: string },
+                              i: number
+                            ) => {
+                              return (
+                                <Link
+                                  key={i}
+                                  href={`${bar?.name === "Roles" ? "/verified-admin/user-application-histories" : "/verified-admin/user-application-revition-histories"}`}
+                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                                  <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                    <DotIcon
+                                      className={`w-5 h-5 text-black-80`}
+                                    />
+                                    <p>{bar?.value}</p>
+                                  </div>
+                                </Link>
+                              );
+                            }
+                          )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div> */}
+
+              {/* <div className="w-full flex flex-col gap-y-3">
+                <div
+                  className={`${pathName === "/super-admin/settings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={"/super-admin/settings"}
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Pengaturan
+                  </Link>
+                </div>
+              </div> */}
+            </>
+          )}
+
+          {/* render department head */}
+          {user?.role_name && user?.role_name === "Kepala Dinas" && (
+            <>
+              <div className="w-full flex flex-col">
+                <Accordion
+                  className="w-full flex flex-col gap-y-4"
+                  type="single"
+                  collapsible
+                  value={activeAccordionValue}
+                  onValueChange={(value) => {
+                    setActiveAccordionValue(value);
+                  }}>
+                  <AccordionItem
+                    className="w-full border-none flex flex-col"
+                    value={`item-1`}>
+                    <AccordionTrigger
+                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}>
+                      <div className="w-full flex flex-row items-center gap-x-2">
+                        <p className="text-black-80 text-[16px]">
+                          Riwayat Permohonan
+                        </p>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                      <div className="w-full flex flex-col">
+                        {adminBars &&
+                          adminBars.length > 0 &&
+                          adminBars?.map(
+                            (bar: { id: number; name: string }, i: number) => {
+                              const isWaitingPath =
+                                bar.name === "Riwayat Pengajuan" &&
+                                pathName ===
+                                  "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history";
+                              const isRevisionPath =
+                                bar.name !== "Riwayat Pengajuan" &&
+                                pathName ===
+                                  "/verification-admin/verification-user-application-histories/verification-user-revision-application-history";
+
+                              return (
+                                <Link
+                                  key={i}
+                                  href={`${
+                                    bar.name === "Riwayat Pengajuan"
+                                      ? "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history"
+                                      : "/verification-admin/verification-user-application-histories/verification-user-revision-application-history"
+                                  }`}
+                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                                  <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                    <DotIcon
+                                      className={`w-5 h-5 ${
+                                        isWaitingPath || isRevisionPath
+                                          ? "text-primary-40"
+                                          : "text-black-80"
+                                      }`}
+                                    />
+                                    <p
+                                      className={`text-[14px] ${
+                                        isWaitingPath || isRevisionPath
+                                          ? "text-primary-40"
+                                          : "text-black-80"
+                                      }`}>
+                                      {bar.name}
+                                    </p>
+                                  </div>
+                                </Link>
+                              );
+                            }
+                          )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+
+              <div className="w-full flex flex-col gap-y-4">
+                <div
+                  className={`${pathName === "/department-secretary/department-signature-validation" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-detail" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-upload" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={
+                      "/department-secretary/department-signature-validation"
+                    }
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Pengesahan Tanda Tangan
+                  </Link>
+                </div>
+
+                <div
+                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={
+                      "/verification-admin/verification-user-complaint-history"
+                    }
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Pengaduan
+                  </Link>
+                </div>
+
+                <div
+                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={"/department-secretary/department-reportings"}
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Laporan
+                  </Link>
+                </div>
+
+                <div
+                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={
+                      "/verification-admin/verification-satisfaction-index-history"
+                    }
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Indeks Kepuasan
+                  </Link>
+                </div>
+              </div>
+
+              <div className="w-full flex flex-col">
+                <Accordion
+                  className="w-full flex flex-col gap-y-4"
+                  type="single"
+                  collapsible
+                  value={activeAccordionValue}
+                  onValueChange={(value) => {
+                    setActiveAccordionValue(value);
+                  }}>
+                  <AccordionItem
+                    className="w-full border-none flex flex-col"
+                    value={`item-3`}>
+                    <AccordionTrigger
+                      className={`${pathName === "/super-admin/master-data/areas" || pathName === "/super-admin/master-data/services" || pathName === "/super-admin/master-data/service-requirements" || pathName === "/super-admin/master-data/news" || pathName === "/super-admin/master-data/bkd-gallery-activities" || pathName === "/super-admin/master-data/about-us-vision-mission" || pathName === "/super-admin/master-data/structure-organization" || pathName === "/super-admin/master-data/structure-organization-main" || pathName === "/super-admin/master-data/faqs" || pathName === "/super-admin/master-data/terms-and-conditions" || pathName === "/super-admin/master-data/manual-book" || pathName === "/super-admin/master-data/logo" || pathName === "/super-admin/master-data/carousel-slider" || pathName === "/super-admin/master-data/location-maps" ? "bg-primary-40 bg-opacity-20 text-primary-40" : "text-black-80"} px-4 py-3 font-normal text-sm text-start h-[50px] md:h-full pr-4`}>
+                      <div className="w-full flex flex-row items-center gap-x-2">
+                        <p className="text-[16px]">Data Master</p>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                      <div className="w-full flex flex-col">
+                        {masterDataSupers &&
+                          masterDataSupers?.length > 0 &&
+                          masterDataSupers?.map(
+                            (
+                              master: { id: number; name: string },
+                              i: number
+                            ) => {
+                              let linking;
+
+                              switch (master?.name) {
+                                case "Bidang":
+                                  linking = "/super-admin/master-data/areas";
+                                  break;
+                                case "Layanan":
+                                  linking = "/super-admin/master-data/services";
+                                  break;
+                                case "Persyaratan Layanan":
+                                  linking =
+                                    "/super-admin/master-data/service-requirements";
+                                  break;
+                                case "Berita":
+                                  linking = "/super-admin/master-data/news";
+                                  break;
+                                case "Foto Kegiatan":
+                                  linking =
+                                    "/super-admin/master-data/bkd-gallery-activities";
+                                  break;
+                                case "Tentang, Visi, & Misi":
+                                  linking =
+                                    "/super-admin/master-data/about-us-vision-mission";
+                                  break;
+                                case "Struktur Organisasi":
+                                  linking =
+                                    "/super-admin/master-data/structure-organization";
+                                  break;
+                                case "Struktur Organisasi Inti":
+                                  linking =
+                                    "/super-admin/master-data/structure-organization-main";
+                                  break;
+                                case "FAQ":
+                                  linking = "/super-admin/master-data/faqs";
+                                  break;
+                                case "Syarat dan Ketentuan":
+                                  linking =
+                                    "/super-admin/master-data/terms-and-conditions";
+                                  break;
+                                case "Manual Book":
+                                  linking =
+                                    "/super-admin/master-data/manual-book";
+                                  break;
+                                case "Regulasi":
+                                  linking =
+                                    "/super-admin/master-data/regulations";
+                                  break;
+                                case "Logo":
+                                  linking = "/super-admin/master-data/logo";
+                                  break;
+                                case "Carousel - Slider":
+                                  linking =
+                                    "/super-admin/master-data/carousel-slider";
+                                  break;
+                                case "Lokasi - Maps":
+                                  linking =
+                                    "/super-admin/master-data/location-maps";
+                                  break;
+                                default:
+                                  break;
+                              }
+
+                              return (
+                                <Link
+                                  key={i}
+                                  href={`${linking}`}
+                                  className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50`}>
+                                  <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                    <DotIcon
+                                      className={`w-5 h-5 ${pathName === linking ? "text-primary-40" : "text-black-80"}`}
+                                    />
+                                    <p>{master?.name}</p>
+                                  </div>
+                                </Link>
+                              );
+                            }
+                          )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+            </>
+          )}
+
+          {/* render regional secretary */}
+          {user?.role_name && user?.role_name === "Sekretaris Daerah" && (
+            <>
+              <div className="w-full flex flex-col">
+                <Accordion
+                  className="w-full flex flex-col gap-y-4"
+                  type="single"
+                  collapsible
+                  value={activeAccordionValue}
+                  onValueChange={(value) => {
+                    setActiveAccordionValue(value);
+                  }}>
+                  <AccordionItem
+                    className="w-full border-none flex flex-col"
+                    value={`item-1`}>
+                    <AccordionTrigger
+                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}>
+                      <div className="w-full flex flex-row items-center gap-x-2">
+                        <p className="text-black-80 text-[16px]">
+                          Riwayat Permohonan
+                        </p>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                      <div className="w-full flex flex-col">
+                        {adminBars &&
+                          adminBars.length > 0 &&
+                          adminBars?.map(
+                            (bar: { id: number; name: string }, i: number) => {
+                              const isWaitingPath =
+                                bar.name === "Riwayat Pengajuan" &&
+                                pathName ===
+                                  "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history";
+                              const isRevisionPath =
+                                bar.name !== "Riwayat Pengajuan" &&
+                                pathName ===
+                                  "/verification-admin/verification-user-application-histories/verification-user-revision-application-history";
+
+                              return (
+                                <Link
+                                  key={i}
+                                  href={`${
+                                    bar.name === "Riwayat Pengajuan"
+                                      ? "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history"
+                                      : "/verification-admin/verification-user-application-histories/verification-user-revision-application-history"
+                                  }`}
+                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                                  <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                    <DotIcon
+                                      className={`w-5 h-5 ${
+                                        isWaitingPath || isRevisionPath
+                                          ? "text-primary-40"
+                                          : "text-black-80"
+                                      }`}
+                                    />
+                                    <p
+                                      className={`text-[14px] ${
+                                        isWaitingPath || isRevisionPath
+                                          ? "text-primary-40"
+                                          : "text-black-80"
+                                      }`}>
+                                      {bar.name}
+                                    </p>
+                                  </div>
+                                </Link>
+                              );
+                            }
+                          )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+
+              <div className="w-full flex flex-col gap-y-4">
+                <div
+                  className={`${pathName === "/department-secretary/department-signature-validation" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-detail" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-upload" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={
+                      "/department-secretary/department-signature-validation"
+                    }
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Pengesahan Tanda Tangan
+                  </Link>
+                </div>
+
+                <div
+                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={
+                      "/verification-admin/verification-user-complaint-history"
+                    }
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Pengaduan
+                  </Link>
+                </div>
+
+                <div
+                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={"/department-secretary/department-reportings"}
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Laporan
+                  </Link>
+                </div>
+
+                <div
+                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={
+                      "/verification-admin/verification-satisfaction-index-history"
+                    }
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Indeks Kepuasan
+                  </Link>
+                </div>
+              </div>
+            </>
+          )}
 
           {/* render Super Admin */}
-          {/* {user && user?.role_id && user?.role_id == 3 && ( */}
-          <div className="w-full flex flex-col">
-            <Accordion
-              className="w-full flex flex-col gap-y-4"
-              type="single"
-              collapsible
-              value={activeAccordionValue}
-              onValueChange={(value) => {
-                setActiveAccordionValue(value);
-              }}>
-              <AccordionItem
-                className="w-full border-none flex flex-col"
-                value={`item-1`}>
-                <AccordionTrigger
-                  className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}>
-                  <div className="w-full flex flex-row items-center gap-x-2">
-                    <p className="text-black-80 text-[16px]">
-                      Riwayat Permohonan
-                    </p>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
-                  <div className="w-full flex flex-col">
-                    {adminBars &&
-                      adminBars.length > 0 &&
-                      adminBars?.map(
-                        (bar: { id: number; name: string }, i: number) => {
-                          const isWaitingPath =
-                            bar.name === "Riwayat Pengajuan" &&
-                            pathName ===
-                              "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history";
-                          const isRevisionPath =
-                            bar.name !== "Riwayat Pengajuan" &&
-                            pathName ===
-                              "/verification-admin/verification-user-application-histories/verification-user-revision-application-history";
+          {user?.role_name && user?.role_name === "Super Admin" && (
+            <>
+              <div className="w-full flex flex-col">
+                <Accordion
+                  className="w-full flex flex-col gap-y-4"
+                  type="single"
+                  collapsible
+                  value={activeAccordionValue}
+                  onValueChange={(value) => {
+                    setActiveAccordionValue(value);
+                  }}>
+                  <AccordionItem
+                    className="w-full border-none flex flex-col"
+                    value={`item-1`}>
+                    <AccordionTrigger
+                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}>
+                      <div className="w-full flex flex-row items-center gap-x-2">
+                        <p className="text-black-80 text-[16px]">
+                          Riwayat Permohonan
+                        </p>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                      <div className="w-full flex flex-col">
+                        {adminBars &&
+                          adminBars.length > 0 &&
+                          adminBars?.map(
+                            (bar: { id: number; name: string }, i: number) => {
+                              const isWaitingPath =
+                                bar.name === "Riwayat Pengajuan" &&
+                                pathName ===
+                                  "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history";
+                              const isRevisionPath =
+                                bar.name !== "Riwayat Pengajuan" &&
+                                pathName ===
+                                  "/verification-admin/verification-user-application-histories/verification-user-revision-application-history";
 
-                          return (
-                            <Link
-                              key={i}
-                              href={`${
-                                bar.name === "Riwayat Pengajuan"
-                                  ? "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history"
-                                  : "/verification-admin/verification-user-application-histories/verification-user-revision-application-history"
-                              }`}
-                              className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
-                              <div className="w-10/12 flex flex-row items-center gap-x-2">
-                                <DotIcon
-                                  className={`w-5 h-5 ${
-                                    isWaitingPath || isRevisionPath
-                                      ? "text-primary-40"
-                                      : "text-black-80"
+                              return (
+                                <Link
+                                  key={i}
+                                  href={`${
+                                    bar.name === "Riwayat Pengajuan"
+                                      ? "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history"
+                                      : "/verification-admin/verification-user-application-histories/verification-user-revision-application-history"
                                   }`}
-                                />
-                                <p
-                                  className={`text-[14px] ${
-                                    isWaitingPath || isRevisionPath
-                                      ? "text-primary-40"
-                                      : "text-black-80"
-                                  }`}>
-                                  {bar.name}
-                                </p>
-                              </div>
-                            </Link>
-                          );
-                        }
-                      )}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div>
-          {/* )} */}
-
-          <div className="w-full flex flex-col gap-y-4">
-            {user && user?.role_id && user?.role_id != 3 && (
-              <div
-                className={`${pathName === "/department-secretary/department-signature-validation" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-detail" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-upload" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
-                <Link
-                  href={"/department-secretary/department-signature-validation"}
-                  className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
-                  Pengesahan Tanda Tangan
-                </Link>
-              </div>
-            )}
-
-            {user && user?.role_id && user?.role_id != 3 && (
-              <div
-                className={`${pathName === "/areas-head/head-manage-approvals" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
-                <Link
-                  href={"/areas-head/head-manage-approvals"}
-                  className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
-                  Kelola Persetujuan
-                </Link>
-              </div>
-            )}
-
-            {/* {user && user?.role_id && user?.role_id == 3 && ( */}
-            <div
-              className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
-              <Link
-                href={"/verification-admin/verification-user-complaint-history"}
-                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
-                Pengaduan
-              </Link>
-            </div>
-            {/* )} */}
-
-            {user && user?.role_id && user?.role_id != 3 && (
-              <div
-                className={`${pathName === "/department-head/lead-bkd-staff" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
-                <Link
-                  href={"/department-secretary/department-reportings"}
-                  className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
-                  Staff BKD
-                </Link>
-              </div>
-            )}
-
-            {/* {user && user?.role_id && user?.role_id == 3 && ( */}
-            <div
-              className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
-              <Link
-                href={"/department-secretary/department-reportings"}
-                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
-                Laporan
-              </Link>
-            </div>
-            {/* )} */}
-
-            {/* {user && user?.role_id && user?.role_id == 3 && ( */}
-            <div
-              className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
-              <Link
-                href={
-                  "/verification-admin/verification-satisfaction-index-history"
-                }
-                className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
-                Indeks Kepuasan
-              </Link>
-            </div>
-            {/* )} */}
-          </div>
-
-          {/* <div className="w-full flex flex-col">
-            <Accordion
-              className="w-full flex flex-col gap-y-4"
-              type="single"
-              collapsible
-              value={activeAccordionValue}
-              onValueChange={(value) => {
-                setActiveAccordionValue(value);
-              }}>
-              <AccordionItem
-                className="w-full border-none flex flex-col"
-                value={`item-2`}>
-                <AccordionTrigger className="px-4 py-2 bg-white font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4">
-                  <div className="w-full flex flex-row items-center gap-x-2">
-                    <p className="text-black-80 text-[16px]">Indeks Kepuasan</p>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
-                  <div className="w-full flex flex-col">
-                    {SatisfactionIndexs &&
-                      SatisfactionIndexs.length > 0 &&
-                      SatisfactionIndexs?.map(
-                        (
-                          bar: { id: number; name: string; value: string },
-                          i: number
-                        ) => {
-                          return (
-                            <Link
-                              key={i}
-                              href={`${bar?.name === "Questions Master" ? "/verified-admin/user-application-histories" : "/verified-admin/user-application-revition-histories"}`}
-                              className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
-                              <div className="w-10/12 flex flex-row items-center gap-x-2">
-                                <DotIcon className={`w-5 h-5 text-black-80`} />
-                                <p>{bar?.value}</p>
-                              </div>
-                            </Link>
-                          );
-                        }
-                      )}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div> */}
-
-          {user && user?.role_id && user?.role_id != 3 && (
-            <div className="w-full flex flex-col">
-              <Accordion
-                className="w-full flex flex-col gap-y-4"
-                type="single"
-                collapsible
-                value={activeAccordionValue}
-                onValueChange={(value) => {
-                  setActiveAccordionValue(value);
-                }}>
-                <AccordionItem
-                  className="w-full border-none flex flex-col"
-                  value={`item-3`}>
-                  <AccordionTrigger
-                    // onClick={() => setServiceId(area.id)}
-                    className={`${pathName === "/super-admin/master-data/areas" || pathName === "/super-admin/master-data/services" || pathName === "/super-admin/master-data/service-requirements" || pathName === "/super-admin/master-data/news" || pathName === "/super-admin/master-data/bkd-gallery-activities" || pathName === "/super-admin/master-data/about-us-vision-mission" || pathName === "/super-admin/master-data/structure-organization" || pathName === "/super-admin/master-data/structure-organization-main" || pathName === "/super-admin/master-data/faqs" || pathName === "/super-admin/master-data/terms-and-conditions" || pathName === "/super-admin/master-data/manual-book" || pathName === "/super-admin/master-data/logo" || pathName === "/super-admin/master-data/carousel-slider" || pathName === "/super-admin/master-data/location-maps" ? "bg-primary-40 bg-opacity-20 text-primary-40" : "text-black-80"} px-4 py-3 font-normal text-sm text-start h-[50px] md:h-full pr-4`}>
-                    <div className="w-full flex flex-row items-center gap-x-2">
-                      <p className="text-[16px]">Data Master</p>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
-                    <div className="w-full flex flex-col">
-                      {masterDataSupers &&
-                        masterDataSupers?.length > 0 &&
-                        masterDataSupers?.map(
-                          (master: { id: number; name: string }, i: number) => {
-                            let linking;
-
-                            switch (master?.name) {
-                              case "Bidang":
-                                linking = "/super-admin/master-data/areas";
-                                break;
-                              case "Layanan":
-                                linking = "/super-admin/master-data/services";
-                                break;
-                              case "Persyaratan Layanan":
-                                linking =
-                                  "/super-admin/master-data/service-requirements";
-                                break;
-                              case "Berita":
-                                linking = "/super-admin/master-data/news";
-                                break;
-                              case "Foto Kegiatan":
-                                linking =
-                                  "/super-admin/master-data/bkd-gallery-activities";
-                                break;
-                              case "Tentang, Visi, & Misi":
-                                linking =
-                                  "/super-admin/master-data/about-us-vision-mission";
-                                break;
-                              case "Struktur Organisasi":
-                                linking =
-                                  "/super-admin/master-data/structure-organization";
-                                break;
-                              case "Struktur Organisasi Inti":
-                                linking =
-                                  "/super-admin/master-data/structure-organization-main";
-                                break;
-                              case "FAQ":
-                                linking = "/super-admin/master-data/faqs";
-                                break;
-                              case "Syarat dan Ketentuan":
-                                linking =
-                                  "/super-admin/master-data/terms-and-conditions";
-                                break;
-                              case "Manual Book":
-                                linking =
-                                  "/super-admin/master-data/manual-book";
-                                break;
-                              case "Regulasi":
-                                linking =
-                                  "/super-admin/master-data/regulations";
-                                break;
-                              case "Logo":
-                                linking = "/super-admin/master-data/logo";
-                                break;
-                              case "Carousel - Slider":
-                                linking =
-                                  "/super-admin/master-data/carousel-slider";
-                                break;
-                              case "Lokasi - Maps":
-                                linking =
-                                  "/super-admin/master-data/location-maps";
-                                break;
-                              default:
-                                break;
+                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                                  <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                    <DotIcon
+                                      className={`w-5 h-5 ${
+                                        isWaitingPath || isRevisionPath
+                                          ? "text-primary-40"
+                                          : "text-black-80"
+                                      }`}
+                                    />
+                                    <p
+                                      className={`text-[14px] ${
+                                        isWaitingPath || isRevisionPath
+                                          ? "text-primary-40"
+                                          : "text-black-80"
+                                      }`}>
+                                      {bar.name}
+                                    </p>
+                                  </div>
+                                </Link>
+                              );
                             }
-
-                            return (
-                              <Link
-                                key={i}
-                                href={`${linking}`}
-                                className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50`}>
-                                <div className="w-10/12 flex flex-row items-center gap-x-2">
-                                  <DotIcon
-                                    className={`w-5 h-5 ${pathName === linking ? "text-primary-40" : "text-black-80"}`}
-                                  />
-                                  <p>{master?.name}</p>
-                                </div>
-                              </Link>
-                            );
-                          }
-                        )}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </div>
-          )}
-
-          {user && user?.role_id && user?.role_id != 3 && (
-            <div className="w-full flex flex-col">
-              <Accordion
-                className="w-full flex flex-col gap-y-4"
-                type="single"
-                collapsible
-                value={activeAccordionValue}
-                onValueChange={(value) => {
-                  setActiveAccordionValue(value);
-                }}>
-                <AccordionItem
-                  className="w-full border-none flex flex-col"
-                  value={`item-4`}>
-                  <AccordionTrigger className="px-4 py-2 bg-white font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4">
-                    <div className="w-full flex flex-row items-center gap-x-2">
-                      <p className="text-black-80 text-[16px]">Kelola Akun</p>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
-                    <div className="w-full flex flex-col">
-                      {AccountManagement &&
-                        AccountManagement.length > 0 &&
-                        AccountManagement?.map(
-                          (
-                            bar: { id: number; name: string; value: string },
-                            i: number
-                          ) => {
-                            return (
-                              <Link
-                                key={i}
-                                href={`${bar?.name === "Roles" ? "/verified-admin/user-application-histories" : "/verified-admin/user-application-revition-histories"}`}
-                                className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
-                                <div className="w-10/12 flex flex-row items-center gap-x-2">
-                                  <DotIcon
-                                    className={`w-5 h-5 text-black-80`}
-                                  />
-                                  <p>{bar?.value}</p>
-                                </div>
-                              </Link>
-                            );
-                          }
-                        )}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </div>
-          )}
-
-          {user && user?.role_id && user?.role_id != 3 && (
-            <div className="w-full flex flex-col gap-y-3">
-              <div
-                className={`${pathName === "/super-admin/settings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
-                <Link
-                  href={"/super-admin/settings"}
-                  className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
-                  Pengaturan
-                </Link>
+                          )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </div>
-            </div>
+
+              <div className="w-full flex flex-col gap-y-4">
+                <div
+                  className={`${pathName === "/department-secretary/department-signature-validation" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-detail" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-upload" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={
+                      "/department-secretary/department-signature-validation"
+                    }
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Pengesahan Tanda Tangan
+                  </Link>
+                </div>
+
+                <div
+                  className={`${pathName === "/areas-head/head-manage-approvals" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={"/areas-head/head-manage-approvals"}
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Kelola Persetujuan
+                  </Link>
+                </div>
+
+                <div
+                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={
+                      "/verification-admin/verification-user-complaint-history"
+                    }
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Pengaduan
+                  </Link>
+                </div>
+
+                <div
+                  className={`${pathName === "/department-head/lead-bkd-staff" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={"/department-secretary/department-reportings"}
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Staff BKD
+                  </Link>
+                </div>
+
+                <div
+                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={"/department-secretary/department-reportings"}
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Laporan
+                  </Link>
+                </div>
+
+                <div
+                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={
+                      "/verification-admin/verification-satisfaction-index-history"
+                    }
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Indeks Kepuasan
+                  </Link>
+                </div>
+              </div>
+
+              <div className="w-full flex flex-col">
+                <Accordion
+                  className="w-full flex flex-col gap-y-4"
+                  type="single"
+                  collapsible
+                  value={activeAccordionValue}
+                  onValueChange={(value) => {
+                    setActiveAccordionValue(value);
+                  }}>
+                  <AccordionItem
+                    className="w-full border-none flex flex-col"
+                    value={`item-3`}>
+                    <AccordionTrigger
+                      className={`${pathName === "/super-admin/master-data/areas" || pathName === "/super-admin/master-data/services" || pathName === "/super-admin/master-data/service-requirements" || pathName === "/super-admin/master-data/news" || pathName === "/super-admin/master-data/bkd-gallery-activities" || pathName === "/super-admin/master-data/about-us-vision-mission" || pathName === "/super-admin/master-data/structure-organization" || pathName === "/super-admin/master-data/structure-organization-main" || pathName === "/super-admin/master-data/faqs" || pathName === "/super-admin/master-data/terms-and-conditions" || pathName === "/super-admin/master-data/manual-book" || pathName === "/super-admin/master-data/logo" || pathName === "/super-admin/master-data/carousel-slider" || pathName === "/super-admin/master-data/location-maps" ? "bg-primary-40 bg-opacity-20 text-primary-40" : "text-black-80"} px-4 py-3 font-normal text-sm text-start h-[50px] md:h-full pr-4`}>
+                      <div className="w-full flex flex-row items-center gap-x-2">
+                        <p className="text-[16px]">Data Master</p>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                      <div className="w-full flex flex-col">
+                        {masterDataSupers &&
+                          masterDataSupers?.length > 0 &&
+                          masterDataSupers?.map(
+                            (
+                              master: { id: number; name: string },
+                              i: number
+                            ) => {
+                              let linking;
+
+                              switch (master?.name) {
+                                case "Bidang":
+                                  linking = "/super-admin/master-data/areas";
+                                  break;
+                                case "Layanan":
+                                  linking = "/super-admin/master-data/services";
+                                  break;
+                                case "Persyaratan Layanan":
+                                  linking =
+                                    "/super-admin/master-data/service-requirements";
+                                  break;
+                                case "Berita":
+                                  linking = "/super-admin/master-data/news";
+                                  break;
+                                case "Foto Kegiatan":
+                                  linking =
+                                    "/super-admin/master-data/bkd-gallery-activities";
+                                  break;
+                                case "Tentang, Visi, & Misi":
+                                  linking =
+                                    "/super-admin/master-data/about-us-vision-mission";
+                                  break;
+                                case "Struktur Organisasi":
+                                  linking =
+                                    "/super-admin/master-data/structure-organization";
+                                  break;
+                                case "Struktur Organisasi Inti":
+                                  linking =
+                                    "/super-admin/master-data/structure-organization-main";
+                                  break;
+                                case "FAQ":
+                                  linking = "/super-admin/master-data/faqs";
+                                  break;
+                                case "Syarat dan Ketentuan":
+                                  linking =
+                                    "/super-admin/master-data/terms-and-conditions";
+                                  break;
+                                case "Manual Book":
+                                  linking =
+                                    "/super-admin/master-data/manual-book";
+                                  break;
+                                case "Regulasi":
+                                  linking =
+                                    "/super-admin/master-data/regulations";
+                                  break;
+                                case "Logo":
+                                  linking = "/super-admin/master-data/logo";
+                                  break;
+                                case "Carousel - Slider":
+                                  linking =
+                                    "/super-admin/master-data/carousel-slider";
+                                  break;
+                                case "Lokasi - Maps":
+                                  linking =
+                                    "/super-admin/master-data/location-maps";
+                                  break;
+                                default:
+                                  break;
+                              }
+
+                              return (
+                                <Link
+                                  key={i}
+                                  href={`${linking}`}
+                                  className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50`}>
+                                  <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                    <DotIcon
+                                      className={`w-5 h-5 ${pathName === linking ? "text-primary-40" : "text-black-80"}`}
+                                    />
+                                    <p>{master?.name}</p>
+                                  </div>
+                                </Link>
+                              );
+                            }
+                          )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+
+              <div className="w-full flex flex-col">
+                <Accordion
+                  className="w-full flex flex-col gap-y-4"
+                  type="single"
+                  collapsible
+                  value={activeAccordionValue}
+                  onValueChange={(value) => {
+                    setActiveAccordionValue(value);
+                  }}>
+                  <AccordionItem
+                    className="w-full border-none flex flex-col"
+                    value={`item-4`}>
+                    <AccordionTrigger className="px-4 py-2 bg-white font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4">
+                      <div className="w-full flex flex-row items-center gap-x-2">
+                        <p className="text-black-80 text-[16px]">Kelola Akun</p>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                      <div className="w-full flex flex-col">
+                        {AccountManagement &&
+                          AccountManagement.length > 0 &&
+                          AccountManagement?.map(
+                            (
+                              bar: { id: number; name: string; value: string },
+                              i: number
+                            ) => {
+                              return (
+                                <Link
+                                  key={i}
+                                  href={`${bar?.name === "Roles" ? "/verified-admin/user-application-histories" : "/verified-admin/user-application-revition-histories"}`}
+                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                                  <div className="w-10/12 flex flex-row items-center gap-x-2">
+                                    <DotIcon
+                                      className={`w-5 h-5 text-black-80`}
+                                    />
+                                    <p>{bar?.value}</p>
+                                  </div>
+                                </Link>
+                              );
+                            }
+                          )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+
+              <div className="w-full flex flex-col gap-y-3">
+                <div
+                  className={`${pathName === "/super-admin/settings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  <Link
+                    href={"/super-admin/settings"}
+                    className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
+                    Pengaturan
+                  </Link>
+                </div>
+              </div>
+            </>
           )}
 
           <div className="w-full flex flex-col items-center justify-center">
