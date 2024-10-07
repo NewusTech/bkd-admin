@@ -53,7 +53,7 @@ export default function StructureOrganizationScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
-  const limitItem = 30;
+  const limitItem = 50;
   const [organizations, setOrganizations] = useState<
     StructureOrganizationInterface[]
   >([]);
@@ -341,8 +341,9 @@ export default function StructureOrganizationScreen() {
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
                             onDrop={handleDropImage}
-                            className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                            className={`w-full ${
+                              previewImage ? "md:w-8/12" : "w-full"
+                            }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                             <>
                               <input
                                 type="file"
@@ -469,8 +470,9 @@ export default function StructureOrganizationScreen() {
                               onDragOver={handleDragOver}
                               onDragLeave={handleDragLeave}
                               onDrop={handleDropImage}
-                              className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              className={`w-full ${
+                                previewImage ? "md:w-8/12" : "w-full"
+                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                               <>
                                 <input
                                   type="file"

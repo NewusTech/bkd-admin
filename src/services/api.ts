@@ -1112,3 +1112,28 @@ export const updateOutputLetter = async (data: any, id: number) => {
 
   return await response.json();
 };
+
+// get dashboard super admin
+// year?: number,
+//   search?: string,
+//   instansi_id?: number,
+//   start_date?: string,
+//   end_date?: string
+// ?year=${year}&search=${search}&instansi_id=${instansi_id}&start_date=${start_date}&end_date=${end_date}
+export const getSuperAdminDashboard = async () => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/dashboard/superadmin`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};

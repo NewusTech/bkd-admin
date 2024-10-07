@@ -357,6 +357,17 @@ export const masterDataSupers = [
   },
 ];
 
+export const masterDataAreasHeads = [
+  {
+    id: 1,
+    name: "Layanan",
+  },
+  {
+    id: 2,
+    name: "Persyaratan Layanan",
+  },
+];
+
 export const colors = [
   {
     id: 1,
