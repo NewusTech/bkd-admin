@@ -19,13 +19,13 @@ export default function MobileDashboardSideBarPages() {
   return (
     <section className="w-full bg-line-10 px-5 py-5 flex flex-row justify-between items-center">
       <div className="flex flex-row w-full h-10 gap-x-2">
-        <div className="w-2/12 h-full flex flex-col items-center justify-center">
+        <div className="w-2/12 h-full flex flex-col items-center justify-center animate-pulse transition-all">
           <Image
             src={logo}
             alt="Lampung Timur"
             width={1000}
             height={1000}
-            className="w-8 h-8"
+            className="w-6 h-7"
           />
         </div>
 

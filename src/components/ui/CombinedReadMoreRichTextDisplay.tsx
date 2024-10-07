@@ -17,7 +17,7 @@ const CombinedReadMoreRichTextDisplay = ({ content = "", maxLength = 100, keys =
     const displayText = isExpanded ? sanitizedContent : sanitizedContent.slice(0, maxLength);
 
     return (
-        <div>
+        <>
             <div
                 className={`${keys === true
                     ? "prose-mpp"
@@ -35,7 +35,7 @@ const CombinedReadMoreRichTextDisplay = ({ content = "", maxLength = 100, keys =
                     {isExpanded ? 'Tutup' : 'Selengkapnya'}
                 </span>
             )}
-        </div>
+        </>
     );
 };
 

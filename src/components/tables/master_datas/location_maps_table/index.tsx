@@ -32,6 +32,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import TypingEffect from "@/components/ui/TypingEffect";
 
 export default function SuperLocationMapsMasterDataTablePages({
   abouts,
@@ -74,9 +75,10 @@ export default function SuperLocationMapsMasterDataTablePages({
   return (
     <div className="w-full flex flex-col items-center gap-y-5">
       <div className="w-full flex flex-col md:flex-row bg-line-10 rounded-lg shadow-md py-3 items-center px-3 gap-y-5">
-        <div className="w-full text-center md:text-start">
-          Data Master Lokasi Maps Sipandu BKD Lampung Timur
+        <div className="w-full text-center md:text-start text-lg md:text-lg">
+          Data Master Lokasi Maps <br /> Sipandu BKD Lampung Timur
         </div>
+        {/* <h1 className="text-lg">Kelola Bidang</h1> */}
 
         <div className="w-full md:w-7/12 flex flex-row gap-x-3">
           <div className="w-full flex flex-row items-center justify-center gap-x-2">
@@ -91,7 +93,9 @@ export default function SuperLocationMapsMasterDataTablePages({
                       setIsDialogEditOpen(true);
                     }}
                     className="w-full">
-                    <div className="w-full text-sm bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg">
+                    <div className="w-full text-sm bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 *:
+                  md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2
+                    ">
                       Edit
                     </div>
                   </AlertDialogTrigger>
@@ -101,7 +105,7 @@ export default function SuperLocationMapsMasterDataTablePages({
                         Master Data Lokasi
                       </AlertDialogTitle>
                       <AlertDialogDescription className="text-center">
-                        Input data yang diperlukan
+                        <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                       </AlertDialogDescription>
                       <form
                         onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
@@ -158,7 +162,7 @@ export default function SuperLocationMapsMasterDataTablePages({
                           <Button
                             type="submit"
                             disabled={isUpdateLoading ? true : false}
-                            className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                            className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
                             {isUpdateLoading ? (
                               <Loader className="animate-spin" />
                             ) : (
@@ -191,7 +195,7 @@ export default function SuperLocationMapsMasterDataTablePages({
                       </DrawerTitle>
 
                       <DrawerDescription className="text-center">
-                        Input data yang diperlukan
+                        <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                       </DrawerDescription>
 
                       <form
@@ -243,13 +247,15 @@ export default function SuperLocationMapsMasterDataTablePages({
                           </div>
                         </div>
 
-                        <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                          {/* <AlertDialogCancel>Cancel</AlertDialogCancel> */}
-
+                        <div className="flex gap-4 justify-between">
+                          <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-xs">
+                            <DrawerDescription className="text-xs md:text-sm">Batal</DrawerDescription>
+                          </DrawerClose>
                           <Button
+                            title="Simpan Data"
                             type="submit"
                             disabled={isUpdateLoading ? true : false}
-                            className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                             {isUpdateLoading ? (
                               <Loader className="animate-spin" />
                             ) : (
@@ -269,7 +275,7 @@ export default function SuperLocationMapsMasterDataTablePages({
             <Button
               // disabled={isDeleteLoading ? true : false}
               // onClick={() => handleDeleteArea(area?.slug)}
-              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10">
+              className="rounded-lg bg-error-60 hover:bg-error-70 text-line-10  transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
               {/* {isDeleteLoading ? (
                 <Loader className="animate-spin" />
               ) : isDeleteLoading ? (
@@ -297,7 +303,7 @@ export default function SuperLocationMapsMasterDataTablePages({
                 <iframe
                   src={iframeSrc}
                   width="600"
-                  height="300"
+                  height="500"
                   style={{ border: "0" }}
                   className="border-0 w-full rounded-xl"
                   allowFullScreen

@@ -34,6 +34,7 @@ import SuperFaqsMasterDataTablePages from "@/components/tables/master_datas/faqs
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileFaqMasterDataCard from "@/components/mobile_all_cards/mobileFaqMasterDataCard";
 import AddIcon from "@/components/elements/add_button";
+import TypingEffect from "@/components/ui/TypingEffect";
 
 export default function FaqsScreen() {
   const router = useRouter();
@@ -216,7 +217,7 @@ export default function FaqsScreen() {
                       Master Data FAQ
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
-                      Input data yang diperlukan
+                      <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
                     </AlertDialogDescription>
                     <form
                       onSubmit={handleCreateFaqs}
@@ -253,13 +254,13 @@ export default function FaqsScreen() {
                         />
                       </div>
 
-                      <div className="w-full flex flex-row justify-center items-center gap-x-5">
+                      <div className="w-full flex flex-row justify-between items-center gap-x-5">
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
 
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (
@@ -288,7 +289,7 @@ export default function FaqsScreen() {
                     </DrawerTitle>
 
                     <DrawerDescription className="text-center">
-                      Input data yang diperlukan
+                      <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                     </DrawerDescription>
 
                     <form
@@ -328,13 +329,15 @@ export default function FaqsScreen() {
                         </div>
                       </div>
 
-                      <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                        {/* <AlertDialogCancel>Cancel</AlertDialogCancel> */}
-
+                      <div className="flex gap-4 justify-between">
+                        <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
+                          <DrawerDescription>Batal</DrawerDescription>
+                        </DrawerClose>
                         <Button
+                          title="Simpan Data"
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] md:text-[16px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (

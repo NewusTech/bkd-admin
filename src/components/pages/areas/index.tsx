@@ -53,7 +53,7 @@ export default function EditorProvide({
       editorProps={{
         attributes: {
           class:
-            "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl m-5 focus:outline-none",
+            "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl m-4 mb-10 md:mb-20 text-xs md:text-sm focus:outline-none",
         },
       }}
       slotBefore={<TextEditorToogle />}

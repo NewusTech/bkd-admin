@@ -39,8 +39,23 @@ import Image from "next/image";
 import { Label } from "../ui/label";
 import EditorProvide from "../pages/areas";
 import { Input } from "../ui/input";
-import { Loader } from "lucide-react";
+import { EllipsisVertical, Loader } from "lucide-react";
 import { Trash } from "@phosphor-icons/react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import TypingEffect from "../ui/TypingEffect";
 
 export default function MobileStructureOrganizationMainMasterDataCard({
   organization,
@@ -84,6 +99,141 @@ export default function MobileStructureOrganizationMainMasterDataCard({
 
   return (
     <section className="w-full bg-line-10 rounded-lg shadow-md flex flex-col gap-y-7 p-4">
+      <div className="w-full flex justify-end items-end">
+        <div className="w-full text-xs md:text-sm flex justify-end">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300"
+              >
+                <EllipsisVertical className="w-4 h-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="transition-all duration-300 ease-in-out opacity-1 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 bg-white border border-gray-300 shadow-2xl rounded-md w-fit mr-6">
+              <DropdownMenuLabel className="font-semibold text-primary text-sm w-full shadow-md">
+                Actions
+              </DropdownMenuLabel>
+              {/* <hr className="border border-primary transition-all ease-in-out animate-pulse ml-2 mr-2" /> */}
+              <div className="h-1 w-full bg-gradient-to-r from-transparent via-primary to-transparent transition-all animate-pulse"></div>
+              <div className="bg-white w-full h-full">
+                <div className="gap-4 w-full px-2 py-2">
+                  <div className="w-full mb-2">
+                    <div className="w-full">
+                      <Drawer
+                      // open={isDialogEditOpen} onOpenChange={setIsDialogEditOpen}
+                      >
+                        <DrawerTrigger
+                          // onClick={() => {
+                          //   handleSetService();
+                          //   setIsDialogEditOpen(true);
+                          // }}
+                          className="h-10 text-xs md:text-sm rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-full">
+                          Edit
+                        </DrawerTrigger>
+                        <DrawerContent className="bg-white">
+                          <DrawerHeader>
+                            <DrawerTitle className="text-center">
+                              Master Data Berita
+                            </DrawerTitle>
+                            <form
+                              // onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
+                              //   handleUpdateNews(e, item?.slug)
+                              // }
+                              className="w-full flex flex-col gap-y-3 max-h-full h-[700px]">
+                              <DrawerDescription className="text-center">
+                                <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
+                              </DrawerDescription>
+                              <div className="w-full flex flex-col gap-y-3 verticalScroll">
+
+                                <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                                  <Label className="focus-within:text-primary-70 font-normal text-xs md:text-sm text-left">
+                                    Pilih Strusktur Yang Ditampilkan
+                                  </Label>
+
+                                  <Select
+                                  // onValueChange={handleSelectChange}
+                                  >
+                                    <SelectTrigger
+                                      className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                      <SelectValue
+                                        placeholder="Pilih Bidang"
+                                        className="text-black-80 w-full"
+                                      />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-line-10">
+                                      {/* <div className="pt-2">
+                                {organizations &&
+                                  organizations.length > 0 &&
+                                  organizations.map(
+                                    (
+                                      organization: StructureOrganizationInterface,
+                                      i: number
+                                    ) => {
+                                      return (
+                                        <SelectItem
+                                          key={i}
+                                          className={`w-full px-4`}
+                                          value={organization.id.toString()}>
+                                          {organization?.jabatan}
+                                        </SelectItem>
+                                      );
+                                    }
+                                  )}
+                              </div> */}
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                              </div>
+                              <div className="flex gap-4 justify-between">
+                                <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-xs">
+                                  <DrawerDescription className="text-xs md:text-sm">Batal</DrawerDescription>
+                                </DrawerClose>
+                                <Button
+                                  title="Simpan Data"
+                                  type="submit"
+                                  // disabled={isUpdateLoading ? true : false}
+                                  className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                                  {/* {isUpdateLoading ? (
+                                    <Loader className="animate-spin" />
+                                  ) : (
+                                    "Simpan"
+                                  )} */}
+                                </Button>
+                              </div>
+                            </form>
+                          </DrawerHeader>
+                        </DrawerContent>
+                      </Drawer>
+                    </div>
+                  </div>
+                  <div className="w-full">
+                    <Button
+                      // disabled={isDeleteLoading ? true : false}
+                      // onClick={() =>
+                      //   handleDeleteStructureOrganization(organization?.slug)
+                      // }
+                      className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 text-xs md:text-sm">
+                      {/* {isDeleteLoading ? (
+                <Loader className="animate-spin" />
+              ) : isDeleteLoading ? (
+                ""
+              ) : (
+                "Hapus"
+              )} */}
+                      Hapus
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          {/* <hr className="border border-primary transition-all ease-in-out animate-pulse ml-2 mr-2" /> */}
+        </div>
+      </div>
+
+
+
+
       <div className="w-full grid grid-cols-3">
         <div className="w-full text-[14px] md:text-[16px]">No.</div>
 
@@ -108,112 +258,6 @@ export default function MobileStructureOrganizationMainMasterDataCard({
         </div>
       </div>
 
-      <div className="w-full flex flex-row gap-x-5">
-        <Drawer
-        // open={isDialogEditOpen} onOpenChange={setIsDialogEditOpen}
-        >
-          <DrawerTrigger
-            // onClick={() => {
-            //   handleSetGallery();
-            //   setIsDialogEditOpen(true);
-            // }}
-            className="w-full text-[14px] border border-black-80 hover:bg-black-80 hover:bg-opacity-20 hover:text-line-10 rounded-lg">
-            <div className="w-full">Edit</div>
-          </DrawerTrigger>
-          <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
-            <div className="w-full flex flex-col gap-y-3 verticalScroll">
-              <DrawerTitle className="text-center">
-                Master Data Struktur Kegiatan
-              </DrawerTitle>
-
-              <DrawerDescription className="text-center">
-                Input data yang diperlukan
-              </DrawerDescription>
-
-              <form
-                // onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
-                //   handleUpdateStructureOrganization(e, organization?.slug)
-                // }
-                className="w-full flex flex-col gap-y-3 verticalScroll">
-                <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
-                  <Label className="focus-within:text-black-800 font-normal text-sm">
-                    Pilih Struktur Yang Akan Ditampilkan
-                  </Label>
-
-                  <div className="w-full border border-line-20 rounded-lg">
-                    <Select
-                    // onValueChange={handleSelectChange}
-                    >
-                      <SelectTrigger
-                        className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-                        <SelectValue
-                          placeholder="Pilih Bidang"
-                          className="text-black-80 w-full"
-                        />
-                      </SelectTrigger>
-                      <SelectContent className="bg-line-10">
-                        {/* <div className="pt-2">
-                                {organizations &&
-                                  organizations.length > 0 &&
-                                  organizations.map(
-                                    (
-                                      organization: StructureOrganizationInterface,
-                                      i: number
-                                    ) => {
-                                      return (
-                                        <SelectItem
-                                          key={i}
-                                          className={`w-full px-4`}
-                                          value={organization.id.toString()}>
-                                          {organization?.jabatan}
-                                        </SelectItem>
-                                      );
-                                    }
-                                  )}
-                              </div> */}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="w-full flex flex-row justify-center items-center gap-x-5">
-                  {/* <AlertDialogCancel>Cancel</AlertDialogCancel> */}
-
-                  <Button
-                    type="submit"
-                    // disabled={isUpdateLoading ? true : false}
-                    className="bg-primary-40 hover:bg-primary-70 text-line-10">
-                    {/* {isUpdateLoading ? (
-                          <Loader className="animate-spin" />
-                        ) : (
-                          "Update"
-                        )} */}
-                    Update
-                  </Button>
-                </div>
-              </form>
-            </div>
-          </DrawerContent>
-        </Drawer>
-
-        <div className="w-full">
-          <Button
-            // disabled={isDeleteLoading ? true : false}
-            // onClick={() =>
-            //   handleDeleteStructureOrganization(organization?.slug)
-            // }
-            className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10">
-            {/* {isDeleteLoading ? (
-                <Loader className="animate-spin" />
-              ) : isDeleteLoading ? (
-                ""
-              ) : (
-                "Hapus"
-              )} */}
-            Hapus
-          </Button>
-        </div>
-      </div>
     </section>
   );
 }

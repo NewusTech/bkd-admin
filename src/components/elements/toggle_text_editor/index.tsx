@@ -73,11 +73,11 @@ export default function TextEditorToogle() {
         <div className="w-full flex flex-row gap-x-3 flex-wrap border-b border-line-20 py-2 px-2">
           <div className="control-group w-full">
             <div className="button-group max-w-2xl horizontalScroll flex flex-row gap-x-3 justify-between">
-              <div className="w-full flex flex-row gap-x-3 px-3">
+              <div className="w-full flex flex-row gap-x-3">
                 <button
                   type="button"
                   onClick={() => editor?.chain().focus().toggleBold().run()}
-                  className={`${editor?.isActive("bold") ? "is-active" : ""} border border-line-20 rounded-lg px-3`}>
+                  className={`${editor?.isActive("bold") ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-xs md:text-sm`}>
                   B
                 </button>
                 <button
@@ -85,20 +85,20 @@ export default function TextEditorToogle() {
                   onClick={() =>
                     editor?.chain().focus().toggleUnderline().run()
                   }
-                  className={`${editor?.isActive("underline") ? "is-active" : ""} border border-line-20 rounded-lg px-3`}>
+                  className={`${editor?.isActive("underline") ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-xs md:text-sm`}>
                   U
                 </button>
                 <button
                   type="button"
                   onClick={() => editor?.chain().focus().toggleItalic().run()}
-                  className={`${editor?.isActive("italic") ? "is-active" : ""} border border-line-20 rounded-lg px-4`}>
+                  className={`${editor?.isActive("italic") ? "is-active" : ""} border border-line-20 rounded-lg px-4 text-xs md:text-sm`}>
                   I
                 </button>
               </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300 border border-line-20 rounded-lg px-4">
-                    <ListCollapse className="text-primary w-5 h-5" />
+                    <ListCollapse className="text-primary w-4 h-4" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
@@ -124,7 +124,7 @@ export default function TextEditorToogle() {
                               }
                               className={`
                   ${editor?.isActive({ textAlign: "left" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 p-2`}>
-                              <TextAlignLeft className="w-6 h-6 text-black-80" />
+                              <TextAlignLeft className="w-4 h-4 text-black-80" />
                             </button>
                             <button
                               type="button"
@@ -137,7 +137,7 @@ export default function TextEditorToogle() {
                               }
                               className={`
                   ${editor?.isActive({ textAlign: "center" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 p-2`}>
-                              <TextAlignCenter className="w-6 h-6 text-black-80" />
+                              <TextAlignCenter className="w-4 h-4 text-black-80" />
                             </button>
                             <button
                               type="button"
@@ -150,7 +150,7 @@ export default function TextEditorToogle() {
                               }
                               className={`
                   ${editor?.isActive({ textAlign: "right" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 p-2`}>
-                              <TextAlignRight className="w-6 h-6 text-black-80" />
+                              <TextAlignRight className="w-4 h-4 text-black-80" />
                             </button>
                             <button
                               type="button"
@@ -163,7 +163,7 @@ export default function TextEditorToogle() {
                               }
                               className={`
                   ${editor?.isActive({ textAlign: "justify" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 p-2`}>
-                              <TextAlignJustify className="w-6 h-6 text-black-80" />
+                              <TextAlignJustify className="w-4 h-4 text-black-80" />
                             </button>
                             <button
                               type="button"
@@ -171,7 +171,7 @@ export default function TextEditorToogle() {
                                 editor?.chain().focus().toggleBulletList().run()
                               }
                               className={`${editor?.isActive("bulletList") ? "is-active" : ""} border border-line-20 rounded-lg px-2 p-2`}>
-                              <List className="w-6 h-6 text-black-80" />
+                              <List className="w-4 h-4 text-black-80" />
                             </button>
                             <button
                               type="button"
@@ -183,7 +183,7 @@ export default function TextEditorToogle() {
                                   .run()
                               }
                               className={`${editor?.isActive("orderedList") ? "is-active" : ""} border border-line-20 rounded-lg px-2 p-2`}>
-                              <ListOrdered className="w-6 h-6 text-black-80" />
+                              <ListOrdered className="w-4 h-4 text-black-80" />
                             </button>
                           </div>
                         </div>
@@ -200,7 +200,7 @@ export default function TextEditorToogle() {
                                   .run()
                               }
                               className={`
-                  ${editor?.isActive("heading", { level: 1 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 p-2
+                  ${editor?.isActive("heading", { level: 1 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 p-2 text-xs md:text-sm
                 `}>
                               H1
                             </button>
@@ -214,7 +214,7 @@ export default function TextEditorToogle() {
                                   .run()
                               }
                               className={`
-                  ${editor?.isActive("heading", { level: 2 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2
+                  ${editor?.isActive("heading", { level: 2 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
                 `}>
                               H2
                             </button>
@@ -228,7 +228,7 @@ export default function TextEditorToogle() {
                                   .run()
                               }
                               className={`
-                  ${editor?.isActive("heading", { level: 3 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2
+                  ${editor?.isActive("heading", { level: 3 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
                 `}>
                               H3
                             </button>
@@ -242,7 +242,7 @@ export default function TextEditorToogle() {
                                   .run()
                               }
                               className={`
-                  ${editor?.isActive("heading", { level: 4 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2
+                  ${editor?.isActive("heading", { level: 4 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
                 `}>
                               H4
                             </button>
@@ -256,7 +256,7 @@ export default function TextEditorToogle() {
                                   .run()
                               }
                               className={`
-                  ${editor?.isActive("heading", { level: 5 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2
+                  ${editor?.isActive("heading", { level: 5 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
                 `}>
                               H5
                             </button>
@@ -270,7 +270,7 @@ export default function TextEditorToogle() {
                                   .run()
                               }
                               className={`
-                  ${editor?.isActive("heading", { level: 6 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2
+                  ${editor?.isActive("heading", { level: 6 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
                 `}>
                               H6
                             </button>
@@ -282,7 +282,7 @@ export default function TextEditorToogle() {
                             <DropdownMenu>
                               <DropdownMenuTrigger>
                                 <div className="border border-line-20 px-5 py-2 rounded-lg">
-                                  <Pen className="w-6 h-6 text-black-80" />
+                                  <Pen className="w-4 h-4 text-black-80" />
                                 </div>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent className="w-full max-w-xl bg-line-10 flex flex-col">
@@ -355,14 +355,14 @@ export default function TextEditorToogle() {
 
       {/* dekstop*/}
       <div className="hidden md:block">
-        <div className="w-full flex flex-row gap-x-3 flex-wrap border-b border-line-20 py-4 px-2">
+        <div className="w-full flex flex-row gap-x-3 flex-wrap border-b border-line-20 pt-4 px-2">
           <div className="control-group w-full">
             <div className="button-group max-w-2xl horizontalScroll flex flex-row gap-x-3">
-              <div className="w-3/12 flex flex-row gap-x-3 px-3">
+              <div className="w-full flex flex-row gap-x-3 px-2">
                 <button
                   type="button"
                   onClick={() => editor?.chain().focus().toggleBold().run()}
-                  className={`${editor?.isActive("bold") ? "is-active" : ""} border border-line-20 rounded-lg px-3`}>
+                  className={`${editor?.isActive("bold") ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-xs md:text-sm`}>
                   B
                 </button>
 
@@ -371,14 +371,14 @@ export default function TextEditorToogle() {
                   onClick={() =>
                     editor?.chain().focus().toggleUnderline().run()
                   }
-                  className={`${editor?.isActive("underline") ? "is-active" : ""} border border-line-20 rounded-lg px-3`}>
+                  className={`${editor?.isActive("underline") ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-xs md:text-sm`}>
                   U
                 </button>
 
                 <button
                   type="button"
                   onClick={() => editor?.chain().focus().toggleItalic().run()}
-                  className={`${editor?.isActive("italic") ? "is-active" : ""} border border-line-20 rounded-lg px-4`}>
+                  className={`${editor?.isActive("italic") ? "is-active" : ""} border border-line-20 rounded-lg px-4 text-xs md:text-sm`}>
                   I
                 </button>
               </div>
@@ -390,8 +390,8 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().setTextAlign("left").run()
                   }
                   className={`
-                  ${editor?.isActive({ textAlign: "left" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3`}>
-                  <TextAlignLeft className="w-6 h-6 text-black-80" />
+                  ${editor?.isActive({ textAlign: "left" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-xs md:text-sm`}>
+                  <TextAlignLeft className="w-5 h-5 text-black-80" />
                 </button>
                 <button
                   type="button"
@@ -399,8 +399,8 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().setTextAlign("center").run()
                   }
                   className={`
-                  ${editor?.isActive({ textAlign: "center" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3`}>
-                  <TextAlignCenter className="w-6 h-6 text-black-80" />
+                  ${editor?.isActive({ textAlign: "center" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-xs md:text-sm`}>
+                  <TextAlignCenter className="w-5 h-5 text-black-80" />
                 </button>
                 <button
                   type="button"
@@ -408,8 +408,8 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().setTextAlign("right").run()
                   }
                   className={`
-                  ${editor?.isActive({ textAlign: "right" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3`}>
-                  <TextAlignRight className="w-6 h-6 text-black-80" />
+                  ${editor?.isActive({ textAlign: "right" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-xs md:text-sm`}>
+                  <TextAlignRight className="w-5 h-5 text-black-80" />
                 </button>
                 <button
                   type="button"
@@ -417,16 +417,16 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().setTextAlign("justify").run()
                   }
                   className={`
-                  ${editor?.isActive({ textAlign: "justify" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3`}>
-                  <TextAlignJustify className="w-6 h-6 text-black-80" />
+                  ${editor?.isActive({ textAlign: "justify" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-xs md:text-sm`}>
+                  <TextAlignJustify className="w-5 h-5 text-black-80" />
                 </button>
               </div>
 
-              <div className="w-2/12 flex flex-row items-center gap-x-3">
+              <div className="w-full flex flex-row items-center gap-x-3">
                 <DropdownMenu>
                   <DropdownMenuTrigger>
-                    <div className="border border-line-20 px-5 py-2 rounded-lg">
-                      <Pen className="w-6 h-6 text-black-80" />
+                    <div className="border border-line-20 px-2 py-2 rounded-lg">
+                      <Pen className="w-5 h-5 text-black-80" />
                     </div>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-full max-w-xl bg-line-10 flex flex-col">
@@ -474,14 +474,14 @@ export default function TextEditorToogle() {
                 />
               </div>
 
-              <div className="w-8/12 flex flex-row gap-x-3">
+              <div className="w-full flex flex-row gap-x-3">
                 <button
                   type="button"
                   onClick={() =>
                     editor?.chain().focus().toggleHeading({ level: 1 }).run()
                   }
                   className={`
-                  ${editor?.isActive("heading", { level: 1 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2
+                  ${editor?.isActive("heading", { level: 1 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
                 `}>
                   H1
                 </button>
@@ -491,7 +491,7 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().toggleHeading({ level: 2 }).run()
                   }
                   className={`
-                  ${editor?.isActive("heading", { level: 2 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2
+                  ${editor?.isActive("heading", { level: 2 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
                 `}>
                   H2
                 </button>
@@ -501,7 +501,7 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().toggleHeading({ level: 3 }).run()
                   }
                   className={`
-                  ${editor?.isActive("heading", { level: 3 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2
+                  ${editor?.isActive("heading", { level: 3 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
                 `}>
                   H3
                 </button>
@@ -511,7 +511,7 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().toggleHeading({ level: 4 }).run()
                   }
                   className={`
-                  ${editor?.isActive("heading", { level: 4 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2
+                  ${editor?.isActive("heading", { level: 4 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
                 `}>
                   H4
                 </button>
@@ -521,7 +521,7 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().toggleHeading({ level: 5 }).run()
                   }
                   className={`
-                  ${editor?.isActive("heading", { level: 5 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2
+                  ${editor?.isActive("heading", { level: 5 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
                 `}>
                   H5
                 </button>
@@ -531,7 +531,7 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().toggleHeading({ level: 6 }).run()
                   }
                   className={`
-                  ${editor?.isActive("heading", { level: 6 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2
+                  ${editor?.isActive("heading", { level: 6 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
                 `}>
                   H6
                 </button>
@@ -543,16 +543,16 @@ export default function TextEditorToogle() {
                   onClick={() =>
                     editor?.chain().focus().toggleBulletList().run()
                   }
-                  className={`${editor?.isActive("bulletList") ? "is-active" : ""} border border-line-20 rounded-lg px-2`}>
-                  <List className="w-6 h-6 text-black-80" />
+                  className={`${editor?.isActive("bulletList") ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm`}>
+                  <List className="w-5 h-5 text-black-80" />
                 </button>
                 <button
                   type="button"
                   onClick={() =>
                     editor?.chain().focus().toggleOrderedList().run()
                   }
-                  className={`${editor?.isActive("orderedList") ? "is-active" : ""} border border-line-20 rounded-lg px-2`}>
-                  <ListOrdered className="w-6 h-6 text-black-80" />
+                  className={`${editor?.isActive("orderedList") ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm`}>
+                  <ListOrdered className="w-5 h-5 text-black-80" />
                 </button>
               </div>
             </div>

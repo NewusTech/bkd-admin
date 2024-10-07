@@ -44,6 +44,7 @@ import MobileBkdGalleryActivitiesMasterDataCard from "@/components/mobile_all_ca
 import AddIcon from "@/components/elements/add_button";
 import { useDebounce } from "@/hooks/useDebounce";
 import NotFoundSearch from "@/components/ui/SearchNotFound";
+import TypingEffect from "@/components/ui/TypingEffect";
 
 export default function BKDGalleryActivitiesScreen() {
   const router = useRouter();
@@ -380,13 +381,13 @@ export default function BKDGalleryActivitiesScreen() {
                         </div>
                       </div>
 
-                      <div className="w-full flex flex-row justify-center items-center gap-x-5">
+                      <div className="w-full flex flex-row justify-between items-center gap-x-5">
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
 
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2s">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (
@@ -415,7 +416,7 @@ export default function BKDGalleryActivitiesScreen() {
                     </DrawerTitle>
 
                     <DrawerDescription className="text-center">
-                      Input data yang diperlukan
+                      <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
                     </DrawerDescription>
 
                     <form
@@ -495,12 +496,12 @@ export default function BKDGalleryActivitiesScreen() {
                       </div>
 
                       <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                        {/* <AlertDialogCancel>Cancel</AlertDialogCancel> */}
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
 
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (

@@ -16,7 +16,7 @@ export const RichTextDisplay = ({ content, keys }: RichTextDisplayProps) => {
     }, [content]);
 
     return (
-        <div
+        <span
             className={`${keys === true
                 ? "prose-mpp"
                 : keys === false

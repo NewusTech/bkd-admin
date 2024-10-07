@@ -51,6 +51,7 @@ import SuperStructureOrganizationMainMasterDataTablePages from "@/components/tab
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileStructureOrganizationMainMasterDataCard from "@/components/mobile_all_cards/mobileStructurOrganizationMainMasterDataCard";
 import AddIcon from "@/components/elements/add_button";
+import TypingEffect from "@/components/ui/TypingEffect";
 
 export default function StructureOrganizationMainScreen() {
   const router = useRouter();
@@ -260,65 +261,65 @@ export default function StructureOrganizationMainScreen() {
                     Tambah Data
                   </div>
                 </AlertDialogTrigger>
-                <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
-                  <AlertDialogHeader className="flex flex-col max-h-[500px]">
+                <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
+                  <AlertDialogHeader className="flex flex-col">
                     <AlertDialogTitle className="text-center">
                       Master Data Struktur Organisasi Inti
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
-                      Input data yang diperlukan
+                      <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
                     </AlertDialogDescription>
                     <form
                       onSubmit={handleCreateStructureOrganization}
-                      className="w-full flex flex-col gap-y-3 verticalScroll">
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-black-800 font-normal text-sm">
-                            Pilih Struktur Yang Akan Ditampilkan
-                          </Label>
+                      className="w-full flex flex-col gap-y-3 max-h-[500px]">
+                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
+                            <Label className="focus-within:text-black-800 font-normal text-sm">
+                              Pilih Struktur Yang Akan Ditampilkan
+                            </Label>
 
-                          <div className="w-full border border-line-20 rounded-lg">
-                            <Select onValueChange={handleSelectChange}>
-                              <SelectTrigger
-                                className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-                                <SelectValue
-                                  placeholder="Pilih Jabatan"
-                                  className="text-black-80 w-full"
-                                />
-                              </SelectTrigger>
-                              <SelectContent className="bg-line-10">
-                                <div className="pt-2">
-                                  {organizations &&
-                                    organizations.length > 0 &&
-                                    organizations.map(
-                                      (
-                                        organization: StructureOrganizationInterface,
-                                        i: number
-                                      ) => {
-                                        return (
-                                          <SelectItem
-                                            key={i}
-                                            className={`w-full px-4`}
-                                            value={organization.id.toString()}>
-                                            {organization?.nama}
-                                          </SelectItem>
-                                        );
-                                      }
-                                    )}
-                                </div>
-                              </SelectContent>
-                            </Select>
+                            <div className="w-full border border-line-20 rounded-lg">
+                              <Select onValueChange={handleSelectChange}>
+                                <SelectTrigger
+                                  className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                  <SelectValue
+                                    placeholder="Pilih Jabatan"
+                                    className="text-black-80 w-full"
+                                  />
+                                </SelectTrigger>
+                                <SelectContent className="bg-line-10">
+                                  <div className="pt-2">
+                                    {organizations &&
+                                      organizations.length > 0 &&
+                                      organizations.map(
+                                        (
+                                          organization: StructureOrganizationInterface,
+                                          i: number
+                                        ) => {
+                                          return (
+                                            <SelectItem
+                                              key={i}
+                                              className={`w-full px-4`}
+                                              value={organization.id.toString()}>
+                                              {organization?.nama}
+                                            </SelectItem>
+                                          );
+                                        }
+                                      )}
+                                  </div>
+                                </SelectContent>
+                              </Select>
+                            </div>
                           </div>
                         </div>
                       </div>
-
-                      <div className="w-full flex flex-row justify-center items-center gap-x-5">
+                      <div className="w-full flex flex-row justify-between items-center gap-x-5">
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (
@@ -394,13 +395,15 @@ export default function StructureOrganizationMainScreen() {
                         </div>
                       </div>
 
-                      <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                        {/* <AlertDialogCancel>Cancel</AlertDialogCancel> */}
-
+                      <div className="flex gap-4 justify-between">
+                        <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
+                          <DrawerDescription>Batal</DrawerDescription>
+                        </DrawerClose>
                         <Button
+                          title="Simpan Data"
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] md:text-[16px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (
@@ -428,12 +431,12 @@ export default function StructureOrganizationMainScreen() {
                   // isDeleteLoading={isDeleteLoading}
                   data={data}
                   setData={setData}
-                  // isUpdateLoading={isUpdateLoading}
-                  // isDialogEditOpen={isDialogEditOpen}
-                  // setIsDialogEditOpen={setIsDialogEditOpen}
-                  // handleUpdateStructureOrganization={
-                  //   handleUpdateStructureOrganization
-                  // }
+                // isUpdateLoading={isUpdateLoading}
+                // isDialogEditOpen={isDialogEditOpen}
+                // setIsDialogEditOpen={setIsDialogEditOpen}
+                // handleUpdateStructureOrganization={
+                //   handleUpdateStructureOrganization
+                // }
                 />
               )}
             </>

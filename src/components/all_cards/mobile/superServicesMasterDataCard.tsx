@@ -173,7 +173,7 @@ export default function MobileSuperServicesMasterDataCard({
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="transition-all duration-300 ease-in-out opacity-1 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 bg-white border border-gray-300 shadow-2xl rounded-md w-fit mr-6">
                                 <DropdownMenuLabel className="font-semibold text-primary text-sm w-full shadow-md">
-                                    Menu
+                                    Actions
                                 </DropdownMenuLabel>
                                 {/* <hr className="border border-primary transition-all ease-in-out animate-pulse ml-2 mr-2" /> */}
                                 <div className="h-1 w-full bg-gradient-to-r from-transparent via-primary to-transparent transition-all animate-pulse"></div>
@@ -202,7 +202,7 @@ export default function MobileSuperServicesMasterDataCard({
                                                                 onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                                                                     handleUpdateService(e, service?.id)
                                                                 }
-                                                                className="w-full flex flex-col gap-y-3 max-h-full h-[600px]">
+                                                                className="w-full flex flex-col gap-y-3 max-h-full h-[700px]">
                                                                 <DrawerDescription>
                                                                     <div className="text-center mb-4">
                                                                         <TypingEffect text={["Edit data yang diperlukan...."]} />
@@ -224,7 +224,7 @@ export default function MobileSuperServicesMasterDataCard({
                                                                                 })
                                                                             }
                                                                             type="text"
-                                                                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                                                                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-xs md:text-sm"
                                                                             placeholder="Masukkan Nama Bidang"
                                                                         />
                                                                     </div>
@@ -242,7 +242,7 @@ export default function MobileSuperServicesMasterDataCard({
                                                                     </div>
 
                                                                     <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
-                                                                        <Label className="focus-within:text-black-800 font-normal text-sm">
+                                                                        <Label className="focus-within:text-black-800 font-normal text-sm text-left">
                                                                             Pilih Bidang
                                                                         </Label>
 
@@ -305,7 +305,7 @@ export default function MobileSuperServicesMasterDataCard({
                                                                                 })
                                                                             }
                                                                             type="text"
-                                                                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                                                                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-xs md:text-sm"
                                                                             placeholder="Masukkan Nama Penanggung Jawab"
                                                                         />
                                                                     </div>
@@ -334,22 +334,22 @@ export default function MobileSuperServicesMasterDataCard({
                                                                         </div>
                                                                     </div>
 
-                                                                    <div className="flex gap-4 justify-center">
-                                                                        <DrawerClose>
-                                                                            <div className="text-xs md:text-sm">Batal</div>
-                                                                        </DrawerClose>
-                                                                        <Button
-                                                                            title="Simpan Data"
-                                                                            type="submit"
-                                                                            disabled={isUpdateLoading ? true : false}
-                                                                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-fit">
-                                                                            {isUpdateLoading ? (
-                                                                                <Loader className="animate-spin" />
-                                                                            ) : (
-                                                                                "Simpan"
-                                                                            )}
-                                                                        </Button>
-                                                                    </div>
+                                                                </div>
+                                                                <div className="flex gap-4 justify-between">
+                                                                    <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
+                                                                        <DrawerDescription className="text-xs md:text-sm">Batal</DrawerDescription>
+                                                                    </DrawerClose>
+                                                                    <Button
+                                                                        title="Simpan Data"
+                                                                        type="submit"
+                                                                        disabled={isUpdateLoading ? true : false}
+                                                                        className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                                                                        {isUpdateLoading ? (
+                                                                            <Loader className="animate-spin" />
+                                                                        ) : (
+                                                                            "Simpan"
+                                                                        )}
+                                                                    </Button>
                                                                 </div>
                                                             </form>
                                                         </DrawerHeader>
@@ -405,11 +405,17 @@ export default function MobileSuperServicesMasterDataCard({
                     <div className="w-full grid grid-cols-3">
                         <div className="w-full font-medium text-black">Deskripsi</div>
                         <div className="w-full col-span-2">
-                            : {service.desc && (
-                                // <ReadMore text={service.desc}/>
-                                // <RichTextDisplay content={service.desc} />
-                                <CombinedReadMoreRichTextDisplay content={service.desc} keys={true} />
-                            )}
+                            <span>
+                                <>
+                                    {service.desc && (
+                                        // <ReadMore text={service.desc}/>
+                                        // <RichTextDisplay content={service.desc} />
+                                        <>
+                                            <CombinedReadMoreRichTextDisplay content={service.desc} keys={true} />
+                                        </>
+                                    )}
+                                </>
+                            </span>
                         </div>
                     </div>
                 </div>

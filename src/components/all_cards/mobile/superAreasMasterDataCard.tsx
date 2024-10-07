@@ -234,17 +234,15 @@ export default function MobileSuperAreasMasterDataCard({
                                       />
                                     </div>
                                   </div>
-                                  <div className="flex gap-4 justify-center">
-                                    <DrawerClose>
-                                      <DrawerDescription>
-                                        Batal
-                                      </DrawerDescription>
+                                  <div className="flex gap-4 justify-between">
+                                    <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-xs">
+                                      <DrawerDescription className="text-xs md:text-sm">Batal</DrawerDescription>
                                     </DrawerClose>
                                     <Button
                                       title="Simpan Data"
                                       type="submit"
                                       disabled={isUpdateLoading ? true : false}
-                                      className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-fit">
+                                      className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                                       {isUpdateLoading ? (
                                         <Loader className="animate-spin" />
                                       ) : (

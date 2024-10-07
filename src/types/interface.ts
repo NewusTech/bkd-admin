@@ -188,6 +188,8 @@ export interface AboutVisionMisionInterface {
   misi: string;
   kontak: string;
   createdAt: string;
+  logo: string;
+  image_bkd: string;
 }
 
 export interface AboutUsVisionMisionUpdateInterface {
