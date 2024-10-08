@@ -1310,7 +1310,8 @@ export default function DashBoardSidebarPages() {
                   <AccordionItem
                     className="w-full border-none flex flex-col"
                     value={`item-4`}>
-                    <AccordionTrigger className="px-4 py-2 bg-white font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4">
+                    <AccordionTrigger
+                      className={`${pathName === "/super-admin/account-managing-roles" || pathName === "/super-admin/account-managing-users" ? "bg-primary-40 bg-opacity-20 text-primary-40" : "text-black-80"} px-4 py-3 font-normal text-sm text-start h-[50px] md:h-full pr-4`}>
                       <div className="w-full flex flex-row items-center gap-x-2">
                         <p className="text-black-80 text-[16px]">Kelola Akun</p>
                       </div>
@@ -1324,16 +1325,34 @@ export default function DashBoardSidebarPages() {
                               bar: { id: number; name: string; value: string },
                               i: number
                             ) => {
+                              let linking;
+
+                              switch (bar?.name) {
+                                case "Roles":
+                                  linking =
+                                    "/super-admin/account-managing-roles";
+                                  break;
+                                case "Users":
+                                  linking =
+                                    "/super-admin/account-managing-users";
+                                  break;
+                                default:
+                                  break;
+                              }
+
                               return (
                                 <Link
                                   key={i}
-                                  href={`${bar?.name === "Roles" ? "/verified-admin/user-application-histories" : "/verified-admin/user-application-revition-histories"}`}
-                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                                  href={`${bar?.name === "Roles" ? "/super-admin/account-managing-roles" : "/super-admin/account-managing-users"}`}
+                                  className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-full py-2 flex items-center justify-center bg-opacity-50`}>
                                   <div className="w-10/12 flex flex-row items-center gap-x-2">
                                     <DotIcon
-                                      className={`w-5 h-5 text-black-80`}
+                                      className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-5 h-5`}
                                     />
-                                    <p>{bar?.value}</p>
+                                    <p
+                                      className={`${pathName === linking ? "text-primary-40" : "text-black-80"}`}>
+                                      {bar?.value}
+                                    </p>
                                   </div>
                                 </Link>
                               );
