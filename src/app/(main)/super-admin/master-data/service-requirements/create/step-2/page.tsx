@@ -92,13 +92,13 @@ export default function ServiceRequiremntsCreate() {
     dataStep2.length > 0
       ? dataStep2
       : [
-        {
-          id: Date.now(),
-          field: "",
-          tipedata: "text",
-          isrequired: "",
-        },
-      ]
+          {
+            id: Date.now(),
+            field: "",
+            tipedata: "text",
+            isrequired: "",
+          },
+        ]
   );
   const [lastOptionId, setLastOptionId] = useState<number>(0); // State for incremental option ID
 
@@ -134,14 +134,14 @@ export default function ServiceRequiremntsCreate() {
   const addOption = (cardId: number) => {
     const updatedCards = cards.map((card) =>
       card.id === cardId &&
-        (card.tipedata === "radio" || card.tipedata === "checkbox")
+      (card.tipedata === "radio" || card.tipedata === "checkbox")
         ? {
-          ...card,
-          options: [
-            ...(card.options || []),
-            { id: (card.options?.length || 0) + 1, key: "" },
-          ],
-        }
+            ...card,
+            options: [
+              ...(card.options || []),
+              { id: (card.options?.length || 0) + 1, key: "" },
+            ],
+          }
         : card
     );
     setCards(updatedCards);
@@ -151,11 +151,11 @@ export default function ServiceRequiremntsCreate() {
     const updatedCards = cards.map((card) =>
       card.id === cardId
         ? {
-          ...card,
-          options: card.options
-            ?.filter((option) => option.id !== optionId)
-            ?.map((option, index) => ({ ...option, id: index + 1 })), // Reassign IDs starting from 1
-        }
+            ...card,
+            options: card.options
+              ?.filter((option) => option.id !== optionId)
+              ?.map((option, index) => ({ ...option, id: index + 1 })), // Reassign IDs starting from 1
+          }
         : card
     );
     setCards(updatedCards);
@@ -169,11 +169,11 @@ export default function ServiceRequiremntsCreate() {
     const updatedCards = cards.map((card) =>
       card.id === cardId
         ? {
-          ...card,
-          options: card.options?.map((option) =>
-            option.id === optionId ? { ...option, key: value } : option
-          ),
-        }
+            ...card,
+            options: card.options?.map((option) =>
+              option.id === optionId ? { ...option, key: value } : option
+            ),
+          }
         : card
     );
     setCards(updatedCards);
@@ -219,10 +219,7 @@ export default function ServiceRequiremntsCreate() {
         }
       );
 
-      // console.log("Response status:", response.status);
       const responseData = await response.json();
-      // console.log("Response data:", responseData);
-      // console.log("Formatted data:", formattedData);
 
       if (response.ok) {
         Swal.fire({
@@ -320,7 +317,10 @@ export default function ServiceRequiremntsCreate() {
                           handleCardChange(card.id, "tipedata", e)
                         }>
                         <SelectTrigger className="w-full text-xs md:text-sm">
-                          <SelectValue className="text-xs md:text-sm" placeholder="Pilih Tipe Pertanyaan" />
+                          <SelectValue
+                            className="text-xs md:text-sm"
+                            placeholder="Pilih Tipe Pertanyaan"
+                          />
                         </SelectTrigger>
                         <SelectContent className="bg-line-10">
                           <SelectGroup>
@@ -347,11 +347,17 @@ export default function ServiceRequiremntsCreate() {
                     defaultValue={card.isrequired.toString()}
                     className="flex-none md:flex space-x-4 md:space-x-1">
                     <div className="flex items-center space-x-2 space-y-0">
-                      <RadioGroupItem value="1" className="border border-[#E4E4E7]" />
+                      <RadioGroupItem
+                        value="1"
+                        className="border border-[#E4E4E7]"
+                      />
                       <p className="font-normal">Ya</p>
                     </div>
                     <div className="flex items-center space-x-2 space-y-0">
-                      <RadioGroupItem value="0" className="border border-[#E4E4E7]" />
+                      <RadioGroupItem
+                        value="0"
+                        className="border border-[#E4E4E7]"
+                      />
                       <p className="font-normal">Tidak</p>
                     </div>
                   </RadioGroup>

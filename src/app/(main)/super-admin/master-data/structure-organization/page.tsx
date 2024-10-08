@@ -42,12 +42,14 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileStructureOrganizationMasterDataCard from "@/components/mobile_all_cards/mobileStructureOrganizationMasterDataCard";
 import AddIcon from "@/components/elements/add_button";
 import TypingEffect from "@/components/ui/TypingEffect";
+import { useDebounce } from "@/hooks/useDebounce";
 
 export default function StructureOrganizationScreen() {
   const router = useRouter();
   const dropRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search, 500);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -65,9 +67,13 @@ export default function StructureOrganizationScreen() {
     image: "",
   });
 
-  const fetchStructureOrganization = async (limit: number) => {
+  const fetchStructureOrganization = async (
+    page: number,
+    limit: number,
+    search: string
+  ) => {
     try {
-      const response = await getStructureOrganizations(limit);
+      const response = await getStructureOrganizations(page, limit, search);
 
       setOrganizations(response.data);
     } catch (error) {
@@ -76,8 +82,8 @@ export default function StructureOrganizationScreen() {
   };
 
   useEffect(() => {
-    fetchStructureOrganization(limitItem);
-  }, []);
+    fetchStructureOrganization(1, 10, debounceSearch);
+  }, [debounceSearch]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({
@@ -159,7 +165,7 @@ export default function StructureOrganizationScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchStructureOrganization(limitItem);
+        fetchStructureOrganization(1, 10, "");
         setIsDialogOpen(false);
         router.push("/super-admin/master-data/structure-organization");
       } else {
@@ -203,7 +209,7 @@ export default function StructureOrganizationScreen() {
             position: "center",
           });
           setIsDeleteLoading(false);
-          fetchStructureOrganization(limitItem);
+          fetchStructureOrganization(1, 10, "");
         }
       }
     } catch (error) {
@@ -228,7 +234,7 @@ export default function StructureOrganizationScreen() {
     }
 
     try {
-      const response = await updateStructureOrganizations(slug, formData);
+      const response = await updateStructureOrganizations(formData, slug);
 
       if (response.status === 200) {
         setData({
@@ -243,7 +249,7 @@ export default function StructureOrganizationScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchStructureOrganization(limitItem);
+        fetchStructureOrganization(1, 10, "");
         setIsDialogEditOpen(false);
         router.push("/super-admin/master-data/structure-organization");
       } else {
@@ -293,7 +299,12 @@ export default function StructureOrganizationScreen() {
                       Master Data Struktur Organisasi
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
-                      <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
+                      <TypingEffect
+                        className="custom-class md:text-sm text-xs"
+                        speed={125}
+                        deleteSpeed={50}
+                        text={["Input data yang diperlukan"]}
+                      />
                     </AlertDialogDescription>
                     <form
                       onSubmit={handleCreateStructureOrganization}
@@ -420,7 +431,12 @@ export default function StructureOrganizationScreen() {
                     </DrawerTitle>
 
                     <DrawerDescription className="text-center">
-                      <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
+                      <TypingEffect
+                        className="custom-class md:text-sm text-xs"
+                        speed={125}
+                        deleteSpeed={50}
+                        text={["Input data yang diperlukan"]}
+                      />
                     </DrawerDescription>
 
                     <form

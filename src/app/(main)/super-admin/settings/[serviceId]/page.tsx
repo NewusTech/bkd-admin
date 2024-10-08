@@ -48,8 +48,6 @@ export default function SuperSettingCreateScreen({
     try {
       const response = await updateOutputLetter(data, params.serviceId);
 
-      console.log(response, "ini response");
-
       if (response.status === 200) {
         setData({
           header: "",

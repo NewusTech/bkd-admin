@@ -144,8 +144,6 @@ export default function ServiceRequirementsCreate() {
 
       const data = await response.json();
 
-      console.log(data, "ini data");
-
       if (response.ok) {
         Swal.fire({
           icon: "success",

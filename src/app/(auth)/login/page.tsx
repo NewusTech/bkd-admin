@@ -109,7 +109,6 @@ export default function LoginScreen() {
       const response = await getTermConditions();
 
       setTerms(response.data);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }

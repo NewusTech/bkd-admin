@@ -61,6 +61,7 @@ import {
   getApplicationUserHistories,
   getDepartmentHeadDashboard,
   getDepartmentSecretaryDashboard,
+  getRegionalSecretaryDashboard,
   getService,
 } from "@/services/api";
 import PaginationComponent from "@/components/elements/pagination";
@@ -187,6 +188,8 @@ export default function RegionalSecretaryDashboardPages() {
         response = await getDepartmentSecretaryDashboard();
       } else if (role && role === "Kepala Dinas") {
         response = await getDepartmentHeadDashboard();
+      } else if (role && role === "Sekretaris Daerah") {
+        response = await getRegionalSecretaryDashboard();
       }
 
       setData(response.data);
@@ -200,8 +203,6 @@ export default function RegionalSecretaryDashboardPages() {
       fetchDashboardData();
     }
   }, [role]);
-
-  console.log(data, "ini data");
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
@@ -255,8 +256,6 @@ export default function RegionalSecretaryDashboardPages() {
   } satisfies ChartConfig;
 
   const chartDataLegend = data?.monthlyCounts?.map((item) => {
-    console.log(item?.permohonanCount, "ini permohonancount");
-
     return {
       bulan: item?.month,
       permohonan: item?.permohonanCount,
@@ -569,7 +568,13 @@ export default function RegionalSecretaryDashboardPages() {
               className="w-1/2 h-1/2 md:w-full md:h-full flex justify-center m-auto"
             />
           </div>
-          <p className="text-black-80 md:text-sm text-xs">Sedang Divalidasi</p>
+          <p className="text-black-80 md:text-sm text-xs">
+            {role && role === "Sekretaris Dinas"
+              ? "Sedang Divalidasi"
+              : role && role === "Kepala Dinas"
+                ? "Sudah Divalidasi"
+                : "Sedang Ditandatangi"}
+          </p>
           <p className="text-primary-40 font-semibold text-xl md:text-4xl">
             {data && data?.totalMenungguVerifikasi}
           </p>
