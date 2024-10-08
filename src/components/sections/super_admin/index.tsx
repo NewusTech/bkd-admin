@@ -168,6 +168,8 @@ export default function SuperAdminDashboardPages() {
     },
   } satisfies ChartConfig;
 
+  console.log(superAdmin, "data");
+
   return (
     <div className="w-full flex flex-col gap-y-5 mb-24">
       <div className="w-full h-[450px] md:h-full verticalScroll md:horizontalScroll flex flex-col md:flex-row gap-y-3 md:gap-x-5 items-center md:items-start bg-primary-40 bg-opacity-20 rounded-lg p-3">
