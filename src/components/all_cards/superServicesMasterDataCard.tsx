@@ -142,7 +142,7 @@ export default function SuperServicesMasterDataCard({
                   setIsDialogEditOpen(true);
                 }}
                 className="w-full">
-                <div className="w-full text-sm bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg">
+                <div className="w-full text-[14px] md:text-[16px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg">
                   Edit
                 </div>
               </AlertDialogTrigger>
@@ -161,7 +161,7 @@ export default function SuperServicesMasterDataCard({
                     className="w-full flex flex-col gap-y-3 max-h-[500px]">
                     <div className="w-full flex flex-col gap-y-3 verticalScroll">
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Nama Layanan
                         </Label>
                         <Input
@@ -183,7 +183,7 @@ export default function SuperServicesMasterDataCard({
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                         <Label
                           htmlFor="syarat"
-                          className="focus-within:text-primary-70 font-normal text-sm">
+                          className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Syarat Layanan
                         </Label>
                         <div className="w-full h-full border border-line-20 rounded-lg text-left">
@@ -197,7 +197,7 @@ export default function SuperServicesMasterDataCard({
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                         <Label
                           htmlFor="ketentuan"
-                          className="focus-within:text-primary-70 font-normal text-sm">
+                          className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Pilih Bidang
                         </Label>
                         <div className="w-full border border-line-20 rounded-lg">
@@ -234,7 +234,7 @@ export default function SuperServicesMasterDataCard({
                       </div>
 
                       <div className="w-full flex flex-col gap-y-2">
-                        <Label className="text-black-70 font-normal text-xs md:text-sm text-left">
+                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Deskripsi Bidang
                         </Label>
                         <div className="w-full h-full border border-line-20 rounded-lg text-left">
@@ -246,7 +246,7 @@ export default function SuperServicesMasterDataCard({
                       </div>
 
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Penanggung Jawab
                         </Label>
                         <Input
@@ -260,7 +260,7 @@ export default function SuperServicesMasterDataCard({
                             })
                           }
                           type="text"
-                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px] md:text-[16px]"
                           placeholder="Masukkan Nama Penanggung Jawab"
                         />
                       </div>
@@ -268,7 +268,7 @@ export default function SuperServicesMasterDataCard({
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                         <Label
                           htmlFor="ketentuan"
-                          className="focus-within:text-primary-70 font-normal text-sm">
+                          className="ffocus-within:text-primary-70 font-normal text-[14px] md:text-[16px]]">
                           Ketentuan
                         </Label>
                         <div className="w-full h-full border border-line-20 rounded-lg text-left">
@@ -282,7 +282,7 @@ export default function SuperServicesMasterDataCard({
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                         <Label
                           htmlFor="langkah"
-                          className="focus-within:text-primary-70 font-normal text-sm">
+                          className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Langkah
                         </Label>
                         <div className="w-full h-full border border-line-20 rounded-lg text-left">
@@ -295,12 +295,11 @@ export default function SuperServicesMasterDataCard({
                     </div>
 
                     <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-
+                      <AlertDialogCancel className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">Cancel</AlertDialogCancel>
                       <Button
                         type="submit"
                         disabled={isUpdateLoading ? true : false}
-                        className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                        className="bg-primary-40 hover:bg-primary-70 text-line-10 focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] transition-all">
                         {isUpdateLoading ? (
                           <Loader className="animate-spin" />
                         ) : (
@@ -308,6 +307,7 @@ export default function SuperServicesMasterDataCard({
                         )}
                       </Button>
                     </div>
+
                   </form>
                 </AlertDialogHeader>
               </AlertDialogContent>

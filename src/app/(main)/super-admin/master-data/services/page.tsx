@@ -383,11 +383,13 @@ export default function ServicesScreen() {
 
   return (
     <section className="w-full flex flex-col items-center md:px-5 md:mt-5">
-      <div className="bg-[#F6F6F6] md:bg-line-10 md:shadow-md md:rounded-lg w-full flex flex-col p-5 gap-y-5">
+      <div className="bg-line-10 md:bg-line-10 md:shadow-md md:rounded-lg w-full flex flex-col p-5 gap-y-5">
         <h1 className="text-lg">Kelola Layanan</h1>
+
         {/* Mobile */}
         <div className="md:hidden">
           <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-4 gap-y-4 md:p-5 md:gap-y-5">
+
             <div className="w-full">
               <SearchPages
                 search={search}
@@ -398,13 +400,14 @@ export default function ServicesScreen() {
                 placeholder="Pencarian"
               />
             </div>
+
             <div className="w-full">
               <Drawer
                 open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
                 <DrawerTrigger onClick={() => {
                   setIsDrawerOpen(true);
                 }} className="w-full">
-                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah Layanan
                   </div>
@@ -418,13 +421,13 @@ export default function ServicesScreen() {
                       className="w-full flex flex-col gap-y-3 max-h-full h-[700px]">
                       <DrawerDescription>
                         <div className="text-center mb-4">
-                          <TypingEffect text={["Tambah data yang diperlukan...."]} />
+                          <TypingEffect className="text-[14px] md:text-[16px]" text={["Tambah data yang diperlukan...."]} />
                         </div>
                       </DrawerDescription>
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-xs md:text-sm text-left">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
                             Nama Layanan
                           </Label>
                           <Input
@@ -433,7 +436,7 @@ export default function ServicesScreen() {
                             value={data.nama}
                             onChange={handleChange}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-xs md:text-sm"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px] md:text-[16px]"
                             placeholder="Masukkan Nama Layanan"
                           />
                         </div>
@@ -441,7 +444,7 @@ export default function ServicesScreen() {
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label
                             htmlFor="syarat"
-                            className="focus-within:text-primary-70 font-normal text-xs md:text-sm text-left">
+                            className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
                             Syarat Layanan
                           </Label>
                           <div className="w-full h-full border border-line-20 rounded-lg text-left">
@@ -453,7 +456,7 @@ export default function ServicesScreen() {
                         </div>
 
                         <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-black-800 font-normal text-xs md:text-sm text-left">
+                          <Label className="focus-within:text-black-800 font-normal text-[14px] md:text-[16px] text-left">
                             Pilih Bidang
                           </Label>
                           <div className="w-full border border-line-20 rounded-lg">
@@ -474,7 +477,7 @@ export default function ServicesScreen() {
                                         return (
                                           <SelectItem
                                             key={i}
-                                            className={`w-full px-4`}
+                                            className={`w-full px-4 text-[14px] md:text-[16px]`}
                                             value={area.id.toString()}>
                                             {area.nama}
                                           </SelectItem>
@@ -488,7 +491,7 @@ export default function ServicesScreen() {
                         </div>
 
                         <div className="w-full flex flex-col gap-y-2">
-                          <Label className="text-black-70 font-normal text-xs md:text-sm text-left">
+                          <Label className="text-black-70 font-normal text-[14px] md:text-[16px] text-left">
                             Deskripsi Bidang
                           </Label>
                           <div className="w-full h-full border border-line-20 rounded-lg text-left">
@@ -500,7 +503,7 @@ export default function ServicesScreen() {
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-xs md:text-sm text-left">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
                             Penanggung Jawab
                           </Label>
                           <Input
@@ -509,7 +512,7 @@ export default function ServicesScreen() {
                             value={data.penanggung_jawab}
                             onChange={handleChange}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-xs md:text-sm"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px] md:text-[16px]"
                             placeholder="Masukkan Nama Penanggung Jawab"
                           />
                         </div>
@@ -517,7 +520,7 @@ export default function ServicesScreen() {
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label
                             htmlFor="ketentuan"
-                            className="focus-within:text-primary-70 font-normal text-xs md:text-sm text-left">
+                            className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
                             Ketentuan
                           </Label>
                           <div className="w-full h-full border border-line-20 rounded-lg text-left">
@@ -531,7 +534,7 @@ export default function ServicesScreen() {
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label
                             htmlFor="langkah"
-                            className="focus-within:text-primary-70 font-normal text-xs md:text-sm text-left">
+                            className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
                             Langkah
                           </Label>
                           <div className="w-full h-full border border-line-20 rounded-lg text-left">
@@ -565,6 +568,7 @@ export default function ServicesScreen() {
                 </DrawerContent>
               </Drawer>
             </div>
+
           </div>
         </div>
         {/* Mobile */}
@@ -586,7 +590,7 @@ export default function ServicesScreen() {
                 <AlertDialogTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah Layanan
                   </div>
@@ -597,7 +601,7 @@ export default function ServicesScreen() {
                       Master Data Layanan
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
-                      <TypingEffect className="custom-class md:text-sm text-xs" text={["Input data yang diperlukan"]} />
+                      <TypingEffect className="custom-class text-[14px] md:text-[16px]" text={["Input data yang diperlukan"]} />
                     </AlertDialogDescription>
                     <form
                       onSubmit={handleCreateService}
@@ -605,7 +609,7 @@ export default function ServicesScreen() {
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             Nama Layanan
                           </Label>
                           <Input
@@ -622,7 +626,7 @@ export default function ServicesScreen() {
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label
                             htmlFor="syarat"
-                            className="focus-within:text-primary-70 font-normal text-sm">
+                            className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             Syarat Layanan
                           </Label>
                           <div className="w-full h-full border border-line-20 rounded-lg text-left">
@@ -634,7 +638,7 @@ export default function ServicesScreen() {
                         </div>
 
                         <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-black-800 font-normal text-xs md:text-smtext-left">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
                             Pilih Bidang
                           </Label>
                           <div className="w-full border border-line-20 rounded-lg">
@@ -655,7 +659,7 @@ export default function ServicesScreen() {
                                         return (
                                           <SelectItem
                                             key={i}
-                                            className={`w-full px-4`}
+                                            className={`w-full px-4 text-[14px] md:text-[16px]`}
                                             value={area.id.toString()}>
                                             {area.nama}
                                           </SelectItem>
@@ -669,7 +673,7 @@ export default function ServicesScreen() {
                         </div>
 
                         <div className="w-full flex flex-col gap-y-2">
-                          <Label className="text-sm text-black-70 font-normal">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             Deskripsi Bidang
                           </Label>
                           <div className="w-full h-full border border-line-20 rounded-lg text-left">
@@ -681,7 +685,7 @@ export default function ServicesScreen() {
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             Penanggung Jawab
                           </Label>
                           <Input
@@ -698,7 +702,7 @@ export default function ServicesScreen() {
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label
                             htmlFor="ketentuan"
-                            className="focus-within:text-primary-70 font-normal text-sm">
+                            className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             Ketentuan
                           </Label>
                           <div className="w-full h-full border border-line-20 rounded-lg text-left">
@@ -712,7 +716,7 @@ export default function ServicesScreen() {
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label
                             htmlFor="langkah"
-                            className="focus-within:text-primary-70 font-normal text-sm">
+                            className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             Langkah
                           </Label>
                           <div className="w-full h-full border border-line-20 rounded-lg text-left">
@@ -728,7 +732,7 @@ export default function ServicesScreen() {
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (

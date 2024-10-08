@@ -83,7 +83,7 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
         <div className="w-full">
           <AlertDialog>
             <AlertDialogTrigger className="w-full">
-              <div className="w-full text-sm flex items-center justify-center h-10 text-black-80 hover:underline hover:text-primary-40 rounded-lg">
+              <div className="w-full text-[14px] md:text-[16px] flex items-center justify-center h-10 text-black-80 hover:underline hover:text-primary-40 rounded-lg">
                 Lihat Foto Kegiatan
               </div>
             </AlertDialogTrigger>
@@ -92,6 +92,7 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
                 <AlertDialogTitle className="text-center">
                   Master Data
                 </AlertDialogTitle>
+
                 <AlertDialogDescription className="text-center">
                   Galeri
                 </AlertDialogDescription>
@@ -106,9 +107,10 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
                     />
                   </div>
                 )}
+
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel className="hover:bg-line-70 hover:text-line-10 text-xs md:text-sm flex justify-center items-center text-center">
+                <AlertDialogCancel className="hover:bg-line-70 hover:text-line-10 text-xs text-[14px] md:text-[16px] flex justify-center items-center text-center">
                   Cancel
                 </AlertDialogCancel>
               </AlertDialogFooter>
@@ -128,7 +130,7 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
                   setIsDialogEditOpen(true);
                 }}
                 className="w-full">
-                <div className="w-full text-sm bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                <div className="w-full text-[14px] md:text-[16px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                   Edit
                 </div>
               </AlertDialogTrigger>
@@ -138,18 +140,18 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
                     Master Data Foto Kegiatan
                   </AlertDialogTitle>
                   <AlertDialogDescription className="text-center">
-                    <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
+                    <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                   </AlertDialogDescription>
                   <form
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                       handleUpdateGallery(e, gallery?.slug)
                     }
                     className="w-full flex flex-col gap-y-3 verticalScroll">
+
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
+                      <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                         Judul Foto Kegiatan
                       </Label>
-
                       <Input
                         id="title"
                         name="title"
@@ -167,10 +169,9 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
                     </div>
 
                     <div className="flex flex-col w-full">
-                      <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                      <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                         Foto Kegiatan
                       </Label>
-
                       <div className="flex flex-col md:flex-row w-full">
                         <div
                           ref={dropRef}
@@ -195,7 +196,6 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
                             </label>
                           </>
                         </div>
-
                         {(previewImage || data?.image) && (
                           <div className="relative md:ml-4 w-full mt-1">
                             <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
@@ -222,7 +222,6 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
 
                     <div className="w-full flex flex-row justify-between items-center gap-x-5">
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
-
                       <Button
                         type="submit"
                         disabled={isUpdateLoading ? true : false}
@@ -234,6 +233,7 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
                         )}
                       </Button>
                     </div>
+
                   </form>
                 </AlertDialogHeader>
               </AlertDialogContent>
