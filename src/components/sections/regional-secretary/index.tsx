@@ -1,6 +1,9 @@
 "use client";
 
 import waiting from "@/../../public/assets/icons/admin-dashboard-time.png";
+import done from "@/../../public/assets/icons/admin-dashboard-approval.png";
+import revision from "@/../../public/assets/icons/admin-dashboard-revision.png";
+import failed from "@/../../public/assets/icons/admin-dashboard-reject.png";
 import dasboard from "@/../../public/assets/images/dashboard-dashboard.png";
 import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
@@ -48,32 +51,39 @@ import TypingEffect from "@/components/ui/TypingEffect";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import {
-  AdminProfileInterface,
+  JwtPayload,
   ServiceInterface,
+  SuperAdminDashboardInterface,
   UserApplicationHistoryInterface,
 } from "@/types/interface";
 import { formatDate } from "@/lib/utils";
 import {
   getApplicationUserHistories,
+  getDepartmentHeadDashboard,
+  getDepartmentSecretaryDashboard,
   getService,
-  getUserProfile,
 } from "@/services/api";
 import PaginationComponent from "@/components/elements/pagination";
 import DataNotFound from "@/components/elements/data_not_found";
 import VerificationUserApplicationHistoryTablePages from "@/components/tables/verification_admin_user_application_history_table";
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
+import { useRouter } from "next/navigation";
 
 export default function RegionalSecretaryDashboardPages() {
+  const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
+  const [role, setRole] = useState<string | null>(null);
   const [layananId, setLayananId] = useState<number | undefined>(undefined);
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
   const [startDate, setStartDate] = useState<Date | undefined>(firstDayOfMonth);
   const [endDate, setEndDate] = useState<Date | undefined>(new Date());
-  const [user, setUser] = useState<AdminProfileInterface>();
   const [users, setUsers] = useState<UserApplicationHistoryInterface[]>([]);
   const [services, setServices] = useState<ServiceInterface[]>([]);
+  const [data, setData] = useState<SuperAdminDashboardInterface>();
   const [pagination, setPagination] = useState({
     currentPage: 1,
     perPage: 10,
@@ -81,23 +91,28 @@ export default function RegionalSecretaryDashboardPages() {
     totalCount: 0,
   });
 
+  useEffect(() => {
+    const token = Cookies.get("Authorization");
+
+    if (token) {
+      try {
+        const decoded = jwtDecode<JwtPayload>(token);
+
+        if (decoded && decoded.role !== undefined) {
+          setRole(decoded.role);
+        }
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    } else {
+      router.push("/login");
+    }
+  }, [router]);
+
   const startDateFormatted = startDate
     ? formatDate(new Date(startDate))
     : undefined;
   const endDateFormatted = endDate ? formatDate(new Date(endDate)) : undefined;
-
-  const fetchUserProfile = async () => {
-    try {
-      const response = await getUserProfile();
-      setUser(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchUserProfile();
-  }, []);
 
   const fetchApplicationHistoryUser = async (
     page: number,
@@ -132,7 +147,7 @@ export default function RegionalSecretaryDashboardPages() {
   };
 
   useEffect(() => {
-    if (user && user?.role_name === "Sekretaris Daerah") {
+    if (role && role === "Sekretaris Daerah") {
       fetchApplicationHistoryUser(
         1,
         10,
@@ -142,7 +157,7 @@ export default function RegionalSecretaryDashboardPages() {
         endDateFormatted,
         layananId
       );
-    } else if (user && user?.role_name === "Kepala Dinas") {
+    } else if (role && role === "Kepala Dinas") {
       fetchApplicationHistoryUser(
         1,
         10,
@@ -152,7 +167,7 @@ export default function RegionalSecretaryDashboardPages() {
         endDateFormatted,
         layananId
       );
-    } else if (user && user?.role_name === "Sekretaris Dinas") {
+    } else if (role && role === "Sekretaris Dinas") {
       fetchApplicationHistoryUser(
         1,
         10,
@@ -163,15 +178,36 @@ export default function RegionalSecretaryDashboardPages() {
         layananId
       );
     }
-  }, [debounceSearch, startDateFormatted, endDateFormatted, layananId, user]);
+  }, [debounceSearch, startDateFormatted, endDateFormatted, layananId, role]);
+
+  const fetchDashboardData = async () => {
+    try {
+      let response: any;
+      if (role && role === "Sekretaris Dinas") {
+        response = await getDepartmentSecretaryDashboard();
+      } else if (role && role === "Kepala Dinas") {
+        response = await getDepartmentHeadDashboard();
+      }
+
+      setData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (role) {
+      fetchDashboardData();
+    }
+  }, [role]);
+
+  console.log(data, "ini data");
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
       fetchApplicationHistoryUser(newPage, 10, 1, "", "", "", layananId);
     }
   };
-
-  console.log(users, "users");
 
   const fetchService = async (page: number, limit: number, search?: string) => {
     try {
@@ -187,98 +223,98 @@ export default function RegionalSecretaryDashboardPages() {
     fetchService(1, 100, "");
   }, []);
 
-  const chartDataBar = [
-    {
-      service: "Layanan Mutasi PNS",
-      device: 300,
-      perangkat: 80,
-      fill: "#1947BC",
-    },
-    {
-      service: "Layanan Kenaikan",
-      device: 305,
-      perangkat: 80,
-      fill: "#BC6D19",
-    },
-    { service: "Layanan Pensiun", device: 237, perangkat: 80, fill: "#D51C7F" },
-    { service: "Layanan Cuti PNS", device: 73, perangkat: 80, fill: "#4D56B7" },
-  ];
+  const chartDataBar = data?.countbyBidang?.map((item) => {
+    return {
+      nama: item?.name,
+      bidang: item?.permohonan_count,
+      fill: `${item?.id == 1 ? "#1947BC" : item?.id == 2 ? "#BC6D19" : item?.id == 3 ? "#D51C7F" : "#4D56B7"}`,
+    };
+  });
+
+  // const chartDataBar = [
+  //   {
+  //     service: "Layanan Mutasi PNS",
+  //     device: 300,
+  //     perangkat: 80,
+  //     fill: "#1947BC",
+  //   },
+  //   {
+  //     service: "Layanan Kenaikan",
+  //     device: 305,
+  //     perangkat: 80,
+  //     fill: "#BC6D19",
+  //   },
+  //   { service: "Layanan Pensiun", device: 237, perangkat: 80, fill: "#D51C7F" },
+  //   { service: "Layanan Cuti PNS", device: 73, perangkat: 80, fill: "#4D56B7" },
+  // ];
 
   const chartConfigBar = {
-    device: {
-      label: "Device",
+    bidang: {
+      label: "Bidang",
     },
-    perangkat: {
-      label: "Perangkat",
-    },
-    // laptop: {
-    //   label: "Laptop",
-    //   color: "#1947BC",
-    // },
-    // mobile: {
-    //   label: "Mobile",
-    //   color: "#BC6D19",
-    // },
-    // tab: {
-    //   label: "Tab",
-    //   color: "#D51C7F",
-    // },
-    // iphone: {
-    //   label: "Iphone",
-    //   color: "#4D56B7",
-    // },
   } satisfies ChartConfig;
 
-  const chartDataLegend = useMemo(
-    () => [
-      {
-        bidang: "Bidang Mutasi",
-        selesai: 275,
-        ditolak: 255,
-        direvisi: 235,
-        fill: "#1947BC",
-      },
-      {
-        bidang: "Bidang Kenaikan",
-        selesai: 265,
-        ditolak: 245,
-        direvisi: 225,
-        fill: "#D51C7F",
-      },
-      {
-        bidang: "Bidang Pensiun",
-        selesai: 185,
-        ditolak: 165,
-        direvisi: 145,
-        fill: "#BC6D19",
-      },
-      {
-        bidang: "Bidang Cuti",
-        selesai: 175,
-        ditolak: 155,
-        direvisi: 135,
-        fill: "#4D56B7",
-      },
-    ],
-    []
-  );
+  const chartDataLegend = data?.monthlyCounts?.map((item) => {
+    console.log(item?.permohonanCount, "ini permohonancount");
+
+    return {
+      bulan: item?.month,
+      permohonan: item?.permohonanCount,
+      fill: "#1947BC",
+    };
+  });
+
+  // const chartDataLegend = useMemo(
+  //   () => [
+  //     {
+  //       bidang: "Bidang Mutasi",
+  //       selesai: 275,
+  //       ditolak: 255,
+  //       direvisi: 235,
+  //       fill: "#1947BC",
+  //     },
+  //     {
+  //       bidang: "Bidang Kenaikan",
+  //       selesai: 265,
+  //       ditolak: 245,
+  //       direvisi: 225,
+  //       fill: "#D51C7F",
+  //     },
+  //     {
+  //       bidang: "Bidang Pensiun",
+  //       selesai: 185,
+  //       ditolak: 165,
+  //       direvisi: 145,
+  //       fill: "#BC6D19",
+  //     },
+  //     {
+  //       bidang: "Bidang Cuti",
+  //       selesai: 175,
+  //       ditolak: 155,
+  //       direvisi: 135,
+  //       fill: "#4D56B7",
+  //     },
+  //   ],
+  //   []
+  // );
 
   const chartConfigLegend = {
-    // visitors: {
-    //   label: "Visitors",
-    // },
-    selesai: {
-      label: "Selesai",
+    permohonan: {
+      label: "Permohonan",
       color: "#1947BC",
     },
-    ditolak: {
-      label: "Ditolak",
-      color: "#D51C7F",
-    },
-    direvisi: {
-      label: "Direvisi",
-      color: "#BC6D19",
-    },
+    // selesai: {
+    //   label: "Selesai",
+    //   color: "#1947BC",
+    // },
+    // ditolak: {
+    //   label: "Ditolak",
+    //   color: "#D51C7F",
+    // },
+    // direvisi: {
+    //   label: "Direvisi",
+    //   color: "#BC6D19",
+    // },
     // edge: {
     //   label: "Edge",
     //   color: "#D51C7F",
@@ -307,7 +343,7 @@ export default function RegionalSecretaryDashboardPages() {
         </div>
 
         <div className="w-full flex flex-row items-center self-center">
-          {user && user.role_name && user.role_name === "Sekretaris Daerah" ? (
+          {role && role === "Sekretaris Daerah" ? (
             <div className="w-full text-black-80 font-semibold text-lg md:text-3xl text-center  md:text-left">
               <TypingEffect
                 className="text-3xl"
@@ -316,7 +352,7 @@ export default function RegionalSecretaryDashboardPages() {
                 text={["Sekretaris Daerah"]}
               />
             </div>
-          ) : user && user.role_name && user.role_name === "Kepala Dinas" ? (
+          ) : role && role === "Kepala Dinas" ? (
             <div className="w-full text-black-80 font-semibold text-lg md:text-3xl text-center  md:text-left">
               <TypingEffect
                 className="text-3xl"
@@ -325,9 +361,7 @@ export default function RegionalSecretaryDashboardPages() {
                 text={["Kepala Dinas"]}
               />
             </div>
-          ) : user &&
-            user?.role_name &&
-            user.role_name === "Sekretaris Dinas" ? (
+          ) : role && role === "Sekretaris Dinas" ? (
             <div className="w-full text-black-80 font-semibold text-lg md:text-3xl text-center  md:text-left">
               <TypingEffect
                 className="text-3xl"
@@ -384,7 +418,7 @@ export default function RegionalSecretaryDashboardPages() {
                   }}>
                   {/* <CartesianGrid horizontal={false} /> */}
                   <YAxis
-                    dataKey="service"
+                    dataKey="nama"
                     type="category"
                     tickLine={false}
                     tickMargin={10}
@@ -393,7 +427,7 @@ export default function RegionalSecretaryDashboardPages() {
                   />
 
                   <XAxis
-                    dataKey="device"
+                    dataKey="bidang"
                     type="number"
                     hide={true}
                     tickLine={false}
@@ -415,24 +449,22 @@ export default function RegionalSecretaryDashboardPages() {
                     content={<ChartTooltipContent indicator="line" />}
                   />
                   <Bar
-                    dataKey="device"
+                    dataKey="bidang"
                     layout="vertical"
                     fill="#1947BC"
                     radius={4}>
                     <LabelList
-                      dataKey="service"
+                      dataKey="nama"
                       position="insideLeft"
                       offset={8}
                       className="#1947BC"
-                      // className="#ffffff"
                       fill="#ffffff"
                       fontSize={12}
                     />
                     <LabelList
-                      dataKey="device"
+                      dataKey="bidang"
                       position="right"
                       offset={8}
-                      className="#1947BC"
                       fontSize={12}
                     />
                   </Bar>
@@ -497,11 +529,15 @@ export default function RegionalSecretaryDashboardPages() {
                     cursor={false}
                     content={<ChartTooltipContent indicator="line" />}
                   />
-                  <PolarAngleAxis dataKey="bidang" />
+                  <PolarAngleAxis dataKey="bulan" fill="#BC6D19" />
                   <PolarGrid />
-                  <Radar dataKey="selesai" fill="#1947BC" fillOpacity={0.6} />
-                  <Radar dataKey="ditolak" fill="#BC6D19" />
-                  <Radar dataKey="direvisi" fill="#4D56B7" />
+                  <Radar
+                    dataKey="permohonan"
+                    fill="#1947BC"
+                    // fillOpacity={0.6}
+                  />
+                  {/* {/* <Radar dataKey="ditolak" fill="#BC6D19" /> */}
+                  {/* <Radar dataKey="direvisi" fill="#4D56B7" /> */}
                   <ChartLegend
                     className="mt-8"
                     content={<ChartLegendContent />}
@@ -533,11 +569,59 @@ export default function RegionalSecretaryDashboardPages() {
               className="w-1/2 h-1/2 md:w-full md:h-full flex justify-center m-auto"
             />
           </div>
+          <p className="text-black-80 md:text-sm text-xs">Sedang Divalidasi</p>
+          <p className="text-primary-40 font-semibold text-xl md:text-4xl">
+            {data && data?.totalMenungguVerifikasi}
+          </p>
+        </div>
+
+        <div className="flex flex-col items-center bg-line-10 shadow-md rounded-lg p-6 md:p-4 gap-y-4 m-auto justify-center">
+          <div className="w-full md:w-3/12 h-full transition-all animate-pulse">
+            <Image
+              src={done}
+              alt="Berhasil"
+              width={1000}
+              height={1000}
+              className="w-1/2 h-1/2 md:w-full md:h-full flex justify-center m-auto"
+            />
+          </div>
+          <p className="text-black-80 md:text-sm text-xs">Permohonan Selesai</p>
+          <p className="text-primary-40 font-semibold text-xl md:text-4xl">
+            {data && data?.totalDisetujui}
+          </p>
+        </div>
+
+        <div className="flex flex-col items-center bg-line-10 shadow-md rounded-lg p-6 md:p-4 gap-y-4 m-auto justify-center">
+          <div className="w-full md:w-3/12 h-full transition-all animate-pulse">
+            <Image
+              src={failed}
+              alt="Gagal"
+              width={1000}
+              height={1000}
+              className="w-1/2 h-1/2 md:w-full md:h-full flex justify-center m-auto"
+            />
+          </div>
+          <p className="text-black-80 md:text-sm text-xs">Permohonan Ditolak</p>
+          <p className="text-primary-40 font-semibold text-xl md:text-4xl">
+            {data && data?.totalDitolak}
+          </p>
+        </div>
+
+        <div className="flex flex-col items-center bg-line-10 shadow-md rounded-lg p-6 md:p-4 gap-y-4 m-auto justify-center">
+          <div className="w-full md:w-3/12 h-full transition-all animate-pulse">
+            <Image
+              src={revision}
+              alt="Revisi"
+              width={1000}
+              height={1000}
+              className="w-1/2 h-1/2 md:w-full md:h-full flex justify-center m-auto"
+            />
+          </div>
           <p className="text-black-80 md:text-sm text-xs">
-            Menunggu verifikasi
+            Permohonan Direvisi
           </p>
           <p className="text-primary-40 font-semibold text-xl md:text-4xl">
-            65
+            {data && data?.totalDirevisi}
           </p>
         </div>
       </div>

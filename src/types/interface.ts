@@ -5,6 +5,10 @@ export interface debounceInterface {
   delay: number;
 }
 
+export interface JwtPayload {
+  role?: string;
+}
+
 export interface PaginationInterface {
   page: number;
   perPage: number;
@@ -84,6 +88,13 @@ export interface PaginationInterface {
 //   change: (e: React.ChangeEvent<HTMLInputElement>) => void;
 //   props: any;
 // }
+
+export interface RolesInterface {
+  id: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export interface AreasInterface {
   id: number;
@@ -457,4 +468,9 @@ export interface SuperAdminDashboardInterface {
   permohonanCount: number;
   monthlyCounts: SuperAdminDashboardMonthInterface[];
   countbyBidang: SuperAdminDashboardAreasInterface[];
+  layananByBidang: [];
+  totalMenungguVerifikasi: number;
+  totalDisetujui: number;
+  totalDitolak: number;
+  totalDirevisi: number;
 }

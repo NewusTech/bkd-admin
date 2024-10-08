@@ -60,6 +60,39 @@ export const getAllVillage = async (kecamatan_id: number, limit: number) => {
   return await response.json();
 };
 
+//get all roles
+export const getAllRoles = async () => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/role/get`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// post register user
+export const postRegisterCreate = async (data: any) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+
+  return await response.json();
+};
+
 // post login user
 export const postLoginUser = async (data: LoginUserInterface) => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
@@ -487,9 +520,9 @@ export const getLogo = async () => {
 export const updateLogo = async (id: number, data: any) => {
   const token = Cookies.get("Authorization");
 
-  const formData = new FormData()
+  const formData = new FormData();
 
-  formData.append("logo", data.logo)
+  formData.append("logo", data.logo);
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/user/bkd/profile/update/${id}`,
@@ -1125,6 +1158,63 @@ export const getSuperAdminDashboard = async () => {
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/user/dashboard/superadmin`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// get dashboard department scretary
+export const getDepartmentSecretaryDashboard = async () => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/dashboard/sekretaris/dinas`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// get dashboard department head
+export const getDepartmentHeadDashboard = async () => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/dashboard/kepala/dinas`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// get dashboard regional secreatry
+export const getRegionalSecretaryDashboard = async () => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/dashboard/sekretaris/daerah`,
     {
       method: "GET",
       headers: {
