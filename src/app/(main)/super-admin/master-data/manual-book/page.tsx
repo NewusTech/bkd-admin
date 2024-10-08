@@ -41,7 +41,10 @@ export default function ManualBookScreen() {
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
   const [books, setBooks] = useState([]);
+  const [fileImage, setFileImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState("");
   const [data, setData] = useState({
+    title: "",
     dokumen: "",
   });
 
@@ -59,6 +62,48 @@ export default function ManualBookScreen() {
     fetchManualBooks();
   }, []);
 
+  const handleImageChange = (e: any) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFileImage(file);
+      setData({
+        ...data,
+        dokumen: file.name,
+      });
+      const fileUrl = URL.createObjectURL(file);
+      setPreviewImage(fileUrl);
+    }
+  };
+
+  const handleDragOver = (e: any) => {
+    e.preventDefault();
+  };
+
+  const handleDragLeave = (e: any) => {
+    e.preventDefault();
+  };
+
+  const handleDropImage = (e: any) => {
+    e.preventDefault();
+
+    const file = e.dataTransfer.files?.[0];
+    if (file) {
+      setFileImage(file);
+      setData({
+        ...data,
+        dokumen: file.name,
+      });
+      const fileUrl = URL.createObjectURL(file);
+      setPreviewImage(fileUrl);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setFileImage(null);
+    setPreviewImage("");
+    setData({ ...data, dokumen: "" });
+  };
+
   const handleUpdateManualBook = async (
     e: React.FormEvent<HTMLFormElement>,
     id: number
@@ -75,6 +120,7 @@ export default function ManualBookScreen() {
 
       if (response.status === 200) {
         setData({
+          title: "",
           dokumen: "",
         });
         Swal.fire({
@@ -115,7 +161,14 @@ export default function ManualBookScreen() {
               isUpdateLoading={isUpdateLoading}
               isDialogEditOpen={isDialogEditOpen}
               setIsDialogEditOpen={setIsDialogEditOpen}
-              handleUpdateBooks={() => {}}
+              // handleUpdateBooks={() => { }}
+              handleUpdateManualBook={handleUpdateManualBook}
+              previewImage={previewImage}
+              handleDragOver={handleDragOver}
+              handleDragLeave={handleDragLeave}
+              handleDropImage={handleDropImage}
+              handleImageChange={handleImageChange}
+              handleRemoveImage={handleRemoveImage}
             />
           )}
         </div>

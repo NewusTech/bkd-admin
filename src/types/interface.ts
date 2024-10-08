@@ -228,6 +228,15 @@ export interface AboutVisionMisionInterface {
   image_bkd: string;
 }
 
+export interface ManualBooksInterfaceInterface {
+  id: number;
+  title: string;
+  dokumen: string;
+  role_id: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface AboutUsVisionMisionUpdateInterface {
   about_bkd: string;
   visi: string;
@@ -249,6 +258,13 @@ export interface StructureOrganizationInterface {
   bidang_id: number;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface FaqsInterface {
+  id: number;
+  question: string;
+  answer: string;
+  createdAt: string;
 }
 
 export interface FaqsInterface {
@@ -495,25 +511,17 @@ export interface SuperAdminDashboardAreasInterface {
   permohonan_count: number;
 }
 
-export interface SuperAdminDashboardServicesInterface {
-  bidang_id: number;
-  bidang_name: string;
-  id: number;
-  layanan_createdAt: string;
-  layanan_name: string;
-  permohonanCount: number;
-}
-
 export interface SuperAdminDashboardInterface {
   permohonanCount: number;
   monthlyCounts: SuperAdminDashboardMonthInterface[];
   countbyBidang: SuperAdminDashboardAreasInterface[];
-  layananByBidang: SuperAdminDashboardServicesInterface[];
-  countbyLayanan: SuperAdminDashboardServicesInterface[];
+  layananByBidang: [];
   totalMenungguVerifikasi: number;
+  totalMenunggu: number;
   totalDisetujui: number;
   totalDitolak: number;
   totalDirevisi: number;
+  totalKeseluruhanPermohonan: number;
 }
 
 export interface GradeInterface {
