@@ -52,12 +52,14 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileStructureOrganizationMainMasterDataCard from "@/components/mobile_all_cards/mobileStructurOrganizationMainMasterDataCard";
 import AddIcon from "@/components/elements/add_button";
 import TypingEffect from "@/components/ui/TypingEffect";
+import { useDebounce } from "@/hooks/useDebounce";
 
 export default function StructureOrganizationMainScreen() {
   const router = useRouter();
   const dropRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search, 500);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -72,9 +74,13 @@ export default function StructureOrganizationMainScreen() {
     bkdstruktur_id: "",
   });
 
-  const fetchStructureOrganizationMain = async () => {
+  const fetchStructureOrganizationMain = async (
+    page: number,
+    limit: number,
+    search: string
+  ) => {
     try {
-      const response = await getStructureOrganizationsMain();
+      const response = await getStructureOrganizationsMain(page, limit, search);
 
       setMainOrganizations(response.data);
     } catch (error) {
@@ -83,12 +89,16 @@ export default function StructureOrganizationMainScreen() {
   };
 
   useEffect(() => {
-    fetchStructureOrganizationMain();
-  }, []);
+    fetchStructureOrganizationMain(1, 5, debounceSearch);
+  }, [debounceSearch]);
 
-  const fetchStructureOrganization = async (limit: number) => {
+  const fetchStructureOrganization = async (
+    page: number,
+    limit: number,
+    search: string
+  ) => {
     try {
-      const response = await getStructureOrganizations(limit);
+      const response = await getStructureOrganizations(page, limit, search);
 
       setOrganizations(response.data);
     } catch (error) {
@@ -97,7 +107,7 @@ export default function StructureOrganizationMainScreen() {
   };
 
   useEffect(() => {
-    fetchStructureOrganization(limitItem);
+    fetchStructureOrganization(1, 50, "");
   }, []);
 
   const handleSelectChange = (value: string) => {
@@ -113,15 +123,11 @@ export default function StructureOrganizationMainScreen() {
     e.preventDefault();
     setIsLoading(true);
 
-    // console.log(data, "ini data");
-
     try {
       const response = await postStructureOrganizationsMain({
         ...data,
         bkdstruktur_id: Number(data.bkdstruktur_id),
       });
-
-      // console.log(response, "ini res");
 
       if (response.status === 201) {
         setData({
@@ -134,7 +140,7 @@ export default function StructureOrganizationMainScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchStructureOrganizationMain();
+        fetchStructureOrganizationMain(1, 5, "");
         setIsDialogOpen(false);
         router.push("/super-admin/master-data/structure-organization-main");
       } else {
@@ -264,11 +270,18 @@ export default function StructureOrganizationMainScreen() {
                 <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
                   <AlertDialogHeader className="flex flex-col">
                     <AlertDialogTitle className="text-center">
-                      Master Data Struktur Organisasi Inti
+                      <AlertDialogDescription className="text-center">
+                        Master Data Struktur Organisasi Inti
+                      </AlertDialogDescription>
                     </AlertDialogTitle>
-                    <AlertDialogDescription className="text-center">
-                      <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
-                    </AlertDialogDescription>
+
+                    <TypingEffect
+                      className="custom-class md:text-sm text-xs"
+                      speed={125}
+                      deleteSpeed={50}
+                      text={["Input data yang diperlukan"]}
+                    />
+
                     <form
                       onSubmit={handleCreateStructureOrganization}
                       className="w-full flex flex-col gap-y-3 max-h-[500px]">
@@ -422,29 +435,29 @@ export default function StructureOrganizationMainScreen() {
         <div className="w-full">
           {!isMobile ? (
             <>
-              {organizations && organizations.length > 0 && (
+              {mainOrganizations && mainOrganizations.length > 0 && (
                 <SuperStructureOrganizationMainMasterDataTablePages
-                  organizations={organizations}
+                  organizations={mainOrganizations}
                   // handleDeleteStructureOrganization={
                   //   handleDeleteStructureOrganization
                   // }
                   // isDeleteLoading={isDeleteLoading}
                   data={data}
                   setData={setData}
-                // isUpdateLoading={isUpdateLoading}
-                // isDialogEditOpen={isDialogEditOpen}
-                // setIsDialogEditOpen={setIsDialogEditOpen}
-                // handleUpdateStructureOrganization={
-                //   handleUpdateStructureOrganization
-                // }
+                  // isUpdateLoading={isUpdateLoading}
+                  // isDialogEditOpen={isDialogEditOpen}
+                  // setIsDialogEditOpen={setIsDialogEditOpen}
+                  // handleUpdateStructureOrganization={
+                  //   handleUpdateStructureOrganization
+                  // }
                 />
               )}
             </>
           ) : (
             <>
-              {organizations &&
-                organizations.length > 0 &&
-                organizations?.map(
+              {mainOrganizations &&
+                mainOrganizations.length > 0 &&
+                mainOrganizations?.map(
                   (organization: StructureOrganizationInterface, i: number) => {
                     return (
                       <MobileStructureOrganizationMainMasterDataCard

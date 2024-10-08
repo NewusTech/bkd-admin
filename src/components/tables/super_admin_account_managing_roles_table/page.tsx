@@ -8,11 +8,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import SuperAreasMasterDataCard from "@/components/all_cards/superAreasMasterDataCard";
-import { AreasInterface, RolesInterface } from "@/types/interface";
+import {
+  AccountManagingRolesInterface,
+  AreasInterface,
+  RolesInterface,
+} from "@/types/interface";
 import MobileSuperAreasMasterDataCard from "@/components/all_cards/mobile/superAreasMasterDataCard";
 import SuperAccountManagingRolesCard from "@/components/all_cards/superAccountManagingRolesCard";
 
 export default function SuperAccountManagingRolesTablePages({
+  accounts,
   areas,
   roles,
   // handleDeleteArea,
@@ -28,6 +33,7 @@ export default function SuperAccountManagingRolesTablePages({
   seen,
   setSeen,
 }: {
+  accounts: AccountManagingRolesInterface[];
   areas: AreasInterface[];
   roles: RolesInterface[];
   // handleDeleteArea: (slug: string) => void;
@@ -93,33 +99,35 @@ export default function SuperAccountManagingRolesTablePages({
               <TableHead className="text-center">No.</TableHead>
               <TableHead className="text-center">Nama</TableHead>
               <TableHead className="text-center">NIP</TableHead>
-              <TableHead className="text-center">Email</TableHead>
               <TableHead className="text-center">Bidang</TableHead>
               <TableHead className="text-center">Role</TableHead>
               <TableHead className="text-center w-5/12">Aksi</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {/* {areas &&
-              areas.length > 0 &&
-              areas.map((area: AreasInterface, i: number) => ( */}
-            <SuperAccountManagingRolesCard
-              // key={i}
-              areas={areas}
-              roles={roles}
-              // index={i}
-              // handleDeleteArea={handleDeleteArea}
-              isDeleteLoading={isDeleteLoading}
-              data={data}
-              setData={setData}
-              isUpdateLoading={isUpdateLoading}
-              // handleUpdateArea={handleUpdateArea}
-              isDialogEditOpen={isDialogEditOpen}
-              setIsDialogEditOpen={setIsDialogEditOpen}
-              seen={seen}
-              setSeen={setSeen}
-            />
-            {/* ))} */}
+            {accounts &&
+              accounts.length > 0 &&
+              accounts.map(
+                (account: AccountManagingRolesInterface, i: number) => (
+                  <SuperAccountManagingRolesCard
+                    key={i}
+                    account={account}
+                    areas={areas}
+                    roles={roles}
+                    index={i}
+                    // handleDeleteArea={handleDeleteArea}
+                    isDeleteLoading={isDeleteLoading}
+                    data={data}
+                    setData={setData}
+                    isUpdateLoading={isUpdateLoading}
+                    // handleUpdateArea={handleUpdateArea}
+                    isDialogEditOpen={isDialogEditOpen}
+                    setIsDialogEditOpen={setIsDialogEditOpen}
+                    seen={seen}
+                    setSeen={setSeen}
+                  />
+                )
+              )}
           </TableBody>
         </Table>
       </div>

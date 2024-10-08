@@ -8,13 +8,18 @@ import SuperAreasMasterDataTablePages from "@/components/tables/master_datas/are
 import { Button } from "@/components/ui/button";
 import {
   deleteAreas,
+  getAccountManagingRoles,
   getAllRoles,
   getAreas,
   postAreas,
   postRegisterCreate,
   updateAreas,
 } from "@/services/api";
-import { AreasInterface, RolesInterface } from "@/types/interface";
+import {
+  AccountManagingRolesInterface,
+  AreasInterface,
+  RolesInterface,
+} from "@/types/interface";
 import React, { useEffect, useState } from "react";
 import {
   AlertDialog,
@@ -73,6 +78,7 @@ export default function SuperAccountManagingRolesScreen() {
   const limitItem = 30;
   const [roles, setRoles] = useState<RolesInterface[]>([]);
   const [areas, setAreas] = useState<AreasInterface[]>([]);
+  const [accounts, setAccounts] = useState<AccountManagingRolesInterface[]>([]);
   const [data, setData] = useState({
     bidang_id: "",
     role_id: "",
@@ -87,6 +93,32 @@ export default function SuperAccountManagingRolesScreen() {
     totalPages: 1,
     totalCount: 0,
   });
+
+  const fetchAccountManagingRoles = async (page: number, limit: number) => {
+    try {
+      const response = await getAccountManagingRoles(page, limit);
+
+      setAccounts(response.data);
+      setPagination((prev) => ({
+        ...prev,
+        currentPage: page,
+        totalPages: response.pagination.totalPages,
+        totalCount: response.pagination.totalCount,
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAccountManagingRoles(1, 5);
+  }, []);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage !== pagination.currentPage) {
+      fetchAccountManagingRoles(newPage, 5);
+    }
+  };
 
   const fetchRoles = async () => {
     try {
@@ -103,12 +135,6 @@ export default function SuperAccountManagingRolesScreen() {
       const response = await getAreas(page, limit, search);
 
       setAreas(response.data);
-      setPagination((prev) => ({
-        ...prev,
-        currentPage: page,
-        totalPages: response.pagination.totalPages,
-        totalCount: response.pagination.totalCount,
-      }));
     } catch (error) {
       console.log(error);
     }
@@ -118,12 +144,6 @@ export default function SuperAccountManagingRolesScreen() {
     fetchAreas(1, 10, search);
     fetchRoles();
   }, [search]);
-
-  const handlePageChange = (newPage: number) => {
-    if (newPage !== pagination.currentPage) {
-      fetchAreas(newPage, 10, "");
-    }
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({
@@ -617,6 +637,7 @@ export default function SuperAccountManagingRolesScreen() {
         <div className="w-full">
           {/* {areas && areas.length > 0 ? ( */}
           <SuperAccountManagingRolesTablePages
+            accounts={accounts}
             areas={areas}
             roles={roles}
             // handleDeleteArea={handleDeleteAreas}
@@ -639,13 +660,13 @@ export default function SuperAccountManagingRolesScreen() {
           )} */}
         </div>
 
-        {/* <div className="w-full">
+        <div className="w-full">
           <PaginationComponent
             currentPage={pagination.currentPage}
             totalPages={pagination.totalPages}
             onPageChange={handlePageChange}
           />
-        </div> */}
+        </div>
       </div>
     </section>
   );

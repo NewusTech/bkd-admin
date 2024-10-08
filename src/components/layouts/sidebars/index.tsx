@@ -81,8 +81,6 @@ export default function DashBoardSidebarPages() {
     fetchUserProfile();
   }, []);
 
-  console.log(user, "ini user");
-
   return (
     <section className="flex flex-col w-10/12 md:w-[23%] h-full justify-center items-center fixed">
       <div className="w-full h-screen flex flex-col">
@@ -1161,7 +1159,7 @@ export default function DashBoardSidebarPages() {
                 <div
                   className={`${pathName === "/department-head/lead-bkd-staff" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
                   <Link
-                    href={"/department-secretary/department-reportings"}
+                    href={"/department-head/lead-bkd-staff"}
                     className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
                     Staff BKD
                   </Link>
