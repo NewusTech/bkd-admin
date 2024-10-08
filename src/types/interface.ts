@@ -203,6 +203,15 @@ export interface AboutVisionMisionInterface {
   image_bkd: string;
 }
 
+export interface ManualBooksInterfaceInterface {
+  id: number;
+  title: string;
+  dokumen: string;
+  role_id: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface AboutUsVisionMisionUpdateInterface {
   about_bkd: string;
   visi: string;
@@ -218,6 +227,13 @@ export interface StructureOrganizationInterface {
   slug: string;
   jabatan: string;
   image: string;
+}
+
+export interface FaqsInterface {
+  id: number;
+  question: string;
+  answer: string;
+  createdAt: string;
 }
 
 export interface FaqsInterface {

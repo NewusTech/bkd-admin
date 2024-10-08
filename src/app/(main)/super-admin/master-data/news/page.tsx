@@ -397,7 +397,7 @@ export default function NewsScreen() {
                                   type="file"
                                   id="file-input-image"
                                   name="image"
-                                  accept="image/*"
+                                  accept="image/*,.pdf"
                                   onChange={handleImageChange}
                                   className="hidden"
                                 />
