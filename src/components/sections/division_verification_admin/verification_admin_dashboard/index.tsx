@@ -230,6 +230,8 @@ export default function DivisionVerificationAdminDashboardPages() {
     fetchService(1, 100, "");
   }, []);
 
+  console.log(data, "ini data");
+
   const chartDataBar = data?.allLayananMonth?.map((item) => {
     return {
       nama: item?.LayananName,
@@ -237,7 +239,6 @@ export default function DivisionVerificationAdminDashboardPages() {
       fill: `${item?.LayananId == 1 ? "#1947BC" : item?.LayananId == 2 ? "#BC6D19" : item?.LayananId == 3 ? "#D51C7F" : "#4D56B7"}`,
     };
   });
-
 
   // const chartDataBar = [
   //   {
@@ -258,7 +259,7 @@ export default function DivisionVerificationAdminDashboardPages() {
 
   const chartConfigBar = {
     layanan: {
-      label: "Layanan"
+      label: "Layanan",
     },
     // device: {
     //   label: "Device",
@@ -725,15 +726,21 @@ export default function DivisionVerificationAdminDashboardPages() {
                 <div className="flex">
                   <div className="border-[##E4E4E7] border-t-4 border-r-4 p-4">
                     <div className="div">Menunggu</div>
-                    <div className="text-center text-[#3572EF]">{data?.totalMenunggu}</div>
+                    <div className="text-center text-[#3572EF]">
+                      {data?.totalMenunggu}
+                    </div>
                   </div>
                   <div className="border-[##E4E4E7] border-t-4 border-r-4 p-4">
                     <div className="div">Gagal</div>
-                    <div className="text-center text-[#DF1212]">{data?.totalDitolak}</div>
+                    <div className="text-center text-[#DF1212]">
+                      {data?.totalDitolak}
+                    </div>
                   </div>
                   <div className="border-[##E4E4E7] border-t-4 p-4">
                     <div className="div">Selesai</div>
-                    <div className="text-center text-[#188B09]">{data?.totalDisetujui}</div>
+                    <div className="text-center text-[#188B09]">
+                      {data?.totalDisetujui}
+                    </div>
                   </div>
                 </div>
               </CardFooter>
@@ -836,21 +843,26 @@ export default function DivisionVerificationAdminDashboardPages() {
                 <div className="flex">
                   <div className="border-[##E4E4E7] border-t-4 border-r-4 p-4">
                     <div className="div">Menunggu</div>
-                    <div className="text-center text-[#3572EF]">{data?.totalMenunggu}</div>
+                    <div className="text-center text-[#3572EF]">
+                      {data?.totalMenunggu}
+                    </div>
                   </div>
                   <div className="border-[##E4E4E7] border-t-4 border-r-4 p-4">
                     <div className="div">Gagal</div>
-                    <div className="text-center text-[#DF1212]">{data?.totalDitolak}</div>
+                    <div className="text-center text-[#DF1212]">
+                      {data?.totalDitolak}
+                    </div>
                   </div>
                   <div className="border-[##E4E4E7] border-t-4 p-4">
                     <div className="div">Selesai</div>
-                    <div className="text-center text-[#188B09]">{data?.totalDisetujui}</div>
+                    <div className="text-center text-[#188B09]">
+                      {data?.totalDisetujui}
+                    </div>
                   </div>
                 </div>
               </CardFooter>
             </Card>
           )}
-
         </div>
       </div>
 
@@ -926,7 +938,6 @@ export default function DivisionVerificationAdminDashboardPages() {
         <div
           className={`w-full flex flex-col ${!isMobile ? "bg-white shadow-md rounded-lg p-5" : ""} gap-y-3`}>
           <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
-
             {user && user?.role_name && user.role_name === "Kepala Bidang" ? (
               <Select
                 onValueChange={(value) =>

@@ -511,11 +511,35 @@ export interface SuperAdminDashboardAreasInterface {
   permohonan_count: number;
 }
 
+export interface VericationAdminInterface {
+  LayananId: number;
+  LayananName: string;
+  LayananformnumCount: number;
+}
+
+export interface SuperAdminDashboardServiceInterface {
+  id: number;
+  bidang_id: number;
+  bidang_name: string;
+  layanan_createdAt: string;
+  layanan_name: string;
+  permohonanCount: number;
+}
+
+export interface VerificationAdminAreasDataInterface {
+  id: number;
+  desc: string;
+  nama: string;
+}
+
 export interface SuperAdminDashboardInterface {
   permohonanCount: number;
   monthlyCounts: SuperAdminDashboardMonthInterface[];
   countbyBidang: SuperAdminDashboardAreasInterface[];
   layananByBidang: [];
+  countbyLayanan: SuperAdminDashboardServiceInterface[];
+  allLayananMonth: VericationAdminInterface[];
+  databidang: VerificationAdminAreasDataInterface[];
   totalMenungguVerifikasi: number;
   totalMenunggu: number;
   totalDisetujui: number;
