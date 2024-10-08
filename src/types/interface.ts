@@ -464,13 +464,22 @@ export interface SuperAdminDashboardAreasInterface {
   permohonan_count: number;
 }
 
+export interface SuperAdminDashboardServicesInterface {
+  LayananId: number;
+  LayananName: string;
+  LayananformnumCount: number;
+}
+
 export interface SuperAdminDashboardInterface {
   permohonanCount: number;
   monthlyCounts: SuperAdminDashboardMonthInterface[];
   countbyBidang: SuperAdminDashboardAreasInterface[];
+  allLayananMonth: SuperAdminDashboardServicesInterface[];
   layananByBidang: [];
   totalMenungguVerifikasi: number;
+  totalMenunggu: number;
   totalDisetujui: number;
   totalDitolak: number;
   totalDirevisi: number;
+  totalKeseluruhanPermohonan: number;
 }

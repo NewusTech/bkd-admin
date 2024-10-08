@@ -1171,6 +1171,44 @@ export const getSuperAdminDashboard = async () => {
   return await response.json();
 };
 
+// get dashboard admin verification
+export const getAdminVerificationDashboard = async () => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/dashboard/admin/verifikasi`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// get dashboard kepala bidang
+export const getHeadOfDivisionDashboard = async () => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/dashboard/kepala/bidang`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
 // get dashboard department scretary
 export const getDepartmentSecretaryDashboard = async () => {
   const token = Cookies.get("Authorization");
