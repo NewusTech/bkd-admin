@@ -79,6 +79,25 @@ export const getAllRoles = async () => {
   return await response.json();
 };
 
+//get all account managing roles
+export const getAccountManagingRoles = async (page: number, limit: number) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/info/get?page=${page}&limit=${limit}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
 // post register user
 export const postRegisterCreate = async (data: any) => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/register`, {
@@ -540,9 +559,13 @@ export const updateLogo = async (id: number, data: any) => {
 };
 
 // get struktur organisasi
-export const getStructureOrganizations = async (limit: number) => {
+export const getStructureOrganizations = async (
+  page?: number,
+  limit?: number,
+  search?: string
+) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/bkd/struktur/get?limit=${limit}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/bkd/struktur/get?page=${page}&limit=${limit}&search=${search}`,
     {
       method: "GET",
       headers: {
@@ -593,7 +616,7 @@ export const deleteStructureOrganizations = async (slug: string) => {
 };
 
 // update struktur organisasi
-export const updateStructureOrganizations = async (slug: string, data: any) => {
+export const updateStructureOrganizations = async (data: any, slug: string) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
@@ -976,14 +999,19 @@ export const updateLocationMaps = async (
 };
 
 // get struktur organisasi inti
-export const getStructureOrganizationsMain = async () => {
+export const getStructureOrganizationsMain = async (
+  page?: number,
+  limit?: number,
+  search?: string
+) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/selected/struktur/get`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/selected/struktur/get?page=${page}&limit=${limit}&search=${search}`,
     {
       method: "GET",
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       cache: "no-store",
@@ -1258,6 +1286,22 @@ export const getRegionalSecretaryDashboard = async () => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// get golongan/pangkat
+export const getAllGrade = async (limit: number) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/pangkat/get?limit=${limit}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
       },
       cache: "no-store",
     }

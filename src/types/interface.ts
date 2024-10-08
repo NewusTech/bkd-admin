@@ -107,6 +107,31 @@ export interface AreasInterface {
   jmlLayanan: number;
 }
 
+export interface AccountManagingRolesInterface {
+  id: number;
+  user_id: number;
+  name: string;
+  slug: string;
+  nip: string;
+  nik: string;
+  email: string;
+  telepon: string;
+  kecamatan_id: number;
+  desa_id: number;
+  rt: number;
+  rw: number;
+  alamat: string;
+  agama: string;
+  tempat_lahir: string;
+  tgl_lahir: string;
+  gender: string;
+  goldar: string;
+  createdAt: string;
+  updatedAt: string;
+  Role: string;
+  Bidang: string;
+}
+
 export interface AreasCreateInterface {
   nama: string;
   desc: string;
@@ -224,9 +249,15 @@ export interface AboutUsVisionMisionUpdateInterface {
 export interface StructureOrganizationInterface {
   id: number;
   nama: string;
+  nip: string;
   slug: string;
   jabatan: string;
   image: string;
+  golongan: string;
+  status: number;
+  bidang_id: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface FaqsInterface {
@@ -480,17 +511,10 @@ export interface SuperAdminDashboardAreasInterface {
   permohonan_count: number;
 }
 
-export interface SuperAdminDashboardServicesInterface {
-  LayananId: number;
-  LayananName: string;
-  LayananformnumCount: number;
-}
-
 export interface SuperAdminDashboardInterface {
   permohonanCount: number;
   monthlyCounts: SuperAdminDashboardMonthInterface[];
   countbyBidang: SuperAdminDashboardAreasInterface[];
-  allLayananMonth: SuperAdminDashboardServicesInterface[];
   layananByBidang: [];
   totalMenungguVerifikasi: number;
   totalMenunggu: number;
@@ -498,4 +522,11 @@ export interface SuperAdminDashboardInterface {
   totalDitolak: number;
   totalDirevisi: number;
   totalKeseluruhanPermohonan: number;
+}
+
+export interface GradeInterface {
+  id: number;
+  nama: string;
+  createdAt: string;
+  updatedAt: string;
 }

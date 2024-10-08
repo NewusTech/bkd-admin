@@ -89,8 +89,6 @@ export default function VerificationSatisfactionIndexScreen() {
     );
   }, [deboucedSearch, startDateFormatted, endDateFormatted]);
 
-  console.log(indexes, "ini index");
-
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
       fetchSatisfactionHistory(newPage, 10, "", "", "");

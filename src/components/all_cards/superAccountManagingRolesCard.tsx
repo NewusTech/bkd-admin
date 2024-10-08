@@ -4,7 +4,11 @@ import React from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { AreasInterface, RolesInterface } from "@/types/interface";
+import {
+  AccountManagingRolesInterface,
+  AreasInterface,
+  RolesInterface,
+} from "@/types/interface";
 import { EllipsisVertical, Eye, EyeOff, Loader } from "lucide-react";
 import {
   AlertDialog,
@@ -51,9 +55,10 @@ import {
 import CombinedReadMoreRichTextDisplay from "../ui/CombinedReadMoreRichTextDisplay";
 
 export default function SuperAccountManagingRolesCard({
-  areas,
+  account,
   roles,
-  // index,
+  areas,
+  index,
   // handleDeleteArea,
   isDeleteLoading,
   data,
@@ -65,9 +70,10 @@ export default function SuperAccountManagingRolesCard({
   seen,
   setSeen,
 }: {
+  account: AccountManagingRolesInterface;
   areas: AreasInterface[];
   roles: RolesInterface[];
-  // index: number;
+  index: number;
   // handleDeleteArea: (slug: string) => void;
   isDeleteLoading: boolean;
   data: {
@@ -114,12 +120,19 @@ export default function SuperAccountManagingRolesCard({
   return (
     <>
       <TableRow className="border border-line-20 text-sm text-left">
-        <TableCell className="text-sm">1</TableCell>
-        <TableCell className="text-sm">Admin</TableCell>
-        <TableCell className="text-sm">123242</TableCell>
-        <TableCell className="text-sm">admin@gmail.com</TableCell>
-        <TableCell className="text-sm">mutasi</TableCell>
-        <TableCell className="text-sm">Super Admin</TableCell>
+        <TableCell className="text-sm">{index + 1}</TableCell>
+        <TableCell className="text-sm">
+          {account?.name && account?.name}
+        </TableCell>
+        <TableCell className="text-sm">
+          {account?.nip && account?.nip}
+        </TableCell>
+        <TableCell className="text-sm">
+          {account?.Bidang && account?.Bidang}
+        </TableCell>
+        <TableCell className="text-sm">
+          {account?.Role && account?.Role}
+        </TableCell>
         <TableCell className="text-center flex items-center w-full">
           <div className="w-full flex flex-row items-center justify-center gap-x-2">
             {/* <div className="w-full">

@@ -216,8 +216,6 @@ export default function DivisionVerificationAdminDashboardPages() {
     }
   };
 
-  console.log(users, "users");
-
   const fetchService = async (page: number, limit: number, search?: string) => {
     try {
       const response = await getService(page, limit, search);
