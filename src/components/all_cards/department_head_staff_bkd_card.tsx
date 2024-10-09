@@ -2,22 +2,11 @@
 
 import React, { useRef } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
-import Link from "next/link";
 import {
   AreasInterface,
   GradeInterface,
   StructureOrganizationInterface,
-  UserApplicationHistoryInterface,
 } from "@/types/interface";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -44,14 +33,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { formatDateString, formatToWIB } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Trash, X } from "@phosphor-icons/react";
 import { Label } from "../ui/label";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import AddIcon from "../elements/add_button";
 import TypingEffect from "../ui/TypingEffect";
 import { Input } from "../ui/input";
 import { staffStatus } from "@/constants/main";
@@ -143,91 +130,15 @@ export default function DepartmentHeadStaffBkdCard({
       <TableCell className="text-center">
         {item?.golongan && item?.golongan}
       </TableCell>
-      <TableCell className={`text-center`}>
+      <TableCell className={`text-center w-[13%]`}>
         <div
           className={`${item?.status === 1 ? "text-success-70 bg-success-40" : "text-error-70 bg-error-40"} bg-opacity-20 py-3 px-3 rounded-lg`}>
           {item?.status === 1 ? "Aktif" : "Tidak Aktif"}
         </div>
       </TableCell>
-      <TableCell className="text-center">
+      <TableCell className="text-center w-[22%]">
         <div className="w-full flex flex-row items-center justify-center gap-x-3">
-          <Dialog>
-            <DialogTrigger>
-              <div className="bg-black-80 hover:text-line-10 text-black-80 hover:bg-primary-40 hover:bg-opacity-100 bg-opacity-20 py-3 px-3 rounded-lg">
-                detail
-              </div>
-            </DialogTrigger>
-
-            <DialogContent className="bg-line-10 w-full max-w-2xl h-[500px] px-0 py-0 shadow-sm rounded-lg border border-line-20 [&>button]:hidden">
-              <DialogHeader className="hidden">
-                <DialogTitle>Detail {item?.nama && item?.nama}</DialogTitle>
-                <DialogDescription>
-                  {item?.jabatan && item?.jabatan}
-                </DialogDescription>
-              </DialogHeader>
-              <div className="flex flex-col bg-primary-40 rounded-lg overflow-hidden p-6">
-                <div className="flex flex-col items-center justify-center">
-                  <div className="w-full mb-6">
-                    <DialogClose className="float-right">
-                      <X className="text-white" />
-                    </DialogClose>
-                  </div>
-                  <div className="w-[180px] h-[180px] rounded-full overflow-hidden">
-                    {item?.image && item?.nama && (
-                      <Image
-                        src={item?.image}
-                        alt={item?.nama}
-                        width={300}
-                        height={300}
-                        className="w-full h-full object-cover"
-                      />
-                    )}
-                  </div>
-                  <div className="flex flex-col gap-1 py-4 text-white">
-                    <span className="font-semibold text-center line-clamp-2 text-xl">
-                      {item?.nama && item?.nama}
-                    </span>
-                    <span className="text-center text-base">
-                      NIP. {item?.nip && item?.nip}
-                    </span>
-                  </div>
-                  <div className="flex flex-col text-white w-full items-center gap-y-3 mt-6">
-                    <div className="flex flex-col sm:flex-row border-b sm:border-b-0 pb-2 sm:pb-0 gap-y-2 w-full justify-left items-center">
-                      <p className="font-semibold w-full sm:max-w-[50%] text-left">
-                        Jabatan
-                      </p>
-                      <p className="text-left w-full">
-                        <span className="hidden md:inline-block">:</span>{" "}
-                        {item?.jabatan && item?.jabatan}
-                      </p>
-                    </div>
-                    <div className="flex flex-col sm:flex-row border-b sm:border-b-0 pb-2 sm:pb-0 gap-y-2 w-full justify-left items-center">
-                      <p className="font-semibold w-full sm:max-w-[50%] text-left">
-                        Golongan
-                      </p>
-                      <p className="text-left w-full">
-                        <span className="hidden md:inline-block">:</span>{" "}
-                        {item?.golongan && item?.golongan}
-                      </p>
-                    </div>
-                    <div className="flex flex-col sm:flex-row border-b sm:border-b-0 pb-2 sm:pb-0 gap-y-2 w-full justify-left items-center">
-                      <p className="font-semibold w-full sm:max-w-[50%] text-left">
-                        Status
-                      </p>
-                      <p className="text-left w-full">
-                        <span className="hidden md:inline-block">:</span>{" "}
-                        {item?.status && item?.status === 1
-                          ? "Aktif"
-                          : "Tidak Aktif"}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </DialogContent>
-          </Dialog>
-
-          <div className="w-full md:w-6/12">
+          <div className="w-full md:w-full">
             {!isMobile ? (
               <AlertDialog
                 open={isDialogOpenUpdate}
@@ -238,20 +149,20 @@ export default function DepartmentHeadStaffBkdCard({
                     setIsDialogOpenUpdate(true);
                   }}
                   className="w-full">
-                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-[14px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     Edit
                   </div>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
                   <AlertDialogHeader className="flex flex-col max-h-[500px]">
                     <AlertDialogTitle className="text-center">
-                      <AlertDialogDescription className="text-center">
+                      <AlertDialogDescription className="text-center text-[20px]">
                         Staff BKD
                       </AlertDialogDescription>
                     </AlertDialogTitle>
 
                     <TypingEffect
-                      className="custom-class md:text-sm text-xs"
+                      className="custom-class text-center text-[14px] md:text-[16px]"
                       speed={125}
                       deleteSpeed={50}
                       text={["Input data yang diperlukan"]}
@@ -263,7 +174,7 @@ export default function DepartmentHeadStaffBkdCard({
                       }}
                       className="w-full flex flex-col gap-y-3 verticalScroll">
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Bidang
                         </Label>
 
@@ -275,10 +186,10 @@ export default function DepartmentHeadStaffBkdCard({
                               setData({ ...data, bidang_id: value })
                             }>
                             <SelectTrigger
-                              className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                              className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                               <SelectValue
                                 placeholder="Pilih Bidang"
-                                className="text-black-80 tex-[14px] w-full"
+                                className="text-black-80 text-[14px] md:text-[16px] w-full"
                               />
                             </SelectTrigger>
                             <SelectContent className="bg-line-10">
@@ -289,7 +200,7 @@ export default function DepartmentHeadStaffBkdCard({
                                       return (
                                         <SelectItem
                                           key={i}
-                                          className={`w-full px-4`}
+                                          className={`w-full px-4 text-[14px] md:text-[16px]`}
                                           value={area.id.toString()}>
                                           {area?.nama}
                                         </SelectItem>
@@ -303,7 +214,7 @@ export default function DepartmentHeadStaffBkdCard({
                       </div>
 
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Nama Lengkap
                         </Label>
 
@@ -320,13 +231,13 @@ export default function DepartmentHeadStaffBkdCard({
                             });
                           }}
                           type="text"
-                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                           placeholder="Masukkan Nama Lengkap Anda"
                         />
                       </div>
 
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           NIP
                         </Label>
 
@@ -343,13 +254,13 @@ export default function DepartmentHeadStaffBkdCard({
                             });
                           }}
                           type="text"
-                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                           placeholder="Masukkan NIP Anda"
                         />
                       </div>
 
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Jabatan
                         </Label>
 
@@ -366,13 +277,13 @@ export default function DepartmentHeadStaffBkdCard({
                             });
                           }}
                           type="text"
-                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                           placeholder="Masukkan Jabatan Anda"
                         />
                       </div>
 
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Golongan
                         </Label>
 
@@ -384,10 +295,10 @@ export default function DepartmentHeadStaffBkdCard({
                               setData({ ...data, golongan: value })
                             }>
                             <SelectTrigger
-                              className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                              className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                               <SelectValue
                                 placeholder="Pilih Golongan"
-                                className="text-black-80 tex-[14px] w-full"
+                                className="text-black-80 text-[14px] md:text-[16px] w-full"
                               />
                             </SelectTrigger>
                             <SelectContent className="bg-line-10">
@@ -398,7 +309,7 @@ export default function DepartmentHeadStaffBkdCard({
                                       return (
                                         <SelectItem
                                           key={i}
-                                          className={`w-full px-4`}
+                                          className={`w-full px-4 text-[14px] md:text-[16px]`}
                                           value={grade?.nama}>
                                           {grade?.nama}
                                         </SelectItem>
@@ -412,7 +323,7 @@ export default function DepartmentHeadStaffBkdCard({
                       </div>
 
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Status
                         </Label>
 
@@ -424,10 +335,10 @@ export default function DepartmentHeadStaffBkdCard({
                               setData({ ...data, status: value })
                             }>
                             <SelectTrigger
-                              className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                              className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                               <SelectValue
                                 placeholder="Pilih Status Staff"
-                                className="text-black-80 tex-[14px] w-full"
+                                className="text-black-80 text-[14px] md:text-[16px] w-full"
                               />
                             </SelectTrigger>
                             <SelectContent className="bg-line-10">
@@ -445,7 +356,7 @@ export default function DepartmentHeadStaffBkdCard({
                                       return (
                                         <SelectItem
                                           key={i}
-                                          className={`w-full px-4`}
+                                          className={`w-full px-4 text-[14px] md:text-[16px]`}
                                           value={status.keys.toString()}>
                                           {status?.value}
                                         </SelectItem>
@@ -459,7 +370,7 @@ export default function DepartmentHeadStaffBkdCard({
                       </div>
 
                       <div className="flex flex-col w-full">
-                        <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                        <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                           Foto Staff
                         </Label>
 
@@ -472,7 +383,7 @@ export default function DepartmentHeadStaffBkdCard({
                             className={`w-full ${
                               previewImage ? "md:w-8/12" : "w-full"
                             }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
-                            <div>
+                            <div className="w-full flex flex-row justify-center items-center">
                               <input
                                 type="file"
                                 id="file-input-image"
@@ -483,7 +394,7 @@ export default function DepartmentHeadStaffBkdCard({
                               />
                               <label
                                 htmlFor="file-input-image"
-                                className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
                                 Drag and drop file here or click to select file
                               </label>
                             </div>
@@ -514,13 +425,15 @@ export default function DepartmentHeadStaffBkdCard({
                         </div>
                       </div>
 
-                      <div className="w-full flex flex-row justify-center items-center gap-x-5">
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <div className="w-full flex flex-row justify-between items-center gap-x-5">
+                        <AlertDialogCancel className="text-[14px] md:text-[16px]">
+                          Cancel
+                        </AlertDialogCancel>
 
                         <Button
                           type="submit"
                           disabled={isLoadingUpdate ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                          className="bg-primary-40 text-[14px] md:text-[16px] hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                           {isLoadingUpdate ? (
                             <Loader className="animate-spin" />
                           ) : (
@@ -542,22 +455,24 @@ export default function DepartmentHeadStaffBkdCard({
                     setIsDialogOpenUpdate(true);
                   }}
                   className="w-full">
-                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     Edit
                   </div>
                 </DrawerTrigger>
                 <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
                   <div className="w-full flex flex-col gap-y-3 verticalScroll">
-                    <DrawerTitle className="text-center">Staff BKD</DrawerTitle>
+                    <DrawerTitle className="text-center">
+                      <DrawerDescription className="text-center text-[18px]">
+                        Staff BKD
+                      </DrawerDescription>
+                    </DrawerTitle>
 
-                    <DrawerDescription className="text-center">
-                      <TypingEffect
-                        className="custom-class md:text-sm text-xs"
-                        speed={125}
-                        deleteSpeed={50}
-                        text={["Input data yang diperlukan"]}
-                      />
-                    </DrawerDescription>
+                    <TypingEffect
+                      className="custom-class text-[14px] md:text-[16px]"
+                      speed={125}
+                      deleteSpeed={50}
+                      text={["Input data yang diperlukan"]}
+                    />
 
                     <form
                       onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
@@ -566,7 +481,7 @@ export default function DepartmentHeadStaffBkdCard({
                       className="w-full flex flex-col gap-y-5 verticalScroll">
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             Bidang
                           </Label>
 
@@ -576,10 +491,10 @@ export default function DepartmentHeadStaffBkdCard({
                                 setData({ ...data, bidang_id: value })
                               }>
                               <SelectTrigger
-                                className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                                 <SelectValue
                                   placeholder="Pilih Bidang"
-                                  className="text-black-80 tex-[14px] w-full"
+                                  className="text-black-80 text-[14px] md:text-[16px] w-full"
                                 />
                               </SelectTrigger>
                               <SelectContent className="bg-line-10">
@@ -590,7 +505,7 @@ export default function DepartmentHeadStaffBkdCard({
                                         return (
                                           <SelectItem
                                             key={i}
-                                            className={`w-full px-4`}
+                                            className={`w-full px-4 text-[14px] md:text-[16px]`}
                                             value={area.id.toString()}>
                                             {area?.nama}
                                           </SelectItem>
@@ -604,7 +519,7 @@ export default function DepartmentHeadStaffBkdCard({
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             Nama Lengkap
                           </Label>
 
@@ -621,13 +536,13 @@ export default function DepartmentHeadStaffBkdCard({
                               });
                             }}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan Nama Lengkap Anda"
                           />
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             NIP
                           </Label>
 
@@ -644,13 +559,13 @@ export default function DepartmentHeadStaffBkdCard({
                               });
                             }}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan NIP Anda"
                           />
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             Jabatan
                           </Label>
 
@@ -667,13 +582,13 @@ export default function DepartmentHeadStaffBkdCard({
                               });
                             }}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan Jabatan Anda"
                           />
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             Golongan
                           </Label>
 
@@ -683,10 +598,10 @@ export default function DepartmentHeadStaffBkdCard({
                                 setData({ ...data, golongan: value })
                               }>
                               <SelectTrigger
-                                className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                                 <SelectValue
                                   placeholder="Pilih Golongan"
-                                  className="text-black-80 tex-[14px] w-full"
+                                  className="text-black-80 text-[14px] md:text-[16px] w-full"
                                 />
                               </SelectTrigger>
                               <SelectContent className="bg-line-10">
@@ -697,7 +612,7 @@ export default function DepartmentHeadStaffBkdCard({
                                         return (
                                           <SelectItem
                                             key={i}
-                                            className={`w-full px-4`}
+                                            className={`w-full px-4 text-[14px] md:text-[16px]`}
                                             value={grade?.nama}>
                                             {grade?.nama}
                                           </SelectItem>
@@ -711,7 +626,7 @@ export default function DepartmentHeadStaffBkdCard({
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-sm">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             Status
                           </Label>
 
@@ -721,10 +636,10 @@ export default function DepartmentHeadStaffBkdCard({
                                 setData({ ...data, status: value })
                               }>
                               <SelectTrigger
-                                className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                                 <SelectValue
                                   placeholder="Pilih Status Staff"
-                                  className="text-black-80 tex-[14px] w-full"
+                                  className="text-black-80 text-[14px] md:text-[16px] w-full"
                                 />
                               </SelectTrigger>
                               <SelectContent className="bg-line-10">
@@ -742,7 +657,7 @@ export default function DepartmentHeadStaffBkdCard({
                                         return (
                                           <SelectItem
                                             key={i}
-                                            className={`w-full px-4`}
+                                            className={`w-full px-4 text-[14px] md:text-[16px]`}
                                             value={status.keys.toString()}>
                                             {status?.value}
                                           </SelectItem>
@@ -756,7 +671,7 @@ export default function DepartmentHeadStaffBkdCard({
                         </div>
 
                         <div className="flex flex-col w-full">
-                          <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                          <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                             Foto Staff
                           </Label>
 
@@ -780,7 +695,7 @@ export default function DepartmentHeadStaffBkdCard({
                                 />
                                 <label
                                   htmlFor="file-input-image"
-                                  className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                  className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
                                   Drag and drop file here or click to select
                                   file
                                 </label>
@@ -815,7 +730,9 @@ export default function DepartmentHeadStaffBkdCard({
 
                       <div className="flex gap-4 justify-between">
                         <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
-                          <DrawerDescription>Batal</DrawerDescription>
+                          <DrawerDescription className="text-[14px] md:text-[16px]">
+                            Batal
+                          </DrawerDescription>
                         </DrawerClose>
                         <Button
                           title="Simpan Data"
@@ -835,13 +752,12 @@ export default function DepartmentHeadStaffBkdCard({
               </Drawer>
             )}
           </div>
-
           <div className="w-full">
             <Button
               title="Hapus Data"
               disabled={isLoadingDelete ? true : false}
               onClick={() => handleDeleteStructureOrganization(item?.slug)}
-              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 h-10 text-xs md:text-sm px-3 border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 h-10 text-[14px] px-3 border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
               {isLoadingDelete ? (
                 <Loader className="animate-spin" />
               ) : isLoadingDelete ? (

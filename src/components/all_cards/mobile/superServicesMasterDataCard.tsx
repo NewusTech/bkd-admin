@@ -35,12 +35,12 @@ import {
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import TypingEffect from "@/components/ui/TypingEffect";
 import { Label } from "@/components/ui/label";
@@ -55,7 +55,7 @@ import {
     DrawerHeader,
     DrawerTitle,
     DrawerTrigger,
-} from "@/components/ui/drawer"
+} from "@/components/ui/drawer";
 import CombinedReadMoreRichTextDisplay from "@/components/ui/CombinedReadMoreRichTextDisplay";
 
 export default function MobileSuperServicesMasterDataCard({
@@ -341,33 +341,40 @@ export default function MobileSuperServicesMasterDataCard({
                         </DropdownMenu>
                     </div>
                 </div>
-                <div className="flex flex-col gap-y-4">
+                <div className="text-xs md:text-sm flex flex-col gap-y-4">
                     <div className="w-full grid grid-cols-3">
-                        <div className="w-full font-medium text-black text-[14px]">No.</div>
-                        <div className="w-full col-span-2 text-[14px]">: {index + 1}</div>
+                        <div className="w-full font-medium text-black">No.</div>
+                        <div className="w-full col-span-2">: {index + 1}</div>
                     </div>
 
                     <div className="w-full grid grid-cols-3">
-                        <div className="w-full font-medium text-black text-[14px]">Nama Layanan</div>
-                        <div className="w-full col-span-2 text-[14px]">
-                            : {service.nama}
+                        <div className="w-full font-medium text-black">Nama Layanan</div>
+                        <div className="w-full col-span-2">: {service.nama}</div>
+                    </div>
+
+                    <div className="w-full grid grid-cols-3">
+                        <div className="w-full font-medium text-black">Bidang</div>
+                        <div className="w-full col-span-2">
+                            :<>{service.bidang_id}</>
                         </div>
                     </div>
 
                     <div className="w-full grid grid-cols-3">
-                        <div className="w-full font-medium text-black text-[14px]">Bidang</div>
-                        <div className="w-full col-span-2 text-[14px]">
-                            : {service.bidang_id}
-                        </div>
-                    </div>
-
-                    <div className="w-full grid grid-cols-3">
-                        <div className="w-full font-medium text-black text-[14px]">Deskripsi</div>
-                        <div className="w-full col-span-2 text-[14px]">
+                        <div className="w-full font-medium text-black">Deskripsi</div>
+                        <div className="w-full col-span-2">
                             <span>
-                                {service.desc && (
-                                    <CombinedReadMoreRichTextDisplay content={service.desc} keys={true} />
-                                )}
+                                <>
+                                    {service.desc && (
+                                        // <ReadMore text={service.desc}/>
+                                        // <RichTextDisplay content={service.desc} />
+                                        <>
+                                            <CombinedReadMoreRichTextDisplay
+                                                content={service.desc}
+                                                keys={true}
+                                            />
+                                        </>
+                                    )}
+                                </>
                             </span>
                         </div>
                     </div>

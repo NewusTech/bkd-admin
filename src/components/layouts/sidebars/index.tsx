@@ -1362,7 +1362,7 @@ export default function DashBoardSidebarPages() {
                                       className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-5 h-5`}
                                     />
                                     <p
-                                      className={`${pathName === linking ? "text-primary-40" : "text-black-80"}`}>
+                                      className={`${pathName === linking ? "text-primary-40" : "text-black-80"} text-[14px] md:text-[16px]`}>
                                       {bar?.value}
                                     </p>
                                   </div>
