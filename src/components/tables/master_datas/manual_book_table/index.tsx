@@ -10,6 +10,7 @@ import {
 import SuperAreasMasterDataCard from "@/components/all_cards/superAreasMasterDataCard";
 import { AreasInterface } from "@/types/interface";
 import SuperManualBookMasterDataCard from "@/components/all_cards/superManualBookDataCard";
+import MobileManualBookCard from "@/components/mobile_all_cards/mobileManualBookCard";
 
 export default function SuperManualBookMasterDataTablePages({
   books,
@@ -17,7 +18,9 @@ export default function SuperManualBookMasterDataTablePages({
   setData,
   isUpdateLoading,
   isDialogEditOpen,
+  isDrawerEditOpen,
   setIsDialogEditOpen,
+  setIsDrawerEditOpen,
   handleUpdateManualBook,
   manualFile,
   handleDragOver,
@@ -37,7 +40,9 @@ export default function SuperManualBookMasterDataTablePages({
   >;
   isUpdateLoading: boolean;
   isDialogEditOpen: boolean;
+  isDrawerEditOpen: boolean;
   setIsDialogEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsDrawerEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
   handleUpdateManualBook: (
     e: React.FormEvent<HTMLFormElement>,
     id: number
@@ -52,21 +57,13 @@ export default function SuperManualBookMasterDataTablePages({
 }) {
   return (
     <>
-      <Table className="w-full border border-line-20">
-        <TableHeader className="bg-primary-40 text-line-10">
-          <TableRow className="w-full">
-            <TableHead className="">No.</TableHead>
-            <TableHead className="text-center">Nama Manual Book</TableHead>
-            <TableHead className="text-center">File</TableHead>
-            <TableHead className="text-center">Tanggal Dibuat</TableHead>
-            <TableHead className="text-center w-3/12">Aksi</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
+      {/* mobile*/}
+      <div className="md:hidden">
+        <>
           {books &&
             books.length > 0 &&
             books.map((book: any, i: number) => (
-              <SuperManualBookMasterDataCard
+              <MobileManualBookCard
                 key={i}
                 book={book}
                 index={i + 1}
@@ -83,10 +80,55 @@ export default function SuperManualBookMasterDataTablePages({
                 handleImageChange={handleImageChange}
                 fileName={fileName}
                 previewFile={previewFile}
+                isDrawerEditOpen={isDrawerEditOpen}
+                setIsDrawerEditOpen={setIsDrawerEditOpen}
               />
             ))}
-        </TableBody>
-      </Table>
+        </>
+      </div>
+      {/* mobile*/}
+
+      {/* dekstop*/}
+      <div className="hidden md:block">
+        <>
+          <Table className="w-full border border-line-20">
+            <TableHeader className="bg-primary-40 text-line-10">
+              <TableRow className="w-full">
+                <TableHead className="">No.</TableHead>
+                <TableHead className="text-center">Nama Manual Book</TableHead>
+                <TableHead className="text-center">File</TableHead>
+                <TableHead className="text-center">Tanggal Dibuat</TableHead>
+                <TableHead className="text-center w-3/12">Aksi</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {books &&
+                books.length > 0 &&
+                books.map((book: any, i: number) => (
+                  <SuperManualBookMasterDataCard
+                    key={i}
+                    book={book}
+                    index={i + 1}
+                    data={data}
+                    setData={setData}
+                    isUpdateLoading={isUpdateLoading}
+                    isDialogEditOpen={isDialogEditOpen}
+                    setIsDialogEditOpen={setIsDialogEditOpen}
+                    handleUpdateManualBook={handleUpdateManualBook}
+                    manualFile={manualFile}
+                    handleDragOver={handleDragOver}
+                    handleDragLeave={handleDragLeave}
+                    handleDropImage={handleDropImage}
+                    handleImageChange={handleImageChange}
+                    fileName={fileName}
+                    previewFile={previewFile}
+                  />
+                ))}
+            </TableBody>
+          </Table>
+        </>
+      </div>
+      {/* dekstop*/}
     </>
   );
 }

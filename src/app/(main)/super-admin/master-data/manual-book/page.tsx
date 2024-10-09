@@ -9,6 +9,7 @@ import SuperManualBookMasterDataTablePages from "@/components/tables/master_data
 export default function ManualBookScreen() {
   const router = useRouter();
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
+  const [isDrawerEditOpen, setIsDrawerEditOpen] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
   const [books, setBooks] = useState([]);
   const [fileName, setFileName] = useState<string>("");
@@ -132,6 +133,8 @@ export default function ManualBookScreen() {
               isUpdateLoading={isUpdateLoading}
               isDialogEditOpen={isDialogEditOpen}
               setIsDialogEditOpen={setIsDialogEditOpen}
+              isDrawerEditOpen={isDrawerEditOpen}
+              setIsDrawerEditOpen={setIsDrawerEditOpen}
               // handleUpdateBooks={() => { }}
               handleUpdateManualBook={handleUpdateManualBook}
               manualFile={manualFile}
