@@ -1130,17 +1130,17 @@ export const updateUserApplicationHistoryDetail = async (
 };
 
 // get Indeks Kepuasan
-export const getSatisfactionUser = async (
+export const getSatisfactionIndexHistoryReportDetail = async (
+  id: number,
   page?: number,
   limit?: number,
-  search?: string,
   start_date?: string,
   end_date?: string
 ) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/get/history/feedback?page=${page}&limit=${limit}&search=${search}&start_date=${start_date}&end_date=${end_date}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/history/feedback/${id}?page=${page}&limit=${limit}&start_date=${start_date}&end_date=${end_date}`,
     {
       method: "GET",
       headers: {

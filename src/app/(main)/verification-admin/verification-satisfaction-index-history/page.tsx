@@ -29,14 +29,9 @@ import { useDebounce } from "@/hooks/useDebounce";
 import MobileVerificationSatisfactionIndexCardPages from "@/components/mobile_all_cards/mobileSatisfactionIndexVerificationCard";
 import { Printer } from "@phosphor-icons/react";
 import VerificationSatisfactionIndexTablePages from "@/components/tables/verification_admin_satisfaction_index_table";
+import DataNotFound from "@/components/elements/data_not_found";
 
-export default function VerificationSatisfactionIndexScreen({
-  params,
-}: {
-  params: { serviceId: number };
-}) {
-  console.log(params?.serviceId, "ini params");
-
+export default function VerificationSatisfactionIndexScreen() {
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
@@ -122,102 +117,104 @@ export default function VerificationSatisfactionIndexScreen({
   return (
     <section className="w-full flex flex-col items-center px-5 mt-5">
       <div
-        className={`w-full flex flex-col ${!isMobile ? "bg-white shadow-md rounded-lg p-5" : ""} gap-y-3`}>
+        className={`w-full flex flex-col ${!isMobile ? "bg-white shadow-md rounded-lg p-5" : ""} gap-y-3 pb-10`}>
         <h2 className="text-2xl text-black-80 text-center md:mb-6">
           Indeks Kepuasan
         </h2>
 
         <div className="w-full flex flex-col gap-y-3">
-          <div className="w-full flex flex-row gap-x-5">
-            <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
-              <Select
-              // onValueChange={handleSelectStatusChange}
-              >
-                <SelectTrigger
-                  className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-                  {/* <Checks className="w-6 h-6 text-black-80" /> */}
-                  <SelectValue
-                    placeholder="Pilih Bidang"
-                    className="text-black-80 tex-[14px] w-full"
-                  />
-                </SelectTrigger>
-                <SelectContent className="bg-line-10">
-                  <div className="pt-2">
-                    {areas &&
-                      areas.map((item: AreasInterface, i: number) => {
-                        return (
-                          <SelectItem
-                            key={i}
-                            className={`w-full px-4`}
-                            value={item.id.toString()}>
-                            {item?.nama}
-                          </SelectItem>
-                        );
-                      })}
-                  </div>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
-              <Select
-              // onValueChange={handleSelectStatusChange}
-              >
-                <SelectTrigger
-                  className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-                  {/* <Checks className="w-6 h-6 text-black-80" /> */}
-                  <SelectValue
-                    placeholder="Pilih Layanan"
-                    className="text-black-80 tex-[14px] w-full"
-                  />
-                </SelectTrigger>
-                <SelectContent className="bg-line-10">
-                  <div className="pt-2">
-                    {services &&
-                      services.map((item: ServiceInterface, i: number) => {
-                        return (
-                          <SelectItem
-                            key={i}
-                            className={`w-full px-4`}
-                            value={item.id.toString()}>
-                            {item?.nama}
-                          </SelectItem>
-                        );
-                      })}
-                  </div>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
           <div
-            className={`w-full flex flex-col md:flex-row ${!isMobile ? "" : "p-3 rounded-lg shadow-md"} bg-line-10 gap-y-5 gap-x-5`}>
-            <div className="w-full md:w-7/12">
-              <SearchPages
-                search={search}
-                change={(e: any) => setSearch(e.target.value)}
-                placeholder="Pencarian"
-              />
+            className={`w-full flex flex-col ${!isMobile ? "" : "p-3 rounded-lg shadow-md"} bg-line-10 gap-y-5 gap-x-5`}>
+            <div className="w-full flex flex-row gap-x-3 md:gap-x-5">
+              <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
+                <Select
+                // onValueChange={handleSelectStatusChange}
+                >
+                  <SelectTrigger
+                    className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                    {/* <Checks className="w-6 h-6 text-black-80" /> */}
+                    <SelectValue
+                      placeholder="Pilih Bidang"
+                      className="text-black-80 tex-[14px] w-full"
+                    />
+                  </SelectTrigger>
+                  <SelectContent className="bg-line-10">
+                    <div className="pt-2">
+                      {areas &&
+                        areas.map((item: AreasInterface, i: number) => {
+                          return (
+                            <SelectItem
+                              key={i}
+                              className={`w-full px-4`}
+                              value={item.id.toString()}>
+                              {item?.nama}
+                            </SelectItem>
+                          );
+                        })}
+                    </div>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
+                <Select
+                // onValueChange={handleSelectStatusChange}
+                >
+                  <SelectTrigger
+                    className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                    {/* <Checks className="w-6 h-6 text-black-80" /> */}
+                    <SelectValue
+                      placeholder="Pilih Layanan"
+                      className="text-black-80 tex-[14px] w-full"
+                    />
+                  </SelectTrigger>
+                  <SelectContent className="bg-line-10">
+                    <div className="pt-2">
+                      {services &&
+                        services.map((item: ServiceInterface, i: number) => {
+                          return (
+                            <SelectItem
+                              key={i}
+                              className={`w-full px-4`}
+                              value={item.id.toString()}>
+                              {item?.nama}
+                            </SelectItem>
+                          );
+                        })}
+                    </div>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
-            <div className="flex flex-row justify-center items-center w-full gap-x-3">
-              <DatePages
-                date={startDate ?? null}
-                setDate={(e) => setStartDate(e ?? undefined)}
-              />
-              <p className="text-center">to</p>
-              <DatePages
-                date={endDate ?? null}
-                setDate={(e) => setEndDate(e ?? undefined)}
-              />
-            </div>
+            <div className="w-full flex flex-col md:flex-row gap-y-5 gap-x-5">
+              <div className="w-full md:w-7/12">
+                <SearchPages
+                  search={search}
+                  change={(e: any) => setSearch(e.target.value)}
+                  placeholder="Pencarian"
+                />
+              </div>
 
-            <div className="w-5/12">
-              <Button className="w-full flex flex-row gap-x-4 text-sm bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                <Printer className="w-6 h-6 text-line-10" />
+              <div className="flex flex-row justify-center items-center w-full gap-x-3">
+                <DatePages
+                  date={startDate ?? null}
+                  setDate={(e) => setStartDate(e ?? undefined)}
+                />
+                <p className="text-center">to</p>
+                <DatePages
+                  date={endDate ?? null}
+                  setDate={(e) => setEndDate(e ?? undefined)}
+                />
+              </div>
 
-                <span>Print</span>
-              </Button>
+              <div className="w-full md:w-5/12">
+                <Button className="w-full flex flex-row gap-x-4 text-sm bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
+                  <Printer className="w-6 h-6 text-line-10" />
+
+                  <span>Print</span>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -230,11 +227,27 @@ export default function VerificationSatisfactionIndexScreen({
               )}
             </>
           ) : (
-            <MobileVerificationSatisfactionIndexCardPages />
+            <div className="w-full flex flex-col gap-y-5">
+              {reports &&
+                reports.length > 0 &&
+                reports.map(
+                  (
+                    item: SatisfactionIndexHistoryReportInterface,
+                    i: number
+                  ) => {
+                    return (
+                      <MobileVerificationSatisfactionIndexCardPages
+                        key={i}
+                        index={i}
+                        item={item}
+                      />
+                    );
+                  }
+                )}
+            </div>
           )}
         </div>
 
-        {/* {reports && reports.length! < 10 && ( */}
         <div className="w-full">
           <PaginationComponent
             currentPage={pagination.currentPage}
@@ -242,7 +255,10 @@ export default function VerificationSatisfactionIndexScreen({
             onPageChange={handlePageChange}
           />
         </div>
-        {/* )} */}
+
+        <div className="w-full">
+          {reports && reports.length === 0 && <DataNotFound />}
+        </div>
       </div>
     </section>
   );

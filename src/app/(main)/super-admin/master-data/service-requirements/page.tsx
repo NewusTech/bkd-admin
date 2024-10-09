@@ -1,368 +1,232 @@
 "use client";
 
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import { useQuill } from "react-quilljs";
-import SearchPages from "@/components/elements/search";
-import { Button } from "@/components/ui/button";
-import { deleteAreas, getAreas, postAreas, updateAreas } from "@/services/api";
-import { AreasInterface } from "@/types/interface";
+import {
+  deleteAreas,
+  getAreas,
+  getService,
+  postAreas,
+  updateAreas,
+} from "@/services/api";
+import { AreasInterface, ServiceInterface } from "@/types/interface";
 import React, { useEffect, useState } from "react";
-import { FaPlus } from 'react-icons/fa';
-import {
-    Table,
-    TableBody,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import { Loader } from "lucide-react";
 import PaginationComponent from "@/components/elements/pagination";
-import Editor from "@/components/elements/toolbar_editors";
 import InputComponent from "@/components/InputComponent";
 import SuperServiceRequirementsMasterDataTablePages from "@/components/tables/master_datas/service-requirements-table";
 import Link from "next/link";
 import AddIcon from "@/components/elements/add_button";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import {
-    Drawer,
-    DrawerClose,
-    DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerTitle,
-    DrawerTrigger,
-} from "@/components/ui/drawer";
-import MobileSuperServiceRequirementsMasterDataTablePages from "@/components/mobile_all_cards/mobileSuperServiceRequirementsMasterDataTablePages";
+import SearchPages from "@/components/elements/search";
+import { useDebounce } from "@/hooks/useDebounce";
 
 export default function ServiceRequiremnts() {
-    const [instance, setInstance] = useState<string>("");
-    // const setSelectedId = useCreateRequirement((state) => state.setSelectedId);
-    const [searchTermInstance, setSearchTermInstance] = useState("");
-    const [role, setRole] = useState<string | null>(null);
-    const [instansiId, setInstansiId] = useState<any>(0);
-    const [searchInputInstance, setSearchInputInstance] = useState(""); // State for search input
-    const [permission, setPermission] = useState<string[]>([]);
-    const isMobile = useMediaQuery("(max-width: 768px)");
-    const router = useRouter();
-    const [search, setSearch] = useState("");
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const [isDrawerEditOpen, setIsDrawerEditOpen] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [isDeleteLoading, setIsDeleteLoading] = useState(false);
-    const [isUpdateLoading, setIsUpdateLoading] = useState(false);
-    const limitItem = 30;
-    const [areas, setAreas] = useState<AreasInterface[]>([]);
-    const [data, setData] = useState({
-        nama: "",
-        desc: "",
-        nip_pj: "",
-        pj: "",
-    });
-    const [pagination, setPagination] = useState({
-        currentPage: 1,
-        perPage: 10,
-        totalPages: 1,
-        totalCount: 0,
-    });
-    const { quill: quillAdd, quillRef: quillAddRef } = useQuill();
-    const { quill: quillEdit, quillRef: quillEditRef } = useQuill();
+  const [instance, setInstance] = useState<string>("");
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const [search, setSearch] = useState<string>("");
+  const deboucedSearch = useDebounce(search, 500);
+  const [searchInputInstance, setSearchInputInstance] = useState("");
+  const router = useRouter();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerEditOpen, setIsDrawerEditOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  const [isUpdateLoading, setIsUpdateLoading] = useState(false);
+  const [areas, setAreas] = useState<AreasInterface[]>([]);
+  const [services, setServices] = useState<ServiceInterface[]>([]);
+  const [data, setData] = useState({
+    nama: "",
+    desc: "",
+    nip_pj: "",
+    pj: "",
+  });
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    perPage: 10,
+    totalPages: 1,
+    totalCount: 0,
+  });
 
-    useEffect(() => {
-        if (quillAdd && isDialogOpen) {
-            quillAdd.on("text-change", () => {
-                setData((prevData) => ({
-                    ...prevData,
-                    desc: quillAdd.root.innerHTML,
-                }));
-            });
-        }
+  const fetchService = async (page: number, limit: number, search: string) => {
+    try {
+      const response = await getService(page, limit, search);
 
-        if (quillEdit && isDialogEditOpen) {
-            quillEdit.on("text-change", () => {
-                setData((prevData) => ({
-                    ...prevData,
-                    desc: quillEdit.root.innerHTML,
-                }));
-            });
+      setServices(response.data);
+      setPagination((prev) => ({
+        ...prev,
+        currentPage: page,
+        totalPages: response.pagination.totalPages,
+        totalCount: response.pagination.totalCount,
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-            if (data?.desc && isDialogEditOpen) {
-                quillEdit.clipboard.dangerouslyPasteHTML(data?.desc);
-            }
-        }
-    }, [isDialogOpen, isDialogEditOpen, quillAdd, quillEdit, data?.desc]);
+  useEffect(() => {
+    fetchService(1, 10, "");
+  }, []);
 
-    const fetchAreas = async (page: number, limit: number) => {
-        try {
-            const response = await getAreas(page, limit);
+  const handlePageChange = (newPage: number) => {
+    if (newPage !== pagination.currentPage) {
+      fetchService(newPage, 10, "");
+    }
+  };
 
-            setAreas(response.data);
-            setPagination((prev) => ({
-                ...prev,
-                currentPage: page,
-                totalPages: response.pagination.totalPages,
-                totalCount: response.pagination.totalCount,
-            }));
-        } catch (error) {
-            console.log(error);
-        }
-    };
+  //   const handleDeleteAreas = async (slug: string) => {
+  //     setIsDeleteLoading(true);
+  //     try {
+  //       const result = await Swal.fire({
+  //         title: "Apakah Anda Yakin Menghapus Bidang?",
+  //         text: "Bidang yang telah dihapus tidak dapat dipulihkan!",
+  //         icon: "warning",
+  //         showCancelButton: true,
+  //         confirmButtonColor: "#0000FF",
+  //         cancelButtonColor: "#EE3F62",
+  //         confirmButtonText: "Delete",
+  //       });
 
-    useEffect(() => {
-        fetchAreas(1, 10);
-    }, []);
+  //       if (result.isConfirmed) {
+  //         const response = await deleteAreas(slug);
 
-    const handlePageChange = (newPage: number) => {
-        if (newPage !== pagination.currentPage) {
-            fetchAreas(newPage, 10);
-        }
-    };
+  //         if (response.status === 200) {
+  //           await Swal.fire({
+  //             icon: "success",
+  //             title: `Bidang berhasil dihapus!`,
+  //             timer: 2000,
+  //             position: "center",
+  //           });
+  //           setIsDeleteLoading(false);
+  //           fetchAreas(pagination.currentPage, 10);
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     } finally {
+  //       setIsDeleteLoading(false);
+  //     }
+  //   };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setData({
-            ...data,
-            [e.target.name]: e.target.value,
-        });
-    };
+  //   const handleUpdateArea = async (
+  //     e: React.FormEvent<HTMLFormElement>,
+  //     slug: string
+  //   ) => {
+  //     e.preventDefault();
+  //     setIsUpdateLoading(true);
 
-    const handleCreateAreas = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setIsLoading(true);
+  //     try {
+  //       const response = await updateAreas(slug, data);
 
-        try {
-            const response = await postAreas(data);
+  //       if (response.status === 200) {
+  //         setData({
+  //           nama: "",
+  //           desc: "",
+  //           nip_pj: "",
+  //           pj: "",
+  //         });
+  //         Swal.fire({
+  //           icon: "success",
+  //           title: "Berhasil Mengupdate Bidang!",
+  //           timer: 2000,
+  //           showConfirmButton: false,
+  //           position: "center",
+  //         });
+  //         fetchAreas(pagination.currentPage, 10);
+  //         setIsDialogEditOpen(false);
+  //         router.push("/super-admin/master-data/areas");
+  //       } else {
+  //         Swal.fire({
+  //           icon: "error",
+  //           title: "Gagal Menagupdate Bidang!",
+  //           timer: 2000,
+  //           showConfirmButton: false,
+  //           position: "center",
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     } finally {
+  //       setIsUpdateLoading(false);
+  //     }
+  //   };
 
-            if (response.status === 201) {
-                setData({
-                    nama: "",
-                    desc: "",
-                    nip_pj: "",
-                    pj: "",
-                });
-                Swal.fire({
-                    icon: "success",
-                    title: "Berhasil Menambahkan Bidang!",
-                    timer: 2000,
-                    showConfirmButton: false,
-                    position: "center",
-                });
-                fetchAreas(pagination.currentPage, 10);
-                setIsDialogOpen(false);
-                router.push("/super-admin/master-data/areas");
-            } else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Gagal Menambahkan Bidang!",
-                    timer: 2000,
-                    showConfirmButton: false,
-                    position: "center",
-                });
-            }
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setIsLoading(false);
-            setIsDialogOpen(false);
-        }
-    };
-
-    const handleDeleteAreas = async (slug: string) => {
-        setIsDeleteLoading(true);
-        try {
-            const result = await Swal.fire({
-                title: "Apakah Anda Yakin Menghapus Bidang?",
-                text: "Bidang yang telah dihapus tidak dapat dipulihkan!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#0000FF",
-                cancelButtonColor: "#EE3F62",
-                confirmButtonText: "Delete",
-            });
-
-            if (result.isConfirmed) {
-                const response = await deleteAreas(slug);
-
-                if (response.status === 200) {
-                    await Swal.fire({
-                        icon: "success",
-                        title: `Bidang berhasil dihapus!`,
-                        timer: 2000,
-                        position: "center",
-                    });
-                    setIsDeleteLoading(false);
-                    fetchAreas(pagination.currentPage, 10);
-                }
-            }
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setIsDeleteLoading(false);
-        }
-    };
-
-    const handleUpdateArea = async (
-        e: React.FormEvent<HTMLFormElement>,
-        slug: string
-    ) => {
-        e.preventDefault();
-        setIsUpdateLoading(true);
-
-        try {
-            const response = await updateAreas(slug, data);
-
-            if (response.status === 200) {
-                setData({
-                    nama: "",
-                    desc: "",
-                    nip_pj: "",
-                    pj: "",
-                });
-                Swal.fire({
-                    icon: "success",
-                    title: "Berhasil Mengupdate Bidang!",
-                    timer: 2000,
-                    showConfirmButton: false,
-                    position: "center",
-                });
-                fetchAreas(pagination.currentPage, 10);
-                setIsDialogEditOpen(false);
-                router.push("/super-admin/master-data/areas");
-            } else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Gagal Menagupdate Bidang!",
-                    timer: 2000,
-                    showConfirmButton: false,
-                    position: "center",
-                });
-            }
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setIsUpdateLoading(false);
-        }
-    };
-
-    return (
+  return (
+    <>
+      {!isMobile ? (
         <>
-            {!isMobile ? (
-                <>
-                    {/* Dekstop */}
-                    <section className="w-full flex flex-col items-center px-5 mt-5">
-                        <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
-                            <h1 className="text-lg">Kelola Persyaratan</h1>
-                            <div className="w-full flex flex-row gap-x-5">
-                                <div className="w-[65%] border border-b rounded-lg z-50">
-                                    <InputComponent
-                                        typeInput="selectSearch"
-                                        valueInput={searchInputInstance}
-                                        onChangeInputSearch={(e) =>
-                                            setSearchInputInstance(e.target.value)
-                                        }
-                                        // items={result}
-                                        label="layanan"
-                                        placeholder="Pilih Layanan"
-                                        value={instance}
-                                        onChange={(e: any) => setInstance(e)}
-                                    />
-                                </div>
-                                <div className="w-[35%]">
-                                    <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                                        <AlertDialogTrigger
-                                            onClick={() => {
-                                                setIsDialogOpen(true);
-                                            }}
-                                            className="w-full">
-                                            {/* Add Data */}
-                                            <div className="flex justify-end items-center w-full">
-                                                <Link
-                                                    href="/super-admin/master-data/service-requirements/create"
-                                                    className='bg-primary-40 h-10 text-xs md:text-sm px-3 rounded-lg text-white hover:bg-primary-70 border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300 py-2'>
-                                                    <AddIcon />
-                                                    Tambah Persyaratan Layanan
-                                                </Link>
-                                            </div>
-                                            {/* Tambah Data */}
-                                        </AlertDialogTrigger>
-                                    </AlertDialog>
-                                </div>
-                            </div>
+          {/* Dekstop */}
+          <section className="w-full flex flex-col items-center px-5 mt-5">
+            <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
+              <div className="w-full flex flex-row justify-between gap-x-5">
+                <div className="w-[80%] border border-b rounded-lg z-50">
+                  <SearchPages
+                    search={search}
+                    change={(e: any) => setSearch(e.target.value)}
+                    placeholder="Pencarian"
+                  />
+                </div>
+                <div className="w-[15%]">
+                  <div className="flex justify-end items-center w-full">
+                    <Link
+                      href="/super-admin/master-data/service-requirements/create"
+                      className="bg-primary-40 w-full group h-11 text-[14px] md:text-[16px] px-3 rounded-lg text-white hover:bg-primary-70 border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300 py-2">
+                      <AddIcon className="w-4 h-4 text-line-10" />
+                      Tambah
+                    </Link>
+                  </div>
+                </div>
+              </div>
 
-                            <div className="w-full">
-                                {areas && areas.length > 0 && (
-                                    <SuperServiceRequirementsMasterDataTablePages
-                                        areas={areas}
-                                        handleDeleteArea={handleDeleteAreas}
-                                        isDeleteLoading={isDeleteLoading}
-                                        data={data}
-                                        setData={setData}
-                                        isUpdateLoading={isUpdateLoading}
-                                        isDialogEditOpen={isDialogEditOpen}
-                                        setIsDialogEditOpen={setIsDialogEditOpen}
-                                        handleUpdateArea={handleUpdateArea}
-                                        quillEdit={quillEdit}
-                                        quillEditRef={quillEditRef}
-                                    />
-                                )}
-                            </div>
-                        </div>
-                    </section>
-                    {/* Desktop */}
-                </>
-            ) : (
-                <>
-                    {/* mobile */}
-                    <section className="w-full flex flex-col items-center px-5 mt-5">
-                        <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
-                            <h1 className="text-lg">Kelola Persyaratan</h1>
+              <div className="w-full">
+                {services && services.length > 0 && (
+                  <SuperServiceRequirementsMasterDataTablePages
+                    services={services}
+                  />
+                )}
+              </div>
+            </div>
+          </section>
+          {/* Desktop */}
+        </>
+      ) : (
+        <>
+          {/* mobile */}
+          <section className="w-full flex flex-col items-center px-5 mt-5">
+            <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
+              <h1 className="text-lg text-center">Kelola Persyaratan</h1>
 
-                            <div className="w-full gap-x-5">
-                                <div className="w-full border border-b rounded-lg z-50">
-                                    <InputComponent
-                                        typeInput="selectSearch"
-                                        valueInput={searchInputInstance}
-                                        onChangeInputSearch={(e) =>
-                                            setSearchInputInstance(e.target.value)
-                                        }
-                                        // items={result}
-                                        label="Instansi"
-                                        placeholder="Pilih Instansi"
-                                        value={instance}
-                                        onChange={(e: any) => setInstance(e)}
-                                    />
-                                </div>
-                                <div className="w-full mt-2">
-                                    <div className="flex justify-end items-center w-full">
-                                        <Link className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2"
-                                            href="/super-admin/master-data/service-requirements/create">
-                                            <AddIcon />
-                                            Tambah Persyaratan
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5 mt-2">
-                            <div className="w-full">
-                                {/* {areas && areas.length > 0 && (
+              <div className="w-full gap-x-5">
+                <div className="w-full border border-b rounded-lg z-50">
+                  <InputComponent
+                    typeInput="selectSearch"
+                    valueInput={searchInputInstance}
+                    onChangeInputSearch={(e) =>
+                      setSearchInputInstance(e.target.value)
+                    }
+                    // items={result}
+                    label="Instansi"
+                    placeholder="Pilih Instansi"
+                    value={instance}
+                    onChange={(e: any) => setInstance(e)}
+                  />
+                </div>
+                <div className="w-full mt-2">
+                  <div className="flex justify-end items-center w-full">
+                    <Link
+                      className="w-full text-[14px] md:text-[16px] bg-primary-40 flex flex-row items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 py-2 rounded-lg border border-primary-40 text-center font-medium gap-x-3 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
+                      href="/super-admin/master-data/service-requirements/create">
+                      <AddIcon className="w-4 h-4 text-line-10" />
+                      Tambah Persyaratan
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5 mt-2">
+              <div className="w-full">
+                {/* {areas && areas.length > 0 && (
                                     <MobileSuperServiceRequirementsMasterDataTablePages
                                         areas={areas}
                                         handleDeleteArea={handleDeleteAreas}
@@ -377,20 +241,20 @@ export default function ServiceRequiremnts() {
                                         quillEditRef={quillEditRef}
                                     />
                                 )} */}
-                            </div>
-                        </div>
-                    </section>
-                    {/* Mobile */}
-                </>
-            )}
-
-            <div className="w-full">
-                <PaginationComponent
-                    currentPage={pagination.currentPage}
-                    totalPages={pagination.totalPages}
-                    onPageChange={handlePageChange}
-                />
+              </div>
             </div>
+          </section>
+          {/* Mobile */}
         </>
-    );
+      )}
+
+      <div className="w-full">
+        <PaginationComponent
+          currentPage={pagination.currentPage}
+          totalPages={pagination.totalPages}
+          onPageChange={handlePageChange}
+        />
+      </div>
+    </>
+  );
 }
