@@ -157,7 +157,7 @@ export interface ServiceInterface {
   langkah: string;
   bidang_id: number;
   createdAt: string;
-  Bidang_nama: string;
+  Bidang_name: string;
 }
 
 export interface ServiceCreateInterface {
@@ -500,8 +500,19 @@ export interface SatisfactionHistoryInterface {
   updatedAt: string;
 }
 
+export interface SatisfactionIndexHistoryReportDetailInterface {
+  id: number;
+  name: string;
+  nip: string;
+  gender: string;
+  date: string;
+  kritiksaran: string;
+  nilai: number;
+}
+
 export interface SatisfactionIndexHistoryReportInterface {
   id: number;
+  layanan_id: number;
   layanan_name: string;
   bidang_name: string;
   total_feedback: number;
