@@ -110,18 +110,17 @@ export default function MobileBkdGalleryActivitiesMasterDataCard({
   return (
     <section className="w-full bg-line-10 rounded-lg shadow-md flex flex-col gap-y-7 p-4 mb-4">
       <div className="w-full flex justify-end items-end">
-        <div className="w-full text-xs md:text-sm flex justify-end">
+        <div className="w-full text-[14px] md:text-[16px] flex justify-end">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300"
-              >
+                className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300">
                 <EllipsisVertical className="w-4 h-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="transition-all duration-300 ease-in-out opacity-1 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 bg-white border border-gray-300 shadow-2xl rounded-md w-fit mr-6">
               <DropdownMenuLabel className="font-semibold text-primary text-sm w-full shadow-md">
-                Actions
+                Aksi
               </DropdownMenuLabel>
               {/* <hr className="border border-primary transition-all ease-in-out animate-pulse ml-2 mr-2" /> */}
               <div className="h-1 w-full bg-gradient-to-r from-transparent via-primary to-transparent transition-all animate-pulse"></div>
@@ -135,13 +134,13 @@ export default function MobileBkdGalleryActivitiesMasterDataCard({
                             handleSetGallery();
                             setIsDialogEditOpen(true);
                           }}
-                          className="h-10 rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-full text-xs md:text-sm">
+                          className="h-full rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-full text-[14px] md:text-[16px]">
                           Edit
                         </DrawerTrigger>
                         <DrawerContent className="bg-white">
                           <DrawerHeader>
                             <DrawerTitle className="text-center">
-                              Master Data Galeri
+                              Master Data
                             </DrawerTitle>
                             <form
                               onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
@@ -154,10 +153,9 @@ export default function MobileBkdGalleryActivitiesMasterDataCard({
                               <div className="w-full flex flex-col gap-y-3 verticalScroll">
 
                                 <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                                  <Label className="focus-within:text-primary-70 font-normal text-xs md:text-sm text-left">
-                                    Judul Foto Kegiatan
+                                  <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
+                                    Judul Kegiatan
                                   </Label>
-
                                   <Input
                                     id="title"
                                     name="title"
@@ -175,10 +173,9 @@ export default function MobileBkdGalleryActivitiesMasterDataCard({
                                 </div>
 
                                 <div className="flex flex-col w-full">
-                                  <Label className="text-neutral-700 font-normal mb-2 text-xs md:text-sm text-left">
+                                  <Label className="text-neutral-700 font-normal mb-2 text-[14px] md:text-[16px] text-left">
                                     Foto Kegiatan
                                   </Label>
-
                                   <div className="flex flex-col md:flex-row w-full">
                                     <div
                                       ref={dropRef}
@@ -198,12 +195,11 @@ export default function MobileBkdGalleryActivitiesMasterDataCard({
                                         />
                                         <label
                                           htmlFor="file-input-image"
-                                          className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                          className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
                                           Drag and drop file here or click to select file
                                         </label>
                                       </>
                                     </div>
-
                                     {(previewImage || data?.image) && (
                                       <div className="relative md:ml-4 w-full mt-1">
                                         <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
@@ -213,7 +209,7 @@ export default function MobileBkdGalleryActivitiesMasterDataCard({
                                               width={1000}
                                               height={1000}
                                               alt="Preview"
-                                              className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                              className="max-h-full rounded-lg p-4 md:p-2 max-w-full object-contain shadow-xl"
                                             />
                                           </div>
                                           <button
@@ -228,15 +224,16 @@ export default function MobileBkdGalleryActivitiesMasterDataCard({
                                   </div>
                                 </div>
                               </div>
+
                               <div className="flex gap-4 justify-between">
-                                <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-xs">
-                                  <DrawerDescription className="text-xs md:text-sm">Batal</DrawerDescription>
+                                <DrawerClose className="border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-[14px] md:text-[16px] w-full h-full">
+                                  Batal
                                 </DrawerClose>
                                 <Button
                                   title="Simpan Data"
                                   type="submit"
                                   disabled={isUpdateLoading ? true : false}
-                                  className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                                  className="bg-primary-40 hover:bg-primary-70 text-line-10 text-[14px] md:text-[16px] rounded-lg border border-primary text-center font-medium items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 w-full h-full">
                                   {isUpdateLoading ? (
                                     <Loader className="animate-spin" />
                                   ) : (
@@ -254,7 +251,7 @@ export default function MobileBkdGalleryActivitiesMasterDataCard({
                     <Button
                       disabled={isDeleteLoading ? true : false}
                       onClick={() => handleDeleteGallery(gallery?.slug)}
-                      className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10">
+                      className="w-full h-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 text-[14px] md:text-[16px]">
                       {isDeleteLoading ? (
                         <Loader className="animate-spin" />
                       ) : isDeleteLoading ? (
@@ -273,36 +270,31 @@ export default function MobileBkdGalleryActivitiesMasterDataCard({
       </div>
 
       <>
-        <div className="text-xs md:text-sm flex flex-col gap-y-4">
+        <div className="text-[14px] md:text-[16px] flex flex-col gap-y-4">
           <div className="w-full grid grid-cols-3">
-            <div className="w-full text-xs md:text-sm">No.</div>
-
-            <div className="w-full col-span-2 text-xs md:text-sm">
+            <div className="w-full text-[14px] md:text-[16px]">No.</div>
+            <div className="w-full col-span-2 text-[14px] md:text-[16px]">
               : {index + 1}
             </div>
           </div>
 
           <div className="w-full grid grid-cols-3">
-            <div className="w-full text-xs md:text-sm">Judul foto Kegiatan</div>
-
-            <div className="w-full col-span-2 text-xs md:text-sm">
+            <div className="w-full text-[14px] md:text-[16px]">Judul Kegiatan</div>
+            <div className="w-full col-span-2 text-[14px] md:text-[16px]">
               : {gallery.title && gallery.title}
             </div>
           </div>
 
           <div className="w-full grid grid-cols-3">
-            <div className="w-full text-xs md:text-sm">Foto Kegiatan</div>
-            <div className="w-full col-span-2 text-xs md:text-sm ">
+            <div className="w-full text-[14px] md:text-[16px]">Foto</div>
+            <div className="w-full col-span-2 text-[14px] md:text-[16px] ">
               <div className="w-full flex">
                 <span>: </span>
                 <div className="">
-                  <div className="pl-1">
-                    {/* <TruncateRichText content={item.desc} length={20} keys={true} /> */}
-                  </div>
                   <span>
                     <AlertDialog>
-                      <AlertDialogTrigger className="w-full text-left pl-1">
-                        Lihat Foto Kegiatan
+                      <AlertDialogTrigger className="w-full text-left pl-1 underline">
+                        Lihat Foto
                       </AlertDialogTrigger>
                       <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
                         <AlertDialogHeader className="flex flex-col max-h-[500px]">
@@ -310,22 +302,20 @@ export default function MobileBkdGalleryActivitiesMasterDataCard({
                             Master Data
                           </AlertDialogTitle>
                           <AlertDialogDescription className="text-center">
-                            Kegiatan
+                            <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={150} deleteSpeed={50} text={["Foto Kegiatan"]} />
                           </AlertDialogDescription>
                           {gallery && (
-                            <div className="w-full h-full flex justify-center">
-                              <Image
-                                src={gallery?.image}
-                                alt="Slider"
-                                width={1000}
-                                height={1000}
-                                className="w-9/12 h-5/6"
-                              />
-                            </div>
+                            <Image
+                              src={gallery?.image}
+                              alt="Slider"
+                              width={1000}
+                              height={1000}
+                              className="w-9/12 h-5/6 rounded-lg shadow-xl flex m-auto"
+                            />
                           )}
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                          <AlertDialogCancel className="hover:bg-line-70 hover:text-line-10 text-center w-full flex items-center justify-center">
+                          <AlertDialogCancel className="hover:bg-line-70 hover:text-line-10 text-center flex items-center justify-center w-fit m-auto">
                             Kembali
                           </AlertDialogCancel>
                         </AlertDialogFooter>

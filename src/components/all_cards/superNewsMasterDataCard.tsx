@@ -88,11 +88,12 @@ export default function SuperNewsMasterDataCard({
       <TableCell className="text-start">{index + 1}</TableCell>
       <TableCell className="text-start">{item.title}</TableCell>
       <TableCell className="text-start">
-        {item.desc && (
-          // <ReadMore text={item.desc}/>
-          // <RichTextDisplay content={item.desc} />
+        <ReadMore text={item.desc}></ReadMore>
+        {/* {item.desc && (
+          <ReadMore text={item.desc}/>
+          <RichTextDisplay content={item.desc} />
           <CombinedReadMoreRichTextDisplay content={item.desc} keys={true} />
-        )}
+        )} */}
       </TableCell>
       <TableCell className="text-start">
         <div className="w-full">

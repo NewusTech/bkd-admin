@@ -127,24 +127,22 @@ export default function MobileSuperServicesMasterDataCard({
         <>
             <section className="w-full bg-line-10 rounded-lg shadow-md p-4 mb-4">
                 <div className="w-full flex justify-end items-end">
-                    <div className="w-full text-xs md:text-sm flex justify-end">
+                    <div className="w-full text-[14px] flex justify-end">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button
-                                    className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300"
-                                >
+                                    className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300">
                                     <EllipsisVertical className="w-4 h-4" />
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="transition-all duration-300 ease-in-out opacity-1 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 bg-white border border-gray-300 shadow-2xl rounded-md w-fit mr-6">
-                                <DropdownMenuLabel className="font-semibold text-primary text-sm w-full shadow-md">
-                                    Actions
+                                <DropdownMenuLabel className="font-semibold text-primary w-full shadow-md text-[14px]">
+                                    Aksi
                                 </DropdownMenuLabel>
-                                {/* <hr className="border border-primary transition-all ease-in-out animate-pulse ml-2 mr-2" /> */}
                                 <div className="h-1 w-full bg-gradient-to-r from-transparent via-primary to-transparent transition-all animate-pulse"></div>
                                 <div className="bg-white w-full h-full">
-                                    <div className="flex gap-4 w-full px-2 py-2">
-                                        <div className="w-fit">
+                                    <div className="gap-4 w-full px-2 py-2">
+                                        <div className="w-full mb-2">
                                             <div className="w-full">
                                                 <Drawer
                                                     open={isDrawerEditOpen}
@@ -156,7 +154,7 @@ export default function MobileSuperServicesMasterDataCard({
                                                         <Button
                                                             name="Edit"
                                                             title="Edit Data"
-                                                            className='h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10'>
+                                                            className='h-full rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-full text-[14px]'>
                                                             Edit
                                                         </Button>
                                                     </DrawerTrigger>
@@ -189,7 +187,7 @@ export default function MobileSuperServicesMasterDataCard({
                                                                                 })
                                                                             }
                                                                             type="text"
-                                                                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-xs md:text-sm"
+                                                                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
                                                                             placeholder="Masukkan Nama Bidang"
                                                                         />
                                                                     </div>
@@ -270,7 +268,7 @@ export default function MobileSuperServicesMasterDataCard({
                                                                                 })
                                                                             }
                                                                             type="text"
-                                                                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-xs md:text-sm"
+                                                                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
                                                                             placeholder="Masukkan Nama Penanggung Jawab"
                                                                         />
                                                                     </div>
@@ -302,13 +300,13 @@ export default function MobileSuperServicesMasterDataCard({
                                                                 </div>
                                                                 <div className="flex gap-4 justify-between">
                                                                     <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
-                                                                        <DrawerDescription className="text-xs md:text-sm">Batal</DrawerDescription>
+                                                                        <DrawerDescription className="text-[14px]">Batal</DrawerDescription>
                                                                     </DrawerClose>
                                                                     <Button
                                                                         title="Simpan Data"
                                                                         type="submit"
                                                                         disabled={isUpdateLoading ? true : false}
-                                                                        className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                                                                        className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                                                                         {isUpdateLoading ? (
                                                                             <Loader className="animate-spin" />
                                                                         ) : (
@@ -322,12 +320,12 @@ export default function MobileSuperServicesMasterDataCard({
                                                 </Drawer>
                                             </div>
                                         </div>
-                                        <div className="w-fit">
+                                        <div className="w-full">
                                             <Button
                                                 title="Hapus Data"
                                                 disabled={isDeleteLoading ? true : false}
                                                 onClick={() => handleDeleteService(service.id)}
-                                                className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 h-10 text-xs md:text-sm px-3 border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                                                className="w-full h-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 text-[14px] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
                                                 {isDeleteLoading ? (
                                                     <Loader className="animate-spin" />
                                                 ) : isDeleteLoading ? (
@@ -341,45 +339,35 @@ export default function MobileSuperServicesMasterDataCard({
                                 </div>
                             </DropdownMenuContent>
                         </DropdownMenu>
-                        {/* <hr className="border border-primary transition-all ease-in-out animate-pulse ml-2 mr-2" /> */}
                     </div>
                 </div>
-                <div className="text-xs md:text-sm flex flex-col gap-y-4">
+                <div className="flex flex-col gap-y-4">
                     <div className="w-full grid grid-cols-3">
-                        <div className="w-full font-medium text-black">No.</div>
-                        <div className="w-full col-span-2">: {index + 1}</div>
+                        <div className="w-full font-medium text-black text-[14px]">No.</div>
+                        <div className="w-full col-span-2 text-[14px]">: {index + 1}</div>
                     </div>
 
                     <div className="w-full grid grid-cols-3">
-                        <div className="w-full font-medium text-black">Nama Layanan</div>
-                        <div className="w-full col-span-2">
+                        <div className="w-full font-medium text-black text-[14px]">Nama Layanan</div>
+                        <div className="w-full col-span-2 text-[14px]">
                             : {service.nama}
                         </div>
                     </div>
 
                     <div className="w-full grid grid-cols-3">
-                        <div className="w-full font-medium text-black">Bidang</div>
-                        <div className="w-full col-span-2">
-                            :
-                            <>
-                                {service.bidang_id}
-                            </>
+                        <div className="w-full font-medium text-black text-[14px]">Bidang</div>
+                        <div className="w-full col-span-2 text-[14px]">
+                            : {service.bidang_id}
                         </div>
                     </div>
 
                     <div className="w-full grid grid-cols-3">
-                        <div className="w-full font-medium text-black">Deskripsi</div>
-                        <div className="w-full col-span-2">
+                        <div className="w-full font-medium text-black text-[14px]">Deskripsi</div>
+                        <div className="w-full col-span-2 text-[14px]">
                             <span>
-                                <>
-                                    {service.desc && (
-                                        // <ReadMore text={service.desc}/>
-                                        // <RichTextDisplay content={service.desc} />
-                                        <>
-                                            <CombinedReadMoreRichTextDisplay content={service.desc} keys={true} />
-                                        </>
-                                    )}
-                                </>
+                                {service.desc && (
+                                    <CombinedReadMoreRichTextDisplay content={service.desc} keys={true} />
+                                )}
                             </span>
                         </div>
                     </div>

@@ -311,9 +311,9 @@ export default function NewsScreen() {
                   <div className="flex justify-end items-center w-full">
                     <Link
                       href="/super-admin/master-data/news"
-                      className='bg-primary-40 h-10 text-[14px] mf:text-[16] px-3 rounded-lg text-white hover:bg-primary-70 border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300 py-2'>
+                      className='w-full h-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2'>
                       <AddIcon />
-                      Tambah Berita
+                      Tambah
                     </Link>
                   </div>
                   {/* Tambah Data */}
@@ -341,13 +341,13 @@ export default function NewsScreen() {
                             value={data.title}
                             onChange={handleChange}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]"
                             placeholder="Masukkan Judul Berita"
                           />
                         </div>
 
                         <div className="w-full flex flex-col gap-y-2">
-                          <Label className="text-[14px] md:text-[16px] text-black-70 font-normal">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             Deskripsi Berita
                           </Label>
                           <div className="w-full h-full border border-line-20 rounded-lg">
@@ -361,7 +361,7 @@ export default function NewsScreen() {
                         </div>
 
                         <div className="flex flex-col w-full">
-                          <Label className="text-[14px] md:text[16px] text-neutral-700 font-normal mb-2">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             Foto Berita
                           </Label>
                           <div className="flex flex-col md:flex-row w-full">
@@ -438,14 +438,14 @@ export default function NewsScreen() {
                 <DrawerTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 text-[14px] md:text-[16px] px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah Berita
                   </div>
                 </DrawerTrigger>
                 <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
                   <div className="w-full flex flex-col gap-y-3 verticalScroll">
-                    <DrawerTitle className="text-center">
+                    <DrawerTitle className="text-center text-[14px] md:text-[16px]">
                       Master Data Berita
                     </DrawerTitle>
 
@@ -488,7 +488,7 @@ export default function NewsScreen() {
                         </div>
 
                         <div className="flex flex-col w-full">
-                          <Label className="text-[14] md:text[16px] text-neutral-700 font-normal mb-2">
+                          <Label className="text-[14px] md:text[16px] text-neutral-700 font-normal mb-2">
                             Foto Berita
                           </Label>
                           <div className="flex flex-col md:flex-row w-full">
@@ -544,14 +544,14 @@ export default function NewsScreen() {
                       </div>
 
                       <div className="flex gap-4 justify-between">
-                        <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
-                          <DrawerDescription>Batal</DrawerDescription>
+                        <DrawerClose className="border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-[14px] md:text-[16px] w-full h-full">
+                          Batal
                         </DrawerClose>
                         <Button
                           title="Simpan Data"
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] md:text[16px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 text-[14px] md:text-[16px] rounded-lg border border-primary text-center font-medium items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 w-full h-full">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (
@@ -559,6 +559,7 @@ export default function NewsScreen() {
                           )}
                         </Button>
                       </div>
+
                     </form>
                   </div>
                 </DrawerContent>

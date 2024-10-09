@@ -14,7 +14,7 @@ export default function SearchPages({ change, search, ...props }: any) {
         onChange={change}
         name="search"
         placeholder={props.placeholder ? props.placeholder : "Cari..."}
-        className="text-black-80 w-full text-[14px] md:text-[14px] h-[40px] active:border-x-line-40 focus:border-line-40 focus:outline-none active:outline-none placeholder:text-black-80 rounded-lg placeholder:text-[16px]"
+        className="text-black-80 w-full text-[14px] md:text-[16px] h-[40px] active:border-x-line-40 focus:border-line-40 focus:outline-none active:outline-none placeholder:text-black-80 rounded-lg placeholder:text-[16px]"
       />
     </div>
   );

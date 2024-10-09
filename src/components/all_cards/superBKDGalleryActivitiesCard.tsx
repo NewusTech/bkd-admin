@@ -76,16 +76,14 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
   };
 
   return (
-    <TableRow className="border border-line-20">
+    <TableRow className="border border-line-20 text-[14px]">
       <TableCell className="text-left">{index + 1}</TableCell>
       <TableCell className="text-left">{gallery.title}</TableCell>
       <TableCell className="text-left">
         <div className="w-full">
           <AlertDialog>
-            <AlertDialogTrigger className="w-full">
-              <div className="w-full text-[14px] md:text-[16px] flex items-center justify-center h-10 text-black-80 hover:underline hover:text-primary-40 rounded-lg">
-                Lihat Foto Kegiatan
-              </div>
+            <AlertDialogTrigger className="w-full text-black">
+              Lihat Foto
             </AlertDialogTrigger>
             <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
               <AlertDialogHeader className="flex flex-col max-h-[500px]">
@@ -103,14 +101,14 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
                       alt="Slider"
                       width={1000}
                       height={1000}
-                      className="w-9/12 h-5/6"
+                      className="w-9/12 h-5/6 rounded-lg"
                     />
                   </div>
                 )}
 
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel className="hover:bg-line-70 hover:text-line-10 text-xs text-[14px] md:text-[16px] flex justify-center items-center text-center">
+                <AlertDialogCancel className="hover:bg-line-70 hover:text-line-10 text-[14px] md:text-[16px] flex justify-center items-center text-center w-fit m-auto">
                   Cancel
                 </AlertDialogCancel>
               </AlertDialogFooter>
@@ -135,7 +133,7 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
                 </div>
               </AlertDialogTrigger>
               <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
-                <AlertDialogHeader className="flex flex-col max-h-[500px]">
+                <AlertDialogHeader className="flex flex-col">
                   <AlertDialogTitle className="text-center">
                     Master Data Foto Kegiatan
                   </AlertDialogTitle>
@@ -146,77 +144,79 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                       handleUpdateGallery(e, gallery?.slug)
                     }
-                    className="w-full flex flex-col gap-y-3 verticalScroll">
+                    className="w-full flex flex-col gap-y-3 max-h-[500px]">
+                    <div className="w-full flex flex-col gap-y-3 verticalScroll">
 
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
-                        Judul Foto Kegiatan
-                      </Label>
-                      <Input
-                        id="title"
-                        name="title"
-                        value={data.title}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setData({
-                            ...data,
-                            title: e.target.value,
-                          })
-                        }
-                        type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                        placeholder="Masukkan Judul Foto Kegiatan"
-                      />
-                    </div>
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                          Judul Foto Kegiatan
+                        </Label>
+                        <Input
+                          id="title"
+                          name="title"
+                          value={data.title}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setData({
+                              ...data,
+                              title: e.target.value,
+                            })
+                          }
+                          type="text"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          placeholder="Masukkan Judul Foto Kegiatan"
+                        />
+                      </div>
 
-                    <div className="flex flex-col w-full">
-                      <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
-                        Foto Kegiatan
-                      </Label>
-                      <div className="flex flex-col md:flex-row w-full">
-                        <div
-                          ref={dropRef}
-                          onDragOver={handleDragOver}
-                          onDragLeave={handleDragLeave}
-                          onDrop={handleDropImage}
-                          className={`w-full ${data?.image || previewImage ? "md:w-8/12" : "w-full"
-                            }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
-                          <>
-                            <input
-                              type="file"
-                              id="file-input-image"
-                              name="image"
-                              accept="image/*"
-                              onChange={handleImageChange}
-                              className="hidden"
-                            />
-                            <label
-                              htmlFor="file-input-image"
-                              className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
-                              Drag and drop file here or click to select file
-                            </label>
-                          </>
-                        </div>
-                        {(previewImage || data?.image) && (
-                          <div className="relative md:ml-4 w-full mt-1">
-                            <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
-                              <div className="w-full h-full">
-                                <Image
-                                  src={previewImage || data?.image}
-                                  width={1000}
-                                  height={1000}
-                                  alt="Preview"
-                                  className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
-                                />
-                              </div>
-                              <button
-                                type="button"
-                                onClick={handleRemoveImage}
-                                className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
-                                <Trash />
-                              </button>
-                            </div>
+                      <div className="flex flex-col w-full">
+                        <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
+                          Foto Kegiatan
+                        </Label>
+                        <div className="flex flex-col md:flex-row w-full">
+                          <div
+                            ref={dropRef}
+                            onDragOver={handleDragOver}
+                            onDragLeave={handleDragLeave}
+                            onDrop={handleDropImage}
+                            className={`w-full ${data?.image || previewImage ? "md:w-8/12" : "w-full"
+                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                            <>
+                              <input
+                                type="file"
+                                id="file-input-image"
+                                name="image"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                className="hidden"
+                              />
+                              <label
+                                htmlFor="file-input-image"
+                                className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                Drag and drop file here or click to select file
+                              </label>
+                            </>
                           </div>
-                        )}
+                          {(previewImage || data?.image) && (
+                            <div className="relative md:ml-4 w-full mt-1">
+                              <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
+                                <div className="w-full h-full">
+                                  <Image
+                                    src={previewImage || data?.image}
+                                    width={1000}
+                                    height={1000}
+                                    alt="Preview"
+                                    className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                  />
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={handleRemoveImage}
+                                  className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
+                                  <Trash />
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
 

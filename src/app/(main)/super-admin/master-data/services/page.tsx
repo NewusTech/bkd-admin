@@ -267,8 +267,6 @@ export default function ServicesScreen() {
   return (
     <section className="w-full flex flex-col items-center md:px-5 md:mt-5">
       <div className="bg-line-10 md:bg-line-10 md:shadow-md md:rounded-lg w-full flex flex-col p-5 gap-y-5">
-        <h1 className="text-lg">Kelola Layanan</h1>
-
         {/* Mobile */}
         <div className="md:hidden">
           <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-4 gap-y-4 md:p-5 md:gap-y-5">
@@ -290,7 +288,7 @@ export default function ServicesScreen() {
                 <DrawerTrigger onClick={() => {
                   setIsDrawerOpen(true);
                 }} className="w-full">
-                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full h-full text-[14px] bg-primary-40 hover:bg-primary-70 flex items-center justify-center text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah Layanan
                   </div>
@@ -430,14 +428,14 @@ export default function ServicesScreen() {
                       </div>
 
                       <div className="flex gap-4 justify-between">
-                        <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
-                          <DrawerDescription>Batal</DrawerDescription>
+                        <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-[14px]">
+                          Batal
                         </DrawerClose>
                         <Button
                           title="Simpan Data"
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] md:text-[16px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-full text-[14px] px-3 rounded-lg border border-primary text-center font-mediumitems-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 w-full">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (
@@ -473,7 +471,7 @@ export default function ServicesScreen() {
                 <AlertDialogTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full h-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah
                   </div>

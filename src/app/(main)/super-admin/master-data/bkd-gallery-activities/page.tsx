@@ -278,7 +278,6 @@ export default function BKDGalleryActivitiesScreen() {
   return (
     <section className="w-full flex flex-col items-center px-5 mt-5">
       <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
-        <h1 className="text-lg">Kelola Galeri Kegiatan</h1>
         <div className="w-full flex flex-col md:flex-row gap-x-5 gap-y-5">
           <SearchPages
             search={search}
@@ -295,9 +294,9 @@ export default function BKDGalleryActivitiesScreen() {
                 <AlertDialogTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full h-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
-                    Tambah Galeri
+                    Tambah
                   </div>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
@@ -306,14 +305,14 @@ export default function BKDGalleryActivitiesScreen() {
                       Master Data Galeri Kegiatan
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
-                      Input data yang diperlukan
+                      <TypingEffect className="custom-class text-[14px] md:text-[14] md:text[16px]" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
                     </AlertDialogDescription>
 
                     <form
                       onSubmit={handleCreateGallery}
                       className="w-full flex flex-col gap-y-3 verticalScroll">
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Judul Berita
                         </Label>
                         <Input
@@ -355,7 +354,6 @@ export default function BKDGalleryActivitiesScreen() {
                               </label>
                             </>
                           </div>
-
                           {previewImage && (
                             <div className="relative md:ml-4 w-full mt-1">
                               <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
@@ -385,7 +383,7 @@ export default function BKDGalleryActivitiesScreen() {
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2s">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (
@@ -403,19 +401,19 @@ export default function BKDGalleryActivitiesScreen() {
                 <DrawerTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah Galeri
                   </div>
                 </DrawerTrigger>
                 <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
                   <div className="w-full flex flex-col gap-y-3 verticalScroll">
-                    <DrawerTitle className="text-center">
+                    <DrawerTitle className="text-center text-[14px] md:text-[16px]">
                       Master Data Berita
                     </DrawerTitle>
 
                     <DrawerDescription className="text-center">
-                      <TypingEffect className="custom-class md:text-sm text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
+                      <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
                     </DrawerDescription>
 
                     <form
@@ -467,7 +465,6 @@ export default function BKDGalleryActivitiesScreen() {
                                 </label>
                               </>
                             </div>
-
                             {previewImage && (
                               <div className="relative md:ml-4 w-full mt-1">
                                 <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
@@ -493,12 +490,15 @@ export default function BKDGalleryActivitiesScreen() {
                         </div>
                       </div>
 
-                      <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <div className="flex gap-4 justify-between">
+                        <DrawerClose className="border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-[14px] md:text-[16px] w-full h-full">
+                          Batal
+                        </DrawerClose>
                         <Button
+                          title="Simpan Data"
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 text-[14px] md:text-[16px] rounded-lg border border-primary text-center font-medium items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 w-full h-full">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (
