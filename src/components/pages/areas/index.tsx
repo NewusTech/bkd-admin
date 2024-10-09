@@ -38,7 +38,7 @@ const extensions = [
   Highlight.configure({ multicolor: true }),
   Heading.configure({ levels: [1, 2, 3, 4, 5, 6] }),
   Underline.configure({}),
-  Paragraph.configure({})
+  Paragraph.configure({}),
 ];
 
 export default function EditorProvide({
@@ -53,7 +53,7 @@ export default function EditorProvide({
       editorProps={{
         attributes: {
           class:
-            "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl m-4 mb-10 md:mb-20 text-xs md:text-sm focus:outline-none",
+            "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl m-4 mb-10 md:mb-20 text-[14px] md:text-[16px] focus:outline-none",
         },
       }}
       slotBefore={<TextEditorToogle />}

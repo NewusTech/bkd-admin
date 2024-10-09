@@ -23,7 +23,6 @@ export default function SuperAreasMasterDataTablePages({
   setIsDialogEditOpen,
   setIsDrawerEditOpen,
   handleUpdateArea,
-
 }: {
   areas: AreasInterface[];
   handleDeleteArea: (slug: string) => void;
@@ -49,41 +48,10 @@ export default function SuperAreasMasterDataTablePages({
       {/* mobile*/}
       <div className="md:hidden">
         <>
-          {areas && areas.length > 0 && areas.map((area: AreasInterface, i: number) => (
-            <MobileSuperAreasMasterDataCard
-              key={i}
-              area={area}
-              index={i}
-              handleDeleteArea={handleDeleteArea}
-              isDeleteLoading={isDeleteLoading}
-              data={data}
-              setData={setData}
-              isUpdateLoading={isUpdateLoading}
-              handleUpdateArea={handleUpdateArea}
-              isDrawerEditOpen={isDrawerEditOpen}
-              setIsDrawerEditOpen={setIsDrawerEditOpen}
-            />
-          ))}
-        </>
-      </div>
-      {/* mobile*/}
-
-      {/* dekstop*/}
-      <div className="hidden md:block">
-        <Table className="w-full border border-line-20">
-          <TableHeader className="bg-primary-40 text-line-10">
-            <TableRow className="w-full">
-              <TableHead className="text-center">No.</TableHead>
-              <TableHead className="text-center">Nama Bidang</TableHead>
-              <TableHead className="text-center">Penanggung Jawab</TableHead>
-              <TableHead className="text-center">NIP Penanggung Jawab</TableHead>
-              <TableHead className="text-center">Deskripsi</TableHead>
-              <TableHead className="text-center">Aksi</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {areas && areas.length > 0 && areas.map((area: AreasInterface, i: number) => (
-              <SuperAreasMasterDataCard
+          {areas &&
+            areas.length > 0 &&
+            areas.map((area: AreasInterface, i: number) => (
+              <MobileSuperAreasMasterDataCard
                 key={i}
                 area={area}
                 index={i}
@@ -93,10 +61,57 @@ export default function SuperAreasMasterDataTablePages({
                 setData={setData}
                 isUpdateLoading={isUpdateLoading}
                 handleUpdateArea={handleUpdateArea}
-                isDialogEditOpen={isDialogEditOpen}
-                setIsDialogEditOpen={setIsDialogEditOpen}
+                isDrawerEditOpen={isDrawerEditOpen}
+                setIsDrawerEditOpen={setIsDrawerEditOpen}
               />
             ))}
+        </>
+      </div>
+      {/* mobile*/}
+
+      {/* dekstop*/}
+      <div className="hidden md:block">
+        <Table className="w-full border border-line-20">
+          <TableHeader className="bg-primary-40 text-line-10">
+            <TableRow className="w-full">
+              <TableHead className="text-center text-[14px] md:text-[16px]">
+                No.
+              </TableHead>
+              <TableHead className="text-center text-[14px] md:text-[16px]">
+                Nama Bidang
+              </TableHead>
+              <TableHead className="text-center text-[14px] md:text-[16px]">
+                Penanggung Jawab
+              </TableHead>
+              <TableHead className="text-center text-[14px] md:text-[16px]">
+                NIP Penanggung Jawab
+              </TableHead>
+              <TableHead className="text-center text-[14px] md:text-[16px]">
+                Deskripsi
+              </TableHead>
+              <TableHead className="text-center text-[14px] md:text-[16px]">
+                Aksi
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {areas &&
+              areas.length > 0 &&
+              areas.map((area: AreasInterface, i: number) => (
+                <SuperAreasMasterDataCard
+                  key={i}
+                  area={area}
+                  index={i}
+                  handleDeleteArea={handleDeleteArea}
+                  isDeleteLoading={isDeleteLoading}
+                  data={data}
+                  setData={setData}
+                  isUpdateLoading={isUpdateLoading}
+                  handleUpdateArea={handleUpdateArea}
+                  isDialogEditOpen={isDialogEditOpen}
+                  setIsDialogEditOpen={setIsDialogEditOpen}
+                />
+              ))}
           </TableBody>
         </Table>
       </div>

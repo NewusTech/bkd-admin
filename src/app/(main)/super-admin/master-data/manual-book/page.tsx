@@ -1,39 +1,9 @@
 "use client";
 
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import { useQuill } from "react-quilljs";
-import SearchPages from "@/components/elements/search";
-import SuperAreasMasterDataTablePages from "@/components/tables/master_datas/areas_table";
-import { Button } from "@/components/ui/button";
-import {
-  deleteAreas,
-  getAreas,
-  getManualBooks,
-  postAreas,
-  updateAreas,
-  updateManualBooks,
-} from "@/services/api";
-import { AreasInterface } from "@/types/interface";
+import { getManualBooks, updateManualBooks } from "@/services/api";
 import React, { useEffect, useState } from "react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import { Loader } from "lucide-react";
-import PaginationComponent from "@/components/elements/pagination";
-import Editor from "@/components/elements/toolbar_editors";
 import SuperManualBookMasterDataTablePages from "@/components/tables/master_datas/manual_book_table";
 
 export default function ManualBookScreen() {
@@ -41,8 +11,9 @@ export default function ManualBookScreen() {
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
   const [books, setBooks] = useState([]);
-  const [fileImage, setFileImage] = useState(null);
-  const [previewImage, setPreviewImage] = useState("");
+  const [fileName, setFileName] = useState<string>("");
+  const [manualFile, setManualFile] = useState<File | null>(null);
+  const [previewFile, setPreviewFile] = useState<string>("");
   const [data, setData] = useState({
     title: "",
     dokumen: "",
@@ -65,14 +36,15 @@ export default function ManualBookScreen() {
   const handleImageChange = (e: any) => {
     const file = e.target.files?.[0];
     if (file) {
-      setFileImage(file);
+      setManualFile(file);
+      setFileName(file.name);
       setData({
         ...data,
         dokumen: file.name,
       });
-      const fileUrl = URL.createObjectURL(file);
-      setPreviewImage(fileUrl);
     }
+    const fileUrl = URL.createObjectURL(file);
+    setPreviewFile(fileUrl);
   };
 
   const handleDragOver = (e: any) => {
@@ -88,20 +60,16 @@ export default function ManualBookScreen() {
 
     const file = e.dataTransfer.files?.[0];
     if (file) {
-      setFileImage(file);
+      setManualFile(file);
+      setFileName(file.name);
       setData({
         ...data,
         dokumen: file.name,
       });
-      const fileUrl = URL.createObjectURL(file);
-      setPreviewImage(fileUrl);
     }
-  };
 
-  const handleRemoveImage = () => {
-    setFileImage(null);
-    setPreviewImage("");
-    setData({ ...data, dokumen: "" });
+    const fileUrl = URL.createObjectURL(file);
+    setPreviewFile(fileUrl);
   };
 
   const handleUpdateManualBook = async (
@@ -113,7 +81,10 @@ export default function ManualBookScreen() {
 
     const formData = new FormData();
 
-    formData.append("dokumen", data.dokumen);
+    formData.append("title", data.title);
+    if (manualFile) {
+      formData.append("dokumen", manualFile);
+    }
 
     try {
       const response = await updateManualBooks(formData, id);
@@ -163,12 +134,13 @@ export default function ManualBookScreen() {
               setIsDialogEditOpen={setIsDialogEditOpen}
               // handleUpdateBooks={() => { }}
               handleUpdateManualBook={handleUpdateManualBook}
-              previewImage={previewImage}
+              manualFile={manualFile}
               handleDragOver={handleDragOver}
               handleDragLeave={handleDragLeave}
               handleDropImage={handleDropImage}
               handleImageChange={handleImageChange}
-              handleRemoveImage={handleRemoveImage}
+              fileName={fileName}
+              previewFile={previewFile}
             />
           )}
         </div>

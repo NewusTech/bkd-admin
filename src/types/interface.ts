@@ -500,6 +500,15 @@ export interface SatisfactionHistoryInterface {
   updatedAt: string;
 }
 
+export interface SatisfactionIndexHistoryReportInterface {
+  id: number;
+  layanan_name: string;
+  bidang_name: string;
+  total_feedback: number;
+  average_nilai: number;
+  created_at: string;
+}
+
 export interface SuperAdminDashboardMonthInterface {
   month: string;
   permohonanCount: number;

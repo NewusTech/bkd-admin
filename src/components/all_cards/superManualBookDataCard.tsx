@@ -1,14 +1,11 @@
 "use client";
 
-// import "quill/dist/quill.snow.css";
-// import { useQuill } from "react-quilljs";
 import React, { useRef } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { AreasInterface, ManualBooksInterfaceInterface } from "@/types/interface";
+import { ManualBooksInterfaceInterface } from "@/types/interface";
 import { Loader } from "lucide-react";
-import { Trash } from "@phosphor-icons/react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,9 +17,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Textarea } from "../ui/textarea";
+import { CloudArrowUp } from "@phosphor-icons/react";
 import Image from "next/image";
 
 export default function SuperManualBookMasterDataCard({
@@ -38,8 +36,9 @@ export default function SuperManualBookMasterDataCard({
   handleDragLeave,
   handleDropImage,
   handleImageChange,
-  handleRemoveImage,
-  previewImage,
+  manualFile,
+  fileName,
+  previewFile,
 }: {
   book: ManualBooksInterfaceInterface;
   index: number;
@@ -60,20 +59,21 @@ export default function SuperManualBookMasterDataCard({
   isUpdateLoading: boolean;
   isDialogEditOpen: boolean;
   setIsDialogEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  previewImage: string;
+  manualFile: File | null;
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
   handleDragLeave: (e: React.DragEvent<HTMLDivElement>) => void;
   handleDropImage: (e: React.DragEvent<HTMLDivElement>) => void;
   handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleRemoveImage: () => void;
+  fileName: string;
+  previewFile: string;
 }) {
   const dropRef = useRef<HTMLDivElement>(null);
   const handleSetManual = () => {
     setData({
       title: book.title,
       dokumen: book.dokumen,
-    })
-  }
+    });
+  };
 
   return (
     <TableRow className="border border-line-20">
@@ -84,22 +84,28 @@ export default function SuperManualBookMasterDataCard({
           Lihat Dokumen
         </Link>
       </TableCell>
-      <TableCell className="text-center">{new Date(book.createdAt).toLocaleDateString()}</TableCell>
+      <TableCell className="text-center">
+        {new Date(book.createdAt).toLocaleDateString()}
+      </TableCell>
       <TableCell className="text-center flex items-center w-full">
         <div className="w-full flex flex-row items-center justify-center gap-x-2">
           {/* Aksi Edit */}
           <div className="w-full">
-            <AlertDialog open={isDialogEditOpen} onOpenChange={setIsDialogEditOpen}>
-              <AlertDialogTrigger onClick={() => {
-                handleSetManual();
-                setIsDialogEditOpen(true);
-              }} className="w-full">
+            <AlertDialog
+              open={isDialogEditOpen}
+              onOpenChange={setIsDialogEditOpen}>
+              <AlertDialogTrigger
+                onClick={() => {
+                  handleSetManual();
+                  setIsDialogEditOpen(true);
+                }}
+                className="w-full">
                 <div className="w-full text-sm bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                   Edit
                 </div>
               </AlertDialogTrigger>
 
-              <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
+              <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
                 <AlertDialogHeader className="flex flex-col max-h-[500px]">
                   <AlertDialogTitle className="text-center">
                     Master Data Manual Books
@@ -128,62 +134,67 @@ export default function SuperManualBookMasterDataCard({
                         className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                         placeholder="Masukkan Nama Manual Book"
                       />
-
                     </div>
 
-                    {/* <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                       <Label className="focus-within:text-primary-70 font-normal text-sm">
                         File
                       </Label>
-                      <div className="flex flex-col md:flex-row w-full">
-                        <div
-                          ref={dropRef}
-                          onDragOver={handleDragOver}
-                          onDragLeave={handleDragLeave}
-                          onDrop={handleDropImage}
-                          className={`w-full ${data?.dokumen || previewImage ? "md:w-8/12" : "w-full"
-                            }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
-                          <>
-                            <input
-                              type="file"
-                              id="file-input-image"
-                              name="file"
-                              accept="image/*,.pdf"
-                              onChange={handleImageChange}
-                              className="hidden"
-                            />
-                            <label
-                              htmlFor="file-input-image"
-                              className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
-                              Drag and drop file here or click to select file
-                            </label>
-                          </>
-                        </div>
 
-                        {(data?.dokumen || previewImage) && (
-                          <div className="relative md:ml-4 w-full mt-1">
-                            <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
-                              <div className="w-full h-full">
-                                <Image
-                                  src={data?.dokumen || previewImage}
-                                  width={1000}
-                                  height={1000}
-                                  alt="Preview"
-                                  className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
-                                />
+                      {/* atas */}
+                      <div className="flex flex-col gap-y-5 mt-3 md:mt-0">
+                        <div className="flex flex-col items-center w-full gap-y-5">
+                          <div className="flex flex-row justify-between w-full h-[80px] rounded-xl mb-[8px] bg-line-10 border border-primary-40 px-4">
+                            <div className="flex flex-col w-full justify-center gap-[9px]">
+                              <h6 className="text-[14px] md:text-[16px] text-black-80 font-normal">
+                                File Manual Book
+                                <span className="text-error-50 text-[14px] font-normal">
+                                  *
+                                </span>
+                              </h6>
+
+                              <div className="text-error-50 text-[14px]">
+                                Data Wajib Diisi!
                               </div>
-                              <button
-                                type="button"
-                                onClick={handleRemoveImage}
-                                className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
-                                <Trash />
-                              </button>
+                            </div>
+                            <div className="flex self-center items-center w-full md:justify-end">
+                              <input
+                                id="file-input-image"
+                                type="file"
+                                className="md:appearance-none hidden"
+                                onChange={handleImageChange}
+                              />
+                              <label
+                                htmlFor="file-input-image"
+                                className="flex items-center w-full md:w-5/12 h-[25px] md:h-[40px] rounded-[50px] justify-center font-normal text-sm hover:bg-primary-40 hover:text-line-10 border border-primary-40 text-primary-40 py-[10px] cursor-pointer">
+                                {fileName || "Upload"}
+                              </label>
+
+                              <Dialog>
+                                <DialogTrigger className="w-full md:w-3/12">
+                                  <div className="flex items-center text-sm justify-center w-full text-black-80 font-normal hover:text-primary-40 hover:border-b hover:border-line-20 ml-4 mr-2">
+                                    Lihat File
+                                  </div>
+                                </DialogTrigger>
+                                <DialogContent className="flex flex-col justify-between w-full bg-line-10">
+                                  <div className="fixed inset-0 flex items-center justify-center bg-neutral-900 bg-opacity-50 z-50">
+                                    <div className="bg-primary-100 rounded-xl shadow-md max-w-full">
+                                      {previewFile && (
+                                        <iframe
+                                          src={previewFile}
+                                          className="w-full h-64"
+                                        />
+                                      )}
+                                    </div>
+                                  </div>
+                                </DialogContent>
+                              </Dialog>
                             </div>
                           </div>
-                        )}
+                        </div>
                       </div>
-
-                    </div> */}
+                      {/* bawah */}
+                    </div>
 
                     <div className="w-full flex flex-row justify-between items-center gap-x-5">
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -202,13 +213,10 @@ export default function SuperManualBookMasterDataCard({
                   </form>
                 </AlertDialogHeader>
               </AlertDialogContent>
-
-              {/* Konten modal edit */}
             </AlertDialog>
           </div>
         </div>
       </TableCell>
     </TableRow>
-
   );
 }

@@ -24,8 +24,11 @@ import { getApplicationUserHistories, getService } from "@/services/api";
 import DataNotFound from "@/components/elements/data_not_found";
 import { useDebounce } from "@/hooks/useDebounce";
 import PaginationComponent from "@/components/elements/pagination";
+import { useRouter } from "next/navigation";
+import MobileHeadManageApprovalCard from "@/components/mobile_all_cards/mobileHeadManageApprovalCard";
 
 export default function HeadManageApprovalsScreen() {
+  const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
@@ -188,8 +191,22 @@ export default function HeadManageApprovalsScreen() {
       /> */}
 
       <div className="w-full">
-        {users && users.length > 0 && (
-          <VerificationAdminManageApprovalsTablePages users={users} />
+        {!isMobile ? (
+          <>
+            {users && users.length > 0 && (
+              <VerificationAdminManageApprovalsTablePages users={users} />
+            )}
+          </>
+        ) : (
+          <>
+            {users &&
+              users.length > 0 &&
+              users.map((user: UserApplicationHistoryInterface, i: number) => {
+                return (
+                  <MobileHeadManageApprovalCard key={i} index={i} user={user} />
+                );
+              })}
+          </>
         )}
       </div>
 
