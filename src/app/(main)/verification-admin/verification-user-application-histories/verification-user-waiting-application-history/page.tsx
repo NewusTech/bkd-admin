@@ -24,6 +24,7 @@ import {
 import DataNotFound from "@/components/elements/data_not_found";
 import { useDebounce } from "@/hooks/useDebounce";
 import PaginationComponent from "@/components/elements/pagination";
+import MobileDivisionVerificationAdminApplicationHistoryCard from "@/components/mobile_all_cards/mobileDivisionVerificationAdminApplicationHistoryCard";
 
 export default function VerificationUserApplicationHistoriesScreen() {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -178,18 +179,28 @@ export default function VerificationUserApplicationHistoriesScreen() {
           </div>
         </div>
       </div>
-      {/* <FilterDataPages
-        startDate={startDate as Date}
-        setStartDate={setStartDate}
-        endDate={endDate as Date}
-        setEndDate={setEndDate}
-        search={search}
-        setSearch={setSearch}
-      /> */}
 
       <div className="w-full">
-        {users && users.length > 0 && (
-          <VerificationUserApplicationHistoryTablePages users={users} />
+        {!isMobile ? (
+          <>
+            {users && users.length > 0 && (
+              <VerificationUserApplicationHistoryTablePages users={users} />
+            )}
+          </>
+        ) : (
+          <>
+            {users &&
+              users.length > 0 &&
+              users.map((user: UserApplicationHistoryInterface, i: number) => {
+                return (
+                  <MobileDivisionVerificationAdminApplicationHistoryCard
+                    key={i}
+                    index={i}
+                    user={user}
+                  />
+                );
+              })}
+          </>
         )}
       </div>
 

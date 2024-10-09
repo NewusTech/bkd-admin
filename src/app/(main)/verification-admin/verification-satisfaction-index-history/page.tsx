@@ -7,38 +7,50 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   AreasInterface,
-  SatisfactionHistoryInterface,
+  SatisfactionIndexHistoryReportInterface,
   ServiceInterface,
 } from "@/types/interface";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   getAreas,
-  getSatisfactionUser,
-  getServiceByAreas,
+  getSatisfactionIndexReport,
+  getService,
 } from "@/services/api";
-import { Label } from "@/components/ui/label";
-import DateFormInput from "@/components/elements/date_form_input";
-import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { Loader } from "lucide-react";
-import { set } from "date-fns";
 import PaginationComponent from "@/components/elements/pagination";
 import { useDebounce } from "@/hooks/useDebounce";
-import VerificationSatisfactionIndexTablePages from "@/components/tables/verification_admin_satisfaction_index_history_table";
 import MobileVerificationSatisfactionIndexCardPages from "@/components/mobile_all_cards/mobileSatisfactionIndexVerificationCard";
+import { Printer } from "@phosphor-icons/react";
+import VerificationSatisfactionIndexTablePages from "@/components/tables/verification_admin_satisfaction_index_table";
 
-export default function VerificationSatisfactionIndexScreen() {
+export default function VerificationSatisfactionIndexScreen({
+  params,
+}: {
+  params: { serviceId: number };
+}) {
+  console.log(params?.serviceId, "ini params");
+
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
   const deboucedSearch = useDebounce(search, 500);
-  // const limitItem = 35;
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
   const [startDate, setStartDate] = useState<Date | undefined>(firstDayOfMonth);
   const [endDate, setEndDate] = useState<Date | undefined>(new Date());
   const [isLoading, setIsLoading] = useState(false);
-  const [indexes, setIndexes] = useState<SatisfactionHistoryInterface[]>();
+  const [reports, setReports] = useState<
+    SatisfactionIndexHistoryReportInterface[]
+  >([]);
+  const [areas, setAreas] = useState<AreasInterface[]>([]);
+  const [services, setServices] = useState<ServiceInterface[]>([]);
   const [pagination, setPagination] = useState({
     currentPage: 1,
     perPage: 10,
@@ -51,23 +63,14 @@ export default function VerificationSatisfactionIndexScreen() {
     : undefined;
   const endDateFormatted = endDate ? formatDate(new Date(endDate)) : undefined;
 
-  const fetchSatisfactionHistory = async (
+  const fetchSatisfactionIndexHistoryReports = async (
     page: number,
-    limit: number,
-    search: string,
-    start_date: string,
-    end_date: string
+    limit: number
   ) => {
     try {
-      const response = await getSatisfactionUser(
-        page,
-        limit,
-        search,
-        start_date,
-        end_date
-      );
+      const response = await getSatisfactionIndexReport(page, limit);
 
-      setIndexes(response.data);
+      setReports(response.data);
       setPagination((prev) => ({
         ...prev,
         currentPage: page,
@@ -80,18 +83,39 @@ export default function VerificationSatisfactionIndexScreen() {
   };
 
   useEffect(() => {
-    fetchSatisfactionHistory(
-      1,
-      10,
-      deboucedSearch,
-      startDateFormatted ?? "",
-      endDateFormatted ?? ""
-    );
-  }, [deboucedSearch, startDateFormatted, endDateFormatted]);
+    fetchSatisfactionIndexHistoryReports(1, 5);
+  }, []);
+
+  console.log(reports, "ini reports");
+
+  const fetchAreas = async (page: number, limit: number, search: string) => {
+    try {
+      const response = await getAreas(page, limit, search);
+
+      setAreas(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchService = async (page: number, limit: number, search: string) => {
+    try {
+      const response = await getService(page, limit, search);
+
+      setServices(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAreas(1, 50, "");
+    fetchService(1, 50, "");
+  }, []);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchSatisfactionHistory(newPage, 10, "", "", "");
+      fetchSatisfactionIndexHistoryReports(newPage, 5);
     }
   };
 
@@ -103,34 +127,106 @@ export default function VerificationSatisfactionIndexScreen() {
           Indeks Kepuasan
         </h2>
 
-        <div
-          className={`w-full flex flex-col md:flex-row ${!isMobile ? "" : "p-3 rounded-lg shadow-md"} bg-line-10 gap-y-5 gap-x-5`}>
-          <div className="w-full md:w-7/12">
-            <SearchPages
-              search={search}
-              change={(e: any) => setSearch(e.target.value)}
-              placeholder="Pencarian"
-            />
+        <div className="w-full flex flex-col gap-y-3">
+          <div className="w-full flex flex-row gap-x-5">
+            <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
+              <Select
+              // onValueChange={handleSelectStatusChange}
+              >
+                <SelectTrigger
+                  className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                  {/* <Checks className="w-6 h-6 text-black-80" /> */}
+                  <SelectValue
+                    placeholder="Pilih Bidang"
+                    className="text-black-80 tex-[14px] w-full"
+                  />
+                </SelectTrigger>
+                <SelectContent className="bg-line-10">
+                  <div className="pt-2">
+                    {areas &&
+                      areas.map((item: AreasInterface, i: number) => {
+                        return (
+                          <SelectItem
+                            key={i}
+                            className={`w-full px-4`}
+                            value={item.id.toString()}>
+                            {item?.nama}
+                          </SelectItem>
+                        );
+                      })}
+                  </div>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
+              <Select
+              // onValueChange={handleSelectStatusChange}
+              >
+                <SelectTrigger
+                  className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                  {/* <Checks className="w-6 h-6 text-black-80" /> */}
+                  <SelectValue
+                    placeholder="Pilih Layanan"
+                    className="text-black-80 tex-[14px] w-full"
+                  />
+                </SelectTrigger>
+                <SelectContent className="bg-line-10">
+                  <div className="pt-2">
+                    {services &&
+                      services.map((item: ServiceInterface, i: number) => {
+                        return (
+                          <SelectItem
+                            key={i}
+                            className={`w-full px-4`}
+                            value={item.id.toString()}>
+                            {item?.nama}
+                          </SelectItem>
+                        );
+                      })}
+                  </div>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
-          <div className="flex flex-row justify-center items-center w-full gap-x-3">
-            <DatePages
-              date={startDate ?? null}
-              setDate={(e) => setStartDate(e ?? undefined)}
-            />
-            <p className="text-center">to</p>
-            <DatePages
-              date={endDate ?? null}
-              setDate={(e) => setEndDate(e ?? undefined)}
-            />
+          <div
+            className={`w-full flex flex-col md:flex-row ${!isMobile ? "" : "p-3 rounded-lg shadow-md"} bg-line-10 gap-y-5 gap-x-5`}>
+            <div className="w-full md:w-7/12">
+              <SearchPages
+                search={search}
+                change={(e: any) => setSearch(e.target.value)}
+                placeholder="Pencarian"
+              />
+            </div>
+
+            <div className="flex flex-row justify-center items-center w-full gap-x-3">
+              <DatePages
+                date={startDate ?? null}
+                setDate={(e) => setStartDate(e ?? undefined)}
+              />
+              <p className="text-center">to</p>
+              <DatePages
+                date={endDate ?? null}
+                setDate={(e) => setEndDate(e ?? undefined)}
+              />
+            </div>
+
+            <div className="w-5/12">
+              <Button className="w-full flex flex-row gap-x-4 text-sm bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
+                <Printer className="w-6 h-6 text-line-10" />
+
+                <span>Print</span>
+              </Button>
+            </div>
           </div>
         </div>
 
         <div className="w-full">
           {!isMobile ? (
             <>
-              {indexes && indexes.length > 0 && (
-                <VerificationSatisfactionIndexTablePages indexes={indexes} />
+              {reports && reports.length > 0 && (
+                <VerificationSatisfactionIndexTablePages reports={reports} />
               )}
             </>
           ) : (
@@ -138,15 +234,15 @@ export default function VerificationSatisfactionIndexScreen() {
           )}
         </div>
 
-        {indexes && indexes.length > 10 && (
-          <div className="w-full">
-            <PaginationComponent
-              currentPage={pagination.currentPage}
-              totalPages={pagination.totalPages}
-              onPageChange={handlePageChange}
-            />
-          </div>
-        )}
+        {/* {reports && reports.length! < 10 && ( */}
+        <div className="w-full">
+          <PaginationComponent
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
+        {/* )} */}
       </div>
     </section>
   );

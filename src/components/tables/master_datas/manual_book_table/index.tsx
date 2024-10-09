@@ -19,15 +19,16 @@ export default function SuperManualBookMasterDataTablePages({
   isDialogEditOpen,
   setIsDialogEditOpen,
   handleUpdateManualBook,
-  previewImage,
+  manualFile,
   handleDragOver,
   handleDragLeave,
   handleDropImage,
   handleImageChange,
-  handleRemoveImage,
+  fileName,
+  previewFile,
 }: {
   books: any;
-  data: { dokumen: string, title: string };
+  data: { dokumen: string; title: string };
   setData: React.Dispatch<
     React.SetStateAction<{
       title: string;
@@ -41,12 +42,13 @@ export default function SuperManualBookMasterDataTablePages({
     e: React.FormEvent<HTMLFormElement>,
     id: number
   ) => void;
-  previewImage: string;
+  manualFile: File | null;
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
   handleDragLeave: (e: React.DragEvent<HTMLDivElement>) => void;
   handleDropImage: (e: React.DragEvent<HTMLDivElement>) => void;
   handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleRemoveImage: () => void;
+  fileName: string;
+  previewFile: string;
 }) {
   return (
     <>
@@ -74,12 +76,13 @@ export default function SuperManualBookMasterDataTablePages({
                 isDialogEditOpen={isDialogEditOpen}
                 setIsDialogEditOpen={setIsDialogEditOpen}
                 handleUpdateManualBook={handleUpdateManualBook}
-                previewImage={previewImage}
+                manualFile={manualFile}
                 handleDragOver={handleDragOver}
                 handleDragLeave={handleDragLeave}
                 handleDropImage={handleDropImage}
                 handleImageChange={handleImageChange}
-                handleRemoveImage={handleRemoveImage}
+                fileName={fileName}
+                previewFile={previewFile}
               />
             ))}
         </TableBody>

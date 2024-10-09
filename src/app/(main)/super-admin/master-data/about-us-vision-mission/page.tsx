@@ -1,16 +1,9 @@
 "use client";
 
 export const dynamic = "force-dynamic";
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import { useQuill } from "react-quilljs";
-import SearchPages from "@/components/elements/search";
 import { getAboutVisionMision, updateAboutVisionMision } from "@/services/api";
-import {
-  AboutUsVisionMisionInterface,
-  AboutVisionMisionInterface,
-} from "@/types/interface";
-import React, { useEffect, useMemo, useState } from "react";
+import { AboutVisionMisionInterface } from "@/types/interface";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import SuperAboutUsVisionMisionMasterDataTablePages from "@/components/tables/master_datas/about_us_visiob_mision_table";
@@ -20,7 +13,6 @@ export default function AboutUsVisionMisionScreen() {
   const [search, setSearch] = useState("");
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
-  const limitItem = 30;
   const [abouts, setAbouts] = useState<AboutVisionMisionInterface>();
   const [data, setData] = useState({
     kontak: "",
