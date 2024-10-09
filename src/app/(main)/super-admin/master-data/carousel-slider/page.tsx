@@ -353,7 +353,7 @@ export default function CarouselSliderScreen() {
                       Master Data Carousel Slider
                     </DrawerTitle>
                     <DrawerDescription className="text-center">
-                      Input data yang diperlukan
+                      <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
                     </DrawerDescription>
 
                     <form

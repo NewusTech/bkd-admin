@@ -75,7 +75,7 @@ export default function SuperLocationMapsMasterDataTablePages({
   return (
     <div className="w-full flex flex-col items-center gap-y-5">
       <div className="w-full flex flex-col md:flex-row bg-line-10 rounded-lg shadow-md py-3 items-center px-3 gap-y-5">
-        <div className="w-full text-center md:text-start text-lg">
+        <div className="w-full text-center md:text-start text-[14px] md:text-[16px]">
           Data Master Lokasi Maps <br /> Sipandu BKD Lampung Timur
         </div>
         {/* <h1 className="text-lg">Kelola Bidang</h1> */}
@@ -168,6 +168,7 @@ export default function SuperLocationMapsMasterDataTablePages({
                             )}
                           </Button>
                         </div>
+
                       </form>
                     </AlertDialogHeader>
                   </AlertDialogContent>
@@ -271,7 +272,7 @@ export default function SuperLocationMapsMasterDataTablePages({
             <Button
               // disabled={isDeleteLoading ? true : false}
               // onClick={() => handleDeleteArea(area?.slug)}
-              className="rounded-lg bg-error-60 hover:bg-error-70 text-line-10  transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+              className="rounded-lg bg-error-60 hover:bg-error-70 text-line-10  transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full text-[14px] md:text-[16px]">
               {/* {isDeleteLoading ? (
                 <Loader className="animate-spin" />
               ) : isDeleteLoading ? (
@@ -294,21 +295,19 @@ export default function SuperLocationMapsMasterDataTablePages({
           </div>
 
           <div className="w-full">
-            <div className="w-full h-[300px] md:h-[500px]">
-              {abouts && (
-                <iframe
-                  src={iframeSrc}
-                  width="600"
-                  height="500"
-                  style={{ border: "0" }}
-                  className="border-0 w-full rounded-xl"
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade">
-                  {abouts?.lang}
-                </iframe>
-              )}
-            </div>
+            {abouts && (
+              <iframe
+                src={iframeSrc}
+                width="600"
+                height="500"
+                style={{ border: "0" }}
+                className="border-0 w-full rounded-xl h-[300px] md:h-[500px]"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade">
+                {abouts?.lang}
+              </iframe>
+            )}
           </div>
         </section>
       </div>

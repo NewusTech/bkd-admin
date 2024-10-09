@@ -111,7 +111,7 @@ export default function MobileStructureOrganizationMasterDataCard({
   return (
     <section className="w-full bg-line-10 rounded-lg shadow-md flex flex-col gap-y-7 p-4">
       <div className="w-full flex justify-end items-end">
-        <div className="w-full text-xs md:text-sm flex justify-end">
+        <div className="w-full text-[14px] md:text-[16px] flex justify-end">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -136,7 +136,7 @@ export default function MobileStructureOrganizationMasterDataCard({
                             handleSetGallery();
                             setIsDialogEditOpen(true);
                           }}
-                          className="h-10 text-xs md:text-sm rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-full">
+                          className="h-10 text-[14px] md:text-[16px] rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-full">
                           Edit
                         </DrawerTrigger>
                         <DrawerContent className="bg-white">
@@ -156,10 +156,9 @@ export default function MobileStructureOrganizationMasterDataCard({
 
                                 <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                                   <Label className="focus-within:text-primary-70 font-normal 
-                                  text-xs md:text-sm text-left">
+                                  text-[14px] md:text-[16px] text-left">
                                     Nama Lengkap
                                   </Label>
-
                                   <Input
                                     id="nama"
                                     name="nama"
@@ -177,10 +176,9 @@ export default function MobileStructureOrganizationMasterDataCard({
                                 </div>
 
                                 <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                                  <Label className="focus-within:text-primary-70 font-normal text-xs md:text-sm text-left">
+                                  <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
                                     Jabatan
                                   </Label>
-
                                   <Input
                                     id="jabatan"
                                     name="jabatan"
@@ -198,10 +196,9 @@ export default function MobileStructureOrganizationMasterDataCard({
                                 </div>
 
                                 <div className="flex flex-col w-full">
-                                  <Label className="text-neutral-700 font-normal mb-2 text-xs md:text-sm text-left">
+                                  <Label className="text-neutral-700 font-normal mb-2 text-[14px] md:text-[16px] text-left">
                                     Foto Diri
                                   </Label>
-
                                   <div className="flex flex-col md:flex-row w-full">
                                     <div
                                       ref={dropRef}
@@ -221,12 +218,11 @@ export default function MobileStructureOrganizationMasterDataCard({
                                         />
                                         <label
                                           htmlFor="file-input-image"
-                                          className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                          className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
                                           Drag and drop file here or click to select file
                                         </label>
                                       </div>
                                     </div>
-
                                     {(previewImage || data?.image) && (
                                       <div className="relative md:ml-4 w-full mt-1">
                                         <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
@@ -254,13 +250,13 @@ export default function MobileStructureOrganizationMasterDataCard({
                               </div>
                               <div className="flex gap-4 justify-between">
                                 <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-xs">
-                                  <DrawerDescription className="text-xs md:text-sm">Batal</DrawerDescription>
+                                  <DrawerDescription className="text-[14px] md:text-[16px]">Batal</DrawerDescription>
                                 </DrawerClose>
                                 <Button
                                   title="Simpan Data"
                                   type="submit"
                                   disabled={isUpdateLoading ? true : false}
-                                  className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                                  className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] md:text-[16px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                                   {isUpdateLoading ? (
                                     <Loader className="animate-spin" />
                                   ) : (
@@ -268,6 +264,7 @@ export default function MobileStructureOrganizationMasterDataCard({
                                   )}
                                 </Button>
                               </div>
+
                             </form>
                           </DrawerHeader>
                         </DrawerContent>
@@ -280,7 +277,7 @@ export default function MobileStructureOrganizationMasterDataCard({
                       onClick={() =>
                         handleDeleteStructureOrganization(organization?.slug)
                       }
-                      className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 text-xs md:text-sm">
+                      className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 text-[14px] md:text-[16px]">
                       {isDeleteLoading ? (
                         <Loader className="animate-spin" />
                       ) : isDeleteLoading ? (

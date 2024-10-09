@@ -92,7 +92,6 @@ export default function MobileRegulationMasterDataCard({
     <section className="w-full bg-line-10 rounded-lg shadow-md flex flex-col gap-y-7 p-4">
       <div className="w-full grid grid-cols-3">
         <div className="w-full text-[14px] md:text-[16px]">No.</div>
-
         <div className="w-full col-span-2 text-[14px] md:text-[16px]">
           : {index + 1}
         </div>
@@ -100,7 +99,6 @@ export default function MobileRegulationMasterDataCard({
 
       <div className="w-full grid grid-cols-3">
         <div className="w-full text-[14px] md:text-[16px]">Judul Regulasi</div>
-
         <div className="w-full col-span-2 text-[14px] md:text-[16px]">
           : {regulation?.title && regulation?.title}
         </div>
@@ -108,7 +106,6 @@ export default function MobileRegulationMasterDataCard({
 
       <div className="w-full grid grid-cols-3">
         <div className="w-full text-[14px] md:text-[16px]">File</div>
-
         <div className="w-full col-span-2 text-[14px] md:text-[16px]">
           {regulation?.file && (
             <iframe
@@ -127,7 +124,7 @@ export default function MobileRegulationMasterDataCard({
               handleSetRegulation();
               setIsDialogEditOpen(true);
             }}
-            className="h-10 text-xs md:text-sm rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-full">Edit
+            className="h-10 text-[14px] md:text-[16px] rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-full">Edit
           </DrawerTrigger>
           <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
             <div className="w-full flex flex-col gap-y-3 verticalScroll">
@@ -144,11 +141,11 @@ export default function MobileRegulationMasterDataCard({
                   handleUpdateRegulations(e, regulation?.id)
                 }
                 className="w-full flex flex-col gap-y-3 verticalScroll">
+
                 <div className="flex flex-col gap-y-3 w-full">
-                  <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                  <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                     Title
                   </Label>
-
                   <Input
                     type="text"
                     name="title"
@@ -162,10 +159,9 @@ export default function MobileRegulationMasterDataCard({
                 </div>
 
                 <div className="flex flex-col w-full">
-                  <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                  <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                     File
                   </Label>
-
                   <div className="flex flex-col md:flex-row w-full">
                     <div
                       ref={dropRef}
@@ -185,12 +181,11 @@ export default function MobileRegulationMasterDataCard({
                         />
                         <label
                           htmlFor="file-input-image"
-                          className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                          className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
                           Drag and drop file here or click to select file
                         </label>
                       </div>
                     </div>
-
                     {regulation?.file && (
                       <div className="relative md:ml-4 w-full mt-1">
                         <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
@@ -214,14 +209,14 @@ export default function MobileRegulationMasterDataCard({
                 </div>
 
                 <div className="flex gap-4 justify-between">
-                  <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-xs">
-                    <DrawerDescription className="text-xs md:text-sm">Batal</DrawerDescription>
+                  <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-[14px] md:text-[16px]">
+                    <DrawerDescription className="text-[14px] md:text-[16px]">Batal</DrawerDescription>
                   </DrawerClose>
                   <Button
                     title="Simpan Data"
                     type="submit"
                     disabled={isUpdateLoading ? true : false}
-                    className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                    className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] md:text-[16px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                     {isUpdateLoading ? (
                       <Loader className="animate-spin" />
                     ) : (
@@ -229,6 +224,7 @@ export default function MobileRegulationMasterDataCard({
                     )}
                   </Button>
                 </div>
+
               </form>
             </div>
           </DrawerContent>
