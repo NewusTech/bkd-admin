@@ -133,59 +133,59 @@ export default function SuperManualBookMasterDataCard({
                       />
                     </div>
 
-                      {/* atas */}
-                      <div className="flex flex-col gap-y-5 mt-3 md:mt-0">
-                        <div className="flex flex-col items-center w-full gap-y-5">
-                          <div className="flex flex-row justify-between w-full h-[80px] rounded-xl mb-[8px] bg-line-10 border border-primary-40 px-4">
-                            <div className="flex flex-col w-full justify-center gap-[9px]">
-                              <h6 className="text-[14px] md:text-[16px] text-black-80 font-normal">
-                                File Manual Book
-                                <span className="text-error-50 text-[14px] font-normal">
-                                  *
-                                </span>
-                              </h6>
+                    {/* atas */}
+                    <div className="flex flex-col gap-y-5 mt-3 md:mt-0">
+                      <div className="flex flex-col items-center w-full gap-y-5">
+                        <div className="flex flex-row justify-between w-full h-[80px] rounded-xl mb-[8px] bg-line-10 border border-primary-40 px-4">
+                          <div className="flex flex-col w-full justify-center gap-[9px]">
+                            <h6 className="text-[14px] md:text-[16px] text-black-80 font-normal">
+                              File Manual Book
+                              <span className="text-error-50 text-[14px] font-normal">
+                                *
+                              </span>
+                            </h6>
 
-                              <div className="text-error-50 text-[14px]">
-                                Data Wajib Diisi!
-                              </div>
+                            <div className="text-error-50 text-[14px]">
+                              Data Wajib Diisi!
                             </div>
-                            <div className="flex self-center items-center w-full md:justify-end">
-                              <input
-                                id="file-input-image"
-                                type="file"
-                                className="md:appearance-none hidden"
-                                onChange={handleImageChange}
-                              />
-                              <label
-                                htmlFor="file-input-image"
-                                className="flex items-center w-full md:w-5/12 h-[25px] md:h-[40px] rounded-[50px] justify-center font-normal text-sm hover:bg-primary-40 hover:text-line-10 border border-primary-40 text-primary-40 py-[10px] cursor-pointer">
-                                {fileName || "Upload"}
-                              </label>
+                          </div>
+                          <div className="flex self-center items-center w-full md:justify-end">
+                            <input
+                              id="file-input-image"
+                              type="file"
+                              className="md:appearance-none hidden"
+                              onChange={handleImageChange}
+                            />
+                            <label
+                              htmlFor="file-input-image"
+                              className="flex items-center w-full md:w-5/12 h-[25px] md:h-[40px] rounded-[50px] justify-center font-normal text-sm hover:bg-primary-40 hover:text-line-10 border border-primary-40 text-primary-40 py-[10px] cursor-pointer">
+                              {fileName || "Upload"}
+                            </label>
 
-                              <Dialog>
-                                <DialogTrigger className="w-full md:w-3/12">
-                                  <div className="flex items-center text-sm justify-center w-full text-black-80 font-normal hover:text-primary-40 hover:border-b hover:border-line-20 ml-4 mr-2">
-                                    Lihat File
+                            <Dialog>
+                              <DialogTrigger className="w-full md:w-3/12">
+                                <div className="flex items-center text-sm justify-center w-full text-black-80 font-normal hover:text-primary-40 hover:border-b hover:border-line-20 ml-4 mr-2">
+                                  Lihat File
+                                </div>
+                              </DialogTrigger>
+                              <DialogContent className="flex flex-col justify-between w-full bg-line-10">
+                                <div className="fixed inset-0 flex items-center justify-center bg-neutral-900 bg-opacity-50 z-50">
+                                  <div className="bg-primary-100 rounded-xl shadow-md max-w-full">
+                                    {previewFile && (
+                                      <iframe
+                                        src={previewFile}
+                                        className="w-full h-64"
+                                      />
+                                    )}
                                   </div>
-                                </DialogTrigger>
-                                <DialogContent className="flex flex-col justify-between w-full bg-line-10">
-                                  <div className="fixed inset-0 flex items-center justify-center bg-neutral-900 bg-opacity-50 z-50">
-                                    <div className="bg-primary-100 rounded-xl shadow-md max-w-full">
-                                      {previewFile && (
-                                        <iframe
-                                          src={previewFile}
-                                          className="w-full h-64"
-                                        />
-                                      )}
-                                    </div>
-                                  </div>
-                                </DialogContent>
-                              </Dialog>
-                            </div>
+                                </div>
+                              </DialogContent>
+                            </Dialog>
                           </div>
                         </div>
                       </div>
-                      {/* bawah */}
+                    </div>
+                    {/* bawah */}
 
                     <div className="w-full flex flex-row justify-between items-center gap-x-5">
                       <AlertDialogCancel>Batal</AlertDialogCancel>

@@ -26,6 +26,7 @@ import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import EditorProvide from "../pages/areas";
 import CombinedReadMoreRichTextDisplay from "../ui/CombinedReadMoreRichTextDisplay";
+import ReadMore from "../ui/ReadMore";
 
 export default function SuperServicesMasterDataCard({
   service,
@@ -92,9 +93,10 @@ export default function SuperServicesMasterDataCard({
       <TableCell className="text-left">{service.nama}</TableCell>
       <TableCell className="text-left">{service.penanggung_jawab}</TableCell>
       <TableCell className="text-left">
-        {service.desc && (
+        <ReadMore text={service.desc}></ReadMore>
+        {/* {service.desc && (
           <CombinedReadMoreRichTextDisplay content={service.desc} keys={true} />
-        )}
+        )} */}
       </TableCell>
       <TableCell className="text-center flex items-center w-full">
         <div className="w-full flex flex-row items-center justify-center gap-x-2">
