@@ -75,7 +75,7 @@ export default function SuperLocationMapsMasterDataTablePages({
   return (
     <div className="w-full flex flex-col items-center gap-y-5">
       <div className="w-full flex flex-col md:flex-row bg-line-10 rounded-lg shadow-md py-3 items-center px-3 gap-y-5">
-        <div className="w-full text-center md:text-start text-lg md:text-lg">
+        <div className="w-full text-center md:text-start text-lg">
           Data Master Lokasi Maps <br /> Sipandu BKD Lampung Timur
         </div>
         {/* <h1 className="text-lg">Kelola Bidang</h1> */}
@@ -93,8 +93,8 @@ export default function SuperLocationMapsMasterDataTablePages({
                       setIsDialogEditOpen(true);
                     }}
                     className="w-full">
-                    <div className="w-full text-sm bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 *:
-                  md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2
+                    <div className="w-full text-[14px] md:text-[16px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 *:
+                  px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2
                     ">
                       Edit
                     </div>
@@ -105,7 +105,7 @@ export default function SuperLocationMapsMasterDataTablePages({
                         Master Data Lokasi
                       </AlertDialogTitle>
                       <AlertDialogDescription className="text-center">
-                        <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
+                        <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                       </AlertDialogDescription>
                       <form
                         onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
@@ -113,13 +113,13 @@ export default function SuperLocationMapsMasterDataTablePages({
                         }
                         className="w-full flex flex-col gap-y-3 max-h-[500px]">
                         <div className="w-full flex flex-col gap-y-3 verticalScroll">
+
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                             <Label
                               htmlFor="long"
-                              className="focus-within:text-primary-70 font-normal text-sm">
+                              className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                               Bujur
                             </Label>
-
                             <Input
                               id="long"
                               name="long"
@@ -137,10 +137,9 @@ export default function SuperLocationMapsMasterDataTablePages({
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                             <Label
                               htmlFor="lang"
-                              className="focus-within:text-primary-70 font-normal text-sm">
+                              className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                               Lintang
                             </Label>
-
                             <Input
                               id="lang"
                               name="lang"
@@ -157,8 +156,7 @@ export default function SuperLocationMapsMasterDataTablePages({
                         </div>
 
                         <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
-
+                          <AlertDialogCancel>Batal</AlertDialogCancel>
                           <Button
                             type="submit"
                             disabled={isUpdateLoading ? true : false}
@@ -183,8 +181,8 @@ export default function SuperLocationMapsMasterDataTablePages({
                       handleSetAbout();
                       setIsDialogEditOpen(true);
                     }}
-                    className="w-full min-h-[40px] md:min-h-[60px] text-line-10 text-[13px] md:text-lg md:bg-primary-40 md:hover:bg-primary-70 rounded-lg">
-                    <div className="w-full text-sm bg-line-40 bg-opacity-20 flex items-center justify-center hover:bg-line-70 h-10 text-black-80 hover:text-line-10 rounded-lg">
+                    className="w-full min-h-[40px] md:min-h-[60px] text-line-10 text-[14px] md:text-[16px] md:bg-primary-40 md:hover:bg-primary-70 rounded-lg">
+                    <div className="w-full text-[14px] md:text-[16px] bg-line-40 bg-opacity-20 flex items-center justify-center hover:bg-line-70 h-10 text-black-80 hover:text-line-10 rounded-lg">
                       Edit
                     </div>
                   </DrawerTrigger>
@@ -193,9 +191,8 @@ export default function SuperLocationMapsMasterDataTablePages({
                       <DrawerTitle className="text-center">
                         Master Data Lokasi Maps
                       </DrawerTitle>
-
                       <DrawerDescription className="text-center">
-                        <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
+                        <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                       </DrawerDescription>
 
                       <form
@@ -204,13 +201,13 @@ export default function SuperLocationMapsMasterDataTablePages({
                         }
                         className="w-full flex flex-col gap-y-5 verticalScroll">
                         <div className="w-full flex flex-col gap-y-3 verticalScroll">
+
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                             <Label
                               htmlFor="long"
-                              className="focus-within:text-primary-70 font-normal text-sm">
+                              className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                               Bujur
                             </Label>
-
                             <Input
                               id="long"
                               name="long"
@@ -228,10 +225,9 @@ export default function SuperLocationMapsMasterDataTablePages({
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                             <Label
                               htmlFor="lang"
-                              className="focus-within:text-primary-70 font-normal text-sm">
+                              className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                               Lintang
                             </Label>
-
                             <Input
                               id="lang"
                               name="lang"
@@ -248,14 +244,14 @@ export default function SuperLocationMapsMasterDataTablePages({
                         </div>
 
                         <div className="flex gap-4 justify-between">
-                          <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-xs">
-                            <DrawerDescription className="text-xs md:text-sm">Batal</DrawerDescription>
+                          <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-[14px] md:text-[16px]">
+                            <DrawerDescription className="text-[14px] md:text-[16px]">Batal</DrawerDescription>
                           </DrawerClose>
                           <Button
                             title="Simpan Data"
                             type="submit"
                             disabled={isUpdateLoading ? true : false}
-                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] md:text-[16px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                             {isUpdateLoading ? (
                               <Loader className="animate-spin" />
                             ) : (
@@ -292,7 +288,7 @@ export default function SuperLocationMapsMasterDataTablePages({
       <div className="w-full flex flex-col gap-y-5 bg-line-10 p-3 rounded-lg shadow-md">
         <section className="w-full flex snap-start scroll-mt-24 flex-col py-8 md:py-12 px-4 md:px-20 gap-y-8">
           <div className="w-full flex flex-col items-center gap-y-3">
-            <h5 className="text-center text-black-80 px-6 md:px-0 text-xl md:text-3xl font-semibold">
+            <h5 className="text-center text-black-80 px-6 md:px-0 text-lg font-semibold">
               MAPS BKD LAMPUNG TIMUR
             </h5>
           </div>

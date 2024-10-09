@@ -72,7 +72,7 @@ export default function SuperFaqsMasterDataCard({
                   setIsDialogEditOpen(true);
                 }}
                 className="w-full">
-                <div className="w-full text-sm bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2x ">
+                <div className="w-full text-[14px] md:text-[16px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2x ">
                   Edit
                 </div>
               </AlertDialogTrigger>
@@ -84,16 +84,17 @@ export default function SuperFaqsMasterDataCard({
                   <AlertDialogDescription className="text-center">
                     Input data yang diperlukan
                   </AlertDialogDescription>
+
                   <form
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                       handleUpdateFaqs(e, faq?.id)
                     }
                     className="w-full flex flex-col gap-y-3 verticalScroll">
+
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
+                      <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                         Pertanyaan
                       </Label>
-
                       <Input
                         id="question"
                         name="question"
@@ -108,10 +109,9 @@ export default function SuperFaqsMasterDataCard({
                     </div>
 
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
+                      <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                         Jawaban
                       </Label>
-
                       <Input
                         id="answer"
                         name="answer"
@@ -127,7 +127,6 @@ export default function SuperFaqsMasterDataCard({
 
                     <div className="w-full flex flex-row justify-between items-center gap-x-5">
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
-
                       <Button
                         type="submit"
                         disabled={isUpdateLoading ? true : false}
@@ -139,6 +138,7 @@ export default function SuperFaqsMasterDataCard({
                         )}
                       </Button>
                     </div>
+
                   </form>
                 </AlertDialogHeader>
               </AlertDialogContent>

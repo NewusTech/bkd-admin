@@ -39,6 +39,7 @@ import { Loader } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import EditorProvide from "@/components/pages/areas";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import TypingEffect from "@/components/ui/TypingEffect";
 
 export default function TermConditionScreen() {
   const router = useRouter();
@@ -138,19 +139,20 @@ export default function TermConditionScreen() {
                         Master Data Syarat dan Ketentuan
                       </AlertDialogTitle>
                       <AlertDialogDescription className="text-center">
-                        Input data yang diperlukan
+                        <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                       </AlertDialogDescription>
+
                       <form
                         onSubmit={handleUpdateTerms}
                         className="w-full flex flex-col gap-y-3 max-h-[500px]">
                         <div className="w-full verticalScroll flex flex-col gap-y-5">
+
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                             <div className="w-full flex flex-row justify-between items-center">
-                              <Label className="focus-within:text-primary-70 font-normal text-[16px]">
+                              <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                                 Ketentuan
                               </Label>
                             </div>
-
                             <div className="w-full h-full verticalScroll border border-line-20 rounded-lg">
                               <EditorProvide
                                 content={data.desc}
@@ -163,11 +165,10 @@ export default function TermConditionScreen() {
 
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                             <div className="w-full flex flex-row justify-between items-center">
-                              <Label className="focus-within:text-primary-70 font-normal text-[16px]">
+                              <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                                 Syarat
                               </Label>
                             </div>
-
                             <div className="w-full h-full verticalScroll border border-line-20 rounded-lg">
                               <EditorProvide
                                 content={data.privacy_policy}
@@ -181,7 +182,6 @@ export default function TermConditionScreen() {
 
                         <div className="w-full flex flex-row justify-between items-center gap-x-5">
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
-
                           <Button
                             type="submit"
                             disabled={isUpdateLoading ? true : false}
@@ -193,6 +193,7 @@ export default function TermConditionScreen() {
                             )}
                           </Button>
                         </div>
+
                       </form>
                     </AlertDialogHeader>
                   </AlertDialogContent>
@@ -205,7 +206,7 @@ export default function TermConditionScreen() {
                     onClick={() => {
                       setIsDialogEditOpen(true);
                     }}
-                    className="w-full min-h-[40px] md:min-h-[60px] text-line-10 text-[13px] md:text-lg md:bg-primary-40 md:hover:bg-primary-70 rounded-lg">
+                    className="w-full min-h-[40px] md:min-h-[60px] text-line-10 text-[14px] md:text-[16px] md:text-lg md:bg-primary-40 md:hover:bg-primary-70 rounded-lg">
                     <div className="w-full text-sm bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg">
                       Edit
                     </div>
@@ -217,20 +218,20 @@ export default function TermConditionScreen() {
                       </DrawerTitle>
 
                       <DrawerDescription className="text-center">
-                        Input data yang diperlukan
+                        <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                       </DrawerDescription>
 
                       <form
                         onSubmit={handleUpdateTerms}
                         className="w-full flex flex-col gap-y-5 verticalScroll">
                         <div className="w-full flex flex-col gap-y-3 verticalScroll">
+
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                             <div className="w-full flex flex-row justify-between items-center">
-                              <Label className="focus-within:text-primary-70 font-normal text-[16px]">
+                              <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                                 Ketentuan
                               </Label>
                             </div>
-
                             <div className="w-full h-full verticalScroll border border-line-20 rounded-lg">
                               <EditorProvide
                                 content={data.desc}
@@ -243,11 +244,10 @@ export default function TermConditionScreen() {
 
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                             <div className="w-full flex flex-row justify-between items-center">
-                              <Label className="focus-within:text-primary-70 font-normal text-[16px]">
+                              <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                                 Syarat
                               </Label>
                             </div>
-
                             <div className="w-full h-full verticalScroll border border-line-20 rounded-lg">
                               <EditorProvide
                                 content={data.privacy_policy}
@@ -275,6 +275,7 @@ export default function TermConditionScreen() {
                             )}
                           </Button>
                         </div>
+
                       </form>
                     </div>
                   </DrawerContent>
@@ -285,25 +286,25 @@ export default function TermConditionScreen() {
         </div>
 
         <div className="w-full flex flex-col gap-y-5 bg-line-10 p-3 rounded-lg shadow-md">
-          <div className="w-full flex flex-col gap-y-3">
-            <h5 className="text-primary-40 text-[20px]">Ketentuan</h5>
 
+          <div className="w-full flex flex-col gap-y-3">
+            <h5 className="text-primary-40 text-lg">Ketentuan</h5>
             <div className="w-full border border-black-80 rounded-lg p-3">
-              <div className="text-black-80 font-normal text-[16px]">
+              <div className="text-black-80 font-normal text-[14px] md:text-[16px]">
                 {terms && <RichTextDisplay content={terms?.desc} />}
               </div>
             </div>
           </div>
 
           <div className="w-full flex flex-col gap-y-3">
-            <h5 className="text-primary-40 text-[20px]">Syarat</h5>
-
+            <h5 className="text-primary-40 text-lg">Syarat</h5>
             <div className="w-full border border-black-80 rounded-lg p-3">
-              <div className="text-black-80 font-normal text-[16px]">
+              <div className="text-black-80 font-normal text-[14px] md:text-[16px]">
                 {terms && <RichTextDisplay content={terms?.privacy_policy} />}
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -319,7 +320,7 @@ export default function TermConditionScreen() {
           className="w-full flex flex-col gap-y-3">
           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
             <div className="w-full flex flex-row justify-between items-center">
-              <Label className="focus-within:text-primary-70 font-normal text-[16px]">
+              <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                 Deskripsi
               </Label>
 

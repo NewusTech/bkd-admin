@@ -24,6 +24,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import Image from "next/image";
+import TypingEffect from "../ui/TypingEffect";
 
 export default function SuperManualBookMasterDataCard({
   book,
@@ -94,7 +95,7 @@ export default function SuperManualBookMasterDataCard({
                 handleSetManual();
                 setIsDialogEditOpen(true);
               }} className="w-full">
-                <div className="w-full text-sm bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                <div className="w-full text-[14px] md:text-[16px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                   Edit
                 </div>
               </AlertDialogTrigger>
@@ -105,18 +106,18 @@ export default function SuperManualBookMasterDataCard({
                     Master Data Manual Books
                   </AlertDialogTitle>
                   <AlertDialogDescription className="text-center">
-                    Input data yang diperlukan
+                    <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                   </AlertDialogDescription>
                   <form
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                       handleUpdateManualBook(e, book?.id)
                     }
                     className="w-full flex flex-col gap-y-3 verticalScroll">
+
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
+                      <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                         Nama Manual Books
                       </Label>
-
                       <Input
                         id="title"
                         name="title"
@@ -128,11 +129,10 @@ export default function SuperManualBookMasterDataCard({
                         className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                         placeholder="Masukkan Nama Manual Book"
                       />
-
                     </div>
 
                     {/* <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
+                      <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                         File
                       </Label>
                       <div className="flex flex-col md:flex-row w-full">
@@ -186,8 +186,7 @@ export default function SuperManualBookMasterDataCard({
                     </div> */}
 
                     <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-
+                      <AlertDialogCancel>Batal</AlertDialogCancel>
                       <Button
                         type="submit"
                         disabled={isUpdateLoading ? true : false}
@@ -199,11 +198,10 @@ export default function SuperManualBookMasterDataCard({
                         )}
                       </Button>
                     </div>
+
                   </form>
                 </AlertDialogHeader>
               </AlertDialogContent>
-
-              {/* Konten modal edit */}
             </AlertDialog>
           </div>
         </div>
