@@ -24,6 +24,7 @@ import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import { Trash } from "@phosphor-icons/react";
 import Image from "next/image";
+import TypingEffect from "../ui/TypingEffect";
 
 export default function SuperregulationMasterDataCard({
   regulation,
@@ -103,7 +104,7 @@ export default function SuperregulationMasterDataCard({
                   setIsDialogEditOpen(true);
                 }}
                 className="w-full">
-                <div className="w-full text-[16px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg">
+                <div className="w-full text-[14px] md:text-[16px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg">
                   Edit
                 </div>
               </AlertDialogTrigger>
@@ -113,18 +114,19 @@ export default function SuperregulationMasterDataCard({
                     Master Data Regulasi
                   </AlertDialogTitle>
                   <AlertDialogDescription className="text-center">
-                    Input data yang diperlukan
+                    <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                   </AlertDialogDescription>
+
                   <form
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                       handleUpdateRegulations(e, regulation?.id)
                     }
                     className="w-full flex flex-col gap-y-3 verticalScroll">
+
                     <div className="flex flex-col gap-y-3 w-full">
-                      <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                      <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                         Title
                       </Label>
-
                       <Input
                         type="text"
                         name="title"
@@ -138,19 +140,17 @@ export default function SuperregulationMasterDataCard({
                     </div>
 
                     <div className="flex flex-col w-full">
-                      <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                      <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                         File
                       </Label>
-
                       <div className="flex flex-col md:flex-row w-full">
                         <div
                           ref={dropRef}
                           onDragOver={handleDragOver}
                           onDragLeave={handleDragLeave}
                           onDrop={handleDropImage}
-                          className={`w-full ${
-                            previewImage ? "md:w-8/12" : "w-full"
-                          }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                          className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
+                            }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                           <>
                             <input
                               type="file"
@@ -162,12 +162,11 @@ export default function SuperregulationMasterDataCard({
                             />
                             <label
                               htmlFor="file-input-image"
-                              className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                              className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
                               Drag and drop file here or click to select file
                             </label>
                           </>
                         </div>
-
                         {regulation?.file && (
                           <div className="relative md:ml-4 w-full mt-1">
                             <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
@@ -192,7 +191,6 @@ export default function SuperregulationMasterDataCard({
 
                     <div className="w-full flex flex-row justify-center items-center gap-x-5">
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
-
                       <Button
                         type="submit"
                         disabled={isUpdateLoading ? true : false}
@@ -204,6 +202,7 @@ export default function SuperregulationMasterDataCard({
                         )}
                       </Button>
                     </div>
+
                   </form>
                 </AlertDialogHeader>
               </AlertDialogContent>

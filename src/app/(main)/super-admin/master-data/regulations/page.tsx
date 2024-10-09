@@ -52,6 +52,7 @@ import { set } from "date-fns";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileRegulationMasterDataCard from "@/components/mobile_all_cards/mobileRegulationMasterDataCard";
 import AddIcon from "@/components/elements/add_button";
+import TypingEffect from "@/components/ui/TypingEffect";
 
 export default function RegulationScreen() {
   const router = useRouter();
@@ -237,7 +238,7 @@ export default function RegulationScreen() {
               <AlertDialogTrigger
                 onClick={() => setIsDialogOpen(true)}
                 className="w-full">
-                <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                   <AddIcon />
                   Tambah Regulasi
                 </div>
@@ -248,16 +249,17 @@ export default function RegulationScreen() {
                     Master Data Regulasi
                   </AlertDialogTitle>
                   <AlertDialogDescription className="text-center">
-                    Input data yang diperlukan
+                    <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
                   </AlertDialogDescription>
+
                   <form
                     onSubmit={handleCreateRegulations}
                     className="w-full flex flex-col gap-y-3 verticalScroll">
+
                     <div className="flex flex-col gap-y-3 w-full">
-                      <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                      <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                         Title
                       </Label>
-
                       <Input
                         type="text"
                         name="title"
@@ -272,10 +274,9 @@ export default function RegulationScreen() {
                     </div>
 
                     <div className="flex flex-col w-full">
-                      <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                      <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                         File
                       </Label>
-
                       <div className="flex flex-col md:flex-row w-full">
                         <div
                           ref={dropRef}
@@ -295,12 +296,11 @@ export default function RegulationScreen() {
                             />
                             <label
                               htmlFor="file-input-image"
-                              className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                              className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
                               Drag and drop file here or click to select file
                             </label>
                           </>
                         </div>
-
                         {previewImage && (
                           <div className="relative md:ml-4 w-full mt-1">
                             <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
@@ -325,7 +325,6 @@ export default function RegulationScreen() {
 
                     <div className="w-full flex flex-row justify-center items-center gap-x-5">
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
-
                       <Button
                         type="submit"
                         disabled={isCreateLoading ? true : false}
@@ -337,6 +336,7 @@ export default function RegulationScreen() {
                         )}
                       </Button>
                     </div>
+
                   </form>
                 </AlertDialogHeader>
               </AlertDialogContent>
@@ -346,7 +346,7 @@ export default function RegulationScreen() {
               <DrawerTrigger
                 onClick={() => setIsDialogOpen(true)}
                 className="w-full">
-                <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                   <AddIcon />
                   Tambah Regulasi
                 </div>
@@ -356,20 +356,19 @@ export default function RegulationScreen() {
                   <DrawerTitle className="text-center">
                     Master Data Regulasi
                   </DrawerTitle>
-
                   <DrawerDescription className="text-center">
-                    Input data yang diperlukan
+                    <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
                   </DrawerDescription>
 
                   <form
                     onSubmit={handleCreateRegulations}
                     className="w-full flex flex-col gap-y-5 verticalScroll">
                     <div className="w-full flex flex-col gap-y-3 verticalScroll">
+
                       <div className="flex flex-col gap-y-3 w-full">
-                        <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                        <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                           Title
                         </Label>
-
                         <Input
                           type="text"
                           name="title"
@@ -384,10 +383,9 @@ export default function RegulationScreen() {
                       </div>
 
                       <div className="flex flex-col w-full">
-                        <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                        <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                           File
                         </Label>
-
                         <div className="flex flex-col md:flex-row w-full">
                           <div
                             ref={dropRef}
@@ -407,12 +405,11 @@ export default function RegulationScreen() {
                               />
                               <label
                                 htmlFor="file-input-image"
-                                className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
                                 Drag and drop file here or click to select file
                               </label>
                             </>
                           </div>
-
                           {previewImage && (
                             <div className="relative md:ml-4 w-full mt-1">
                               <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
@@ -437,14 +434,14 @@ export default function RegulationScreen() {
                     </div>
 
                     <div className="flex gap-4 justify-between">
-                      <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-xs">
-                        <DrawerDescription className="text-xs md:text-sm">Batal</DrawerDescription>
+                      <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-[14px] md:text-[16px]">
+                        <DrawerDescription className="text-[14px] md:text-[16px]">Batal</DrawerDescription>
                       </DrawerClose>
                       <Button
                         title="Simpan Data"
                         type="submit"
                         disabled={isUpdateLoading ? true : false}
-                        className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                        className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] md:text-[16px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                         {isUpdateLoading ? (
                           <Loader className="animate-spin" />
                         ) : (

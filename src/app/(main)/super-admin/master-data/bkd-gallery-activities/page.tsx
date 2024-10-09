@@ -295,7 +295,7 @@ export default function BKDGalleryActivitiesScreen() {
                 <AlertDialogTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah Galeri
                   </div>
@@ -308,6 +308,7 @@ export default function BKDGalleryActivitiesScreen() {
                     <AlertDialogDescription className="text-center">
                       Input data yang diperlukan
                     </AlertDialogDescription>
+
                     <form
                       onSubmit={handleCreateGallery}
                       className="w-full flex flex-col gap-y-3 verticalScroll">
@@ -315,7 +316,6 @@ export default function BKDGalleryActivitiesScreen() {
                         <Label className="focus-within:text-primary-70 font-normal text-sm">
                           Judul Berita
                         </Label>
-
                         <Input
                           id="nama-bidang"
                           name="title"
@@ -328,10 +328,9 @@ export default function BKDGalleryActivitiesScreen() {
                       </div>
 
                       <div className="flex flex-col w-full">
-                        <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                        <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                           Foto Kegiatan
                         </Label>
-
                         <div className="flex flex-col md:flex-row w-full">
                           <div
                             ref={dropRef}
@@ -351,7 +350,7 @@ export default function BKDGalleryActivitiesScreen() {
                               />
                               <label
                                 htmlFor="file-input-image"
-                                className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
                                 Drag and drop file here or click to select file
                               </label>
                             </>
@@ -383,7 +382,6 @@ export default function BKDGalleryActivitiesScreen() {
 
                       <div className="w-full flex flex-row justify-between items-center gap-x-5">
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
@@ -395,6 +393,7 @@ export default function BKDGalleryActivitiesScreen() {
                           )}
                         </Button>
                       </div>
+
                     </form>
                   </AlertDialogHeader>
                 </AlertDialogContent>
@@ -404,7 +403,7 @@ export default function BKDGalleryActivitiesScreen() {
                 <DrawerTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah Galeri
                   </div>
@@ -416,18 +415,18 @@ export default function BKDGalleryActivitiesScreen() {
                     </DrawerTitle>
 
                     <DrawerDescription className="text-center">
-                      <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
+                      <TypingEffect className="custom-class md:text-sm text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
                     </DrawerDescription>
 
                     <form
                       onSubmit={handleCreateGallery}
                       className="w-full flex flex-col gap-y-5 verticalScroll">
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
+
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label className="focus-within:text-primary-70 font-normal text-sm">
                             Judul Berita
                           </Label>
-
                           <Input
                             id="nama-bidang"
                             name="title"
@@ -440,10 +439,9 @@ export default function BKDGalleryActivitiesScreen() {
                         </div>
 
                         <div className="flex flex-col w-full">
-                          <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                          <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                             Foto Kegiatan
                           </Label>
-
                           <div className="flex flex-col md:flex-row w-full">
                             <div
                               ref={dropRef}
@@ -463,7 +461,7 @@ export default function BKDGalleryActivitiesScreen() {
                                 />
                                 <label
                                   htmlFor="file-input-image"
-                                  className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                  className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
                                   Drag and drop file here or click to select
                                   file
                                 </label>
@@ -497,7 +495,6 @@ export default function BKDGalleryActivitiesScreen() {
 
                       <div className="w-full flex flex-row justify-between items-center gap-x-5">
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
@@ -509,6 +506,7 @@ export default function BKDGalleryActivitiesScreen() {
                           )}
                         </Button>
                       </div>
+
                     </form>
                   </div>
                 </DrawerContent>

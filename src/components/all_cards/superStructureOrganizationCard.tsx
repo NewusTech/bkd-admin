@@ -95,7 +95,7 @@ export default function SuperStructureOrganizationMasterDataCard({
                   setIsDialogEditOpen(true);
                 }}
                 className="w-full">
-                <div className="w-full text-sm bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                <div className="w-full text-[14px] md:text-[16px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                   Edit
                 </div>
               </AlertDialogTrigger>
@@ -105,19 +105,20 @@ export default function SuperStructureOrganizationMasterDataCard({
                     Master Data Struktur Kegiatan
                   </AlertDialogTitle>
                   <AlertDialogDescription className="text-center">
-                    <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
+                    <TypingEffect className="custom-class text-[14px] md:text-[16px] text-xs" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                   </AlertDialogDescription>
+
                   <form
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                       handleUpdateStructureOrganization(e, organization?.slug)
                     }
                     className="w-full flex flex-col gap-y-3 max-h-[500px]">
                     <div className="w-full flex flex-col gap-y-3 verticalScroll">
+
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Nama Lengkap
                         </Label>
-
                         <Input
                           id="nama"
                           name="nama"
@@ -135,10 +136,9 @@ export default function SuperStructureOrganizationMasterDataCard({
                       </div>
 
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Jabatan
                         </Label>
-
                         <Input
                           id="jabatan"
                           name="jabatan"
@@ -156,10 +156,9 @@ export default function SuperStructureOrganizationMasterDataCard({
                       </div>
 
                       <div className="flex flex-col w-full">
-                        <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                        <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                           Foto Diri
                         </Label>
-
                         <div className="flex flex-col md:flex-row w-full">
                           <div
                             ref={dropRef}
@@ -179,12 +178,11 @@ export default function SuperStructureOrganizationMasterDataCard({
                               />
                               <label
                                 htmlFor="file-input-image"
-                                className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
                                 Drag and drop file here or click to select file
                               </label>
                             </>
                           </div>
-
                           {(previewImage || data?.image) && (
                             <div className="relative md:ml-4 w-full mt-1">
                               <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
@@ -212,7 +210,6 @@ export default function SuperStructureOrganizationMasterDataCard({
 
                     <div className="w-full flex flex-row justify-between items-center gap-x-5">
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
-
                       <Button
                         type="submit"
                         disabled={isUpdateLoading ? true : false}
@@ -224,6 +221,7 @@ export default function SuperStructureOrganizationMasterDataCard({
                         )}
                       </Button>
                     </div>
+
                   </form>
                 </AlertDialogHeader>
               </AlertDialogContent>

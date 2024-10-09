@@ -24,14 +24,6 @@ export default function SuperServicesMasterDataTablePages({
   isDrawerEditOpen,
   setIsDrawerEditOpen,
   handleUpdateService,
-  quillConditionEdit,
-  quillConditionEditRef,
-  quillTermEdit,
-  quillTermEditRef,
-  quillStepEdit,
-  quillStepEditRef,
-  quillDescEdit,
-  quillDescEditRef,
 }: {
   services: ServiceInterface[];
   areas: AreasInterface[];
@@ -66,14 +58,6 @@ export default function SuperServicesMasterDataTablePages({
     e: React.FormEvent<HTMLFormElement>,
     id: number
   ) => void;
-  quillConditionEdit: any;
-  quillConditionEditRef: any;
-  quillTermEdit: any;
-  quillTermEditRef: any;
-  quillStepEdit: any;
-  quillStepEditRef: any;
-  quillDescEdit: any;
-  quillDescEditRef: any;
 }) {
   return (
     <>
@@ -97,14 +81,6 @@ export default function SuperServicesMasterDataTablePages({
                   handleUpdateService={handleUpdateService}
                   isDrawerEditOpen={isDrawerEditOpen}
                   setIsDrawerEditOpen={setIsDrawerEditOpen}
-                  quillConditionEdit={quillConditionEdit}
-                  quillConditionEditRef={quillConditionEditRef}
-                  quillTermEdit={quillTermEdit}
-                  quillTermEditRef={quillTermEditRef}
-                  quillStepEdit={quillStepEdit}
-                  quillStepEditRef={quillStepEditRef}
-                  quillDescEdit={quillDescEdit}
-                  quillDescEditRef={quillDescEditRef}
                 />
               );
             })}
@@ -142,14 +118,6 @@ export default function SuperServicesMasterDataTablePages({
                     handleUpdateService={handleUpdateService}
                     isDialogEditOpen={isDialogEditOpen}
                     setIsDialogEditOpen={setIsDialogEditOpen}
-                    quillConditionEdit={quillConditionEdit}
-                    quillConditionEditRef={quillConditionEditRef}
-                    quillTermEdit={quillTermEdit}
-                    quillTermEditRef={quillTermEditRef}
-                    quillStepEdit={quillStepEdit}
-                    quillStepEditRef={quillStepEditRef}
-                    quillDescEdit={quillDescEdit}
-                    quillDescEditRef={quillDescEditRef}
                   />
                 );
               })}
