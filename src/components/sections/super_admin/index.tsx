@@ -27,7 +27,6 @@ import SearchPages from "@/components/elements/search";
 import DatePages from "@/components/elements/date";
 import { Button } from "@/components/ui/button";
 import { Printer } from "@phosphor-icons/react";
-import DivitionVerificationAdminApplicationHistoryTablePages from "@/components/tables/division_application_history_table";
 import SuperDashboardCard from "@/components/all_cards/superDashboardCard";
 import {
   ServiceInterface,
@@ -46,6 +45,7 @@ import VerificationUserApplicationHistoryTablePages from "@/components/tables/ve
 import PaginationComponent from "@/components/elements/pagination";
 import DataNotFound from "@/components/elements/data_not_found";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import MobileDivisionVerificationAdminApplicationHistoryCard from "@/components/mobile_all_cards/mobileDivisionVerificationAdminApplicationHistoryCard";
 
 export default function SuperAdminDashboardPages() {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -295,8 +295,28 @@ export default function SuperAdminDashboardPages() {
         </div>
 
         <div className="w-full">
-          {users && users.length > 0 && (
-            <VerificationUserApplicationHistoryTablePages users={users} />
+          {!isMobile ? (
+            <>
+              {users && users.length > 0 && (
+                <VerificationUserApplicationHistoryTablePages users={users} />
+              )}
+            </>
+          ) : (
+            <>
+              {users &&
+                users.length > 0 &&
+                users.map(
+                  (user: UserApplicationHistoryInterface, i: number) => {
+                    return (
+                      <MobileDivisionVerificationAdminApplicationHistoryCard
+                        key={i}
+                        index={i}
+                        user={user}
+                      />
+                    );
+                  }
+                )}
+            </>
           )}
         </div>
 

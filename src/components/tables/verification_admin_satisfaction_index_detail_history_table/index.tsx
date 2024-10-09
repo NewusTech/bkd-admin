@@ -10,9 +10,9 @@ import {
 } from "@/components/ui/table";
 
 import { SatisfactionHistoryInterface } from "@/types/interface";
-import VerificationSatisfactionIndexCard from "@/components/all_cards/verificationSatisfactionIndexCard";
+import VerificationSatisfactionIndexDetailCard from "@/components/all_cards/verificationSatisfactionIndexDetailCard";
 
-export default function VerificationSatisfactionIndexTablePages({
+export default function VerificationSatisfactionIndexDetailTablePages({
   indexes,
 }: {
   indexes: SatisfactionHistoryInterface[];
@@ -43,7 +43,7 @@ export default function VerificationSatisfactionIndexTablePages({
             indexes.length > 0 &&
             indexes.map((item: SatisfactionHistoryInterface, i: number) => {
               return (
-                <VerificationSatisfactionIndexCard
+                <VerificationSatisfactionIndexDetailCard
                   key={i}
                   index={i}
                   item={item}

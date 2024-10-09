@@ -1,12 +1,12 @@
 "use client";
 
-import { formatDateString, formatToWIB } from "@/lib/utils";
-import { UserApplicationHistoryInterface } from "@/types/interface";
 import React from "react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { UserApplicationHistoryInterface } from "@/types/interface";
+import { formatDateString, formatToWIB } from "@/lib/utils";
 
-function MobileDivisionVerificationAdminApplicationHistoryCard({
+function MobileHeadManageApprovalCard({
   user,
   index,
 }: {
@@ -91,9 +91,7 @@ function MobileDivisionVerificationAdminApplicationHistoryCard({
       <div className="w-full mt-6 flex flex-roe items-center justify-center">
         <Button
           onClick={() =>
-            router.push(
-              `/verification-admin/verification-user-application-histories/${user?.id}`
-            )
+            router.push(`/areas-head/head-manage-approvals/${user.id}`)
           }
           className="w-full h-[45px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 rounded-lg">
           Detail
@@ -103,4 +101,4 @@ function MobileDivisionVerificationAdminApplicationHistoryCard({
   );
 }
 
-export default MobileDivisionVerificationAdminApplicationHistoryCard;
+export default MobileHeadManageApprovalCard;

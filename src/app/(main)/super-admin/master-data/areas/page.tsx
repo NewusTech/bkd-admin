@@ -8,7 +8,7 @@ import SuperAreasMasterDataTablePages from "@/components/tables/master_datas/are
 import { Button } from "@/components/ui/button";
 import { deleteAreas, getAreas, postAreas, updateAreas } from "@/services/api";
 import { AreasInterface } from "@/types/interface";
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -230,8 +230,7 @@ export default function AreasScreen() {
 
   return (
     <section className="w-full flex flex-col items-center md:px-5 md:mt-5">
-      <div className="bg-[#F6F6F6] md:bg-line-10 md:shadow-md md:rounded-lg w-full flex flex-col p-5 gap-y-5">
-        <h1 className="text-lg">Kelola Bidang</h1>
+      <div className="bg-line-10 md:shadow-md md:rounded-lg w-full flex flex-col p-5 gap-y-5">
         {/* Mobile */}
         <div className="md:hidden">
           <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-4 gap-y-4 md:p-5 md:gap-y-5">
@@ -254,27 +253,28 @@ export default function AreasScreen() {
                     setIsDrawerOpen(true);
                   }}
                   className="w-full">
-                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah Bidang
                   </div>
                 </DrawerTrigger>
-                <DrawerContent className="bg-white">
+                <DrawerContent className="bg-line-10">
                   <DrawerHeader>
                     <DrawerTitle>Master Data Bidang</DrawerTitle>
 
                     <form
                       onSubmit={handleCreateAreas}
                       className="w-full flex flex-col gap-y-3 max-h-full">
-                      <div className="text-center mb-4">
+                      <div className="text-center text-[14px] md:text-[16px] mb-4">
                         <TypingEffect
+                          className="text-[14px] md:text-[16px]"
                           text={["Tambah data yang diperlukan...."]}
                         />
                       </div>
 
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-[14px] md:text-[16px]">
                             Nama Bidang
                           </Label>
                           <Input
@@ -283,22 +283,23 @@ export default function AreasScreen() {
                             value={data.nama}
                             onChange={handleChange}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan Nama Bidang"
                           />
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-[14px] md:text-[16px]">
                             Penanggung Jawab
                           </Label>
+
                           <Input
                             id="pj"
                             name="pj"
                             value={data.pj}
                             onChange={handleChange}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan Nama Penanggung Jawab"
                           />
                         </div>
@@ -306,9 +307,10 @@ export default function AreasScreen() {
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label
                             htmlFor="nip-pj"
-                            className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                            className="focus-within:text-primary-70 font-normal text-left text-[14px] md:text-[16px]">
                             NIP Penanggung Jawab
                           </Label>
+
                           <Input
                             id="nip-pj"
                             name="nip_pj"
@@ -316,15 +318,16 @@ export default function AreasScreen() {
                             onChange={handleChange}
                             type="text"
                             inputMode="numeric"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan NIP Penanggung Jawab"
                           />
                         </div>
 
                         <div className="w-full flex flex-col gap-y-3">
-                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-[14px] md:text-[16px]">
                             Deskripsi Bidang
                           </Label>
+
                           <div className="w-full h-full border border-line-20 rounded-lg text-left">
                             <EditorProvide
                               content={data.desc}
@@ -337,7 +340,9 @@ export default function AreasScreen() {
 
                         <div className="flex gap-4 justify-between">
                           <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
-                            <DrawerDescription>Batal</DrawerDescription>
+                            <DrawerDescription className="text-[14px] md:text-[16px]">
+                              Batal
+                            </DrawerDescription>
                           </DrawerClose>
                           <Button
                             title="Simpan Data"
@@ -380,7 +385,7 @@ export default function AreasScreen() {
                     setIsDialogOpen(true);
                   }}
                   className="w-full">
-                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah Bidang
                   </div>
@@ -392,7 +397,10 @@ export default function AreasScreen() {
                     </AlertDialogTitle>
 
                     <div className="flex w-full justify-center">
-                      <TypingEffect className="custom-class md:text-sm text-xs" text={["Input data yang diperlukan"]} />
+                      <TypingEffect
+                        className="custom-class text-[14px] md:text-[16px]"
+                        text={["Input data yang diperlukan"]}
+                      />
                     </div>
 
                     <form
@@ -400,31 +408,33 @@ export default function AreasScreen() {
                       className="w-full flex flex-col gap-y-3 max-h-[500px]">
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-[14px] md:text-[16px]">
                             Nama Bidang
                           </Label>
+
                           <Input
                             id="nama-bidang"
                             name="nama"
                             value={data.nama}
                             onChange={handleChange}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan Nama Bidang"
                           />
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-[14px] md:text-[16px]">
                             Penanggung Jawab
                           </Label>
+
                           <Input
                             id="pj"
                             name="pj"
                             value={data.pj}
                             onChange={handleChange}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan Nama Penanggung Jawab"
                           />
                         </div>
@@ -432,9 +442,10 @@ export default function AreasScreen() {
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label
                             htmlFor="nip-pj"
-                            className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                            className="focus-within:text-primary-70 font-normal text-left text-[14px] md:text-[16px]">
                             NIP Penanggung Jawab
                           </Label>
+
                           <Input
                             id="nip-pj"
                             name="nip_pj"
@@ -442,15 +453,16 @@ export default function AreasScreen() {
                             onChange={handleChange}
                             type="text"
                             inputMode="numeric"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan NIP Penanggung Jawab"
                           />
                         </div>
 
                         <div className="w-full flex flex-col gap-y-3">
-                          <Label className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                          <Label className="focus-within:text-primary-70 font-normal text-left text-[14px] md:text-[16px]">
                             Deskripsi Bidang
                           </Label>
+
                           <div className="w-full h-full border border-line-20 rounded-lg text-left">
                             <EditorProvide
                               content={data.desc}
@@ -464,14 +476,15 @@ export default function AreasScreen() {
 
                       <div className="w-full flex flex-row justify-between items-center gap-x-5">
                         <AlertDialogCancel>
-                          <AlertDialogDescription className="text-center">
+                          <AlertDialogDescription className="text-center text-[14px] md:text-[16px]">
                             Batal
                           </AlertDialogDescription>
                         </AlertDialogCancel>
+
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] md:text-[16px] px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (

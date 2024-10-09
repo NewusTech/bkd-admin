@@ -1309,3 +1309,25 @@ export const getAllGrade = async (limit: number) => {
 
   return await response.json();
 };
+
+// get satisfaction index report
+export const getSatisfactionIndexReport = async (
+  page: number,
+  limit: number
+) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/history/feedback?page=${page}&limit=${limit}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};

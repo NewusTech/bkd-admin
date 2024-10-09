@@ -47,7 +47,6 @@ import SearchPages from "@/components/elements/search";
 import DatePages from "@/components/elements/date";
 import { Button } from "@/components/ui/button";
 import { Printer } from "@phosphor-icons/react";
-import DivitionVerificationAdminApplicationHistoryTablePages from "@/components/tables/division_application_history_table";
 import TypingEffect from "@/components/ui/TypingEffect";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useDebounce } from "@/hooks/useDebounce";
