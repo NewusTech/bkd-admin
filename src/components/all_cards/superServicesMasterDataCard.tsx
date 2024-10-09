@@ -1,8 +1,5 @@
 "use client";
 
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import { useQuill } from "react-quilljs";
 import React from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "../ui/button";
@@ -42,14 +39,6 @@ export default function SuperServicesMasterDataCard({
   handleUpdateService,
   isDialogEditOpen,
   setIsDialogEditOpen,
-  quillConditionEdit,
-  quillConditionEditRef,
-  quillTermEdit,
-  quillTermEditRef,
-  quillStepEdit,
-  quillStepEditRef,
-  quillDescEdit,
-  quillDescEditRef,
 }: {
   service: ServiceInterface;
   areas: AreasInterface[];
@@ -83,14 +72,6 @@ export default function SuperServicesMasterDataCard({
   ) => void;
   isDialogEditOpen: boolean;
   setIsDialogEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  quillConditionEdit: any;
-  quillConditionEditRef: any;
-  quillTermEdit: any;
-  quillTermEditRef: any;
-  quillStepEdit: any;
-  quillStepEditRef: any;
-  quillDescEdit: any;
-  quillDescEditRef: any;
 }) {
   const handleSetService = () => {
     setData({
@@ -103,21 +84,6 @@ export default function SuperServicesMasterDataCard({
       langkah: service.langkah,
     });
 
-    if (quillConditionEdit && service?.syarat) {
-      quillConditionEdit.clipboard.dangerouslyPasteHTML(service?.syarat);
-    }
-
-    if (quillTermEdit && service?.ketentuan) {
-      quillTermEdit.clipboard.dangerouslyPasteHTML(service?.ketentuan);
-    }
-
-    if (quillStepEdit && service?.langkah) {
-      quillStepEdit.clipboard.dangerouslyPasteHTML(service?.langkah);
-    }
-
-    if (quillDescEdit && service?.desc) {
-      quillDescEdit.clipboard.dangerouslyPasteHTML(service?.desc);
-    }
   };
 
   return (

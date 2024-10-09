@@ -1,9 +1,6 @@
 "use client";
 
 export const dynamic = "force-dynamic";
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import { useQuill } from "react-quilljs";
 import SearchPages from "@/components/elements/search";
 import { Button } from "@/components/ui/button";
 import {
@@ -63,15 +60,6 @@ export default function ServicesScreen() {
     setSearch(event.target.value);
   };
   // serach
-  const { quill: quillCondition, quillRef: quillConditionRef } = useQuill();
-  const { quill: quillTerm, quillRef: quillTermRef } = useQuill();
-  const { quill: quillStep, quillRef: quillStepRef } = useQuill();
-  const { quill: quillDesc, quillRef: quillDescRef } = useQuill();
-  const { quill: quillConditionEdit, quillRef: quillConditionEditRef } =
-    useQuill();
-  const { quill: quillTermEdit, quillRef: quillTermEditRef } = useQuill();
-  const { quill: quillStepEdit, quillRef: quillStepEditRef } = useQuill();
-  const { quill: quillDescEdit, quillRef: quillDescEditRef } = useQuill();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -98,111 +86,6 @@ export default function ServicesScreen() {
     totalCount: 0,
   });
   const debounceSearch = useDebounce(search);
-
-  useEffect(() => {
-    if (quillCondition && isDialogOpen) {
-      quillCondition.on("text-change", () => {
-        setData((prevData) => ({
-          ...prevData,
-          syarat: quillCondition.root.innerHTML,
-        }));
-      });
-    }
-
-    if (quillTerm && isDialogOpen) {
-      quillTerm.on("text-change", () => {
-        setData((prevData) => ({
-          ...prevData,
-          ketentuan: quillTerm.root.innerHTML,
-        }));
-      });
-    }
-
-    if (quillStep && isDialogOpen) {
-      quillStep.on("text-change", () => {
-        setData((prevData) => ({
-          ...prevData,
-          langkah: quillStep.root.innerHTML,
-        }));
-      });
-    }
-
-    if (quillDesc && isDialogOpen) {
-      quillDesc.on("text-change", () => {
-        setData((prevData) => ({
-          ...prevData,
-          desc: quillDesc.root.innerHTML,
-        }));
-      });
-    }
-
-    if (quillConditionEdit && isDialogEditOpen) {
-      quillConditionEdit.on("text-change", () => {
-        setData((prevData) => ({
-          ...prevData,
-          syarat: quillConditionEdit.root.innerHTML,
-        }));
-      });
-
-      if (data?.syarat && isDialogEditOpen) {
-        quillConditionEdit.clipboard.dangerouslyPasteHTML(data?.syarat);
-      }
-    }
-
-    if (quillTermEdit && isDialogEditOpen) {
-      quillTermEdit.on("text-change", () => {
-        setData((prevData) => ({
-          ...prevData,
-          ketentuan: quillTermEdit.root.innerHTML,
-        }));
-      });
-
-      if (data?.ketentuan && isDialogEditOpen) {
-        quillTermEdit.clipboard.dangerouslyPasteHTML(data?.ketentuan);
-      }
-    }
-
-    if (quillStepEdit && isDialogEditOpen) {
-      quillStepEdit.on("text-change", () => {
-        setData((prevData) => ({
-          ...prevData,
-          langkah: quillStepEdit.root.innerHTML,
-        }));
-      });
-
-      if (data?.langkah && isDialogEditOpen) {
-        quillStepEdit.clipboard.dangerouslyPasteHTML(data?.langkah);
-      }
-    }
-
-    if (quillDescEdit && isDialogEditOpen) {
-      quillDescEdit.on("text-change", () => {
-        setData((prevData) => ({
-          ...prevData,
-          desc: quillDescEdit.root.innerHTML,
-        }));
-      });
-
-      if (data?.desc && isDialogEditOpen) {
-        quillDescEdit.clipboard.dangerouslyPasteHTML(data?.desc);
-      }
-    }
-  }, [
-    quillCondition,
-    quillTerm,
-    quillStep,
-    quillDesc,
-    quillConditionEdit,
-    quillTermEdit,
-    quillStepEdit,
-    quillDescEdit,
-    isDialogOpen,
-    isDialogEditOpen,
-    data?.syarat,
-    data?.ketentuan,
-    data?.langkah,
-    data?.desc,
-  ]);
 
   const fetchAreas = async (page: number, limit: number, search: string) => {
     try {
@@ -465,7 +348,7 @@ export default function ServicesScreen() {
                                 className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                                 <SelectValue
                                   placeholder="Pilih Bidang"
-                                  className="text-black-80 w-full"
+                                  className="text-black-80 w-full text-[14px] md:text-[16px]"
                                 />
                               </SelectTrigger>
                               <SelectContent className="bg-line-10">
@@ -764,14 +647,6 @@ export default function ServicesScreen() {
               isDrawerEditOpen={isDrawerEditOpen}
               setIsDrawerEditOpen={setIsDrawerEditOpen}
               handleUpdateService={handleUpdateService}
-              quillConditionEdit={quillConditionEdit}
-              quillConditionEditRef={quillConditionEditRef}
-              quillTermEdit={quillTermEdit}
-              quillTermEditRef={quillTermEditRef}
-              quillStepEdit={quillStepEdit}
-              quillStepEditRef={quillStepEditRef}
-              quillDescEdit={quillDescEdit}
-              quillDescEditRef={quillDescEditRef}
             />
           ) : (
             <>

@@ -1,9 +1,6 @@
 "use client";
 
 import React from "react";
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import { useQuill } from "react-quilljs";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { AreasInterface, ServiceInterface } from "@/types/interface";
 import {
@@ -73,14 +70,6 @@ export default function MobileSuperServicesMasterDataCard({
     handleUpdateService,
     isDrawerEditOpen,
     setIsDrawerEditOpen,
-    quillConditionEdit,
-    quillConditionEditRef,
-    quillTermEdit,
-    quillTermEditRef,
-    quillStepEdit,
-    quillStepEditRef,
-    quillDescEdit,
-    quillDescEditRef,
 }: {
     service: ServiceInterface;
     areas: AreasInterface[];
@@ -114,14 +103,6 @@ export default function MobileSuperServicesMasterDataCard({
     ) => void;
     isDrawerEditOpen: boolean;
     setIsDrawerEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    quillConditionEdit: any;
-    quillConditionEditRef: any;
-    quillTermEdit: any;
-    quillTermEditRef: any;
-    quillStepEdit: any;
-    quillStepEditRef: any;
-    quillDescEdit: any;
-    quillDescEditRef: any;
 }) {
     const handleSetService = () => {
         setData({
@@ -133,22 +114,6 @@ export default function MobileSuperServicesMasterDataCard({
             ketentuan: service.ketentuan,
             langkah: service.langkah,
         });
-
-        if (quillConditionEdit && service?.syarat) {
-            quillConditionEdit.clipboard.dangerouslyPasteHTML(service?.syarat);
-        }
-
-        if (quillTermEdit && service?.ketentuan) {
-            quillTermEdit.clipboard.dangerouslyPasteHTML(service?.ketentuan);
-        }
-
-        if (quillStepEdit && service?.langkah) {
-            quillStepEdit.clipboard.dangerouslyPasteHTML(service?.langkah);
-        }
-
-        if (quillDescEdit && service?.desc) {
-            quillDescEdit.clipboard.dangerouslyPasteHTML(service?.desc);
-        }
     };
 
     function truncateString(str: string, num: number): string {
