@@ -15,6 +15,8 @@ export default function DepartmentSecretarySignatureValidationCard({
   index: number;
   user: UserApplicationHistoryInterface;
 }) {
+  console.log(user, "ini user");
+
   const router = useRouter();
 
   return (
@@ -30,7 +32,7 @@ export default function DepartmentSecretarySignatureValidationCard({
       </TableCell>
       <TableCell className={`text-center`}>
         <div
-          className={`${user.status === 1 ? "text-primary-70 bg-primary-40" : user?.status === 2 ? "text-secondary-70 bg-secondary-40" : user?.status === 3 ? "text-warning-70 bg-warning-40" : user?.status === 4 ? "text-error-70 bg-error-40" : user?.status === 5 ? "text-primary-70 bg-primary-50" : user?.status === 6 ? "text-secondary-70 bg-secondary-50" : user?.status === 7 ? "text-warning-70 bg-warning-50" : user?.status === 8 ? "text-error-70 bg-error-50" : user?.status === 9 ? "text-success-70 bg-success-40" : "text-error-70 bg-error-40"} bg-opacity-20 py-3 px-3 rounded-lg`}>
+          className={`${user?.status === 1 ? "text-primary-70 bg-primary-40" : user?.status === 2 ? "text-secondary-70 bg-secondary-40" : user?.status === 3 ? "text-warning-70 bg-warning-40" : user?.status === 4 ? "text-error-70 bg-error-40" : user?.status === 5 ? "text-primary-70 bg-primary-50" : user?.status === 6 ? "text-secondary-70 bg-secondary-50" : user?.status === 7 ? "text-warning-70 bg-warning-50" : user?.status === 8 ? "text-error-70 bg-error-50" : user?.status === 9 ? "text-success-70 bg-success-40" : "text-error-70 bg-error-40"} bg-opacity-20 py-3 px-3 rounded-lg`}>
           {user.status === 1
             ? "Menunggu"
             : user?.status === 2
@@ -57,7 +59,7 @@ export default function DepartmentSecretarySignatureValidationCard({
           <Button
             onClick={() =>
               router.push(
-                `/verification-admin/verification-user-application-histories/${user?.id}`
+                `/department-secretary/department-signature-validation/department-signature-validation-detail/${user?.id}`
               )
             }
             className="w-full h-[45px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 rounded-lg">

@@ -2,7 +2,7 @@
 
 import contract from "@/../../public/assets/icons/signature-contract-white-out.svg";
 import { Button } from "@/components/ui/button";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Dialog,
@@ -18,8 +18,15 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft, Loader } from "lucide-react";
 import Image from "next/image";
 import ReactSignatureCanvas from "react-signature-canvas";
+import { getApplicationDocumentOutput } from "@/services/api";
 
-export default function DepartmentSecretarySignatureValidationUploadScreen() {
+export default function DepartmentSecretarySignatureValidationUploadScreen({
+  params,
+}: {
+  params: { applicationId: number };
+}) {
+  console.log(params.applicationId, "ini params");
+
   const router = useRouter();
   const dropRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -32,7 +39,27 @@ export default function DepartmentSecretarySignatureValidationUploadScreen() {
   const [newProfileImage, setNewProfileImage] = useState({
     image_url: "",
   });
+  const [output, setOutput] = useState<string>("");
   const [previewPPImage, setPreviewPPImage] = useState<string>("");
+
+  const fetchOutput = async (id: number) => {
+    try {
+      const reponse = await getApplicationDocumentOutput(id);
+      console.log(reponse, "ini response");
+
+      const fileURL = URL.createObjectURL(reponse);
+      // window.open(fileURL);
+      setOutput(fileURL);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchOutput(params?.applicationId);
+  }, [params?.applicationId]);
+
+  console.log(output, "output");
 
   const clearSignature = () => {
     sigCanvas?.current?.clear();
@@ -104,13 +131,11 @@ export default function DepartmentSecretarySignatureValidationUploadScreen() {
 
           <div className="w-4/12">
             <Dialog>
-              <DialogTrigger>
-                <div className="bg-primary-40 hover:bg-primary-70 rounded-lg px-2 py-3 text-line-10 w-full flex flex-ro gap-x-3">
+              <DialogTrigger className="w-full">
+                <div className="bg-primary-40 hover:bg-primary-70 rounded-lg px-4 py-3 text-line-10 w-full flex flex-row justify-center items-center gap-x-3">
                   <Plus className="w-6 h-6 text-line-10" />
 
-                  <p className="text-line-10 text-[16px]">
-                    Tambah Tanda Tangan
-                  </p>
+                  <p className="text-line-10 text-[16px]">Tambah</p>
                 </div>
               </DialogTrigger>
               <DialogContent className="bg-line-10 w-full max-w-xl">
@@ -254,9 +279,8 @@ export default function DepartmentSecretarySignatureValidationUploadScreen() {
           <div className="w-full h-full">
             <iframe
               allowFullScreen
-              src="/assets/illustrations/CV-M G Arma Yoga Pratama.pdf#toolbar=0&view=FitH&scrollbar=1"
+              src={output}
               title="PDF"
-              allowTransparency
               className="rounded-lg w-full h-[1450px]">
               PDF
             </iframe>

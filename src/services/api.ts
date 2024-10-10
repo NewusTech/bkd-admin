@@ -1369,3 +1369,40 @@ export const getReportHistoryDetail = async (page: number, limit: number) => {
 
   return await response.json();
 };
+
+// get Application history output
+export const getApplicationDocumentOutput = async (id: number) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/${id}/surat`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.blob();
+};
+
+// get setting message
+export const getSettingMessage = async (id: number) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/detail/surat/${id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
