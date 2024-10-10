@@ -123,7 +123,10 @@ export default function DepartmentSecretarySignatureValidationScreen() {
         endDateFormatted,
         layananId
       );
-    } else if (role && role === "Sekretaris Dinas") {
+    } else if (
+      role &&
+      (role === "Sekretaris Dinas" || role === "Super Admin")
+    ) {
       fetchApplicationHistoryUser(
         1,
         10,

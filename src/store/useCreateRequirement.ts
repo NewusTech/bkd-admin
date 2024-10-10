@@ -10,14 +10,7 @@ interface OptionType {
 interface Step2 {
   id?: any;
   field: string;
-  tipedata:
-    | "text"
-    | "number"
-    | "radio"
-    | "checkbox"
-    | "date"
-    | "textarea"
-    | "string";
+  tipedata: "text" | "textarea" | "number" | "radio" | "checkbox" | "date";
   isrequired: string;
   options?: OptionType[];
 }
@@ -59,8 +52,8 @@ const useCreateRequirement = create<CreateRequirementProps>()(
     {
       name: "requirement",
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 );
 
 export default useCreateRequirement;
