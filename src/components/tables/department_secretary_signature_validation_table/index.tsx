@@ -9,8 +9,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import DepartmentSecretarySignatureValidationCard from "@/components/all_cards/dapartmentSecretarySignatureValidationCard";
+import { UserApplicationHistoryInterface } from "@/types/interface";
 
-export default function DepartmentSecretarySignatureValidationTablePages() {
+export default function DepartmentSecretarySignatureValidationTablePages({
+  users,
+}: {
+  users: UserApplicationHistoryInterface[];
+}) {
   return (
     <>
       <Table className="w-full border border-line-20">
@@ -21,19 +26,22 @@ export default function DepartmentSecretarySignatureValidationTablePages() {
             <TableHead className="text-center">NIP</TableHead>
             <TableHead className="text-center">Layanan</TableHead>
             <TableHead className="text-center">Tanggal</TableHead>
-            <TableHead className="text-center">Jam</TableHead>
             <TableHead className="text-center">Status</TableHead>
+            <TableHead className="text-center">Aksi</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {/* {currentPermohonans?.map(
-            (permohonan: PermohonanDataType, i: number) => {
+          {users &&
+            users.length > 0 &&
+            users.map((user: UserApplicationHistoryInterface, i: number) => {
               return (
-                <TablePermohonanComponent key={i} permohonan={permohonan} />
+                <DepartmentSecretarySignatureValidationCard
+                  key={i}
+                  user={user}
+                  index={i}
+                />
               );
-            }
-          )} */}
-          <DepartmentSecretarySignatureValidationCard />
+            })}
         </TableBody>
       </Table>
     </>

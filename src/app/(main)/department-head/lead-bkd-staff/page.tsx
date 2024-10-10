@@ -144,6 +144,8 @@ export default function LeadBkdStaffScreen() {
     }
   };
 
+  console.log(organizations, "ini organisasi");
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({
       ...data,
