@@ -165,7 +165,7 @@ export default function DepartmentHeadStaffBkdCard({
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
-                    className="bg-primary-40 text-[14px] md:text-[16px] hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2"
+                    className="bg-primary-40 text-[14px] hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2"
                   >
                     Detail
                   </Button>
@@ -208,7 +208,7 @@ export default function DepartmentHeadStaffBkdCard({
                                           className="text-center text-base md:text-lg font-light"
                                           speed={125}
                                           deleteSpeed={50}
-                                          text={["Detail Staff BKD"]}
+                                          text={[data?.nama || "Detail Staff BKD"]} 
                                         />
 
                                         <form

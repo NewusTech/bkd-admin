@@ -171,17 +171,17 @@ export default function MobileStaffBkdCardPages({
                               </DrawerTitle>
 
                               <TypingEffect
-                                className="custom-class text-center text-[14px] md:text-[16px]"
+                                className="text-center text-base md:text-lg font-light"
                                 speed={125}
                                 deleteSpeed={50}
-                                text={["Detail Staff BKD"]}
+                                text={[data?.nama || "Detail Staff BKD"]}
                               />
 
                               <form
                                 onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                                   handleUpdateStructureOrganization(e, item?.slug);
                                 }}
-                                className="flex flex-col gap-6 overflow-y-auto max-h-[400px] pr-4 bg-white rounded-xl p-6">
+                                className="flex flex-col gap-6 overflow-y-auto max-h-[600px] pr-4 bg-white rounded-xl p-6">
                                 <>
                                   {previewImage || item?.image ? (
                                     <div className="relative flex justify-center mb-4">
