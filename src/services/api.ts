@@ -1154,6 +1154,31 @@ export const getSatisfactionIndexHistoryReportDetail = async (
   return await response.json();
 };
 
+// get Indeks Kepuasan
+export const getVerificationReportingsDetail = async (
+  page?: number,
+  limit?: number,
+  start_date?: string,
+  end_date?: string,
+  layanan_id?: number
+) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/history/form?page=${page}&limit=${limit}&start_date=${start_date}&end_date=${end_date}&layanan_id=${layanan_id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
 // update output Letter
 export const updateOutputLetter = async (data: any, id: number) => {
   const token = Cookies.get("Authorization");

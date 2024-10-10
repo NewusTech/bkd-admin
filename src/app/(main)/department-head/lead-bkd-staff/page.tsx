@@ -80,6 +80,7 @@ export default function LeadBkdStaffScreen() {
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
   const [isDialogOpenCreate, setIsDialogOpenCreate] = useState(false);
   const [isDialogOpenUpdate, setIsDialogOpenUpdate] = useState(false);
+  const [isDialogOpenDetail, setIsDialogOpenDetail] = useState(false);
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
   const [startDate, setStartDate] = useState<Date | undefined>(firstDayOfMonth);
@@ -486,13 +487,13 @@ export default function LeadBkdStaffScreen() {
                     <AlertDialogTrigger
                       onClick={() => setIsDialogOpenCreate(true)}
                       className="w-full">
-                      <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                      <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-full text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                         <AddIcon className="w-4 h-4 text-line-10" />
                         Tambah
                       </div>
                     </AlertDialogTrigger>
                     <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
-                      <AlertDialogHeader className="flex flex-col max-h-[500px]">
+                      <AlertDialogHeader className="flex flex-col max-h-[700px]">
                         <AlertDialogTitle className="text-center">
                           <AlertDialogDescription className="text-center text-[20px]">
                             Staff BKD
@@ -500,244 +501,237 @@ export default function LeadBkdStaffScreen() {
                         </AlertDialogTitle>
 
                         <TypingEffect
-                          className="custom-class text-[14px] md:text-[16px]"
+                          className="custom-class text-[14px] md:text-[16px] text-center"
                           speed={125}
                           deleteSpeed={50}
                           text={["Input data yang diperlukan"]}
                         />
                         <form
                           onSubmit={handleCreateStructureOrganization}
-                          className="w-full flex flex-col gap-y-3 verticalScroll">
-                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
-                              Bidang
-                            </Label>
+                          className="w-full flex flex-col gap-y-3 max-h-[500px]">
+                          <div className="w-full flex flex-col gap-y-3 verticalScroll">
 
-                            <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
-                              <Select
-                                onValueChange={(value) =>
-                                  setData({ ...data, bidang_id: value })
-                                }>
-                                <SelectTrigger
-                                  className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-                                  <SelectValue
-                                    placeholder="Pilih Bidang"
-                                    className="text-black-80 text-[14px] md:text-[16px] w-full"
-                                  />
-                                </SelectTrigger>
-                                <SelectContent className="bg-line-10">
-                                  <div className="pt-2">
-                                    {areas &&
-                                      areas.map(
-                                        (area: AreasInterface, i: number) => {
-                                          return (
-                                            <SelectItem
-                                              key={i}
-                                              className={`w-full px-4 text-[14px] md:text-[16px]`}
-                                              value={area.id.toString()}>
-                                              {area?.nama}
-                                            </SelectItem>
-                                          );
-                                        }
-                                      )}
-                                  </div>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                          </div>
-
-                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
-                              Nama Lengkap
-                            </Label>
-
-                            <Input
-                              id="nama"
-                              name="nama"
-                              value={data.nama}
-                              onChange={handleChange}
-                              type="text"
-                              className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                              placeholder="Masukkan Nama Lengkap Anda"
-                            />
-                          </div>
-
-                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
-                              NIP
-                            </Label>
-
-                            <Input
-                              id="nip"
-                              name="nip"
-                              value={data.nip}
-                              onChange={handleChange}
-                              type="text"
-                              className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                              placeholder="Masukkan NIP Anda"
-                            />
-                          </div>
-
-                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
-                              Jabatan
-                            </Label>
-
-                            <Input
-                              id="jabatan"
-                              name="jabatan"
-                              value={data.jabatan}
-                              onChange={handleChange}
-                              type="text"
-                              className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                              placeholder="Masukkan Jabatan Anda"
-                            />
-                          </div>
-
-                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
-                              Golongan
-                            </Label>
-
-                            <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
-                              <Select
-                                onValueChange={(value) =>
-                                  setData({ ...data, golongan: value })
-                                }>
-                                <SelectTrigger
-                                  className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-                                  <SelectValue
-                                    placeholder="Pilih Golongan"
-                                    className="text-black-80 text-[14px] md:text-[16px] w-full"
-                                  />
-                                </SelectTrigger>
-                                <SelectContent className="bg-line-10">
-                                  <div className="pt-2">
-                                    {grades &&
-                                      grades.map(
-                                        (grade: GradeInterface, i: number) => {
-                                          return (
-                                            <SelectItem
-                                              key={i}
-                                              className={`w-full px-4 text-[14px] md:text-[16px]`}
-                                              value={grade?.nama}>
-                                              {grade?.nama}
-                                            </SelectItem>
-                                          );
-                                        }
-                                      )}
-                                  </div>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                          </div>
-
-                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
-                              Status
-                            </Label>
-
-                            <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
-                              <Select
-                                onValueChange={(value) =>
-                                  setData({ ...data, status: value })
-                                }>
-                                <SelectTrigger
-                                  className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-                                  <SelectValue
-                                    placeholder="Pilih Status Staff"
-                                    className="text-black-80 text-[14px] md:text-[16px] w-full"
-                                  />
-                                </SelectTrigger>
-                                <SelectContent className="bg-line-10">
-                                  <div className="pt-2">
-                                    {staffStatus &&
-                                      staffStatus.map(
-                                        (
-                                          status: {
-                                            id: number;
-                                            value: string;
-                                            keys: number;
-                                          },
-                                          i: number
-                                        ) => {
-                                          return (
-                                            <SelectItem
-                                              key={i}
-                                              className={`w-full px-4 text-[14px] md:text-[16px]`}
-                                              value={status.keys.toString()}>
-                                              {status?.value}
-                                            </SelectItem>
-                                          );
-                                        }
-                                      )}
-                                  </div>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                          </div>
-
-                          <div className="flex flex-col w-full">
-                            <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
-                              Foto Staff
-                            </Label>
-
-                            <div className="flex flex-col md:flex-row w-full">
-                              <div
-                                ref={dropRef}
-                                onDragOver={handleDragOver}
-                                onDragLeave={handleDragLeave}
-                                onDrop={handleDropImage}
-                                className={`w-full ${
-                                  previewImage ? "md:w-8/12" : "w-full"
-                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
-                                <div>
-                                  <input
-                                    type="file"
-                                    id="file-input-image"
-                                    name="image"
-                                    accept="image/*"
-                                    onChange={handleImageChange}
-                                    className="hidden"
-                                  />
-                                  <label
-                                    htmlFor="file-input-image"
-                                    className="text-[14px] md:text-[16px] text-center text-black-80 p-2 md:p-4 font-light cursor-pointer">
-                                    Drag and drop file here or click to select
-                                    file
-                                  </label>
-                                </div>
-                              </div>
-
-                              {previewImage && (
-                                <div className="relative md:ml-4 w-full mt-1">
-                                  <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
-                                    <div className="w-full h-full">
-                                      <Image
-                                        src={previewImage}
-                                        width={1000}
-                                        height={1000}
-                                        alt="Preview"
-                                        className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
-                                      />
+                            <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                              <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                                Bidang
+                              </Label>
+                              <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
+                                <Select
+                                  onValueChange={(value) =>
+                                    setData({ ...data, bidang_id: value })
+                                  }>
+                                  <SelectTrigger
+                                    className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                    <SelectValue
+                                      placeholder="Pilih Bidang"
+                                      className="text-black-80 text-[14px] md:text-[16px] w-full"
+                                    />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-line-10">
+                                    <div className="pt-2">
+                                      {areas &&
+                                        areas.map(
+                                          (area: AreasInterface, i: number) => {
+                                            return (
+                                              <SelectItem
+                                                key={i}
+                                                className={`w-full px-4 text-[14px] md:text-[16px]`}
+                                                value={area.id.toString()}>
+                                                {area?.nama}
+                                              </SelectItem>
+                                            );
+                                          }
+                                        )}
                                     </div>
-                                    <button
-                                      type="button"
-                                      onClick={handleRemoveImage}
-                                      className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
-                                      <Trash />
-                                    </button>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                            </div>
+
+                            <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                              <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                                Nama Lengkap
+                              </Label>
+                              <Input
+                                id="nama"
+                                name="nama"
+                                value={data.nama}
+                                onChange={handleChange}
+                                type="text"
+                                className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                                placeholder="Masukkan Nama Lengkap Anda"
+                              />
+                            </div>
+
+                            <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                              <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                                NIP
+                              </Label>
+                              <Input
+                                id="nip"
+                                name="nip"
+                                value={data.nip}
+                                onChange={handleChange}
+                                type="text"
+                                className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                                placeholder="Masukkan NIP Anda"
+                              />
+                            </div>
+
+                            <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                              <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                                Jabatan
+                              </Label>
+                              <Input
+                                id="jabatan"
+                                name="jabatan"
+                                value={data.jabatan}
+                                onChange={handleChange}
+                                type="text"
+                                className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                                placeholder="Masukkan Jabatan Anda"
+                              />
+                            </div>
+
+                            <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                              <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                                Golongan
+                              </Label>
+                              <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
+                                <Select
+                                  onValueChange={(value) =>
+                                    setData({ ...data, golongan: value })
+                                  }>
+                                  <SelectTrigger
+                                    className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                    <SelectValue
+                                      placeholder="Pilih Golongan"
+                                      className="text-black-80 text-[14px] md:text-[16px] w-full"
+                                    />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-line-10">
+                                    <div className="pt-2">
+                                      {grades &&
+                                        grades.map(
+                                          (grade: GradeInterface, i: number) => {
+                                            return (
+                                              <SelectItem
+                                                key={i}
+                                                className={`w-full px-4 text-[14px] md:text-[16px]`}
+                                                value={grade?.nama}>
+                                                {grade?.nama}
+                                              </SelectItem>
+                                            );
+                                          }
+                                        )}
+                                    </div>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                            </div>
+
+                            <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                              <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                                Status
+                              </Label>
+                              <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
+                                <Select
+                                  onValueChange={(value) =>
+                                    setData({ ...data, status: value })
+                                  }>
+                                  <SelectTrigger
+                                    className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                    <SelectValue
+                                      placeholder="Pilih Status Staff"
+                                      className="text-black-80 text-[14px] md:text-[16px] w-full"
+                                    />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-line-10">
+                                    <div className="pt-2">
+                                      {staffStatus &&
+                                        staffStatus.map(
+                                          (
+                                            status: {
+                                              id: number;
+                                              value: string;
+                                              keys: number;
+                                            },
+                                            i: number
+                                          ) => {
+                                            return (
+                                              <SelectItem
+                                                key={i}
+                                                className={`w-full px-4 text-[14px] md:text-[16px]`}
+                                                value={status.keys.toString()}>
+                                                {status?.value}
+                                              </SelectItem>
+                                            );
+                                          }
+                                        )}
+                                    </div>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                            </div>
+
+                            <div className="flex flex-col w-full">
+                              <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
+                                Foto Staff
+                              </Label>
+                              <div className="flex flex-col md:flex-row w-full">
+                                <div
+                                  ref={dropRef}
+                                  onDragOver={handleDragOver}
+                                  onDragLeave={handleDragLeave}
+                                  onDrop={handleDropImage}
+                                  className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
+                                    }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                                  <div>
+                                    <input
+                                      type="file"
+                                      id="file-input-image"
+                                      name="image"
+                                      accept="image/*"
+                                      onChange={handleImageChange}
+                                      className="hidden"
+                                    />
+                                    <label
+                                      htmlFor="file-input-image"
+                                      className="text-[14px] md:text-[16px] text-center text-black-80 p-2 md:p-4 font-light cursor-pointer">
+                                      Drag and drop file here or click to select
+                                      file
+                                    </label>
                                   </div>
                                 </div>
-                              )}
+                                {previewImage && (
+                                  <div className="relative md:ml-4 w-full mt-1">
+                                    <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
+                                      <div className="w-full h-full">
+                                        <Image
+                                          src={previewImage}
+                                          width={1000}
+                                          height={1000}
+                                          alt="Preview"
+                                          className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                        />
+                                      </div>
+                                      <button
+                                        type="button"
+                                        onClick={handleRemoveImage}
+                                        className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
+                                        <Trash />
+                                      </button>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
                             </div>
                           </div>
 
-                          <div className="w-full flex flex-row justify-center items-center gap-x-5">
+                          <div className="w-full flex flex-row justify-between items-center gap-x-5">
                             <AlertDialogCancel className="text-[14px] md:text-[16px]">
-                              Cancel
+                              Batal
                             </AlertDialogCancel>
-
                             <Button
                               type="submit"
                               disabled={isLoadingCreate ? true : false}
@@ -788,7 +782,6 @@ export default function LeadBkdStaffScreen() {
                               <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                                 Bidang
                               </Label>
-
                               <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
                                 <Select
                                   onValueChange={(value) =>
@@ -826,7 +819,6 @@ export default function LeadBkdStaffScreen() {
                               <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                                 Nama Lengkap
                               </Label>
-
                               <Input
                                 id="nama"
                                 name="nama"
@@ -842,7 +834,6 @@ export default function LeadBkdStaffScreen() {
                               <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                                 NIP
                               </Label>
-
                               <Input
                                 id="nip"
                                 name="nip"
@@ -858,7 +849,6 @@ export default function LeadBkdStaffScreen() {
                               <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                                 Jabatan
                               </Label>
-
                               <Input
                                 id="jabatan"
                                 name="jabatan"
@@ -874,7 +864,6 @@ export default function LeadBkdStaffScreen() {
                               <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                                 Golongan
                               </Label>
-
                               <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
                                 <Select
                                   onValueChange={(value) =>
@@ -915,7 +904,6 @@ export default function LeadBkdStaffScreen() {
                               <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                                 Status
                               </Label>
-
                               <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
                                 <Select
                                   onValueChange={(value) =>
@@ -960,16 +948,14 @@ export default function LeadBkdStaffScreen() {
                               <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                                 Foto Staff
                               </Label>
-
                               <div className="flex flex-col md:flex-row w-full">
                                 <div
                                   ref={dropRef}
                                   onDragOver={handleDragOver}
                                   onDragLeave={handleDragLeave}
                                   onDrop={handleDropImage}
-                                  className={`w-full ${
-                                    previewImage ? "md:w-8/12" : "w-full"
-                                  }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                                  className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
+                                    }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                                   <div>
                                     <input
                                       type="file"
@@ -987,7 +973,6 @@ export default function LeadBkdStaffScreen() {
                                     </label>
                                   </div>
                                 </div>
-
                                 {previewImage && (
                                   <div className="relative md:ml-4 w-full mt-1">
                                     <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
@@ -1019,7 +1004,6 @@ export default function LeadBkdStaffScreen() {
                                 Batal
                               </DrawerDescription>
                             </DrawerClose>
-
                             <Button
                               title="Simpan Data"
                               type="submit"
@@ -1066,6 +1050,8 @@ export default function LeadBkdStaffScreen() {
                 isLoadingUpdate={isLoadingUpdate}
                 isDialogOpenUpdate={isDialogOpenUpdate}
                 setIsDialogOpenUpdate={setIsDialogOpenUpdate}
+                isDialogOpenDetail={isDialogOpenDetail}
+                setIsDialogOpenDetail={setIsDialogOpenDetail}
                 handleUpdateStructureOrganization={
                   handleUpdateStructureOrganization
                 }
@@ -1099,6 +1085,8 @@ export default function LeadBkdStaffScreen() {
                       setData={setData}
                       isLoadingUpdate={isLoadingUpdate}
                       isDialogOpenUpdate={isDialogOpenUpdate}
+                      isDialogOpenDetail={isDialogOpenDetail}
+                      setIsDialogOpenDetail={setIsDialogOpenDetail}
                       setIsDialogOpenUpdate={setIsDialogOpenUpdate}
                       handleUpdateStructureOrganization={
                         handleUpdateStructureOrganization

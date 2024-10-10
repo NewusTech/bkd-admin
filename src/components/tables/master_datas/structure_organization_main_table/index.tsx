@@ -13,18 +13,18 @@ import SuperStructureOrganizationMainMasterDataCard from "@/components/all_cards
 
 export default function SuperStructureOrganizationMainMasterDataTablePages({
   organizations,
-  // handleDeleteStructureOrganization,
-  // isDeleteLoading,
+  handleDeleteStructureOrganization,
+  isDeleteLoading,
   data,
   setData,
-  // isUpdateLoading,
-  // isDialogEditOpen,
-  // setIsDialogEditOpen,
+  isUpdateLoading,
+  isDialogEditOpen,
+  setIsDialogEditOpen,
   // handleUpdateStructureOrganization,
 }: {
   organizations: StructureOrganizationInterface[];
-  // handleDeleteStructureOrganization: (slug: string) => void;
-  // isDeleteLoading: boolean;
+  handleDeleteStructureOrganization: (slug: string) => void;
+  isDeleteLoading: boolean;
   data: {
     bkdstruktur_id: string;
   };
@@ -33,9 +33,9 @@ export default function SuperStructureOrganizationMainMasterDataTablePages({
       bkdstruktur_id: string;
     }>
   >;
-  // isUpdateLoading: boolean;
-  // isDialogEditOpen: boolean;
-  // setIsDialogEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isUpdateLoading: boolean;
+  isDialogEditOpen: boolean;
+  setIsDialogEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
   // handleUpdateStructureOrganization: (
   //   e: React.FormEvent<HTMLFormElement>,
   //   slug: string
@@ -62,18 +62,18 @@ export default function SuperStructureOrganizationMainMasterDataTablePages({
                     key={i}
                     organization={organization}
                     index={i}
-                    // handleDeleteStructureOrganization={
-                    //   handleDeleteStructureOrganization
-                    // }
-                    // isDeleteLoading={isDeleteLoading}
+                    handleDeleteStructureOrganization={
+                      handleDeleteStructureOrganization
+                    }
+                    isDeleteLoading={isDeleteLoading}
                     data={data}
                     setData={setData}
-                    // isUpdateLoading={isUpdateLoading}
+                    isUpdateLoading={isUpdateLoading}
                     // handleUpdateStructureOrganization={
                     //   handleUpdateStructureOrganization
                     // }
-                    // isDialogEditOpen={isDialogEditOpen}
-                    // setIsDialogEditOpen={setIsDialogEditOpen}
+                    isDialogEditOpen={isDialogEditOpen}
+                    setIsDialogEditOpen={setIsDialogEditOpen}
                   />
                 );
               }

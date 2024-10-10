@@ -43,13 +43,13 @@ import MobileStructureOrganizationMasterDataCard from "@/components/mobile_all_c
 import AddIcon from "@/components/elements/add_button";
 import TypingEffect from "@/components/ui/TypingEffect";
 import { useDebounce } from "@/hooks/useDebounce";
+import PaginationComponent from "@/components/elements/pagination";
 
 export default function StructureOrganizationScreen() {
   const router = useRouter();
   const dropRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
-  const debounceSearch = useDebounce(search, 500);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -66,6 +66,13 @@ export default function StructureOrganizationScreen() {
     jabatan: "",
     image: "",
   });
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    perPage: 10,
+    totalPages: 1,
+    totalCount: 0,
+  });
+  const debounceSearch = useDebounce(search);
 
   const fetchStructureOrganization = async (
     page: number,
@@ -74,8 +81,13 @@ export default function StructureOrganizationScreen() {
   ) => {
     try {
       const response = await getStructureOrganizations(page, limit, search);
-
       setOrganizations(response.data);
+      setPagination((prev) => ({
+        ...prev,
+        currentPage: page,
+        totalPages: response.pagination.totalPages,
+        totalCount: response.pagination.totalCount,
+      }));
     } catch (error) {
       console.log(error);
     }
@@ -84,6 +96,12 @@ export default function StructureOrganizationScreen() {
   useEffect(() => {
     fetchStructureOrganization(1, 10, debounceSearch);
   }, [debounceSearch]);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage !== pagination.currentPage) {
+      fetchStructureOrganization(newPage, 10, "");
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({
@@ -146,10 +164,8 @@ export default function StructureOrganizationScreen() {
     if (fileImage) {
       formData.append("image", fileImage);
     }
-
     try {
       const response = await postStructureOrganizations(formData);
-
       if (response.status === 201) {
         setData({
           nama: "",
@@ -197,10 +213,8 @@ export default function StructureOrganizationScreen() {
         cancelButtonColor: "#EE3F62",
         confirmButtonText: "Delete",
       });
-
       if (result.isConfirmed) {
         const response = await deleteStructureOrganizations(slug);
-
         if (response.status === 200) {
           await Swal.fire({
             icon: "success",
@@ -225,17 +239,14 @@ export default function StructureOrganizationScreen() {
   ) => {
     e.preventDefault();
     setIsUpdateLoading(true);
-
     const formData = new FormData();
     formData.append("nama", data.nama);
     formData.append("jabatan", data.jabatan);
     if (fileImage) {
       formData.append("image", fileImage);
     }
-
     try {
       const response = await updateStructureOrganizations(formData, slug);
-
       if (response.status === 200) {
         setData({
           nama: "",
@@ -613,6 +624,15 @@ export default function StructureOrganizationScreen() {
             </>
           )}
         </div>
+
+        <div className="w-full">
+          <PaginationComponent
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
+
       </div>
     </section>
   );

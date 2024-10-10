@@ -9,8 +9,8 @@ export default function VerificationReportingCard({
   item,
   index,
 }: {
-  item: ReportDataInterface;
   index: number;
+  item: ReportDataInterface;
 }) {
   return (
     <TableRow className="border border-line-20">
@@ -27,13 +27,13 @@ export default function VerificationReportingCard({
         </div>
       </TableCell>
       <TableCell className="text-center">
-        {/* <div>
+        <div>
           <Link
-            href={`/verification-admin/verification-satisfaction-index-history/${item?.layanan_id}`}
+            href={`/verification-admin/verification-reportings/${item?.id}`}
             className="bg-black-80 bg-opacity-20 hover:bg-black-30 rounded-lg text-[14px] py-3 px-8 text-black-80">
             Detail
           </Link>
-        </div> */}
+        </div>
       </TableCell>
     </TableRow>
   );

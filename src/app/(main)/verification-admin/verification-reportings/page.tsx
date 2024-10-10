@@ -9,10 +9,14 @@ import { ReportDataInterface } from "@/types/interface";
 import { getReportHistories } from "@/services/api";
 import PaginationComponent from "@/components/elements/pagination";
 import DataNotFound from "@/components/elements/data_not_found";
+import { useRouter } from "next/navigation";
+import { useDebounce } from "@/hooks/useDebounce";
 
 export default function VerificationUserApplicationRevitionHistoriesScreen() {
+  const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
+  const deboucedSearch = useDebounce(search, 500);
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
   const [startDate, setStartDate] = useState<Date | undefined>(firstDayOfMonth);
