@@ -510,6 +510,31 @@ export interface SatisfactionIndexHistoryReportDetailInterface {
   nilai: number;
 }
 
+export interface StatisVerificationReportingsDetailInterface {
+  id: number;
+  userinfo_id: number;
+  name: string;
+  nip: string;
+  pesan: string;
+  admin_updated: StatisVerificationReportingsDetailInterfaceAdminUpdate;
+  status: number;
+  tgl_selesai: string;
+  fileoutput: string;
+  no_request: string;
+  layanan_id: number;
+  layanan_name: string;
+  bidang_id: number;
+  bidang_name: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface StatisVerificationReportingsDetailInterfaceAdminUpdate {
+  id: number;
+  name: string;
+  nip: string;
+}
+
 export interface SatisfactionIndexHistoryReportInterface {
   id: number;
   layanan_id: number;
