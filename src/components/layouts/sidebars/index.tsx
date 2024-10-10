@@ -192,7 +192,7 @@ export default function DashBoardSidebarPages() {
                 <div
                   className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
                   <Link
-                    href={"/department-secretary/department-reportings"}
+                    href={"/verification-admin/verification-reportings"}
                     className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
                     Laporan
                   </Link>
@@ -310,7 +310,7 @@ export default function DashBoardSidebarPages() {
                 <div
                   className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
                   <Link
-                    href={"/department-secretary/department-reportings"}
+                    href={"/verification-admin/verification-reportings"}
                     className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
                     Laporan
                   </Link>
@@ -507,7 +507,7 @@ export default function DashBoardSidebarPages() {
                 {/* <div
                   className={`${pathName === "/department-head/lead-bkd-staff" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
                   <Link
-                    href={"/department-secretary/department-reportings"}
+                    href={"/verification-admin/verification-reportings"}
                     className={`w-full flex flex-row text-black-80 text-[16px] px-4`}>
                     Staff BKD
                   </Link>
@@ -516,7 +516,7 @@ export default function DashBoardSidebarPages() {
                 <div
                   className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
                   <Link
-                    href={"/department-secretary/department-reportings"}
+                    href={"/verification-admin/verification-reportings"}
                     className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
                     Laporan
                   </Link>
@@ -804,7 +804,7 @@ export default function DashBoardSidebarPages() {
                 <div
                   className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
                   <Link
-                    href={"/department-secretary/department-reportings"}
+                    href={"/verification-admin/verification-reportings"}
                     className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
                     Laporan
                   </Link>
@@ -1038,7 +1038,7 @@ export default function DashBoardSidebarPages() {
                 <div
                   className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
                   <Link
-                    href={"/department-secretary/department-reportings"}
+                    href={"/verification-admin/verification-reportings"}
                     className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
                     Laporan
                   </Link>
@@ -1176,7 +1176,7 @@ export default function DashBoardSidebarPages() {
                 <div
                   className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
                   <Link
-                    href={"/department-secretary/department-reportings"}
+                    href={"/verification-admin/verification-reportings"}
                     className={`w-full flex flex-row hover:pl-5 ease-in-out duration-300 animate-in text-black-80 text-[14px] md:text-[16px] px-4`}>
                     Laporan
                   </Link>

@@ -99,6 +99,8 @@ export default function VerificationUserApplicationHistoriesScreen() {
     }
   };
 
+  console.log(users, "ini users");
+
   const fetchService = async (page: number, limit: number, search?: string) => {
     try {
       const response = await getService(page, limit, search);

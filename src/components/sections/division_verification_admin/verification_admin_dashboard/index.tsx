@@ -167,7 +167,7 @@ export default function DivisionVerificationAdminDashboardPages() {
       fetchApplicationHistoryUser(
         1,
         10,
-        5,
+        2,
         debounceSearch,
         startDateFormatted,
         endDateFormatted,
@@ -177,7 +177,7 @@ export default function DivisionVerificationAdminDashboardPages() {
       fetchApplicationHistoryUser(
         1,
         10,
-        2,
+        1,
         debounceSearch,
         startDateFormatted,
         endDateFormatted,
