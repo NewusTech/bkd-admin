@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import FilterDataPages from "@/components/elements/data_filters";
 import VerificationAdminManageApprovalsTablePages from "@/components/tables/head_manage_approvals_table";
 import {
+  JwtPayload,
   ServiceInterface,
   UserApplicationHistoryInterface,
 } from "@/types/interface";
@@ -26,10 +27,13 @@ import { useDebounce } from "@/hooks/useDebounce";
 import PaginationComponent from "@/components/elements/pagination";
 import { useRouter } from "next/navigation";
 import MobileHeadManageApprovalCard from "@/components/mobile_all_cards/mobileHeadManageApprovalCard";
+import { jwtDecode } from "jwt-decode";
+import Cookies from "js-cookie";
 
 export default function HeadManageApprovalsScreen() {
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const [role, setRole] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
   const [layananId, setLayananId] = useState<number | undefined>(undefined);
@@ -45,6 +49,24 @@ export default function HeadManageApprovalsScreen() {
     totalPages: 1,
     totalCount: 0,
   });
+
+  useEffect(() => {
+    const token = Cookies.get("Authorization");
+
+    if (token) {
+      try {
+        const decoded = jwtDecode<JwtPayload>(token);
+
+        if (decoded && decoded.role !== undefined) {
+          setRole(decoded.role);
+        }
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    } else {
+      router.push("/login");
+    }
+  }, [router]);
 
   const startDateFormatted = startDate
     ? formatDate(new Date(startDate))
@@ -84,16 +106,21 @@ export default function HeadManageApprovalsScreen() {
   };
 
   useEffect(() => {
-    fetchApplicationHistoryUser(
-      1,
-      10,
-      7,
-      debounceSearch,
-      startDateFormatted,
-      endDateFormatted,
-      layananId
-    );
-  }, [debounceSearch, startDateFormatted, endDateFormatted, layananId]);
+    if (
+      role &&
+      (role === "Super Admin" || (role && role === "Kepala Bidang"))
+    ) {
+      fetchApplicationHistoryUser(
+        1,
+        10,
+        2,
+        debounceSearch,
+        startDateFormatted,
+        endDateFormatted,
+        layananId
+      );
+    }
+  }, [debounceSearch, startDateFormatted, endDateFormatted, layananId, role]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {

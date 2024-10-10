@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import Cookies from "js-cookie";
 import {
   AdminProfileInterface,
+  JwtPayload,
   UserApplicationHistoryDetailInterface,
   UserApplicationHistoryFormServiceInputInterface,
 } from "@/types/interface";
@@ -21,12 +23,15 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, Loader } from "lucide-react";
 import UserApplicationActions from "@/components/pages/user_application_action";
+import { jwtDecode } from "jwt-decode";
 
 export default function VerificationUserApplicationHistoryDetailScreen({
   params,
 }: {
   params: { applicationId: number };
 }) {
+  console.log(params.applicationId);
+
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [isLoading, setIsLoading] = useState(false);
@@ -41,6 +46,25 @@ export default function VerificationUserApplicationHistoryDetailScreen({
     status: 1,
     pesan: "",
   });
+  const [role, setRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    const token = Cookies.get("Authorization");
+
+    if (token) {
+      try {
+        const decoded = jwtDecode<JwtPayload>(token);
+
+        if (decoded && decoded.role !== undefined) {
+          setRole(decoded.role);
+        }
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    } else {
+      router.push("/login");
+    }
+  }, [router]);
 
   const fetchUserProfile = async () => {
     try {
@@ -77,7 +101,7 @@ export default function VerificationUserApplicationHistoryDetailScreen({
         await updateUserApplicationHistoryDetail(
           {
             ...data,
-            status: 7,
+            status: 2,
           },
           id
         );
@@ -94,9 +118,9 @@ export default function VerificationUserApplicationHistoryDetailScreen({
           showConfirmButton: false,
           position: "center",
         });
-        if (user?.role_id === 2) {
+        if (role && role === "Super Admin") {
           router.push(`/areas-head/head-manage-approvals`);
-        } else if (user?.role_id === 3) {
+        } else if (role && role === "Admin Verifikasi") {
           router.push(
             `/verification-admin/verification-user-application-histories/verification-user-waiting-application-history`
           );
@@ -146,7 +170,7 @@ export default function VerificationUserApplicationHistoryDetailScreen({
           position: "center",
         });
         setIsDialogRevision(false);
-        if (user?.role_id === 2 || user?.role_id === 3) {
+        if (role && (role === "Super Admin" || role === "Admin Verifikasi")) {
           router.push(
             `/verification-admin/verification-user-application-histories/verification-user-revision-application-history`
           );
@@ -196,7 +220,7 @@ export default function VerificationUserApplicationHistoryDetailScreen({
           position: "center",
         });
         setIsDialogFailed(false);
-        if (user?.role_id === 2 || user?.role_id === 3) {
+        if (role && (role === "Super Admin" || role === "Admin Verifikasi")) {
           router.push(`/verification-admin/verification-reportings`);
         }
       } else {

@@ -152,7 +152,7 @@ export default function RegionalSecretaryDashboardPages() {
       fetchApplicationHistoryUser(
         1,
         10,
-        8,
+        7,
         debounceSearch,
         startDateFormatted,
         endDateFormatted,
@@ -162,7 +162,7 @@ export default function RegionalSecretaryDashboardPages() {
       fetchApplicationHistoryUser(
         1,
         10,
-        7,
+        6,
         debounceSearch,
         startDateFormatted,
         endDateFormatted,
@@ -172,7 +172,7 @@ export default function RegionalSecretaryDashboardPages() {
       fetchApplicationHistoryUser(
         1,
         10,
-        6,
+        5,
         debounceSearch,
         startDateFormatted,
         endDateFormatted,

@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import {
   AdminProfileInterface,
+  JwtPayload,
   UserApplicationHistoryDetailInterface,
   UserApplicationHistoryFormServiceInputInterface,
 } from "@/types/interface";
@@ -20,7 +21,9 @@ import UserApplicationHistoryFormCard from "@/components/all_cards/verificationU
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, Loader } from "lucide-react";
+import Cookies from "js-cookie";
 import UserApplicationActions from "@/components/pages/user_application_action";
+import { jwtDecode } from "jwt-decode";
 
 export default function HeadUserApplicationHistoryDetailScreen({
   params,
@@ -29,12 +32,12 @@ export default function HeadUserApplicationHistoryDetailScreen({
 }) {
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const [role, setRole] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingRevision, setIsLoadingRevision] = useState(false);
   const [isLoadingFailed, setIsLoadingFailed] = useState(false);
   const [isDialogRevision, setIsDialogRevision] = useState(false);
   const [isDialogFailed, setIsDialogFailed] = useState(false);
-  const [user, setUser] = useState<AdminProfileInterface>();
   const [application, setApplication] =
     useState<UserApplicationHistoryDetailInterface>();
   const [data, setData] = useState({
@@ -42,18 +45,23 @@ export default function HeadUserApplicationHistoryDetailScreen({
     pesan: "",
   });
 
-  const fetchUserProfile = async () => {
-    try {
-      const response = await getUserProfile();
-      setUser(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    fetchUserProfile();
-  }, []);
+    const token = Cookies.get("Authorization");
+
+    if (token) {
+      try {
+        const decoded = jwtDecode<JwtPayload>(token);
+
+        if (decoded && decoded.role !== undefined) {
+          setRole(decoded.role);
+        }
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    } else {
+      router.push("/login");
+    }
+  }, [router]);
 
   const fetchUserApplicationHistoryDetail = async (id: number) => {
     try {
@@ -76,7 +84,7 @@ export default function HeadUserApplicationHistoryDetailScreen({
       const response = await updateUserApplicationHistoryDetail(
         {
           ...data,
-          status: 9,
+          status: 5,
         },
         id
       );
@@ -93,12 +101,10 @@ export default function HeadUserApplicationHistoryDetailScreen({
           showConfirmButton: false,
           position: "center",
         });
-        if (user?.role_id === 2) {
+        if (role && role === "Super Admin") {
+          router.push(`/department-secretary/department-signature-validation`);
+        } else if (role && role === "Kepala Bidang") {
           router.push(`/areas-head/head-manage-approvals`);
-        } else if (user?.role_id === 3) {
-          router.push(
-            `/verification-admin/verification-user-application-histories/verification-user-waiting-application-history`
-          );
         }
       } else {
         Swal.fire({

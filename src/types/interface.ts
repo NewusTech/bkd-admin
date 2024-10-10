@@ -574,3 +574,17 @@ export interface GradeInterface {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ReportDataInterface {
+  id: number;
+  nama: string;
+  slug: string;
+  selesai: number;
+  gagal: number;
+}
+
+export interface ReportInterface {
+  report: ReportDataInterface[];
+  total_selesai: number;
+  total_gagal: number;
+}
