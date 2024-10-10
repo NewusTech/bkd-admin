@@ -33,6 +33,8 @@ export default function DepartmentHeadStaffHeadTablePages({
   isLoadingUpdate,
   isDialogOpenUpdate,
   setIsDialogOpenUpdate,
+  isDialogOpenDetail,
+  setIsDialogOpenDetail,
   handleDeleteStructureOrganization,
   handleUpdateStructureOrganization,
 }: {
@@ -69,6 +71,8 @@ export default function DepartmentHeadStaffHeadTablePages({
   isLoadingUpdate: boolean;
   isDialogOpenUpdate: boolean;
   setIsDialogOpenUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+  isDialogOpenDetail: boolean;
+  setIsDialogOpenDetail: React.Dispatch<React.SetStateAction<boolean>>;
   handleDeleteStructureOrganization: (slug: string) => void;
   handleUpdateStructureOrganization: (
     e: React.FormEvent<HTMLFormElement>,
@@ -77,14 +81,14 @@ export default function DepartmentHeadStaffHeadTablePages({
 }) {
   return (
     <>
-      <Table className="w-full border border-line-20">
+      <Table className="w-full border border-line-20 text-[14px]">
         <TableHeader className="bg-primary-40 text-line-10">
           <TableRow className="">
             <TableHead className="">No.</TableHead>
             <TableHead className="text-center">Nama</TableHead>
-            <TableHead className="text-center">NIP</TableHead>
+            {/* <TableHead className="text-center">NIP</TableHead> */}
             <TableHead className="text-center">Jabatan</TableHead>
-            <TableHead className="text-center">Gol/Pangkat</TableHead>
+            {/* <TableHead className="text-center">Gol/Pangkat</TableHead> */}
             <TableHead className="text-center">Status</TableHead>
             <TableHead className="text-center">Aksi</TableHead>
           </TableRow>
@@ -115,7 +119,9 @@ export default function DepartmentHeadStaffHeadTablePages({
                     setData={setData}
                     isLoadingUpdate={isLoadingUpdate}
                     isDialogOpenUpdate={isDialogOpenUpdate}
+                    isDialogOpenDetail={isDialogOpenDetail}
                     setIsDialogOpenUpdate={setIsDialogOpenUpdate}
+                    setIsDialogOpenDetail={setIsDialogOpenDetail}
                     handleUpdateStructureOrganization={
                       handleUpdateStructureOrganization
                     }

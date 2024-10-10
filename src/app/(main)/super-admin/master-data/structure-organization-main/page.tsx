@@ -160,39 +160,39 @@ export default function StructureOrganizationMainScreen() {
     }
   };
 
-  // const handleDeleteStructureOrganization = async (slug: string) => {
-  //   setIsDeleteLoading(true);
-  //   try {
-  //     const result = await Swal.fire({
-  //       title: "Apakah Anda Yakin Menghapus Struktur Organisasi?",
-  //       text: "Struktur Organisasi yang telah dihapus tidak dapat dipulihkan!",
-  //       icon: "warning",
-  //       showCancelButton: true,
-  //       confirmButtonColor: "#0000FF",
-  //       cancelButtonColor: "#EE3F62",
-  //       confirmButtonText: "Delete",
-  //     });
+  const handleDeleteStructureOrganization = async (slug: string) => {
+    setIsDeleteLoading(true);
+    try {
+      const result = await Swal.fire({
+        title: "Apakah Anda Yakin Menghapus Struktur Organisasi?",
+        text: "Struktur Organisasi yang telah dihapus tidak dapat dipulihkan!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#0000FF",
+        cancelButtonColor: "#EE3F62",
+        confirmButtonText: "Delete",
+      });
 
-  //     if (result.isConfirmed) {
-  //       const response = await deleteStructureOrganizations(slug);
+      if (result.isConfirmed) {
+        const response = await deleteStructureOrganizations(slug);
 
-  //       if (response.status === 200) {
-  //         await Swal.fire({
-  //           icon: "success",
-  //           title: `Struktur Organisasi berhasil dihapus!`,
-  //           timer: 2000,
-  //           position: "center",
-  //         });
-  //         setIsDeleteLoading(false);
-  //         fetchStructureOrganization(limitItem);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setIsDeleteLoading(false);
-  //   }
-  // };
+        if (response.status === 200) {
+          await Swal.fire({
+            icon: "success",
+            title: `Struktur Organisasi berhasil dihapus!`,
+            timer: 2000,
+            position: "center",
+          });
+          setIsDeleteLoading(false);
+          fetchStructureOrganization(1, 10, "");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsDeleteLoading(false);
+    }
+  };
 
   // const handleUpdateStructureOrganization = async (
   //   e: React.FormEvent<HTMLFormElement>,
@@ -200,17 +200,14 @@ export default function StructureOrganizationMainScreen() {
   // ) => {
   //   e.preventDefault();
   //   setIsUpdateLoading(true);
-
   //   const formData = new FormData();
   //   formData.append("nama", data.nama);
   //   formData.append("jabatan", data.jabatan);
   //   if (fileImage) {
   //     formData.append("image", fileImage);
   //   }
-
   //   try {
-  //     const response = await updateStructureOrganizations(slug, formData);
-
+  //     const response = await updateStructureOrganizations(formData, slug);
   //     if (response.status === 200) {
   //       setData({
   //         nama: "",
@@ -224,9 +221,9 @@ export default function StructureOrganizationMainScreen() {
   //         showConfirmButton: false,
   //         position: "center",
   //       });
-  //       fetchStructureOrganization(limitItem);
+  //       fetchStructureOrganization(1, 10, "");
   //       setIsDialogEditOpen(false);
-  //       router.push("/super-admin/master-data/structure-organization");
+  //       router.push("/super-admin/master-data/structure-organization-main");
   //     } else {
   //       Swal.fire({
   //         icon: "error",
@@ -262,7 +259,7 @@ export default function StructureOrganizationMainScreen() {
                 <AlertDialogTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-full text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah Data
                   </div>
@@ -276,7 +273,7 @@ export default function StructureOrganizationMainScreen() {
                     </AlertDialogTitle>
 
                     <TypingEffect
-                      className="custom-class md:text-sm text-xs"
+                      className="custom-class text-[14px] md:text-[16px] text-center"
                       speed={125}
                       deleteSpeed={50}
                       text={["Input data yang diperlukan"]}
@@ -349,7 +346,7 @@ export default function StructureOrganizationMainScreen() {
                 <DrawerTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full text-xs bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah Data
                   </div>
@@ -361,7 +358,12 @@ export default function StructureOrganizationMainScreen() {
                     </DrawerTitle>
 
                     <DrawerDescription className="text-center">
-                      Input data yang diperlukan
+                      <TypingEffect
+                        className="custom-class text-[14px] md:text-[16px] text-center"
+                        speed={125}
+                        deleteSpeed={50}
+                        text={["Input data yang diperlukan"]}
+                      />
                     </DrawerDescription>
 
                     <form
@@ -438,18 +440,18 @@ export default function StructureOrganizationMainScreen() {
               {mainOrganizations && mainOrganizations.length > 0 && (
                 <SuperStructureOrganizationMainMasterDataTablePages
                   organizations={mainOrganizations}
-                  // handleDeleteStructureOrganization={
-                  //   handleDeleteStructureOrganization
-                  // }
-                  // isDeleteLoading={isDeleteLoading}
+                  handleDeleteStructureOrganization={
+                    handleDeleteStructureOrganization
+                  }
+                  isDeleteLoading={isDeleteLoading}
                   data={data}
                   setData={setData}
-                  // isUpdateLoading={isUpdateLoading}
-                  // isDialogEditOpen={isDialogEditOpen}
-                  // setIsDialogEditOpen={setIsDialogEditOpen}
-                  // handleUpdateStructureOrganization={
-                  //   handleUpdateStructureOrganization
-                  // }
+                  isUpdateLoading={isUpdateLoading}
+                  isDialogEditOpen={isDialogEditOpen}
+                  setIsDialogEditOpen={setIsDialogEditOpen}
+                // handleUpdateStructureOrganization={
+                //   handleUpdateStructureOrganization
+                // }
                 />
               )}
             </>
