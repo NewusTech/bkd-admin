@@ -345,14 +345,7 @@ export interface CardType {
   id?: any;
   toggle?: boolean;
   field: string;
-  tipedata:
-    | "text"
-    | "number"
-    | "radio"
-    | "checkbox"
-    | "date"
-    | "textarea"
-    | "string";
+  tipedata: "text" | "textarea" | "number" | "radio" | "checkbox" | "date";
   isrequired: any;
   options?: OptionType[];
 }
@@ -587,4 +580,29 @@ export interface ReportInterface {
   report: ReportDataInterface[];
   total_selesai: number;
   total_gagal: number;
+}
+
+export interface SettingMessageServiceInterface {
+  layanan_id: number;
+  header: string;
+  body: string;
+  footer: string;
+  nomor: string;
+  perihal: string;
+  catatan: string;
+  tembusan: string;
+}
+
+export interface SettingServiceInterface {
+  id: number;
+  nama: string;
+  pj: string;
+  nip_pj: string;
+}
+
+export interface SuperAdminSettingInterface {
+  id: number;
+  nama: string;
+  Bidang: SettingServiceInterface;
+  Layanan_surat: SettingMessageServiceInterface;
 }

@@ -1,52 +1,15 @@
 "use client";
 
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import { useQuill } from "react-quilljs";
-import SearchPages from "@/components/elements/search";
 import { Button } from "@/components/ui/button";
-import {
-  deleteAreas,
-  getAreas,
-  postAreas,
-  updateAreas,
-  serviceRequirementStep2,
-} from "@/services/api";
-import { AreasInterface, CardType, OptionType } from "@/types/interface";
+import { CardType, OptionType } from "@/types/interface";
 import React, { useEffect, useState } from "react";
-import { FaPlus } from "react-icons/fa";
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { Loader, X } from "lucide-react";
-import PaginationComponent from "@/components/elements/pagination";
-import Editor from "@/components/elements/toolbar_editors";
 import InputComponent from "@/components/InputComponent";
-import SuperServiceRequirementsMasterDataTablePages from "@/components/tables/master_datas/service-requirements-table";
 import Link from "next/link";
-import AddIcon from "@/components/elements/add_button";
 import Step from "@/components/Steps";
-
-import Image from "next/image";
 import { selectDataTypeForm } from "@/constants";
 import {
   Select,
@@ -69,24 +32,8 @@ const steps = [
 const currentStep = 2;
 
 export default function ServiceRequiremntsCreate() {
-  const [instance, setInstance] = useState<string>("");
-  // const setSelectedId = useCreateRequirement((state) => state.setSelectedId);
-  const [searchTermInstance, setSearchTermInstance] = useState("");
-  const [role, setRole] = useState<string | null>(null);
-  const [instansiId, setInstansiId] = useState<any>(0);
-  const [searchInputInstance, setSearchInputInstance] = useState(""); // State for search input
-  const [permission, setPermission] = useState<string[]>([]);
-
   const router = useRouter();
-  const [search, setSearch] = useState("");
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
-  const [isUpdateLoading, setIsUpdateLoading] = useState(false);
-  const limitItem = 30;
-  const [areas, setAreas] = useState<AreasInterface[]>([]);
-
   const { serviceId, dataStep2, setDataStep2 } = useCreateRequirement();
   const [cards, setCards] = useState<CardType[]>(
     dataStep2.length > 0
@@ -100,23 +47,94 @@ export default function ServiceRequiremntsCreate() {
           },
         ]
   );
-  const [lastOptionId, setLastOptionId] = useState<number>(0); // State for incremental option ID
 
   const handleAddCard = () => {
-    setCards([
-      ...cards,
-      {
-        id: Date.now(),
-        field: "",
-        tipedata: "text",
-        isrequired: "",
-        options: [],
-      },
-    ]);
+    const newCard: CardType = {
+      id: Date.now(),
+      field: "",
+      tipedata: "text",
+      isrequired: "",
+      // Tambahkan options hanya jika diperlukan
+      ...(cards[cards.length - 1].tipedata === "radio" ||
+      cards[cards.length - 1].tipedata === "checkbox"
+        ? { options: [] }
+        : {}),
+    };
+    setCards([...cards, newCard]);
   };
+
+  // const handleAddCard = () => {
+  //   if (cards[cards.length - 1].tipedata === "radio") {
+  //     setCards([
+  //       ...cards,
+  //       {
+  //         id: Date.now(),
+  //         field: "",
+  //         tipedata: "text",
+  //         isrequired: "",
+  //         options: [],
+  //       },
+  //     ]);
+  //   } else if (cards[cards.length - 1].tipedata === "checkbox") {
+  //     setCards([
+  //       ...cards,
+  //       {
+  //         id: Date.now(),
+  //         field: "",
+  //         tipedata: "text",
+  //         isrequired: "",
+  //         options: [],
+  //       },
+  //     ]);
+  //   } else if (cards[cards.length - 1].tipedata === "date") {
+  //     setCards([
+  //       ...cards,
+  //       {
+  //         id: Date.now(),
+  //         field: "",
+  //         tipedata: "text",
+  //         isrequired: "",
+  //       },
+  //     ]);
+  //   } else if (cards[cards.length - 1].tipedata === "number") {
+  //     setCards([
+  //       ...cards,
+  //       {
+  //         id: Date.now(),
+  //         field: "",
+  //         tipedata: "text",
+  //         isrequired: "",
+  //       },
+  //     ]);
+  //   } else if (cards[cards.length - 1].tipedata === "textarea") {
+  //     setCards([
+  //       ...cards,
+  //       {
+  //         id: Date.now(),
+  //         field: "",
+  //         tipedata: "text",
+  //         isrequired: "",
+  //       },
+  //     ]);
+  //   } else {
+  //     setCards([
+  //       ...cards,
+  //       {
+  //         id: Date.now(),
+  //         field: "",
+  //         tipedata: "text",
+  //         isrequired: "",
+  //       },
+  //     ]);
+  //   }
+  // };
+
+  console.log(cards, "ini cards yang di set");
 
   const handleRemoveCard = (id: number) => {
     const updatedCards = cards.filter((card) => card.id !== id);
+    console.log(updatedCards, "ini updated remove cards inti");
+
     setCards(updatedCards);
     setDataStep2(updatedCards);
   };
@@ -144,6 +162,8 @@ export default function ServiceRequiremntsCreate() {
           }
         : card
     );
+    console.log(updatedCards, "ini updated add cards");
+
     setCards(updatedCards);
   };
 
@@ -154,10 +174,12 @@ export default function ServiceRequiremntsCreate() {
             ...card,
             options: card.options
               ?.filter((option) => option.id !== optionId)
-              ?.map((option, index) => ({ ...option, id: index + 1 })), // Reassign IDs starting from 1
+              ?.map((option, index) => ({ ...option, id: index + 1 })),
           }
         : card
     );
+    console.log(updatedCards, "ini updated remove cards");
+
     setCards(updatedCards);
   };
 
@@ -200,9 +222,12 @@ export default function ServiceRequiremntsCreate() {
           key: option.key,
         }));
       }
+      console.log(formattedCard, "ini formatted card");
 
       return formattedCard;
     });
+
+    console.log(formattedData, "ini format data");
 
     const token = Cookies.get("Authorization");
 
@@ -216,10 +241,13 @@ export default function ServiceRequiremntsCreate() {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(formattedData),
+          cache: "no-store",
         }
       );
 
       const responseData = await response.json();
+
+      console.log(responseData, "ini response data");
 
       if (response.ok) {
         Swal.fire({
@@ -298,8 +326,17 @@ export default function ServiceRequiremntsCreate() {
               <div className="flex-none md:flex text-xs md:text-sm gap-8">
                 <div className="w-full md:w-[70%]">
                   {/* Apakah kamu bersedia melakukan pendaftaran? */}
-                  <InputComponent
+                  {/* <InputComponent
                     typeInput="formInput"
+                    value={card.field}
+                    onChange={(e) =>
+                      handleCardChange(card.id, "field", e.target.value)
+                    }
+                  /> */}
+                  <Input
+                    type="text"
+                    placeholder="Judul / Pertanyaan"
+                    className="rounded-none border-r-0 border-t-0 border-l-0 bg-transparent text-[14px] md:text-[16px]"
                     value={card.field}
                     onChange={(e) =>
                       handleCardChange(card.id, "field", e.target.value)
@@ -344,7 +381,8 @@ export default function ServiceRequiremntsCreate() {
                     onValueChange={(e) =>
                       handleCardChange(card.id, "isrequired", parseInt(e))
                     }
-                    defaultValue={card.isrequired.toString()}
+                    // defaultValue={card.isrequired.toString()}
+                    value={card.isrequired.toString()}
                     className="flex-none md:flex space-x-4 md:space-x-1">
                     <div className="flex items-center space-x-2 space-y-0">
                       <RadioGroupItem

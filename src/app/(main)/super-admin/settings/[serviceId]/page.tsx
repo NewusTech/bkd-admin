@@ -1,34 +1,26 @@
 "use client";
 
-import active from "@/../../public/assets/icons/documentActive.png";
-import Deactive from "@/../../public/assets/icons/documentNotActive.png";
 import React, { useEffect, useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useRouter } from "next/navigation";
-import { ServiceInterface } from "@/types/interface";
-import { getService, updateOutputLetter } from "@/services/api";
-import { useDebounce } from "@/hooks/useDebounce";
-import Image from "next/image";
+import { getSettingMessage, updateOutputLetter } from "@/services/api";
 import { ChevronLeft, Loader } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import EditorProvide from "@/components/pages/areas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Swal from "sweetalert2";
+import { SuperAdminSettingInterface } from "@/types/interface";
 
 export default function SuperSettingCreateScreen({
   params,
 }: {
   params: { serviceId: number };
 }) {
+  console.log(params.serviceId, "ini params");
+
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [setting, setSetting] = useState<SuperAdminSettingInterface>();
   const [data, setData] = useState({
     header: "",
     nomor: "",
@@ -36,10 +28,37 @@ export default function SuperSettingCreateScreen({
     bidang_pj: "",
     body: "",
     nip_pj: "",
-    tebusan: "",
+    tembusan: "",
     catatan: "",
     footer: "",
   });
+
+  const fetchSetting = async (id: number) => {
+    try {
+      const response = await getSettingMessage(id);
+
+      setSetting(response.data);
+      setData({
+        header: response?.data?.Layanan_surat?.header || "",
+        nomor: response?.data?.Layanan_surat?.nomor || "",
+        perihal: response?.data?.Layanan_surat?.perihal || "",
+        bidang_pj: response?.data?.Bidang?.pj || "",
+        body: response?.data?.Layanan_surat?.body || "",
+        nip_pj: response?.data?.Bidang?.nip_pj || "",
+        tembusan: response?.data?.Layanan_surat?.tembusan || "",
+        catatan: response?.data?.Layanan_surat?.catatan || "",
+        footer: response?.data?.Layanan_surat?.footer || "",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSetting(params.serviceId);
+  }, [params.serviceId]);
+
+  console.log(setting, "ini setting");
 
   const updateNewOuputLetter = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -56,7 +75,7 @@ export default function SuperSettingCreateScreen({
           bidang_pj: "",
           body: "",
           nip_pj: "",
-          tebusan: "",
+          tembusan: "",
           catatan: "",
           footer: "",
         });
@@ -193,8 +212,8 @@ export default function SuperSettingCreateScreen({
               </Label>
               <div className="w-full h-full border border-line-20 rounded-lg text-left">
                 <EditorProvide
-                  content={data?.tebusan}
-                  onChange={(e: any) => setData({ ...data, tebusan: e })}
+                  content={data?.tembusan}
+                  onChange={(e: any) => setData({ ...data, tembusan: e })}
                 />
               </div>
             </div>
