@@ -241,7 +241,7 @@ export default function StructureOrganizationMainScreen() {
   // };
 
   return (
-    <section className="w-full flex flex-col items-center px-5 mt-5">
+    <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
       <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
         <div className="w-full flex flex-col md:flex-row gap-x-5 gap-y-5">
           <SearchPages
@@ -449,14 +449,14 @@ export default function StructureOrganizationMainScreen() {
                   isUpdateLoading={isUpdateLoading}
                   isDialogEditOpen={isDialogEditOpen}
                   setIsDialogEditOpen={setIsDialogEditOpen}
-                // handleUpdateStructureOrganization={
-                //   handleUpdateStructureOrganization
-                // }
+                  // handleUpdateStructureOrganization={
+                  //   handleUpdateStructureOrganization
+                  // }
                 />
               )}
             </>
           ) : (
-            <>
+            <div className="w-full flex flex-col gap-y-5">
               {mainOrganizations &&
                 mainOrganizations.length > 0 &&
                 mainOrganizations?.map(
@@ -472,7 +472,7 @@ export default function StructureOrganizationMainScreen() {
                     );
                   }
                 )}
-            </>
+            </div>
           )}
         </div>
       </div>

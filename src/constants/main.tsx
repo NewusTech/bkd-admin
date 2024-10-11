@@ -276,11 +276,11 @@ export const AccountManagement = [
     name: "Roles",
     value: "Peran",
   },
-  {
-    id: 2,
-    name: "Users",
-    value: "Pengguna",
-  },
+  // {
+  //   id: 2,
+  //   name: "Users",
+  //   value: "Pengguna",
+  // },
 ];
 
 export const areasHeadBars = [

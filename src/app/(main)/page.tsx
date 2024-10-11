@@ -33,7 +33,7 @@ export default function DashboardScreen() {
   }, [router]);
 
   return (
-    <section className="w-full flex flex-col items-center px-5 mt-5">
+    <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
       {role && role === "Super Admin" ? (
         <SuperAdminDashboardPages />
       ) : role && role === "Sekretaris Daerah" ? (

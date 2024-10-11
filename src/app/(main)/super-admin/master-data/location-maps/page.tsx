@@ -85,7 +85,7 @@ export default function LocationMapsScreen() {
   };
 
   return (
-    <section className="w-full flex flex-col items-center px-5 mt-5">
+    <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
       <div className="w-full flex flex-col md:p-5 gap-y-5">
         {/* <div className="w-full flex flex-row gap-x-5">
           <SearchPages

@@ -288,7 +288,7 @@ export default function NewsScreen() {
   };
 
   return (
-    <section className="w-full flex flex-col items-center px-5 mt-5">
+    <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
       <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
         <h1 className="text-lg">Kelola Berita</h1>
         <div className="w-full flex flex-col md:flex-row gap-x-5 gap-y-5">
@@ -311,7 +311,7 @@ export default function NewsScreen() {
                   <div className="flex justify-end items-center w-full">
                     <Link
                       href="/super-admin/master-data/news"
-                      className='w-full h-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2'>
+                      className="w-full h-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                       <AddIcon />
                       Tambah
                     </Link>
@@ -324,13 +324,17 @@ export default function NewsScreen() {
                       Master Data Berita
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
-                      <TypingEffect className="custom-class text-[14px] md:text-[14] md:text[16px]" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
+                      <TypingEffect
+                        className="custom-class text-[14px] md:text-[14] md:text[16px]"
+                        speed={125}
+                        deleteSpeed={50}
+                        text={["Input data yang diperlukan"]}
+                      />
                     </AlertDialogDescription>
                     <form
                       onSubmit={handleCreateNews}
                       className="w-full flex flex-col gap-y-3 max-h-[500px]">
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
-
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             Judul Berita
@@ -370,10 +374,11 @@ export default function NewsScreen() {
                               onDragOver={handleDragOver}
                               onDragLeave={handleDragLeave}
                               onDrop={handleDropImage}
-                              className={`w-full ${data?.image || previewImage
-                                ? "md:w-8/12"
-                                : "w-full"
-                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              className={`w-full ${
+                                data?.image || previewImage
+                                  ? "md:w-8/12"
+                                  : "w-full"
+                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                               <>
                                 <input
                                   type="file"
@@ -450,14 +455,18 @@ export default function NewsScreen() {
                     </DrawerTitle>
 
                     <DrawerDescription className="text-center">
-                      <TypingEffect className="custom-class text-[14px] md:text[16px]" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
+                      <TypingEffect
+                        className="custom-class text-[14px] md:text[16px]"
+                        speed={125}
+                        deleteSpeed={50}
+                        text={["Input data yang diperlukan"]}
+                      />
                     </DrawerDescription>
 
                     <form
                       onSubmit={handleCreateNews}
                       className="w-full flex flex-col gap-y-5 verticalScroll">
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
-
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             Judul Berita
@@ -497,10 +506,11 @@ export default function NewsScreen() {
                               onDragOver={handleDragOver}
                               onDragLeave={handleDragLeave}
                               onDrop={handleDropImage}
-                              className={`w-full ${data?.image || previewImage
-                                ? "md:w-8/12"
-                                : "w-full"
-                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              className={`w-full ${
+                                data?.image || previewImage
+                                  ? "md:w-8/12"
+                                  : "w-full"
+                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                               <>
                                 <input
                                   type="file"
@@ -559,7 +569,6 @@ export default function NewsScreen() {
                           )}
                         </Button>
                       </div>
-
                     </form>
                   </div>
                 </DrawerContent>
@@ -596,7 +605,7 @@ export default function NewsScreen() {
               )}
             </>
           ) : (
-            <>
+            <div className="w-full flex flex-col gap-y-5">
               {news && news.length > 0 ? (
                 news.map((item: NewsInterface, i: number) => {
                   return (
@@ -624,7 +633,7 @@ export default function NewsScreen() {
               ) : (
                 <NotFoundSearch />
               )}
-            </>
+            </div>
           )}
         </div>
 

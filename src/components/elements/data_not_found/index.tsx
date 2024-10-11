@@ -8,7 +8,7 @@ export default function DataNotFound() {
   return (
     <div className="container mx-auto flex flex-col justify-center items-center w-full h-full">
       <Image src={backHome} width={200} height={200} alt="sad" />
-      <p className="text-center text-neutral-900 text-[12px] md:text-[32px] font-thin mt-4">
+      <p className="text-center text-neutral-900 text-[24px] md:text-[32px] font-thin mt-4">
         Data tidak ditemukan!
       </p>
     </div>

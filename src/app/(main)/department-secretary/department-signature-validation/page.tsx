@@ -160,7 +160,7 @@ export default function DepartmentSecretarySignatureValidationScreen() {
   }, []);
 
   return (
-    <section className="w-full flex flex-col items-center px-5 mt-5">
+    <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
       <div
         className={`w-full flex flex-col ${!isMobile ? "bg-white shadow-md rounded-lg p-5" : ""} gap-y-3`}>
         <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">

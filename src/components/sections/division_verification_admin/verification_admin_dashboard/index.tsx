@@ -207,8 +207,6 @@ export default function DivisionVerificationAdminDashboardPages() {
     }
   }, [role]);
 
-  console.log(data, "ini data");
-
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
       fetchApplicationHistoryUser(newPage, 10, 1, "", "", "", layananId);
@@ -228,8 +226,6 @@ export default function DivisionVerificationAdminDashboardPages() {
   useEffect(() => {
     fetchService(1, 100, "");
   }, []);
-
-  console.log(data, "ini data");
 
   const chartDataBar = data?.allLayananMonth?.map((item) => {
     return {
@@ -380,8 +376,6 @@ export default function DivisionVerificationAdminDashboardPages() {
   }, [chartDataPie]);
 
   const chartDataLegend = data?.monthlyCounts?.map((item) => {
-    console.log(item?.permohonanCount, "ini permohonancount");
-
     return {
       bulan: item?.month,
       permohonan: item?.permohonanCount,

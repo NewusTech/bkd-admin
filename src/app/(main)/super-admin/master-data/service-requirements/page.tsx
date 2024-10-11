@@ -157,7 +157,7 @@ export default function ServiceRequiremnts() {
       {!isMobile ? (
         <>
           {/* Dekstop */}
-          <section className="w-full flex flex-col items-center px-5 mt-5">
+          <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
             <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
               <div className="w-full flex flex-row justify-between gap-x-5">
                 <div className="w-[80%] border border-b rounded-lg z-50">
@@ -193,7 +193,7 @@ export default function ServiceRequiremnts() {
       ) : (
         <>
           {/* mobile */}
-          <section className="w-full flex flex-col items-center px-5 mt-5">
+          <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
             <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
               <h1 className="text-lg text-center">Kelola Persyaratan</h1>
 

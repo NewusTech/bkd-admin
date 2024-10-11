@@ -264,7 +264,7 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
             )}
           </>
         ) : (
-          <>
+          <div className="w-full flex flex-col gap-y-5">
             {users &&
               users.length > 0 &&
               users.map((user: UserApplicationHistoryInterface, i: number) => {
@@ -276,7 +276,7 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
                   />
                 );
               })}
-          </>
+          </div>
         )}
       </div>
 

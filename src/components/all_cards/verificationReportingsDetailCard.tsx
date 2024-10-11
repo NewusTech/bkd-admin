@@ -3,43 +3,45 @@
 import React from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import Link from "next/link";
-import { ReportDataInterface, StatisVerificationReportingsDetailInterface } from "@/types/interface";
+import {
+  ReportDataInterface,
+  StatisVerificationReportingsDetailInterface,
+} from "@/types/interface";
+import { formatDateString } from "@/lib/utils";
+import DataNotFound from "../elements/data_not_found";
 
 export default function VerificationReportingsDetailCard({
-    item,
-    index,
+  item,
+  index,
 }: {
-    index: number;
-    item: StatisVerificationReportingsDetailInterface;
+  index: number;
+  item: StatisVerificationReportingsDetailInterface;
 }) {
-    return (
+  return (
+    <>
+      {(item?.status === 9 || item?.status === 10) && (
         <TableRow className="border border-line-20">
-            <TableCell className="text-center">{index + 1}</TableCell>
-            <TableCell className="text-center">{item?.name && item?.name}</TableCell>
-            <TableCell className="text-center">
-                <div className="bg-error-60 text-error-60 bg-opacity-20 py-3 px-3 rounded-lg">
-                    {item?.nip && item?.nip}
-                </div>
-            </TableCell>
-            <TableCell className="text-center">
-                <div className="bg-success-70 text-success-70 bg-opacity-20 py-3 px-3 rounded-lg">
-                    {item?.layanan_name && item?.layanan_name}
-                </div>
-            </TableCell>
-            <TableCell className="text-center">
-                <div className="bg-success-70 text-success-70 bg-opacity-20 py-3 px-3 rounded-lg">
-                    {item?.tgl_selesai && item?.tgl_selesai}
-                </div>
-            </TableCell>
-            {/* <TableCell className="text-center">
-                <div>
-                    <Link
-                        href={`/verification-admin/verification-reportings/${item?.id}`}
-                        className="bg-black-80 bg-opacity-20 hover:bg-black-30 rounded-lg text-[14px] py-3 px-8 text-black-80">
-                        Detail
-                    </Link>
-                </div>
-            </TableCell> */}
+          <TableCell className="text-center">{index + 1}</TableCell>
+          <TableCell className="text-center">
+            {item?.name && item?.name}
+          </TableCell>
+          <TableCell className="text-center">
+            {item?.nip && item?.nip}
+          </TableCell>
+          <TableCell className="text-center">
+            {item?.layanan_name && item?.layanan_name}
+          </TableCell>
+          <TableCell className="text-center">
+            {item?.createdAt && formatDateString(item?.createdAt)}
+          </TableCell>
+          <TableCell className={`text-center`}>
+            <div
+              className={`${item?.status === 9 ? "text-success-70 bg-success-40" : "text-error-70 bg-error-40"} bg-opacity-20 py-3 px-3 rounded-lg`}>
+              {item?.status === 9 ? "Selesai" : "Ditolak"}
+            </div>
+          </TableCell>
         </TableRow>
-    );
+      )}
+    </>
+  );
 }

@@ -25,8 +25,6 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
 }: {
   params: { applicationId: number };
 }) {
-  console.log(params.applicationId, "ini params");
-
   const router = useRouter();
   const dropRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -45,7 +43,6 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
   const fetchOutput = async (id: number) => {
     try {
       const reponse = await getApplicationDocumentOutput(id);
-      console.log(reponse, "ini response");
 
       const fileURL = URL.createObjectURL(reponse);
       // window.open(fileURL);
@@ -58,8 +55,6 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
   useEffect(() => {
     fetchOutput(params?.applicationId);
   }, [params?.applicationId]);
-
-  console.log(output, "output");
 
   const clearSignature = () => {
     sigCanvas?.current?.clear();

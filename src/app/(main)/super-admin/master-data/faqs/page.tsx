@@ -188,7 +188,7 @@ export default function FaqsScreen() {
   };
 
   return (
-    <section className="w-full flex flex-col items-center px-5 mt-5">
+    <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
       <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
         <div className="w-full flex flex-col md:flex-row gap-x-5 gap-y-5">
           <SearchPages
@@ -217,13 +217,17 @@ export default function FaqsScreen() {
                       Master Data FAQ
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
-                      <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
+                      <TypingEffect
+                        className="custom-class text-[14px] md:text-[16px]"
+                        speed={125}
+                        deleteSpeed={50}
+                        text={["Input data yang diperlukan"]}
+                      />
                     </AlertDialogDescription>
 
                     <form
                       onSubmit={handleCreateFaqs}
                       className="w-full flex flex-col gap-y-3 verticalScroll">
-
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                         <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Pertanyaan
@@ -267,7 +271,6 @@ export default function FaqsScreen() {
                           )}
                         </Button>
                       </div>
-
                     </form>
                   </AlertDialogHeader>
                 </AlertDialogContent>
@@ -289,7 +292,12 @@ export default function FaqsScreen() {
                     </DrawerTitle>
 
                     <DrawerDescription className="text-center">
-                      <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
+                      <TypingEffect
+                        className="custom-class text-[14px] md:text-[16px]"
+                        speed={125}
+                        deleteSpeed={50}
+                        text={["Input data yang diperlukan"]}
+                      />
                     </DrawerDescription>
 
                     <form
@@ -371,7 +379,7 @@ export default function FaqsScreen() {
               )}
             </>
           ) : (
-            <>
+            <div className="w-full flex flex-col gap-y-5">
               {faqs &&
                 faqs.length > 0 &&
                 faqs?.map((faq: FaqsInterface, i: number) => {
@@ -391,7 +399,7 @@ export default function FaqsScreen() {
                     />
                   );
                 })}
-            </>
+            </div>
           )}
         </div>
       </div>

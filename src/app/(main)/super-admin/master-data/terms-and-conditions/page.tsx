@@ -109,7 +109,7 @@ export default function TermConditionScreen() {
   };
 
   return (
-    <section className="w-full flex flex-col items-center px-5 mt-5 gap-y-5">
+    <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5 gap-y-5">
       <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
         <div className="w-full flex flex-col items-center justify-center">
           <p className="text-black-80 font-semibold text-lg">
@@ -139,14 +139,18 @@ export default function TermConditionScreen() {
                         Master Data Syarat dan Ketentuan
                       </AlertDialogTitle>
                       <AlertDialogDescription className="text-center">
-                        <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
+                        <TypingEffect
+                          className="custom-class text-[14px] md:text-[16px]"
+                          speed={125}
+                          deleteSpeed={50}
+                          text={["Edit data yang diperlukan"]}
+                        />
                       </AlertDialogDescription>
 
                       <form
                         onSubmit={handleUpdateTerms}
                         className="w-full flex flex-col gap-y-3 max-h-[500px]">
                         <div className="w-full verticalScroll flex flex-col gap-y-5">
-
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                             <div className="w-full flex flex-row justify-between items-center">
                               <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
@@ -193,7 +197,6 @@ export default function TermConditionScreen() {
                             )}
                           </Button>
                         </div>
-
                       </form>
                     </AlertDialogHeader>
                   </AlertDialogContent>
@@ -218,14 +221,18 @@ export default function TermConditionScreen() {
                       </DrawerTitle>
 
                       <DrawerDescription className="text-center">
-                        <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
+                        <TypingEffect
+                          className="custom-class text-[14px] md:text-[16px]"
+                          speed={125}
+                          deleteSpeed={50}
+                          text={["Edit data yang diperlukan"]}
+                        />
                       </DrawerDescription>
 
                       <form
                         onSubmit={handleUpdateTerms}
                         className="w-full flex flex-col gap-y-5 verticalScroll">
                         <div className="w-full flex flex-col gap-y-3 verticalScroll">
-
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                             <div className="w-full flex flex-row justify-between items-center">
                               <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
@@ -261,7 +268,9 @@ export default function TermConditionScreen() {
 
                         <div className="flex gap-4 justify-between">
                           <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-xs">
-                            <DrawerDescription className="text-xs md:text-sm">Batal</DrawerDescription>
+                            <DrawerDescription className="text-xs md:text-sm">
+                              Batal
+                            </DrawerDescription>
                           </DrawerClose>
                           <Button
                             title="Simpan Data"
@@ -275,7 +284,6 @@ export default function TermConditionScreen() {
                             )}
                           </Button>
                         </div>
-
                       </form>
                     </div>
                   </DrawerContent>
@@ -286,7 +294,6 @@ export default function TermConditionScreen() {
         </div>
 
         <div className="w-full flex flex-col gap-y-5 bg-line-10 p-3 rounded-lg shadow-md">
-
           <div className="w-full flex flex-col gap-y-3">
             <h5 className="text-primary-40 text-lg">Ketentuan</h5>
             <div className="w-full border border-black-80 rounded-lg p-3">
@@ -304,7 +311,6 @@ export default function TermConditionScreen() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
 

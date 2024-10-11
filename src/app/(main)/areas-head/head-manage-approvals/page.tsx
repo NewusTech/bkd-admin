@@ -225,7 +225,7 @@ export default function HeadManageApprovalsScreen() {
             )}
           </>
         ) : (
-          <>
+          <div className="w-full flex flex-col gap-y-5">
             {users &&
               users.length > 0 &&
               users.map((user: UserApplicationHistoryInterface, i: number) => {
@@ -233,7 +233,7 @@ export default function HeadManageApprovalsScreen() {
                   <MobileHeadManageApprovalCard key={i} index={i} user={user} />
                 );
               })}
-          </>
+          </div>
         )}
       </div>
 

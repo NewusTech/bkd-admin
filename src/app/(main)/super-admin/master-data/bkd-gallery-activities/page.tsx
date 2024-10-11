@@ -74,7 +74,11 @@ export default function BKDGalleryActivitiesScreen() {
   });
   const debounceSearch = useDebounce(search);
 
-  const fetchGalleries = async (page: number, limit: number, search: string) => {
+  const fetchGalleries = async (
+    page: number,
+    limit: number,
+    search: string
+  ) => {
     try {
       const response = await getBKDGalleryActivities(page, limit, search);
 
@@ -276,7 +280,7 @@ export default function BKDGalleryActivitiesScreen() {
   };
 
   return (
-    <section className="w-full flex flex-col items-center px-5 mt-5">
+    <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
       <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
         <div className="w-full flex flex-col md:flex-row gap-x-5 gap-y-5">
           <SearchPages
@@ -305,7 +309,12 @@ export default function BKDGalleryActivitiesScreen() {
                       Master Data Galeri Kegiatan
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
-                      <TypingEffect className="custom-class text-[14px] md:text-[14] md:text[16px]" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
+                      <TypingEffect
+                        className="custom-class text-[14px] md:text-[14] md:text[16px]"
+                        speed={125}
+                        deleteSpeed={50}
+                        text={["Input data yang diperlukan"]}
+                      />
                     </AlertDialogDescription>
 
                     <form
@@ -336,8 +345,9 @@ export default function BKDGalleryActivitiesScreen() {
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
                             onDrop={handleDropImage}
-                            className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                            className={`w-full ${
+                              previewImage ? "md:w-8/12" : "w-full"
+                            }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                             <>
                               <input
                                 type="file"
@@ -391,7 +401,6 @@ export default function BKDGalleryActivitiesScreen() {
                           )}
                         </Button>
                       </div>
-
                     </form>
                   </AlertDialogHeader>
                 </AlertDialogContent>
@@ -413,14 +422,18 @@ export default function BKDGalleryActivitiesScreen() {
                     </DrawerTitle>
 
                     <DrawerDescription className="text-center">
-                      <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
+                      <TypingEffect
+                        className="custom-class text-[14px] md:text-[16px]"
+                        speed={125}
+                        deleteSpeed={50}
+                        text={["Input data yang diperlukan"]}
+                      />
                     </DrawerDescription>
 
                     <form
                       onSubmit={handleCreateGallery}
                       className="w-full flex flex-col gap-y-5 verticalScroll">
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
-
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label className="focus-within:text-primary-70 font-normal text-sm">
                             Judul Berita
@@ -446,8 +459,9 @@ export default function BKDGalleryActivitiesScreen() {
                               onDragOver={handleDragOver}
                               onDragLeave={handleDragLeave}
                               onDrop={handleDropImage}
-                              className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              className={`w-full ${
+                                previewImage ? "md:w-8/12" : "w-full"
+                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                               <>
                                 <input
                                   type="file"
@@ -506,7 +520,6 @@ export default function BKDGalleryActivitiesScreen() {
                           )}
                         </Button>
                       </div>
-
                     </form>
                   </div>
                 </DrawerContent>
@@ -543,9 +556,8 @@ export default function BKDGalleryActivitiesScreen() {
               )}
             </>
           ) : (
-            <>
-              {galleries &&
-                galleries.length > 0 ?
+            <div className="w-full flex flex-col gap-y-5">
+              {galleries && galleries.length > 0 ? (
                 galleries?.map(
                   (gallery: BKDGalleryActivitiesInterface, i: number) => {
                     return (
@@ -570,13 +582,13 @@ export default function BKDGalleryActivitiesScreen() {
                       />
                     );
                   }
-                ) : (
-                  <>
-                    <NotFoundSearch />
-                  </>
                 )
-              }
-            </>
+              ) : (
+                <>
+                  <NotFoundSearch />
+                </>
+              )}
+            </div>
           )}
         </div>
 
