@@ -255,12 +255,12 @@ export default function VerificationUserApplicationHistoryDetailScreen({
             <TabsList
               className={`w-full px-0 py-6 flex flex-row border border-line-20 ${isMobile ? "horizontalScroll" : ""}`}>
               <TabsTrigger
-                className="w-full py-4 rounded-s-lg data-[state=active]:bg-primary-40 data-[state=active]:text-line-10"
+                className="w-full py-4 text-[14px] md:text-[16px] rounded-s-lg data-[state=active]:bg-primary-40 data-[state=active]:text-line-10"
                 value="data-diri">
                 Data Diri
               </TabsTrigger>
               <TabsTrigger
-                className="w-full py-4 border-r border-line-20 data-[state=active]:bg-primary-40 data-[state=active]:text-line-10"
+                className="w-full py-4 text-[14px] md:text-[16px] border-r border-line-20 data-[state=active]:bg-primary-40 data-[state=active]:text-line-10"
                 value="formulir">
                 Formulir
               </TabsTrigger>
@@ -285,11 +285,11 @@ export default function VerificationUserApplicationHistoryDetailScreen({
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                       <Label
                         htmlFor="name"
-                        className="focus-within:text-primary-70 font-normal text-sm">
+                        className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                         Nama Lengkap
                       </Label>
 
-                      <p>
+                      <p className="text-[14px] md:text-[16px]">
                         {application?.userinfo?.name &&
                           application?.userinfo?.name}
                       </p>
@@ -298,11 +298,11 @@ export default function VerificationUserApplicationHistoryDetailScreen({
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                       <Label
                         htmlFor="nip"
-                        className="focus-within:text-primary-70 font-normal text-sm">
+                        className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                         NIP
                       </Label>
 
-                      <p>
+                      <p className="text-[14px] md:text-[16px]">
                         {application?.userinfo?.nip &&
                           application?.userinfo?.nip}
                       </p>
@@ -311,11 +311,11 @@ export default function VerificationUserApplicationHistoryDetailScreen({
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                       <Label
                         htmlFor="nik"
-                        className="focus-within:text-primary-70 font-normal text-sm">
+                        className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                         NIK
                       </Label>
 
-                      <p>
+                      <p className="text-[14px] md:text-[16px]">
                         {application?.userinfo?.nik &&
                           application?.userinfo?.nik}
                       </p>
@@ -324,11 +324,11 @@ export default function VerificationUserApplicationHistoryDetailScreen({
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                       <Label
                         htmlFor="email"
-                        className="focus-within:text-primary-70 font-normal text-sm">
+                        className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                         Email
                       </Label>
 
-                      <p>
+                      <p className="text-[14px] md:text-[16px]">
                         {application?.userinfo?.email &&
                           application?.userinfo?.email}
                       </p>
@@ -337,11 +337,11 @@ export default function VerificationUserApplicationHistoryDetailScreen({
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                       <Label
                         htmlFor="telepon"
-                        className="focus-within:text-primary-70 font-normal text-sm">
+                        className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                         Nomor Telepon
                       </Label>
 
-                      <p>
+                      <p className="text-[14px] md:text-[16px]">
                         {application?.userinfo?.telepon &&
                           application?.userinfo?.telepon}
                       </p>
@@ -351,11 +351,11 @@ export default function VerificationUserApplicationHistoryDetailScreen({
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                         <Label
                           htmlFor="tempat-lahir"
-                          className="focus-within:text-primary-70 font-normal text-sm">
+                          className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Tempat Lahir
                         </Label>
 
-                        <p>
+                        <p className="text-[14px] md:text-[16px]">
                           {application?.userinfo?.tempat_lahir &&
                             application?.userinfo?.tempat_lahir}
                         </p>
@@ -364,11 +364,11 @@ export default function VerificationUserApplicationHistoryDetailScreen({
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                         <Label
                           htmlFor="tempat-lahir"
-                          className="focus-within:text-primary-70 font-normal text-sm">
+                          className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Tanggal Lahir
                         </Label>
 
-                        <p>
+                        <p className="text-[14px] md:text-[16px]">
                           {application?.userinfo?.tgl_lahir &&
                             formatDateString(application?.userinfo?.tgl_lahir)}
                         </p>
@@ -376,33 +376,33 @@ export default function VerificationUserApplicationHistoryDetailScreen({
                     </div>
 
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
+                      <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                         Agama
                       </Label>
 
-                      <p>
+                      <p className="text-[14px] md:text-[16px]">
                         {application?.userinfo?.agama &&
                           application?.userinfo?.agama}
                       </p>
                     </div>
 
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
+                      <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                         jenis Kelamin
                       </Label>
 
-                      <p>
+                      <p className="text-[14px] md:text-[16px]">
                         {application?.userinfo?.gender &&
                           application?.userinfo?.gender}
                       </p>
                     </div>
 
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-sm">
+                      <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                         Golongan Darah
                       </Label>
 
-                      <p>
+                      <p className="text-[14px] md:text-[16px]">
                         {application?.userinfo?.goldar &&
                           application?.userinfo?.goldar}
                       </p>
@@ -418,11 +418,11 @@ export default function VerificationUserApplicationHistoryDetailScreen({
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                         <Label
                           htmlFor="kecamatan"
-                          className="focus-within:text-primary-70 font-normal text-sm">
+                          className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Kecamatan
                         </Label>
 
-                        <p>
+                        <p className="text-[14px] md:text-[16px]">
                           {application?.userinfo?.Kecamatan.nama &&
                             application?.userinfo?.Kecamatan.nama}
                         </p>
@@ -431,11 +431,11 @@ export default function VerificationUserApplicationHistoryDetailScreen({
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                         <Label
                           htmlFor="desa"
-                          className="focus-within:text-primary-70 font-normal text-sm">
+                          className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Desa
                         </Label>
 
-                        <p>
+                        <p className="text-[14px] md:text-[16px]">
                           {application?.userinfo?.Desa.nama &&
                             application?.userinfo?.Desa.nama}
                         </p>
@@ -445,11 +445,11 @@ export default function VerificationUserApplicationHistoryDetailScreen({
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label
                             htmlFor="rt"
-                            className="focus-within:text-primary-70 font-normal text-sm">
+                            className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             RT
                           </Label>
 
-                          <p>
+                          <p className="text-[14px] md:text-[16px]">
                             {application?.userinfo?.rt &&
                               application?.userinfo?.rt}
                           </p>
@@ -458,11 +458,11 @@ export default function VerificationUserApplicationHistoryDetailScreen({
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label
                             htmlFor="rw"
-                            className="focus-within:text-primary-70 font-normal text-sm">
+                            className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             RW
                           </Label>
 
-                          <p>
+                          <p className="text-[14px] md:text-[16px]">
                             {application?.userinfo?.rw &&
                               application?.userinfo?.rw}
                           </p>
@@ -470,11 +470,11 @@ export default function VerificationUserApplicationHistoryDetailScreen({
                       </div>
 
                       <div className="w-full flex flex-col gap-y-2">
-                        <Label className="text-[14px] text-black-80">
+                        <Label className="text-[14px] md:text-[16px] text-black-80">
                           Alamat
                         </Label>
 
-                        <p>
+                        <p className="text-[14px] md:text-[16px]">
                           {application?.userinfo?.alamat &&
                             application?.userinfo?.alamat}
                         </p>
@@ -519,12 +519,14 @@ export default function VerificationUserApplicationHistoryDetailScreen({
 
         <div className="w-full flex flex-col items-center justify-center border border-line-20 rounded-lg p-5 gap-y-8">
           <div className="w-8/12 flex flex-col items-center gap-y-5">
-            <p className="text-black-80 text-sm">Status Permohonan:</p>
+            <p className="text-black-80 text-[14px] md:text-[16px]">
+              Status Permohonan:
+            </p>
 
             <div
               className={`w-4/12 ${application?.status === 1 ? "text-primary-70 bg-primary-40" : application?.status === 2 ? "text-secondary-70 bg-secondary-40" : application?.status === 3 ? "text-warning-70 bg-warning-40" : application?.status === 4 ? "text-error-70 bg-error-40" : application?.status === 5 ? "text-primary-70 bg-primary-50" : application?.status === 6 ? "text-secondary-70 bg-secondary-50" : application?.status === 7 ? "text-warning-70 bg-warning-50" : application?.status === 8 ? "text-error-70 bg-error-50" : application?.status === 9 ? "text-success-70 bg-success-40" : "text-error-70 bg-error-40"} bg-opacity-20 py-2 rounded-lg`}>
               <p
-                className={`${application?.status === 1 ? "text-primary-70" : application?.status === 2 ? "text-secondary-70" : application?.status === 3 ? "text-warning-70" : application?.status === 4 ? "text-error-70" : application?.status === 5 ? "text-primary-70" : application?.status === 6 ? "text-secondary-70" : application?.status === 7 ? "text-warning-70" : application?.status === 8 ? "text-error-70" : application?.status === 9 ? "text-success-70" : "text-error-70"} text-center`}>
+                className={`${application?.status === 1 ? "text-primary-70" : application?.status === 2 ? "text-secondary-70" : application?.status === 3 ? "text-warning-70" : application?.status === 4 ? "text-error-70" : application?.status === 5 ? "text-primary-70" : application?.status === 6 ? "text-secondary-70" : application?.status === 7 ? "text-warning-70" : application?.status === 8 ? "text-error-70" : application?.status === 9 ? "text-success-70" : "text-error-70"} text-center text-[14px] md:text-[16px]`}>
                 {application?.status === 1
                   ? "Menunggu"
                   : application?.status === 2
@@ -548,44 +550,48 @@ export default function VerificationUserApplicationHistoryDetailScreen({
             </div>
           </div>
 
-          <div className="w-full flex flex-row gap-x-5">
-            {application && application.id && (
-              <UserApplicationActions
-                name="Tolak"
-                isGlobalDialog={isDialogFailed}
-                setIsGlobalDialog={setIsDialogFailed}
-                handleSubmit={updateStatusUserApplicationHistoryFailed}
-                data={data}
-                setData={setData}
-                isGlobalLoading={isLoadingFailed}
-                id={application.id}
-              />
-            )}
+          {role && (role === "Admin Verifikasi" || role === "Super Admin") && (
+            <div className="w-full flex flex-row gap-x-5">
+              {application && application.id && (
+                <UserApplicationActions
+                  name="Tolak"
+                  isGlobalDialog={isDialogFailed}
+                  setIsGlobalDialog={setIsDialogFailed}
+                  handleSubmit={updateStatusUserApplicationHistoryFailed}
+                  data={data}
+                  setData={setData}
+                  isGlobalLoading={isLoadingFailed}
+                  id={application.id}
+                />
+              )}
 
-            {application && application.id && (
-              <UserApplicationActions
-                name="Perbaiki"
-                isGlobalDialog={isDialogRevision}
-                setIsGlobalDialog={setIsDialogRevision}
-                handleSubmit={updateStatusUserApplicationHistoryRevision}
-                data={data}
-                setData={setData}
-                isGlobalLoading={isLoadingRevision}
-                id={application.id}
-              />
-            )}
+              {application && application.id && (
+                <UserApplicationActions
+                  name="Perbaiki"
+                  isGlobalDialog={isDialogRevision}
+                  setIsGlobalDialog={setIsDialogRevision}
+                  handleSubmit={updateStatusUserApplicationHistoryRevision}
+                  data={data}
+                  setData={setData}
+                  isGlobalLoading={isLoadingRevision}
+                  id={application.id}
+                />
+              )}
 
-            {application?.id && (
-              <Button
-                disabled={isLoading ? true : false}
-                onClick={() => {
-                  updateStatusUserApplicationHistoryValidation(application?.id);
-                }}
-                className="w-full rounded-lg py-6 bg-green-700 text-line-10">
-                {isLoading ? <Loader className="animate-spin" /> : "Validasi"}
-              </Button>
-            )}
-          </div>
+              {application?.id && (
+                <Button
+                  disabled={isLoading ? true : false}
+                  onClick={() => {
+                    updateStatusUserApplicationHistoryValidation(
+                      application?.id
+                    );
+                  }}
+                  className="w-full rounded-lg py-6 bg-green-700 text-line-10">
+                  {isLoading ? <Loader className="animate-spin" /> : "Validasi"}
+                </Button>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </section>

@@ -53,7 +53,7 @@ export default function VerificationUserComplaintCard({
         <div>
           <Link
             href={`/verification-admin/verification-user-complaint-history/${complaint.id}`}
-            className="bg-black-80 bg-opacity-20 hover:bg-black-30 rounded-lg text-[14px] py-3 px-8 text-black-80">
+            className="bg-black-80 bg-opacity-20 hover:bg-black-30 rounded-lg text-[14px] md:text-[16px] py-3 px-8 text-black-80">
             Detail
           </Link>
         </div>

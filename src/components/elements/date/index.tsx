@@ -27,7 +27,7 @@ export default function DatePages({
               "w-full hover:bg-line-10 bg-line-10 border border-primary-40 text-black-80 justify-between text-left font-normal",
               !date && "text-muted-foreground"
             )}>
-            <CalendarIcon className="mr-2 h-4 w-4 text-primary-700" />
+            <CalendarIcon className="mr-2 h-4 w-4 text-primary-40" />
             {date ? format(date, "PP") : <span>Pilih Tanggal</span>}
           </Button>
         </div>
@@ -38,6 +38,7 @@ export default function DatePages({
           selected={date as Date}
           onSelect={(day) => setDate(day ?? null)}
           initialFocus
+          className="text-[14px] md:text-[16px]"
         />
       </PopoverContent>
     </Popover>

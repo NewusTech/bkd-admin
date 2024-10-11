@@ -79,6 +79,7 @@ export default function DivisionVerificationAdminDashboardPages() {
   const debounceSearch = useDebounce(search, 500);
   const [role, setRole] = useState<string | null>(null);
   const [layananId, setLayananId] = useState<number | undefined>(undefined);
+  const [areaId, setAreaId] = useState<number | undefined>(undefined);
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
   const [startDate, setStartDate] = useState<Date | undefined>(firstDayOfMonth);
@@ -100,9 +101,11 @@ export default function DivisionVerificationAdminDashboardPages() {
     if (token) {
       try {
         const decoded = jwtDecode<JwtPayload>(token);
+        console.log(decoded, "ini decoded");
 
         if (decoded && decoded.role !== undefined) {
           setRole(decoded.role);
+          setAreaId(decoded?.bidang_id);
         }
       } catch (error) {
         console.error("Error decoding token:", error);
@@ -137,7 +140,8 @@ export default function DivisionVerificationAdminDashboardPages() {
     search?: string,
     start_date?: string,
     end_date?: string,
-    layanan_id?: number
+    layanan_id?: number,
+    bidang_id?: number
   ) => {
     try {
       const response = await getApplicationUserHistories(
@@ -147,7 +151,8 @@ export default function DivisionVerificationAdminDashboardPages() {
         search,
         start_date,
         end_date,
-        layanan_id
+        layanan_id,
+        bidang_id
       );
 
       setUsers(response.data);
@@ -163,28 +168,56 @@ export default function DivisionVerificationAdminDashboardPages() {
   };
 
   useEffect(() => {
-    if (user && user?.role_name === "Kepala Bidang") {
+    if (areaId) {
+      if (role === "Kepala Bidang") {
+        fetchApplicationHistoryUser(
+          1,
+          10,
+          2,
+          debounceSearch,
+          startDateFormatted,
+          endDateFormatted,
+          layananId,
+          areaId
+        );
+      } else if (role === "Admin Verifikasi") {
+        fetchApplicationHistoryUser(
+          1,
+          10,
+          1,
+          debounceSearch,
+          startDateFormatted,
+          endDateFormatted,
+          layananId,
+          areaId
+        );
+      }
+    }
+  }, [
+    role,
+    debounceSearch,
+    startDateFormatted,
+    endDateFormatted,
+    layananId,
+    areaId,
+  ]);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage !== pagination.currentPage) {
       fetchApplicationHistoryUser(
-        1,
-        10,
-        2,
-        debounceSearch,
-        startDateFormatted,
-        endDateFormatted,
-        layananId
-      );
-    } else if (user && user?.role_name === "Admin Verifikasi") {
-      fetchApplicationHistoryUser(
-        1,
+        newPage,
         10,
         1,
-        debounceSearch,
-        startDateFormatted,
-        endDateFormatted,
-        layananId
+        "",
+        "",
+        "",
+        layananId,
+        areaId
       );
     }
-  }, [debounceSearch, startDateFormatted, endDateFormatted, layananId, user]);
+  };
+
+  console.log(users, "ini users");
 
   const fetchDashboardData = async () => {
     try {
@@ -206,12 +239,6 @@ export default function DivisionVerificationAdminDashboardPages() {
       fetchDashboardData();
     }
   }, [role]);
-
-  const handlePageChange = (newPage: number) => {
-    if (newPage !== pagination.currentPage) {
-      fetchApplicationHistoryUser(newPage, 10, 1, "", "", "", layananId);
-    }
-  };
 
   const fetchService = async (page: number, limit: number, search?: string) => {
     try {

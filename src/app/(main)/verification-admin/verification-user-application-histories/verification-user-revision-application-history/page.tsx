@@ -136,15 +136,17 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
                 setLayananId(value === "all" ? undefined : Number(value))
               }>
               <SelectTrigger
-                className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                 <SelectValue
                   placeholder="Pilih Layanan"
-                  className="text-black-80 tex-[14px] w-full"
+                  className="text-black-80 text-[14px] md:text-[16px] w-full"
                 />
               </SelectTrigger>
               <SelectContent className="bg-line-10">
                 <div className="pt-2">
-                  <SelectItem className="w-full px-4" value="all">
+                  <SelectItem
+                    className="w-full px-4 text-[14px] md:text-[16px]"
+                    value="all">
                     Semua Status
                   </SelectItem>
                   {services &&
@@ -152,7 +154,7 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
                       return (
                         <SelectItem
                           key={i}
-                          className={`w-full px-4`}
+                          className={`w-full px-4 text-[14px] md:text-[16px]`}
                           value={service.id.toString()}>
                           {service?.nama}
                         </SelectItem>
@@ -173,7 +175,7 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
                   onClick={() => {
                     setStatus(3);
                   }}
-                  className="w-full py-3 rounded-lg bg-primary-40 bg-opacity-20 text-primary-40 data-[state=active]:bg-opacity-100 data-[state=active]:bg-primary-40 data-[state=active]:text-line-10"
+                  className="w-full py-3 text-[14px] md:text-[16px] rounded-lg bg-primary-40 bg-opacity-20 text-primary-40 data-[state=active]:bg-opacity-100 data-[state=active]:bg-primary-40 data-[state=active]:text-line-10"
                   value="butuh-perbaikan">
                   Butuh Perbaikan
                 </TabsTrigger>
@@ -182,7 +184,7 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
                   onClick={() => {
                     setStatus(4);
                   }}
-                  className="w-full py-3 rounded-lg bg-success-70 data-[state=active]:bg-success-70 bg-opacity-20 text-success-70 data-[state=active]:bg-opacity-100 data-[state=active]:text-line-10"
+                  className="w-full py-3 text-[14px] md:text-[16px] rounded-lg bg-success-70 data-[state=active]:bg-success-70 bg-opacity-20 text-success-70 data-[state=active]:bg-opacity-100 data-[state=active]:text-line-10"
                   value="sudah-diperbaiki">
                   Sudah Diperbaiki
                 </TabsTrigger>
@@ -245,10 +247,10 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
               </div>
 
               <div className="w-full">
-                <Button className="w-full flex flex-row gap-x-4 text-sm bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
+                <Button className="w-full flex flex-row gap-x-4 text-[14px] md:text-[16px] bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
                   <Printer className="w-6 h-6 text-line-10" />
 
-                  <span>Print</span>
+                  <span className="text-[14px] md:text-[16px]">Print</span>
                 </Button>
               </div>
             </div>

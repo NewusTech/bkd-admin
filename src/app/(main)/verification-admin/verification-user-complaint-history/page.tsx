@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { UserComplaintInterface } from "@/types/interface";
+import { JwtPayload, UserComplaintInterface } from "@/types/interface";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { getUserComplaints } from "@/services/api";
 import VerificationUserComplaintTablePages from "@/components/tables/verification_admin_user_compaint_table";
@@ -20,12 +20,18 @@ import { useDebounce } from "@/hooks/useDebounce";
 import PaginationComponent from "@/components/elements/pagination";
 import DataNotFound from "@/components/elements/data_not_found";
 import MobileUserComplaintCardPages from "@/components/mobile_all_cards/mobileUserComplaintCard";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 
 export default function VerificationUserComplaintScreen() {
+  const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
   const deboucedSearch = useDebounce(search, 500);
   const [status, setStatus] = useState<number | undefined>(undefined);
+  const [role, setRole] = useState<string | null>(null);
+  const [areaId, setAreaId] = useState<number | undefined>(undefined);
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
   const [startDate, setStartDate] = useState<Date | undefined>(firstDayOfMonth);
@@ -38,6 +44,25 @@ export default function VerificationUserComplaintScreen() {
     totalCount: 0,
   });
 
+  useEffect(() => {
+    const token = Cookies.get("Authorization");
+
+    if (token) {
+      try {
+        const decoded = jwtDecode<JwtPayload>(token);
+
+        if (decoded && decoded.role !== undefined) {
+          setRole(decoded.role);
+          setAreaId(decoded.bidang_id);
+        }
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    } else {
+      router.push("/login");
+    }
+  }, [router]);
+
   const startDateFormatted = startDate
     ? formatDate(new Date(startDate))
     : undefined;
@@ -49,7 +74,8 @@ export default function VerificationUserComplaintScreen() {
     search?: string,
     start_date?: string,
     end_date?: string,
-    status?: number
+    status?: number,
+    bidang_id?: number
   ) => {
     try {
       const response = await getUserComplaints(
@@ -58,7 +84,8 @@ export default function VerificationUserComplaintScreen() {
         search,
         start_date,
         end_date,
-        status
+        status,
+        bidang_id
       );
 
       setComplaints(response.data);
@@ -74,15 +101,36 @@ export default function VerificationUserComplaintScreen() {
   };
 
   useEffect(() => {
-    fetchUserComplaints(
-      1,
-      10,
-      deboucedSearch,
-      startDateFormatted,
-      endDateFormatted,
-      status
-    );
-  }, [deboucedSearch, startDateFormatted, endDateFormatted, status]);
+    if (role === "Admin Verifikasi" || role === "Kepala Bidang") {
+      if (areaId) {
+        fetchUserComplaints(
+          1,
+          10,
+          deboucedSearch,
+          startDateFormatted,
+          endDateFormatted,
+          status,
+          areaId
+        );
+      }
+    } else {
+      fetchUserComplaints(
+        1,
+        10,
+        deboucedSearch,
+        startDateFormatted,
+        endDateFormatted,
+        status
+      );
+    }
+  }, [
+    deboucedSearch,
+    startDateFormatted,
+    endDateFormatted,
+    status,
+    areaId,
+    role,
+  ]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
@@ -124,10 +172,10 @@ export default function VerificationUserComplaintScreen() {
                 setStatus(value === "all" ? undefined : Number(value))
               }>
               <SelectTrigger
-                className={`w-full text-[14px] px-2 gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                className={`w-full text-[14px] md:text-[16px] px-2 gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                 <SelectValue
                   placeholder="Status"
-                  className="text-black-80 text-[14px] w-full"
+                  className="text-black-80 text-[14px] md:text-[16px] w-full"
                 />
               </SelectTrigger>
               <SelectContent className="bg-line-10">
@@ -144,7 +192,7 @@ export default function VerificationUserComplaintScreen() {
                         return (
                           <SelectItem
                             key={i}
-                            className={`w-full px-4`}
+                            className={`w-full px-4 text-[14px] md:text-[16px]`}
                             value={status.key.toString()}>
                             {status.name}
                           </SelectItem>
@@ -181,13 +229,15 @@ export default function VerificationUserComplaintScreen() {
           )}
         </div>
 
-        <div className="w-full">
-          <PaginationComponent
-            currentPage={pagination.currentPage}
-            totalPages={pagination.totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
+        {complaints && complaints?.length > 0 && (
+          <div className="w-full">
+            <PaginationComponent
+              currentPage={pagination.currentPage}
+              totalPages={pagination.totalPages}
+              onPageChange={handlePageChange}
+            />
+          </div>
+        )}
 
         <div className="w-full">
           {complaints && complaints.length === 0 && <DataNotFound />}

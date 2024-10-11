@@ -11,10 +11,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Checks, Printer } from "@phosphor-icons/react";
+import { Printer } from "@phosphor-icons/react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Button } from "@/components/ui/button";
-import FilterDataPages from "@/components/elements/data_filters";
 import VerificationUserApplicationHistoryTablePages from "@/components/tables/verification_admin_user_application_history_table";
 import { getApplicationUserHistories, getService } from "@/services/api";
 import {
@@ -95,7 +94,15 @@ export default function VerificationUserApplicationHistoriesScreen() {
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchApplicationHistoryUser(newPage, 10, 1, "", "", "", layananId);
+      fetchApplicationHistoryUser(
+        newPage,
+        10,
+        1,
+        debounceSearch,
+        "",
+        "",
+        layananId
+      );
     }
   };
 
@@ -123,10 +130,10 @@ export default function VerificationUserApplicationHistoriesScreen() {
               setLayananId(value === "all" ? undefined : Number(value))
             }>
             <SelectTrigger
-              className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+              className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
               <SelectValue
                 placeholder="Pilih Layanan"
-                className="text-black-80 tex-[14px] w-full"
+                className="text-black-80 text-[14px] md:text-[16px] w-full"
               />
             </SelectTrigger>
             <SelectContent className="bg-line-10">
@@ -139,7 +146,7 @@ export default function VerificationUserApplicationHistoriesScreen() {
                     return (
                       <SelectItem
                         key={i}
-                        className={`w-full px-4`}
+                        className={`w-full px-4 text-[14px] md:text-[16px]`}
                         value={service.id.toString()}>
                         {service?.nama}
                       </SelectItem>
@@ -171,10 +178,10 @@ export default function VerificationUserApplicationHistoriesScreen() {
           </div>
 
           <div className="w-full">
-            <Button className="w-full flex flex-row gap-x-4 text-sm bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
+            <Button className="w-full flex flex-row gap-x-4 text-[14px] md:text-[16px] bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
               <Printer className="w-6 h-6 text-line-10" />
 
-              <span>Print</span>
+              <span className="text-[14px] md:text-[16px]">Print</span>
             </Button>
           </div>
         </div>

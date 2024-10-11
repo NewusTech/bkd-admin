@@ -130,7 +130,9 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
                 <div className="bg-primary-40 hover:bg-primary-70 rounded-lg px-4 py-3 text-line-10 w-full flex flex-row justify-center items-center gap-x-3">
                   <Plus className="w-6 h-6 text-line-10" />
 
-                  <p className="text-line-10 text-[16px]">Tambah</p>
+                  <p className="text-line-10 text-[14px] md:text-[16px]">
+                    Tambah
+                  </p>
                 </div>
               </DialogTrigger>
               <DialogContent className="bg-line-10 w-full max-w-xl">
@@ -151,17 +153,17 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
                     <TabsList
                       className={`w-full px-0 py-0 h-full flex flex-row gap-x-3 border-none verticalScroll`}>
                       <TabsTrigger
-                        className="w-full text-primary-40 py-2 border border-primary-40 bg-line-10 rounded-lg data-[state=active]:bg-primary-40 data-[state=active]:text-line-10"
+                        className="w-full text-[14px] md:text-[16px] text-primary-40 py-2 border border-primary-40 bg-line-10 rounded-lg data-[state=active]:bg-primary-40 data-[state=active]:text-line-10"
                         value="image">
                         Gambar
                       </TabsTrigger>
                       <TabsTrigger
-                        className="w-full text-primary-40 border border-primary-40 bg-line-10 py-2 rounded-lg data-[state=active]:bg-primary-40 data-[state=active]:text-line-10"
+                        className="w-full text-[14px] md:text-[16px] text-primary-40 border border-primary-40 bg-line-10 py-2 rounded-lg data-[state=active]:bg-primary-40 data-[state=active]:text-line-10"
                         value="upload">
                         Upload
                       </TabsTrigger>
                       <div className="w-4/12">
-                        <Button className="w-full bg-secondary-40 hover:bg-secondary-70 text-line-10">
+                        <Button className="w-full text-[14px] md:text-[16px] bg-secondary-40 hover:bg-secondary-70 text-line-10">
                           Digital Signature
                         </Button>
                       </div>
@@ -182,26 +184,30 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
                           />
                           <div className="w-full flex flex-row gap-x-3">
                             <Button
-                              className="border border-line-20"
+                              className="border text-[14px] md:text-[16px] border-line-20"
                               onClick={clearSignature}>
                               Clear
                             </Button>
 
                             <Button
-                              className="border border-line-20"
+                              className="border text-[14px] md:text-[16px] border-line-20"
                               onClick={saveSignature}>
                               Save
                             </Button>
                           </div>
                         </div>
 
-                        {isSigned && <p>Tanda tangan berhasil dibuat!</p>}
+                        {isSigned && (
+                          <p className="text-[14px] md:text-[16px]">
+                            Tanda tangan berhasil dibuat!
+                          </p>
+                        )}
 
                         {/* <button onClick={submitSignature}>
                           Submit PDF with Signature
                         </button> */}
                         <div className="w-full">
-                          <Button className="w-full bg-primary-40 hover:bg-primary-70 text-line-10">
+                          <Button className="w-full text-[14px] md:text-[16px] bg-primary-40 hover:bg-primary-70 text-line-10">
                             Tanda Tangan
                           </Button>
                         </div>
@@ -251,7 +257,7 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
                         </div>
                         <div className="flex justify-center items-end self-end w-4/12 md:self-center my-4 md:pb-[30px] mt-4 pr-2 md:pr-0">
                           <Button
-                            className="w-full bg-primary-40 hover:bg-primary-70 text-neutral-50 h-[30px] md:h-[40px] text-[12px] md:text-[16px]"
+                            className="w-full bg-primary-40 hover:bg-primary-70 text-neutral-50 h-[30px] md:h-[40px] text-[14px] md:text-[16px]"
                             type="submit"
                             disabled={isLoading ? true : false}>
                             {isLoading ? (

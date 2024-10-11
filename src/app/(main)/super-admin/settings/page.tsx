@@ -38,16 +38,18 @@ export default function SuperSettingScreen() {
     fetchService(1, 30, "");
   }, []);
 
+  console.log(services, "ini services");
+
   return (
     <section className="w-full flex flex-col items-center md:px-5 md:mt-5">
       <div className="bg-line-20 md:bg-line-10 md:shadow-md md:rounded-lg w-full flex flex-col p-5 gap-y-5">
         <div className="w-full border border-line-20 rounded-lg">
           <Select onValueChange={(value) => setServiceId(Number(value))}>
             <SelectTrigger
-              className={`w-full text-[14px] gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+              className={`w-full text-[14px] md:text-[16px] gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
               <SelectValue
                 placeholder="Pilih Layanan"
-                className="text-black-80 text-[14px] w-full"
+                className="text-black-80 text-[14px] md:text-[16px] w-full"
               />
             </SelectTrigger>
             <SelectContent className="bg-line-10">

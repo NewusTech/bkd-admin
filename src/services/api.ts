@@ -914,12 +914,13 @@ export const getUserComplaints = async (
   search?: string,
   start_date?: string,
   end_date?: string,
-  status?: number
+  status?: number,
+  bidang_id?: number
 ) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/pengaduan/get?page=${page}&limit=${limit}&search=${search}&start_date=${start_date}&end_date=${end_date}&${status != undefined && `status=${status}`}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/pengaduan/get?page=${page}&limit=${limit}&search=${search}&start_date=${start_date}&end_date=${end_date}&${status != undefined && `status=${status}`}&bidang_id=${bidang_id}`,
     {
       method: "GET",
       headers: {
@@ -1068,12 +1069,13 @@ export const getApplicationUserHistories = async (
   search?: string,
   start_date?: string,
   end_date?: string,
-  layanan_id?: number
+  layanan_id?: number,
+  bidang_id?: number
 ) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/history/form?page=${page}&limit=${limit}&status=${status}&search=${search}&start_date=${start_date}&end_date=${end_date}&layanan_id=${layanan_id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/history/form?page=${page}&limit=${limit}&status=${status}&search=${search}&start_date=${start_date}&end_date=${end_date}&layanan_id=${layanan_id}&bidang_id=${bidang_id}`,
     {
       method: "GET",
       headers: {
@@ -1338,12 +1340,13 @@ export const getAllGrade = async (limit: number) => {
 // get satisfaction index report
 export const getSatisfactionIndexReport = async (
   page: number,
-  limit: number
+  limit: number,
+  bidang_id?: number
 ) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/history/feedback?page=${page}&limit=${limit}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/history/feedback?page=${page}&limit=${limit}&bidang_id=${bidang_id}`,
     {
       method: "GET",
       headers: {
