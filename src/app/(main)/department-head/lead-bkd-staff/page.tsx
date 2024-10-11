@@ -144,8 +144,6 @@ export default function LeadBkdStaffScreen() {
     }
   };
 
-  console.log(organizations, "ini organisasi");
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({
       ...data,
@@ -310,16 +308,12 @@ export default function LeadBkdStaffScreen() {
       formData.append("image", fileImage);
     }
 
-    console.log(data, "data");
-
-    formData.forEach((value, key) => {
-      console.log(key, value);
-    });
+    // formData.forEach((value, key) => {
+    //   console.log(key, value);
+    // });
 
     try {
       const response = await updateStructureOrganizations(formData, slug);
-
-      console.log(response, "ini res");
 
       if (response.status === 200) {
         setData({
@@ -510,7 +504,6 @@ export default function LeadBkdStaffScreen() {
                           onSubmit={handleCreateStructureOrganization}
                           className="w-full flex flex-col gap-y-3 max-h-[500px]">
                           <div className="w-full flex flex-col gap-y-3 verticalScroll">
-
                             <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                               <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                                 Bidang
@@ -613,7 +606,10 @@ export default function LeadBkdStaffScreen() {
                                     <div className="pt-2">
                                       {grades &&
                                         grades.map(
-                                          (grade: GradeInterface, i: number) => {
+                                          (
+                                            grade: GradeInterface,
+                                            i: number
+                                          ) => {
                                             return (
                                               <SelectItem
                                                 key={i}
@@ -684,8 +680,9 @@ export default function LeadBkdStaffScreen() {
                                   onDragOver={handleDragOver}
                                   onDragLeave={handleDragLeave}
                                   onDrop={handleDropImage}
-                                  className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                                    }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                                  className={`w-full ${
+                                    previewImage ? "md:w-8/12" : "w-full"
+                                  }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                                   <div>
                                     <input
                                       type="file"
@@ -954,8 +951,9 @@ export default function LeadBkdStaffScreen() {
                                   onDragOver={handleDragOver}
                                   onDragLeave={handleDragLeave}
                                   onDrop={handleDropImage}
-                                  className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                                    }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                                  className={`w-full ${
+                                    previewImage ? "md:w-8/12" : "w-full"
+                                  }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                                   <div>
                                     <input
                                       type="file"
@@ -1059,7 +1057,7 @@ export default function LeadBkdStaffScreen() {
             )}
           </>
         ) : (
-          <>
+          <div className="w-full flex flex-col gap-y-5">
             {organizations &&
               organizations.length > 0 &&
               organizations.map(
@@ -1095,7 +1093,7 @@ export default function LeadBkdStaffScreen() {
                   );
                 }
               )}
-          </>
+          </div>
         )}
       </div>
 

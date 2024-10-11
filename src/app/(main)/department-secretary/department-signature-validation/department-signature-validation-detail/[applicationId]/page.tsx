@@ -6,27 +6,106 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Pen } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Loader } from "lucide-react";
 import {
+  JwtPayload,
   UserApplicationHistoryDetailInterface,
   UserApplicationHistoryFormServiceInputInterface,
 } from "@/types/interface";
-import { getUserApplicationHistoryDetail } from "@/services/api";
+import {
+  getUserApplicationHistoryDetail,
+  updateUserApplicationHistoryDetail,
+} from "@/services/api";
 import UserApplicationHistoryFormCard from "@/components/all_cards/verificationUserApplicationHistoryFormCard";
 import { Label } from "@/components/ui/label";
 import { formatDateString } from "@/lib/utils";
+// hapus
+import { jwtDecode } from "jwt-decode";
+import Cookies from "js-cookie";
+import Swal from "sweetalert2";
+// hapus
 
 export default function DepartmentSecretarySignatureValidationDetailScreen({
   params,
 }: {
   params: { applicationId: number };
 }) {
-  console.log(params.applicationId, "ini params");
-
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 768px)");
+  // hapus
+  const [role, setRole] = useState<string | null>(null);
+  const [data, setData] = useState({
+    status: 1,
+    pesan: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  // hapus
   const [application, setApplication] =
     useState<UserApplicationHistoryDetailInterface>();
+
+  // hapus
+  useEffect(() => {
+    const token = Cookies.get("Authorization");
+
+    if (token) {
+      try {
+        const decoded = jwtDecode<JwtPayload>(token);
+
+        if (decoded && decoded.role !== undefined) {
+          setRole(decoded.role);
+        }
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    } else {
+      router.push("/login");
+    }
+  }, [router]);
+
+  const updateStatusUserApplicationHistoryValidation = async (id: number) => {
+    setIsLoading(true);
+
+    try {
+      const response = await updateUserApplicationHistoryDetail(
+        {
+          ...data,
+          status: 9,
+        },
+        id
+      );
+
+      if (response.status === 200) {
+        setData({
+          ...data,
+          pesan: "",
+        });
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil Mengupdate Status Permohonan User!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+
+        router.push(
+          `/verification-admin/verification-user-application-histories/verification-user-waiting-application-history`
+        );
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal Mengupdate Status Permohonan User!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  // hapus
 
   const fetchUserApplicationHistoryDetail = async (id: number) => {
     try {
@@ -315,10 +394,30 @@ export default function DepartmentSecretarySignatureValidationDetailScreen({
               className="w-full flex flex-col mt-0">
               <div className="w-full flex flex-col gap-y-5 border border-grey-100 rounded-lg p-4">
                 <div className="w-full flex flex-row items-center gap-x-5">
-                  <div className="w-full"></div>
+                  {/* hapus */}
+                  <div className="w-full flex flex-row justify-start">
+                    {application?.id && (
+                      <Button
+                        disabled={isLoading ? true : false}
+                        onClick={() => {
+                          updateStatusUserApplicationHistoryValidation(
+                            application?.id
+                          );
+                        }}
+                        className="bg-primary-40 hover:bg-primary-70 text-line-10 flex flex-row gap-x-5">
+                        {isLoading ? (
+                          <Loader className="animate-spin" />
+                        ) : (
+                          "Selesai"
+                        )}
+                      </Button>
+                    )}
+                  </div>
+                  {/* hapus */}
 
                   <div className="w-full flex flex-row justify-end">
                     <Button
+                      disabled
                       onClick={() =>
                         router.push(
                           `/department-secretary/department-signature-validation/department-signature-validation-upload/${params?.applicationId}`

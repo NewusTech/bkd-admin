@@ -238,7 +238,7 @@ export default function CarouselSliderScreen() {
   };
 
   return (
-    <section className="w-full flex flex-col items-center px-5 mt-5">
+    <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
       <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
         <div className="w-full flex flex-row justify-end gap-x-5">
           <div className="w-5/12 md:w-3/12">
@@ -258,14 +258,18 @@ export default function CarouselSliderScreen() {
                       Master Data Slider
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
-                      <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
+                      <TypingEffect
+                        className="custom-class text-[14px] md:text-[16px]"
+                        speed={125}
+                        deleteSpeed={50}
+                        text={["Input data yang diperlukan"]}
+                      />
                     </AlertDialogDescription>
 
                     <form
                       onSubmit={handleCreateSlider}
                       className="w-full flex flex-col gap-y-3 max-h-[500px]">
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
-
                         <div className="flex flex-col w-full">
                           <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                             Slider
@@ -276,103 +280,9 @@ export default function CarouselSliderScreen() {
                               onDragOver={handleDragOver}
                               onDragLeave={handleDragLeave}
                               onDrop={handleDropImage}
-                              className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
-                              <>
-                                <input
-                                  type="file"
-                                  id="file-input-image"
-                                  name="image"
-                                  accept="image/*"
-                                  onChange={handleImageChange}
-                                  className="hidden"
-                                />
-                                <label
-                                  htmlFor="file-input-image"
-                                  className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
-                                  Drag and drop file here or click to select file
-                                </label>
-                              </>
-                            </div>
-                            {previewImage && (
-                              <div className="relative md:ml-4 w-full mt-1">
-                                <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
-                                  <div className="w-full h-full">
-                                    <Image
-                                      src={previewImage}
-                                      width={1000}
-                                      height={1000}
-                                      alt="Preview"
-                                      className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
-                                    />
-                                  </div>
-                                  <button
-                                    type="button"
-                                    onClick={handleRemoveImage}
-                                    className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
-                                    <Trash />
-                                  </button>
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                      </div>
-                      <div className="w-full flex flex-row justify-center items-center gap-x-5">
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <Button
-                          type="submit"
-                          disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10">
-                          {isLoading ? (
-                            <Loader className="animate-spin" />
-                          ) : (
-                            "Simpan"
-                          )}
-                        </Button>
-                      </div>
-
-                    </form>
-                  </AlertDialogHeader>
-                </AlertDialogContent>
-              </AlertDialog>
-            ) : (
-              <Drawer open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DrawerTrigger
-                  onClick={() => setIsDialogOpen(true)}
-                  className="w-full">
-                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
-                    <AddIcon />
-                    Tambah Slider
-                  </div>
-                </DrawerTrigger>
-                <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
-                  <div className="w-full flex flex-col gap-y-3 verticalScroll">
-                    <DrawerTitle className="text-center">
-                      Master Data Carousel Slider
-                    </DrawerTitle>
-                    <DrawerDescription className="text-center">
-                      <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
-                    </DrawerDescription>
-
-                    <form
-                      onSubmit={handleCreateSlider}
-                      className="w-full flex flex-col gap-y-5 verticalScroll">
-                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
-
-                        <div className="flex flex-col w-full">
-                          <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
-                            Slider
-                          </Label>
-                          <div className="flex flex-col md:flex-row w-full">
-                            <div
-                              ref={dropRef}
-                              onDragOver={handleDragOver}
-                              onDragLeave={handleDragLeave}
-                              onDrop={handleDropImage}
-                              className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              className={`w-full ${
+                                previewImage ? "md:w-8/12" : "w-full"
+                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                               <>
                                 <input
                                   type="file"
@@ -413,7 +323,105 @@ export default function CarouselSliderScreen() {
                             )}
                           </div>
                         </div>
+                      </div>
+                      <div className="w-full flex flex-row justify-center items-center gap-x-5">
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <Button
+                          type="submit"
+                          disabled={isLoading ? true : false}
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                          {isLoading ? (
+                            <Loader className="animate-spin" />
+                          ) : (
+                            "Simpan"
+                          )}
+                        </Button>
+                      </div>
+                    </form>
+                  </AlertDialogHeader>
+                </AlertDialogContent>
+              </AlertDialog>
+            ) : (
+              <Drawer open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DrawerTrigger
+                  onClick={() => setIsDialogOpen(true)}
+                  className="w-full">
+                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                    <AddIcon />
+                    Tambah Slider
+                  </div>
+                </DrawerTrigger>
+                <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
+                  <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                    <DrawerTitle className="text-center">
+                      Master Data Carousel Slider
+                    </DrawerTitle>
+                    <DrawerDescription className="text-center">
+                      <TypingEffect
+                        className="custom-class text-[14px] md:text-[16px]"
+                        speed={125}
+                        deleteSpeed={50}
+                        text={["Input data yang diperlukan"]}
+                      />
+                    </DrawerDescription>
 
+                    <form
+                      onSubmit={handleCreateSlider}
+                      className="w-full flex flex-col gap-y-5 verticalScroll">
+                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                        <div className="flex flex-col w-full">
+                          <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
+                            Slider
+                          </Label>
+                          <div className="flex flex-col md:flex-row w-full">
+                            <div
+                              ref={dropRef}
+                              onDragOver={handleDragOver}
+                              onDragLeave={handleDragLeave}
+                              onDrop={handleDropImage}
+                              className={`w-full ${
+                                previewImage ? "md:w-8/12" : "w-full"
+                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              <>
+                                <input
+                                  type="file"
+                                  id="file-input-image"
+                                  name="image"
+                                  accept="image/*"
+                                  onChange={handleImageChange}
+                                  className="hidden"
+                                />
+                                <label
+                                  htmlFor="file-input-image"
+                                  className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                  Drag and drop file here or click to select
+                                  file
+                                </label>
+                              </>
+                            </div>
+                            {previewImage && (
+                              <div className="relative md:ml-4 w-full mt-1">
+                                <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
+                                  <div className="w-full h-full">
+                                    <Image
+                                      src={previewImage}
+                                      width={1000}
+                                      height={1000}
+                                      alt="Preview"
+                                      className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                    />
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={handleRemoveImage}
+                                    className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
+                                    <Trash />
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       </div>
 
                       <div className="flex gap-4 justify-between">
@@ -464,7 +472,7 @@ export default function CarouselSliderScreen() {
               )}
             </>
           ) : (
-            <>
+            <div className="w-full flex flex-col gap-y-5">
               {carousels &&
                 carousels.length > 0 &&
                 carousels?.map(
@@ -492,7 +500,7 @@ export default function CarouselSliderScreen() {
                     );
                   }
                 )}
-            </>
+            </div>
           )}
         </div>
       </div>

@@ -280,7 +280,7 @@ export default function StructureOrganizationScreen() {
   };
 
   return (
-    <section className="w-full flex flex-col items-center px-5 mt-5">
+    <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
       <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
         <h1 className="text-lg">Kelola Organisasi</h1>
         <div className="w-full flex flex-col md:flex-row gap-x-5 gap-y-5">
@@ -321,7 +321,6 @@ export default function StructureOrganizationScreen() {
                     <form
                       onSubmit={handleCreateStructureOrganization}
                       className="w-full flex flex-col gap-y-3 verticalScroll">
-
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                         <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                           Nama Lengkap
@@ -362,8 +361,9 @@ export default function StructureOrganizationScreen() {
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
                             onDrop={handleDropImage}
-                            className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                            className={`w-full ${
+                              previewImage ? "md:w-8/12" : "w-full"
+                            }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                             <>
                               <input
                                 type="file"
@@ -417,7 +417,6 @@ export default function StructureOrganizationScreen() {
                           )}
                         </Button>
                       </div>
-
                     </form>
                   </AlertDialogHeader>
                 </AlertDialogContent>
@@ -451,7 +450,6 @@ export default function StructureOrganizationScreen() {
                       onSubmit={handleCreateStructureOrganization}
                       className="w-full flex flex-col gap-y-5 verticalScroll">
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
-
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                             Nama Lengkap
@@ -492,8 +490,9 @@ export default function StructureOrganizationScreen() {
                               onDragOver={handleDragOver}
                               onDragLeave={handleDragLeave}
                               onDrop={handleDropImage}
-                              className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              className={`w-full ${
+                                previewImage ? "md:w-8/12" : "w-full"
+                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                               <>
                                 <input
                                   type="file"
@@ -552,7 +551,6 @@ export default function StructureOrganizationScreen() {
                           )}
                         </Button>
                       </div>
-
                     </form>
                   </div>
                 </DrawerContent>
@@ -589,7 +587,7 @@ export default function StructureOrganizationScreen() {
               )}
             </>
           ) : (
-            <>
+            <div className="w-full flex flex-col gap-y-5">
               {organizations &&
                 organizations.length > 0 &&
                 organizations?.map(
@@ -621,7 +619,7 @@ export default function StructureOrganizationScreen() {
                     );
                   }
                 )}
-            </>
+            </div>
           )}
         </div>
 
@@ -632,7 +630,6 @@ export default function StructureOrganizationScreen() {
             onPageChange={handlePageChange}
           />
         </div>
-
       </div>
     </section>
   );

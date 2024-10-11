@@ -15,8 +15,6 @@ export default function DepartmentSecretarySignatureValidationCard({
   index: number;
   user: UserApplicationHistoryInterface;
 }) {
-  console.log(user, "ini user");
-
   const router = useRouter();
 
   return (

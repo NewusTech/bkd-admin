@@ -30,8 +30,6 @@ export default function VerificationUserApplicationHistoryDetailScreen({
 }: {
   params: { applicationId: number };
 }) {
-  console.log(params.applicationId);
-
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [isLoading, setIsLoading] = useState(false);

@@ -81,8 +81,6 @@ export default function VerificationSatisfactionIndexScreen() {
     fetchSatisfactionIndexHistoryReports(1, 5);
   }, []);
 
-  console.log(reports, "ini reports");
-
   const fetchAreas = async (page: number, limit: number, search: string) => {
     try {
       const response = await getAreas(page, limit, search);
@@ -115,7 +113,7 @@ export default function VerificationSatisfactionIndexScreen() {
   };
 
   return (
-    <section className="w-full flex flex-col items-center px-5 mt-5">
+    <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
       <div
         className={`w-full flex flex-col ${!isMobile ? "bg-white shadow-md rounded-lg p-5" : ""} gap-y-3 pb-10`}>
         <h2 className="text-2xl text-black-80 text-center md:mb-6">

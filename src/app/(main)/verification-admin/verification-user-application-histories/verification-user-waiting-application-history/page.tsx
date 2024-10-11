@@ -99,8 +99,6 @@ export default function VerificationUserApplicationHistoriesScreen() {
     }
   };
 
-  console.log(users, "ini users");
-
   const fetchService = async (page: number, limit: number, search?: string) => {
     try {
       const response = await getService(page, limit, search);
@@ -190,7 +188,7 @@ export default function VerificationUserApplicationHistoriesScreen() {
             )}
           </>
         ) : (
-          <>
+          <div className="w-full flex flex-col gap-y-5">
             {users &&
               users.length > 0 &&
               users.map((user: UserApplicationHistoryInterface, i: number) => {
@@ -202,7 +200,7 @@ export default function VerificationUserApplicationHistoriesScreen() {
                   />
                 );
               })}
-          </>
+          </div>
         )}
       </div>
 

@@ -42,7 +42,6 @@ export default function SuperServiceRequirementsCard({
   //       quillEdit.clipboard.dangerouslyPasteHTML(area?.desc);
   //     }
   //   };
-  console.log(item, "ini item");
 
   return (
     <TableRow className="border border-line-20">

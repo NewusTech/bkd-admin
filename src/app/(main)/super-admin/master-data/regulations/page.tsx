@@ -224,7 +224,7 @@ export default function RegulationScreen() {
   };
 
   return (
-    <section className="w-full flex flex-col items-center px-5 mt-5">
+    <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
       <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
         <div className="w-full flex flex-col items-center justify-center">
           <p className="text-black-80 font-semibold text-lg">
@@ -249,13 +249,17 @@ export default function RegulationScreen() {
                     Master Data Regulasi
                   </AlertDialogTitle>
                   <AlertDialogDescription className="text-center">
-                    <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
+                    <TypingEffect
+                      className="custom-class text-[14px] md:text-[16px]"
+                      speed={125}
+                      deleteSpeed={50}
+                      text={["Input data yang diperlukan"]}
+                    />
                   </AlertDialogDescription>
 
                   <form
                     onSubmit={handleCreateRegulations}
                     className="w-full flex flex-col gap-y-3 verticalScroll">
-
                     <div className="flex flex-col gap-y-3 w-full">
                       <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                         Title
@@ -283,8 +287,9 @@ export default function RegulationScreen() {
                           onDragOver={handleDragOver}
                           onDragLeave={handleDragLeave}
                           onDrop={handleDropImage}
-                          className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                            }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                          className={`w-full ${
+                            previewImage ? "md:w-8/12" : "w-full"
+                          }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                           <>
                             <input
                               type="file"
@@ -336,7 +341,6 @@ export default function RegulationScreen() {
                         )}
                       </Button>
                     </div>
-
                   </form>
                 </AlertDialogHeader>
               </AlertDialogContent>
@@ -357,14 +361,18 @@ export default function RegulationScreen() {
                     Master Data Regulasi
                   </DrawerTitle>
                   <DrawerDescription className="text-center">
-                    <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Input data yang diperlukan"]} />
+                    <TypingEffect
+                      className="custom-class text-[14px] md:text-[16px]"
+                      speed={125}
+                      deleteSpeed={50}
+                      text={["Input data yang diperlukan"]}
+                    />
                   </DrawerDescription>
 
                   <form
                     onSubmit={handleCreateRegulations}
                     className="w-full flex flex-col gap-y-5 verticalScroll">
                     <div className="w-full flex flex-col gap-y-3 verticalScroll">
-
                       <div className="flex flex-col gap-y-3 w-full">
                         <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
                           Title
@@ -392,8 +400,9 @@ export default function RegulationScreen() {
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
                             onDrop={handleDropImage}
-                            className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                            className={`w-full ${
+                              previewImage ? "md:w-8/12" : "w-full"
+                            }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                             <>
                               <input
                                 type="file"
@@ -435,7 +444,9 @@ export default function RegulationScreen() {
 
                     <div className="flex gap-4 justify-between">
                       <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-[14px] md:text-[16px]">
-                        <DrawerDescription className="text-[14px] md:text-[16px]">Batal</DrawerDescription>
+                        <DrawerDescription className="text-[14px] md:text-[16px]">
+                          Batal
+                        </DrawerDescription>
                       </DrawerClose>
                       <Button
                         title="Simpan Data"
@@ -479,7 +490,7 @@ export default function RegulationScreen() {
               )}
             </>
           ) : (
-            <>
+            <div className="w-full flex flex-col gap-y-5">
               {regulations &&
                 regulations.length > 0 &&
                 regulations?.map(
@@ -506,7 +517,7 @@ export default function RegulationScreen() {
                     );
                   }
                 )}
-            </>
+            </div>
           )}
         </div>
       </div>

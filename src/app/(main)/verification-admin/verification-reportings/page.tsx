@@ -3,6 +3,13 @@
 import { formatDate } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import FilterDataPages from "@/components/elements/data_filters";
 import VerificationReportingTablePages from "@/components/tables/verification_admin_reporting_table";
 import { ReportDataInterface } from "@/types/interface";
@@ -11,6 +18,9 @@ import PaginationComponent from "@/components/elements/pagination";
 import DataNotFound from "@/components/elements/data_not_found";
 import { useRouter } from "next/navigation";
 import { useDebounce } from "@/hooks/useDebounce";
+import DatePages from "@/components/elements/date";
+import SearchPages from "@/components/elements/search";
+import MobileReportingCard from "@/components/mobile_all_cards/mobileReportingsCard";
 
 export default function VerificationUserApplicationRevitionHistoriesScreen() {
   const router = useRouter();
@@ -60,22 +70,82 @@ export default function VerificationUserApplicationRevitionHistoriesScreen() {
     }
   };
 
-  console.log(reports, "ini report");
-
   return (
-    <section className="w-full flex flex-col items-center px-5 mt-5">
-      <FilterDataPages
-        startDate={startDate as Date}
-        setStartDate={setStartDate}
-        endDate={endDate as Date}
-        setEndDate={setEndDate}
-        search={search}
-        setSearch={setSearch}
-      />
+    <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5 pb-5">
+      <div
+        className={`w-full flex flex-col ${!isMobile ? "bg-white shadow-md rounded-lg p-5" : ""} gap-y-3`}>
+        <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
+          <Select
+          // onValueChange={handleSelectStatusChange}
+          >
+            <SelectTrigger
+              className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+              {/* <Checks className="w-6 h-6 text-black-80" /> */}
+              <SelectValue
+                placeholder="Pilih Layanan"
+                className="text-black-80 tex-[14px] w-full"
+              />
+            </SelectTrigger>
+            <SelectContent className="bg-line-10">
+              <div className="pt-2">
+                {/* {statusDatas &&
+                statusDatas.map(
+                  (status: { id: number; value: string }, i: number) => {
+                    return (
+                      <SelectItem
+                        key={i}
+                        className={`w-full px-4`}
+                        value={status.id.toString()}>
+                        {status.value}
+                      </SelectItem>
+                    );
+                  }
+                )} */}
+                <SelectItem className="w-full px-4 pl-8" value="1">
+                  Hello World
+                </SelectItem>
+              </div>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div
+          className={`w-full flex flex-col md:flex-row ${!isMobile ? "" : "p-3 rounded-lg shadow-md"} bg-line-10 gap-y-5 gap-x-5`}>
+          <SearchPages
+            search={search}
+            change={(e: any) => setSearch(e.target.value)}
+            placeholder="Pencarian"
+          />
+
+          <div className="flex flex-row justify-center items-center w-full gap-x-3">
+            <DatePages
+              date={startDate ?? null}
+              setDate={(e) => setStartDate(e ?? undefined)}
+            />
+            <p className="text-center">to</p>
+            <DatePages
+              date={endDate ?? null}
+              setDate={(e) => setEndDate(e ?? undefined)}
+            />
+          </div>
+        </div>
+      </div>
 
       <div className="w-full">
-        {reports && reports?.length > 0 && (
-          <VerificationReportingTablePages reports={reports} />
+        {!isMobile ? (
+          <>
+            {reports && reports?.length > 0 && (
+              <VerificationReportingTablePages reports={reports} />
+            )}
+          </>
+        ) : (
+          <div className="w-full flex flex-col gap-y-5">
+            {reports &&
+              reports.length > 0 &&
+              reports.map((item: ReportDataInterface, i: number) => {
+                return <MobileReportingCard key={i} index={i} item={item} />;
+              })}
+          </div>
         )}
       </div>
 

@@ -91,7 +91,7 @@ export default function VerificationUserComplaintScreen() {
   };
 
   return (
-    <section className="w-full flex flex-col items-center px-5 mt-5">
+    <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
       <div
         className={`w-full flex flex-col ${!isMobile ? "bg-white shadow-md rounded-lg p-5" : ""} gap-y-5`}>
         <h2 className="text-2xl text-black-80 text-center md:mb-6">
@@ -165,7 +165,7 @@ export default function VerificationUserComplaintScreen() {
               )}
             </>
           ) : (
-            <>
+            <div className="w-full flex flex-col gap-y-5">
               {complaints &&
                 complaints.length > 0 &&
                 complaints?.map((item: UserComplaintInterface, i: number) => {
@@ -177,7 +177,7 @@ export default function VerificationUserComplaintScreen() {
                     />
                   );
                 })}
-            </>
+            </div>
           )}
         </div>
 
