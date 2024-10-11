@@ -33,7 +33,7 @@ export default function UserApplicationActions({
           onClick={() => setIsGlobalDialog(true)}
           className="w-full">
           <div
-            className={`w-full py-6 text-[14px] ${name === "Perbaiki" ? "bg-primary-40 hover:bg-primary-70" : "bg-error-50 hover:bg-error-70"} flex items-center justify-center h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2`}>
+            className={`w-full py-6 text-[14px] md:text-[16px] ${name === "Perbaiki" ? "bg-primary-40 hover:bg-primary-70" : "bg-error-50 hover:bg-error-70"} flex items-center justify-center h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2`}>
             {name}
           </div>
         </AlertDialogTrigger>
@@ -51,7 +51,7 @@ export default function UserApplicationActions({
               }}
               className="w-full flex flex-col gap-y-3 verticalScroll">
               <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                <Label className="focus-within:text-primary-70 font-normal text-sm">
+                <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
                   Berikan Pesan Kepada Pemohon!
                 </Label>
 
@@ -68,7 +68,9 @@ export default function UserApplicationActions({
               </div>
 
               <div className="w-full flex flex-row justify-center items-center gap-x-5">
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel className="text-[14px] md:text-[16px]">
+                  Cancel
+                </AlertDialogCancel>
 
                 <Button
                   type="submit"

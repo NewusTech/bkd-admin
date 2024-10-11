@@ -7,6 +7,7 @@ export interface debounceInterface {
 
 export interface JwtPayload {
   role?: string;
+  bidang_id?: number;
 }
 
 export interface PaginationInterface {
@@ -608,6 +609,12 @@ export interface ReportInterface {
 }
 
 export interface SettingMessageServiceInterface {
+  id: number;
+  nama_pj: string;
+  nip_pj: string;
+  jabatan_pj: string;
+  pangkat_pj: string;
+  unitkerja_pj: string;
   layanan_id: number;
   header: string;
   body: string;
@@ -616,6 +623,8 @@ export interface SettingMessageServiceInterface {
   perihal: string;
   catatan: string;
   tembusan: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface SettingServiceInterface {

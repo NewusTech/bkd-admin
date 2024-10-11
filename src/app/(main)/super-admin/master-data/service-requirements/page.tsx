@@ -66,12 +66,12 @@ export default function ServiceRequiremnts() {
   };
 
   useEffect(() => {
-    fetchService(1, 10, "");
-  }, []);
+    fetchService(1, 10, deboucedSearch);
+  }, [deboucedSearch]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchService(newPage, 10, "");
+      fetchService(newPage, 10, "deboucedSearch");
     }
   };
 

@@ -31,13 +31,6 @@ export default function VerificationUserApplicationHistoryTablePages({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {/* {currentPermohonans?.map(
-            (permohonan: PermohonanDataType, i: number) => {
-              return (
-                <TablePermohonanComponent key={i} permohonan={permohonan} />
-              );
-            }
-          )} */}
           {users &&
             users.length > 0 &&
             users.map((user: UserApplicationHistoryInterface, i: number) => {

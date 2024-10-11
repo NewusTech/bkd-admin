@@ -34,11 +34,11 @@ export default function UserApplicationHistoryFormCard({
       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
         <Label
           htmlFor="name"
-          className="focus-within:text-primary-70 font-normal text-sm">
+          className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
           {item?.layananform_name && item?.layananform_name}
         </Label>
 
-        <p>{displayValue}</p>
+        <p className="text-[14px] md:text-[16px]">{displayValue}</p>
       </div>
     );
   } else if (item?.layananform_tipedata === "checkbox") {
@@ -46,36 +46,42 @@ export default function UserApplicationHistoryFormCard({
       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
         <Label
           htmlFor="name"
-          className="focus-within:text-primary-70 font-normal text-sm">
+          className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
           {item?.layananform_name && item?.layananform_name}
         </Label>
 
         <ul className="list-disc list-inside w-full flex flex-col gap-y-3">
-          {item?.data_key?.map((key, index) => <li key={index}>{key}</li>)}
+          {item?.data_key?.map((key, index) => (
+            <li key={index} className="text-[14px] md:text-[16px]">
+              {key}
+            </li>
+          ))}
         </ul>
       </div>
     );
   } else if (item?.layananform_tipedata === "date") {
     render = (
       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-        <Label className="focus-within:text-primary-70 font-normal text-sm">
+        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
           {item?.layananform_name && item?.layananform_name}
         </Label>
 
-        <p>{item?.data && formatDateString(item?.data)}</p>
+        <p className="text-[14px] md:text-[16px]">
+          {item?.data && formatDateString(item?.data)}
+        </p>
       </div>
     );
   } else if (item?.layananform_tipedata === "file") {
     render = (
       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-        <Label className="focus-within:text-primary-70 font-normal text-sm">
+        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
           {item?.layananform_name && item?.layananform_name}
         </Label>
 
         <div className="w-full">
           <AlertDialog>
             <AlertDialogTrigger className="w-2/12">
-              <div className="w-full bg-primary-40 hover:bg-primary-70 text-line-10 text-[16px] flex justify-center items-center h-10 hover:underline rounded-lg">
+              <div className="w-full bg-primary-40 hover:bg-primary-70 text-line-10 text-[14px] md:text-[16px] flex justify-center items-center h-10 hover:underline rounded-lg">
                 Lihat File
               </div>
             </AlertDialogTrigger>
@@ -101,7 +107,9 @@ export default function UserApplicationHistoryFormCard({
                 )}
               </AlertDialogHeader>
               <AlertDialogFooter className="w-full flex flex-row justify-center">
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel className="text-[14px] md:text-[16px]">
+                  Cancel
+                </AlertDialogCancel>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
@@ -111,11 +119,11 @@ export default function UserApplicationHistoryFormCard({
   } else {
     render = (
       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-        <Label className="focus-within:text-primary-70 font-normal text-sm">
+        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
           {item?.layananform_name && item?.layananform_name}
         </Label>
 
-        <p>{item?.data && item?.data}</p>
+        <p className="text-[14px] md:text-[16px]">{item?.data && item?.data}</p>
       </div>
     );
   }

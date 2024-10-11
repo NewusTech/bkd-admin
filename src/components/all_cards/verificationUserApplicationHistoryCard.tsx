@@ -53,7 +53,7 @@ export default function VerificationUserApplicationHistoryCard({
         </div>
       </TableCell>
       <TableCell className="text-center">
-        <div className="w-full flex flex-roe items-center justify-center">
+        <div className="w-full flex flex-row items-center justify-center">
           <Button
             onClick={() =>
               router.push(

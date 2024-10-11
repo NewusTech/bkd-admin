@@ -10,7 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import FilterDataPages from "@/components/elements/data_filters";
 import VerificationReportingTablePages from "@/components/tables/verification_admin_reporting_table";
 import { ReportDataInterface } from "@/types/interface";
 import { getReportHistories } from "@/services/api";
@@ -79,11 +78,11 @@ export default function VerificationUserApplicationRevitionHistoriesScreen() {
           // onValueChange={handleSelectStatusChange}
           >
             <SelectTrigger
-              className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+              className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
               {/* <Checks className="w-6 h-6 text-black-80" /> */}
               <SelectValue
                 placeholder="Pilih Layanan"
-                className="text-black-80 tex-[14px] w-full"
+                className="text-black-80 text-[14px] md:text-[16px] w-full"
               />
             </SelectTrigger>
             <SelectContent className="bg-line-10">
@@ -94,7 +93,7 @@ export default function VerificationUserApplicationRevitionHistoriesScreen() {
                     return (
                       <SelectItem
                         key={i}
-                        className={`w-full px-4`}
+                        className={`w-full px-4 text-[14px] md:text-[16px]`}
                         value={status.id.toString()}>
                         {status.value}
                       </SelectItem>

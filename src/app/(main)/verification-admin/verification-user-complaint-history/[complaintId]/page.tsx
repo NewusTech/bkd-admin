@@ -3,13 +3,12 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { ChevronLeft, Loader } from "lucide-react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/legacy/image";
 import Swal from "sweetalert2";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { UserComplaintInterface } from "@/types/interface";
+import { JwtPayload, UserComplaintInterface } from "@/types/interface";
 import { getUserComplaintDetail, updateUserComplaint } from "@/services/api";
 import { formatDateString } from "@/lib/utils";
 import {
@@ -24,8 +23,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { jwtDecode } from "jwt-decode";
 
 export default function VerificationUserComplaintDetailScreen({
   params,
@@ -35,6 +34,7 @@ export default function VerificationUserComplaintDetailScreen({
   const router = useRouter();
   const token = Cookies.get("Authorization");
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const [role, setRole] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpenUpdate, setIsModalOpenUpdate] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,6 +44,24 @@ export default function VerificationUserComplaintDetailScreen({
     status: 1,
     jawaban: "",
   });
+
+  useEffect(() => {
+    const token = Cookies.get("Authorization");
+
+    if (token) {
+      try {
+        const decoded = jwtDecode<JwtPayload>(token);
+
+        if (decoded && decoded.role !== undefined) {
+          setRole(decoded.role);
+        }
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    } else {
+      router.push("/login");
+    }
+  }, [router]);
 
   const fetchUserComplaint = async (id: number) => {
     try {
@@ -143,78 +161,87 @@ export default function VerificationUserComplaintDetailScreen({
             </h5>
           </div>
 
-          <div className="w-3/12">
-            <AlertDialog
-              open={isModalOpenUpdate}
-              onOpenChange={setIsModalOpenUpdate}>
-              <AlertDialogTrigger
-                onClick={() => {
-                  setIsModalOpenUpdate(true);
-                }}
-                className="w-full">
-                <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                  Kirim Jawaban
-                </div>
-              </AlertDialogTrigger>
-              <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
-                <AlertDialogHeader className="flex flex-col">
-                  <AlertDialogTitle className="text-center">
-                    Hasil Pengaduan User
-                  </AlertDialogTitle>
-                  <AlertDialogDescription className="text-center">
-                    Input jawaban yang diperlukan
-                  </AlertDialogDescription>
-                  <form
-                    onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
-                      updateUserComplaintVerification(e, params.complaintId)
-                    }
-                    className="w-full flex flex-col gap-y-3 max-h-[500px]">
-                    <div className="w-full flex flex-col gap-y-3 verticalScroll">
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
-                          Balas Pengaduan User
-                        </Label>
-
-                        <Textarea
-                          name="jawaban"
-                          value={data.jawaban}
-                          onChange={(
-                            e: React.ChangeEvent<HTMLTextAreaElement>
-                          ) => setData({ ...data, jawaban: e.target.value })}
-                          className="w-full h-[150px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                          placeholder="Masukkan Jawaban Untuk Pengaduan User"
-                        />
-                      </div>
+          {role &&
+            (role === "Super Admin" ||
+              role === "Admin Verifikasi" ||
+              role === "Kepala Bidang") && (
+              <div className="w-3/12">
+                <AlertDialog
+                  open={isModalOpenUpdate}
+                  onOpenChange={setIsModalOpenUpdate}>
+                  <AlertDialogTrigger
+                    onClick={() => {
+                      setIsModalOpenUpdate(true);
+                    }}
+                    className="w-full">
+                    <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
+                      Kirim Jawaban
                     </div>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
+                    <AlertDialogHeader className="flex flex-col">
+                      <AlertDialogTitle className="text-center">
+                        Hasil Pengaduan User
+                      </AlertDialogTitle>
+                      <AlertDialogDescription className="text-center">
+                        Input jawaban yang diperlukan
+                      </AlertDialogDescription>
+                      <form
+                        onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
+                          updateUserComplaintVerification(e, params.complaintId)
+                        }
+                        className="w-full flex flex-col gap-y-3 max-h-[500px]">
+                        <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                              Balas Pengaduan User
+                            </Label>
 
-                    <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <Textarea
+                              name="jawaban"
+                              value={data.jawaban}
+                              onChange={(
+                                e: React.ChangeEvent<HTMLTextAreaElement>
+                              ) =>
+                                setData({ ...data, jawaban: e.target.value })
+                              }
+                              className="w-full h-[150px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                              placeholder="Masukkan Jawaban Untuk Pengaduan User"
+                            />
+                          </div>
+                        </div>
 
-                      <Button
-                        type="submit"
-                        disabled={isLoading ? true : false}
-                        className="bg-primary-40 hover:bg-primary-70 text-line-10">
-                        {isLoading ? (
-                          <Loader className="animate-spin" />
-                        ) : (
-                          "Simpan"
-                        )}
-                      </Button>
-                    </div>
-                  </form>
-                </AlertDialogHeader>
-                {/* <AlertDialogFooter className="w-full flex flex-row justify-center items-center gap-x-5"></AlertDialogFooter> */}
-              </AlertDialogContent>
-            </AlertDialog>
-          </div>
+                        <div className="w-full flex flex-row justify-between items-center gap-x-5">
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+
+                          <Button
+                            type="submit"
+                            disabled={isLoading ? true : false}
+                            className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                            {isLoading ? (
+                              <Loader className="animate-spin" />
+                            ) : (
+                              "Simpan"
+                            )}
+                          </Button>
+                        </div>
+                      </form>
+                    </AlertDialogHeader>
+                    {/* <AlertDialogFooter className="w-full flex flex-row justify-center items-center gap-x-5"></AlertDialogFooter> */}
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
+            )}
         </div>
 
         <div className="flex flex-col gap-y-5 mt-3 md:mt-0 px-3 md:px-6">
           {complaint && complaint?.jawaban !== null ? (
             <div className="w-full flex flex-col gap-y-3 border border-line-20 rounded-lg p-4">
-              <h6 className="text-sm text-black-80 font-normal">Balasan:</h6>
+              <h6 className="text-[14px] md:text-[16px] text-black-80 font-normal">
+                Balasan:
+              </h6>
 
-              <p className="text-black-80 font-normal text-sm">
+              <p className="text-black-80 font-normal text-[14px] md:text-[16px]">
                 {complaint?.jawaban && complaint.jawaban}
               </p>
             </div>
@@ -224,27 +251,31 @@ export default function VerificationUserComplaintDetailScreen({
 
           <div className="flex flex-col gap-y-6">
             <div className="flex flex-col gap-2">
-              <p className="text-sm text-primary-40 font-semibold">
+              <p className="text-[14px] md:text-[16px] text-primary-40 font-semibold">
                 Tanggal Pengaduan
               </p>
 
-              <p className="text-sm text-line-80 font-normal">
+              <p className="text-[14px] md:text-[16px] text-line-80 font-normal">
                 {complaint?.createdAt && formatDateString(complaint?.createdAt)}
               </p>
             </div>
 
             <div className="flex flex-col gap-2">
-              <p className="text-sm text-primary-40 font-semibold">Bidang</p>
+              <p className="text-[14px] md:text-[16px] text-primary-40 font-semibold">
+                Bidang
+              </p>
 
-              <p className="text-sm text-line-80 font-normal">
+              <p className="text-[14px] md:text-[16px] text-line-80 font-normal">
                 {complaint?.Bidang?.nama && complaint?.Bidang?.nama}
               </p>
             </div>
 
             <div className="flex flex-col gap-2">
-              <p className="text-sm text-primary-40 font-semibold">Layanan</p>
+              <p className="text-[14px] md:text-[16px] text-primary-40 font-semibold">
+                Layanan
+              </p>
 
-              <p className="text-sm text-line-80 font-normal">
+              <p className="text-[14px] md:text-[16px] text-line-80 font-normal">
                 {complaint?.Layanan &&
                   complaint?.Layanan.nama &&
                   complaint?.Layanan.nama}
@@ -252,36 +283,38 @@ export default function VerificationUserComplaintDetailScreen({
             </div>
 
             <div className="flex flex-col gap-2">
-              <p className="text-sm text-primary-40 font-semibold">
+              <p className="text-[14px] md:text-[16px] text-primary-40 font-semibold">
                 Judul Pengaduan
               </p>
 
-              <p className="text-sm text-line-80 font-normal">
+              <p className="text-[14px] md:text-[16px] text-line-80 font-normal">
                 {complaint?.judul_pengaduan && complaint?.judul_pengaduan}
               </p>
             </div>
 
             <div className="flex flex-col gap-2">
-              <p className="text-sm text-primary-40 font-semibold">
+              <p className="text-[14px] md:text-[16px] text-primary-40 font-semibold">
                 Isi Pengaduan
               </p>
 
-              <p className="text-sm text-line-80 font-normal">
+              <p className="text-[14px] md:text-[16px] text-line-80 font-normal">
                 {complaint?.isi_pengaduan && complaint?.isi_pengaduan}
               </p>
             </div>
 
             <div className="flex flex-col gap-2">
-              <p className="text-sm text-primary-40 font-semibold">Dokumen</p>
+              <p className="text-[14px] md:text-[16px] text-primary-40 font-semibold">
+                Dokumen
+              </p>
 
               <div className="w-full flex flex-row items-center border border-line-20 p-2 md:p-4 gap-x-8 rounded-lg">
-                <p className="w-full text-sm text-line-80 font-normal">
+                <p className="w-full text-[14px] md:text-[16px] text-line-80 font-normal">
                   File Pengaduan
                 </p>
 
                 <AlertDialog>
                   <AlertDialogTrigger className="w-full flex justify-end">
-                    <div className="w-5/12 text-[14px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
+                    <div className="w-5/12 text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
                       Lihat Dokumen
                     </div>
                   </AlertDialogTrigger>
@@ -309,7 +342,9 @@ export default function VerificationUserComplaintDetailScreen({
                     </AlertDialogHeader>
 
                     <div className="w-full flex flex-row justify-center items-center gap-x-5">
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogCancel className="text-[14px] md:text-[16px]">
+                        Cancel
+                      </AlertDialogCancel>
                     </div>
                   </AlertDialogContent>
                 </AlertDialog>
