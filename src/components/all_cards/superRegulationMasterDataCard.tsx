@@ -29,6 +29,8 @@ import TypingEffect from "../ui/TypingEffect";
 export default function SuperregulationMasterDataCard({
   regulation,
   index,
+  handleDeleteRegulations,
+  isDeleteLoading,
   data,
   setData,
   isUpdateLoading,
@@ -45,6 +47,8 @@ export default function SuperregulationMasterDataCard({
 }: {
   regulation: RegulationInterface;
   index: number;
+  handleDeleteRegulations: (id: number) => void;
+  isDeleteLoading: boolean;
   data: {
     title: string;
     file: string;
@@ -207,6 +211,20 @@ export default function SuperregulationMasterDataCard({
                 </AlertDialogHeader>
               </AlertDialogContent>
             </AlertDialog>
+          </div>
+          <div className="w-full">
+            <Button
+              disabled={isDeleteLoading ? true : false}
+              onClick={() => handleDeleteRegulations(regulation?.id)}
+              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+              {isDeleteLoading ? (
+                <Loader className="animate-spin" />
+              ) : isDeleteLoading ? (
+                ""
+              ) : (
+                "Hapus"
+              )}
+            </Button>
           </div>
         </div>
       </TableCell>

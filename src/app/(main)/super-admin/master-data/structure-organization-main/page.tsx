@@ -129,6 +129,8 @@ export default function StructureOrganizationMainScreen() {
         bkdstruktur_id: Number(data.bkdstruktur_id),
       });
 
+      console.log(response, "ini response");
+
       if (response.status === 201) {
         setData({
           bkdstruktur_id: "",
@@ -449,9 +451,9 @@ export default function StructureOrganizationMainScreen() {
                   isUpdateLoading={isUpdateLoading}
                   isDialogEditOpen={isDialogEditOpen}
                   setIsDialogEditOpen={setIsDialogEditOpen}
-                  // handleUpdateStructureOrganization={
-                  //   handleUpdateStructureOrganization
-                  // }
+                // handleUpdateStructureOrganization={
+                //   handleUpdateStructureOrganization
+                // }
                 />
               )}
             </>
