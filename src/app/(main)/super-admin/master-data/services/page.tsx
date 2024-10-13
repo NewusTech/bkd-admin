@@ -290,7 +290,7 @@ export default function ServicesScreen() {
                 }} className="w-full">
                   <div className="w-full h-full text-[14px] bg-primary-40 hover:bg-primary-70 flex items-center justify-center text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
-                    Tambah Layanan
+                    Tambah
                   </div>
                 </DrawerTrigger>
                 <DrawerContent className="bg-white">
@@ -302,13 +302,13 @@ export default function ServicesScreen() {
                       className="w-full flex flex-col gap-y-3 max-h-full h-[700px]">
                       <DrawerDescription>
                         <div className="text-center mb-4">
-                          <TypingEffect className="text-[14px] md:text-[16px]" text={["Tambah data yang diperlukan...."]} />
+                          <TypingEffect className="text-[14px]" text={["Tambah data yang diperlukan"]} />
                         </div>
                       </DrawerDescription>
-                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                      <div className="w-full flex flex-col gap-y-5 verticalScroll">
 
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] text-left">
                             Nama Layanan
                           </Label>
                           <Input
@@ -317,18 +317,18 @@ export default function ServicesScreen() {
                             value={data.nama}
                             onChange={handleChange}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px] md:text-[16px]"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
                             placeholder="Masukkan Nama Layanan"
                           />
                         </div>
 
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                           <Label
                             htmlFor="syarat"
-                            className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
+                            className="focus-within:text-primary-70 font-normal text-[14px] text-left">
                             Syarat Layanan
                           </Label>
-                          <div className="w-full h-full border border-line-20 rounded-lg text-left">
+                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[14px] md:text-[16px]">
                             <EditorProvide
                               content={data.syarat}
                               onChange={(e: any) => setData({ ...data, syarat: e })}
@@ -336,8 +336,8 @@ export default function ServicesScreen() {
                           </div>
                         </div>
 
-                        <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-black-800 font-normal text-[14px] md:text-[16px] text-left">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] text-left">
                             Pilih Bidang
                           </Label>
                           <div className="w-full border border-line-20 rounded-lg">
@@ -346,10 +346,10 @@ export default function ServicesScreen() {
                                 className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                                 <SelectValue
                                   placeholder="Pilih Bidang"
-                                  className="text-black-80 w-full text-[14px] md:text-[16px]"
+                                  className="text-black-80 w-full text-[14px]"
                                 />
                               </SelectTrigger>
-                              <SelectContent className="bg-line-10">
+                              <SelectContent className="bg-line-10 text-[14px]">
                                 <div className="pt-2">
                                   {areas &&
                                     areas.length > 0 &&
@@ -358,7 +358,7 @@ export default function ServicesScreen() {
                                         return (
                                           <SelectItem
                                             key={i}
-                                            className={`w-full px-4 text-[14px] md:text-[16px]`}
+                                            className={`w-full px-4 text-[14px]`}
                                             value={area.id.toString()}>
                                             {area.nama}
                                           </SelectItem>
@@ -371,11 +371,11 @@ export default function ServicesScreen() {
                           </div>
                         </div>
 
-                        <div className="w-full flex flex-col gap-y-2">
-                          <Label className="text-black-70 font-normal text-[14px] md:text-[16px] text-left">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] text-left">
                             Deskripsi Bidang
                           </Label>
-                          <div className="w-full h-full border border-line-20 rounded-lg text-left">
+                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[14px] md:text-[16px]">
                             <EditorProvide
                               content={data.desc}
                               onChange={(e: any) => setData({ ...data, desc: e })}
@@ -383,8 +383,8 @@ export default function ServicesScreen() {
                           </div>
                         </div>
 
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] text-left">
                             Penanggung Jawab
                           </Label>
                           <Input
@@ -393,18 +393,18 @@ export default function ServicesScreen() {
                             value={data.penanggung_jawab}
                             onChange={handleChange}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px] md:text-[16px]"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
                             placeholder="Masukkan Nama Penanggung Jawab"
                           />
                         </div>
 
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                           <Label
                             htmlFor="ketentuan"
-                            className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
+                            className="focus-within:text-primary-70 font-normal text-[14px] text-left">
                             Ketentuan
                           </Label>
-                          <div className="w-full h-full border border-line-20 rounded-lg text-left">
+                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[14px] md:text-[16px]">
                             <EditorProvide
                               content={data.ketentuan}
                               onChange={(e: any) => setData({ ...data, ketentuan: e })}
@@ -412,21 +412,21 @@ export default function ServicesScreen() {
                           </div>
                         </div>
 
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                           <Label
                             htmlFor="langkah"
-                            className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
+                            className="focus-within:text-primary-70 font-normal text-[14px] text-left">
                             Langkah
                           </Label>
-                          <div className="w-full h-full border border-line-20 rounded-lg text-left">
+                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[14px] md:text-[16px]">
                             <EditorProvide
                               content={data.langkah}
                               onChange={(e: any) => setData({ ...data, langkah: e })}
                             />
                           </div>
                         </div>
-                      </div>
 
+                      </div>
                       <div className="flex gap-4 justify-between">
                         <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-[14px]">
                           Batal
@@ -435,7 +435,7 @@ export default function ServicesScreen() {
                           title="Simpan Data"
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-full text-[14px] px-3 rounded-lg border border-primary text-center font-mediumitems-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 w-full">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-full px-3 rounded-lg border border-primary text-center font-mediumitems-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 w-full text-[14px] ">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (
@@ -471,7 +471,7 @@ export default function ServicesScreen() {
                 <AlertDialogTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full h-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full h-full text-[14px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah
                   </div>
@@ -482,15 +482,15 @@ export default function ServicesScreen() {
                       Master Data Layanan
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
-                      <TypingEffect className="custom-class text-[14px] md:text-[16px]" text={["Input data yang diperlukan"]} />
+                      <TypingEffect className="custom-class text-[16px]" text={["Input data yang diperlukan"]} />
                     </AlertDialogDescription>
                     <form
                       onSubmit={handleCreateService}
                       className="w-full flex flex-col gap-y-3 max-h-[500px]">
-                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                      <div className="w-full flex flex-col gap-y-5 verticalScroll">
 
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                             Nama Layanan
                           </Label>
                           <Input
@@ -499,18 +499,18 @@ export default function ServicesScreen() {
                             value={data.nama}
                             onChange={handleChange}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[16px]"
                             placeholder="Masukkan Nama Layanan"
                           />
                         </div>
 
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                           <Label
                             htmlFor="syarat"
-                            className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                            className="focus-within:text-primary-70 font-normal text-[16px]">
                             Syarat Layanan
                           </Label>
-                          <div className="w-full h-full border border-line-20 rounded-lg text-left">
+                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[16px]">
                             <EditorProvide
                               content={data.syarat}
                               onChange={(e: any) => setData({ ...data, syarat: e })}
@@ -518,8 +518,8 @@ export default function ServicesScreen() {
                           </div>
                         </div>
 
-                        <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label className="focus-within:text-primary-70 font-normal text-[16px] text-left">
                             Pilih Bidang
                           </Label>
                           <div className="w-full border border-line-20 rounded-lg">
@@ -540,7 +540,7 @@ export default function ServicesScreen() {
                                         return (
                                           <SelectItem
                                             key={i}
-                                            className={`w-full px-4 text-[14px] md:text-[16px]`}
+                                            className={`w-full px-4 text-[16px]`}
                                             value={area.id.toString()}>
                                             {area.nama}
                                           </SelectItem>
@@ -553,11 +553,11 @@ export default function ServicesScreen() {
                           </div>
                         </div>
 
-                        <div className="w-full flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                             Deskripsi Bidang
                           </Label>
-                          <div className="w-full h-full border border-line-20 rounded-lg text-left">
+                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[16px]">
                             <EditorProvide
                               content={data.desc}
                               onChange={(e: any) => setData({ ...data, desc: e })}
@@ -565,8 +565,8 @@ export default function ServicesScreen() {
                           </div>
                         </div>
 
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                             Penanggung Jawab
                           </Label>
                           <Input
@@ -575,18 +575,18 @@ export default function ServicesScreen() {
                             value={data.penanggung_jawab}
                             onChange={handleChange}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[16px]"
                             placeholder="Masukkan Nama Penanggung Jawab"
                           />
                         </div>
 
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                           <Label
                             htmlFor="ketentuan"
-                            className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                            className="focus-within:text-primary-70 font-normal text-[16px]">
                             Ketentuan
                           </Label>
-                          <div className="w-full h-full border border-line-20 rounded-lg text-left">
+                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[16px]">
                             <EditorProvide
                               content={data.ketentuan}
                               onChange={(e: any) => setData({ ...data, ketentuan: e })}
@@ -594,26 +594,31 @@ export default function ServicesScreen() {
                           </div>
                         </div>
 
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                           <Label
                             htmlFor="langkah"
-                            className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                            className="focus-within:text-primary-70 font-normal text-[16px]">
                             Langkah
                           </Label>
-                          <div className="w-full h-full border border-line-20 rounded-lg text-left">
+                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[16px]">
                             <EditorProvide
                               content={data.langkah}
                               onChange={(e: any) => setData({ ...data, langkah: e })}
                             />
                           </div>
                         </div>
+
                       </div>
                       <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogCancel>
+                          <AlertDialogDescription className="text-center text-[16px] pl-3 pr-3">
+                            Batal
+                          </AlertDialogDescription>
+                        </AlertDialogCancel>
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[16px] px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (
@@ -623,7 +628,6 @@ export default function ServicesScreen() {
                       </div>
                     </form>
                   </AlertDialogHeader>
-                  {/* <AlertDialogFooter className="w-full flex flex-row justify-center items-center gap-x-5"></AlertDialogFooter> */}
                 </AlertDialogContent>
               </AlertDialog>
             </div>

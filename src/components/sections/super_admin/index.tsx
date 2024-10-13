@@ -50,7 +50,6 @@ import MobileDivisionVerificationAdminApplicationHistoryCard from "@/components/
 export default function SuperAdminDashboardPages() {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
-  const debounceSearch = useDebounce(search, 500);
   const [layananId, setLayananId] = useState<number | undefined>(undefined);
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
@@ -65,6 +64,7 @@ export default function SuperAdminDashboardPages() {
     totalPages: 1,
     totalCount: 0,
   });
+  const debounceSearch = useDebounce(search);
 
   const startDateFormatted = startDate
     ? formatDate(new Date(startDate))
@@ -198,19 +198,19 @@ export default function SuperAdminDashboardPages() {
               <BarChart
                 accessibilityLayer
                 data={chartData}
-                // margin={{
-                //   left: 1,
-                //   right: 1,
-                // }}
+              // margin={{
+              //   left: 1,
+              //   right: 1,
+              // }}
               >
                 <CartesianGrid vertical={false} />
                 <XAxis
                   dataKey="nama"
                   tickLine={false}
                   axisLine={false}
-                  // tickMargin={1}
-                  // minTickGap={1}
-                  // className="w-full"
+                // tickMargin={1}
+                // minTickGap={1}
+                // className="w-full"
                 />
                 <ChartTooltip
                   content={
