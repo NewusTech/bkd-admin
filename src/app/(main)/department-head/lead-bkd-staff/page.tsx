@@ -121,7 +121,7 @@ export default function LeadBkdStaffScreen() {
     status: number,
   ) => {
     try {
-      const response = await getStructureOrganizations(page, limit, search, status);
+      const response = await getStructureOrganizations(page, limit, search);
 
       setOrganizations(response.data);
       setPagination((prev) => ({
@@ -137,7 +137,7 @@ export default function LeadBkdStaffScreen() {
 
   useEffect(() => {
     fetchStructureOrganization(1, 5, debounceSearch, 1);
-  }, [debounceSearch, status]);
+  }, [debounceSearch]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
