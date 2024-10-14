@@ -5,13 +5,14 @@ import SearchPages from "@/components/elements/search";
 import { Button } from "@/components/ui/button";
 import {
   deleteStructureOrganizations,
+  deleteStructureOrganizationsMain,
   getStructureOrganizations,
   getStructureOrganizationsMain,
   postStructureOrganizations,
   postStructureOrganizationsMain,
   updateStructureOrganizations,
 } from "@/services/api";
-import { StructureOrganizationInterface } from "@/types/interface";
+import { StructureOrganizationInterface, StructureOrganizationInterfaceMain } from "@/types/interface";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertDialog,
@@ -69,7 +70,7 @@ export default function StructureOrganizationMainScreen() {
   const [organizations, setOrganizations] = useState<
     StructureOrganizationInterface[]
   >([]);
-  const [mainOrganizations, setMainOrganizations] = useState<any>();
+  const [mainOrganizations, setMainOrganizations] = useState<StructureOrganizationInterfaceMain[]>([]);
   const [data, setData] = useState({
     bkdstruktur_id: "",
   });
@@ -81,6 +82,8 @@ export default function StructureOrganizationMainScreen() {
   ) => {
     try {
       const response = await getStructureOrganizationsMain(page, limit, search);
+
+      console.log(response, "ini get")
 
       setMainOrganizations(response.data);
     } catch (error) {
@@ -109,6 +112,7 @@ export default function StructureOrganizationMainScreen() {
   useEffect(() => {
     fetchStructureOrganization(1, 50, "");
   }, []);
+  
 
   const handleSelectChange = (value: string) => {
     setData({
@@ -164,7 +168,7 @@ export default function StructureOrganizationMainScreen() {
     }
   };
 
-  const handleDeleteStructureOrganization = async (slug: string) => {
+  const handleDeleteStructureOrganization = async (id: number) => {
     setIsDeleteLoading(true);
     try {
       const result = await Swal.fire({
@@ -178,7 +182,9 @@ export default function StructureOrganizationMainScreen() {
       });
 
       if (result.isConfirmed) {
-        const response = await deleteStructureOrganizations(slug);
+        const response = await deleteStructureOrganizationsMain(id);
+
+        console.log(response, "lala lili")
 
         if (response.status === 200) {
           await Swal.fire({
@@ -188,7 +194,7 @@ export default function StructureOrganizationMainScreen() {
             position: "center",
           });
           setIsDeleteLoading(false);
-          fetchStructureOrganization(1, 5, "");
+          fetchStructureOrganizationMain(1, 5, "");
         }
       }
     } catch (error) {
@@ -294,11 +300,11 @@ export default function StructureOrganizationMainScreen() {
                             </Label>
 
                             <div className="w-full border border-line-20 rounded-lg">
-                              <Select onValueChange={handleSelectChange}>
+                              <Select onValueChange={handleSelectChange} value={data.bkdstruktur_id}>
                                 <SelectTrigger
                                   className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                                   <SelectValue
-                                    placeholder="Pilih Jabatan"
+                                    placeholder="Pilih Nama"
                                     className="text-black-80 w-full"
                                   />
                                 </SelectTrigger>
@@ -307,23 +313,19 @@ export default function StructureOrganizationMainScreen() {
                                     {organizations &&
                                       organizations.length > 0 &&
                                       organizations.map(
-                                        (
-                                          organization: StructureOrganizationInterface,
-                                          i: number
-                                        ) => {
-                                          return (
-                                            <SelectItem
-                                              key={i}
-                                              className={`w-full px-4`}
-                                              value={organization.id.toString()}>
-                                              {organization?.nama}
-                                            </SelectItem>
-                                          );
-                                        }
+                                        (organization: StructureOrganizationInterface, i: number) => (
+                                          <SelectItem
+                                            key={i}
+                                            className={`w-full px-4`}
+                                            value={organization.id.toString()}>
+                                            {organization.nama}
+                                          </SelectItem>
+                                        )
                                       )}
                                   </div>
                                 </SelectContent>
                               </Select>
+
                             </div>
                           </div>
                         </div>
@@ -390,7 +392,7 @@ export default function StructureOrganizationMainScreen() {
                               </SelectTrigger>
                               <SelectContent className="bg-line-10">
                                 <div className="pt-2">
-                                  {organizations &&
+                                  {/* {organizations &&
                                     organizations.length > 0 &&
                                     organizations.map(
                                       (
@@ -406,7 +408,7 @@ export default function StructureOrganizationMainScreen() {
                                           </SelectItem>
                                         );
                                       }
-                                    )}
+                                    )} */}
                                 </div>
                               </SelectContent>
                             </Select>
@@ -444,7 +446,7 @@ export default function StructureOrganizationMainScreen() {
               {mainOrganizations && mainOrganizations.length > 0 && (
                 <SuperStructureOrganizationMainMasterDataTablePages
                   organizations={mainOrganizations}
-                  handleDeleteStructureOrganization={
+                  handleDeleteStructureOrganizationMain={
                     handleDeleteStructureOrganization
                   }
                   isDeleteLoading={isDeleteLoading}
@@ -460,23 +462,24 @@ export default function StructureOrganizationMainScreen() {
               )}
             </>
           ) : (
-            <div className="w-full flex flex-col gap-y-5">
-              {mainOrganizations &&
-                mainOrganizations.length > 0 &&
-                mainOrganizations?.map(
-                  (organization: StructureOrganizationInterface, i: number) => {
-                    return (
-                      <MobileStructureOrganizationMainMasterDataCard
-                        key={i}
-                        organization={organization}
-                        index={i}
-                        data={data}
-                        setData={setData}
-                      />
-                    );
-                  }
-                )}
-            </div>
+            <></>
+            // <div className="w-full flex flex-col gap-y-5">
+            //   {mainOrganizations &&
+            //     mainOrganizations.length > 0 &&
+            //     mainOrganizations?.map(
+            //       (organization: StructureOrganizationInterface, i: number) => {
+            //         return (
+            //           <MobileStructureOrganizationMainMasterDataCard
+            //             key={i}
+            //             organization={organization}
+            //             index={i}
+            //             data={data}
+            //             setData={setData}
+            //           />
+            //         );
+            //       }
+            //     )}
+            // </div>
           )}
         </div>
       </div>

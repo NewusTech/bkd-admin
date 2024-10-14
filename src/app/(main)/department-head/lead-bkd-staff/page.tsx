@@ -117,10 +117,11 @@ export default function LeadBkdStaffScreen() {
   const fetchStructureOrganization = async (
     page: number,
     limit: number,
-    search: string
+    search: string,
+    status: number,
   ) => {
     try {
-      const response = await getStructureOrganizations(page, limit, search);
+      const response = await getStructureOrganizations(page, limit, search, status);
 
       setOrganizations(response.data);
       setPagination((prev) => ({
@@ -135,12 +136,12 @@ export default function LeadBkdStaffScreen() {
   };
 
   useEffect(() => {
-    fetchStructureOrganization(1, 5, debounceSearch);
-  }, [debounceSearch]);
+    fetchStructureOrganization(1, 5, debounceSearch, 1);
+  }, [debounceSearch, status]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchStructureOrganization(newPage, 5, "");
+      fetchStructureOrganization(newPage, 5, "", 1);
     }
   };
 
@@ -236,7 +237,7 @@ export default function LeadBkdStaffScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchStructureOrganization(pagination?.currentPage, 5, "");
+        fetchStructureOrganization(pagination?.currentPage, 5, "", 1);
         setIsDialogOpenCreate(false);
         router.push("/department-head/lead-bkd-staff");
       } else {
@@ -280,7 +281,7 @@ export default function LeadBkdStaffScreen() {
             position: "center",
           });
           setIsLoadingDelete(false);
-          fetchStructureOrganization(pagination?.currentPage, 5, "");
+          fetchStructureOrganization(pagination?.currentPage, 5, "", 1);
         }
       }
     } catch (error) {
@@ -332,7 +333,7 @@ export default function LeadBkdStaffScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchStructureOrganization(pagination?.currentPage, 5, "");
+        fetchStructureOrganization(pagination?.currentPage, 5, "", 1);
         setIsDialogOpenUpdate(false);
         router.push("/department-head/lead-bkd-staff");
       } else {
@@ -680,9 +681,8 @@ export default function LeadBkdStaffScreen() {
                                   onDragOver={handleDragOver}
                                   onDragLeave={handleDragLeave}
                                   onDrop={handleDropImage}
-                                  className={`w-full ${
-                                    previewImage ? "md:w-8/12" : "w-full"
-                                  }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                                  className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
+                                    }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                                   <div>
                                     <input
                                       type="file"
@@ -951,9 +951,8 @@ export default function LeadBkdStaffScreen() {
                                   onDragOver={handleDragOver}
                                   onDragLeave={handleDragLeave}
                                   onDrop={handleDropImage}
-                                  className={`w-full ${
-                                    previewImage ? "md:w-8/12" : "w-full"
-                                  }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                                  className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
+                                    }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                                   <div>
                                     <input
                                       type="file"

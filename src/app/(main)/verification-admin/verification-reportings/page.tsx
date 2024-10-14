@@ -23,9 +23,13 @@ import MobileReportingCard from "@/components/mobile_all_cards/mobileReportingsC
 
 export default function VerificationUserApplicationRevitionHistoriesScreen() {
   const router = useRouter();
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  // serach
   const [search, setSearch] = useState("");
-  const deboucedSearch = useDebounce(search, 500);
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
+  // serach
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
   const [startDate, setStartDate] = useState<Date | undefined>(firstDayOfMonth);
@@ -37,15 +41,16 @@ export default function VerificationUserApplicationRevitionHistoriesScreen() {
     totalPages: 1,
     totalCount: 0,
   });
+  const debounceSearch = useDebounce(search);
 
   const startDateFormatted = startDate
     ? formatDate(new Date(startDate))
     : undefined;
   const endDateFormatted = endDate ? formatDate(new Date(endDate)) : undefined;
 
-  const fetchReportData = async (page: number, limit: number) => {
+  const fetchReportData = async (page: number, limit: number, search: string) => {
     try {
-      const response = await getReportHistories(page, limit);
+      const response = await getReportHistories(page, limit, search);
 
       setReports(response?.data?.report);
       setPagination((prev) => ({
@@ -60,12 +65,12 @@ export default function VerificationUserApplicationRevitionHistoriesScreen() {
   };
 
   useEffect(() => {
-    fetchReportData(1, 5);
-  }, []);
+    fetchReportData(1, 5, search);
+  }, [search]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchReportData(newPage, 5);
+      fetchReportData(newPage, 5, "");
     }
   };
 
@@ -112,7 +117,10 @@ export default function VerificationUserApplicationRevitionHistoriesScreen() {
           className={`w-full flex flex-col md:flex-row ${!isMobile ? "" : "p-3 rounded-lg shadow-md"} bg-line-10 gap-y-5 gap-x-5`}>
           <SearchPages
             search={search}
-            change={(e: any) => setSearch(e.target.value)}
+            setSearch={setSearch}
+            change={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setSearch(e.target.value)
+            }
             placeholder="Pencarian"
           />
 

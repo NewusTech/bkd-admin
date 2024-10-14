@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "../ui/button";
-import { StructureOrganizationInterface } from "@/types/interface";
+import { StructureOrganizationInterface, StructureOrganizationInterfaceMain } from "@/types/interface";
 import { Loader } from "lucide-react";
 import {
   AlertDialog,
@@ -30,7 +30,7 @@ import TypingEffect from "../ui/TypingEffect";
 export default function SuperStructureOrganizationMainMasterDataCard({
   organization,
   index,
-  handleDeleteStructureOrganization,
+  handleDeleteStructureOrganizationMain,
   isDeleteLoading,
   data,
   setData,
@@ -39,9 +39,9 @@ export default function SuperStructureOrganizationMainMasterDataCard({
   isDialogEditOpen,
   setIsDialogEditOpen,
 }: {
-  organization: StructureOrganizationInterface;
+  organization: StructureOrganizationInterfaceMain;
   index: number;
-  handleDeleteStructureOrganization: (slug: string) => void;
+  handleDeleteStructureOrganizationMain: (id: number) => void;
   isDeleteLoading: boolean;
   data: {
     bkdstruktur_id: string;
@@ -66,6 +66,7 @@ export default function SuperStructureOrganizationMainMasterDataCard({
     });
   };
 
+
   return (
     <TableRow className="border border-line-20">
       <TableCell className="text-left">{index + 1}</TableCell>
@@ -74,7 +75,7 @@ export default function SuperStructureOrganizationMainMasterDataCard({
       {/* <TableCell className="text-left">{item?.image}</TableCell> */}
       <TableCell className="text-left flex items-center w-full">
         <div className="w-full flex flex-row items-center justify-center gap-x-2">
-          <div className="w-full">
+          {/* <div className="w-full">
             <AlertDialog
               open={isDialogEditOpen}
               onOpenChange={setIsDialogEditOpen}
@@ -98,9 +99,9 @@ export default function SuperStructureOrganizationMainMasterDataCard({
                     <TypingEffect className="custom-class text-[14px] md:text-[16px] text-center" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                   </AlertDialogDescription>
                   <form
-                    // onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
-                    //   handleUpdateStructureOrganization(e, organization?.slug)
-                    // }
+                    onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
+                      handleUpdateStructureOrganization(e, organization?.slug)
+                    }
                     className="w-full flex flex-col gap-y-3 max-h-[500px]">
                     <div className="w-full flex flex-col gap-y-3 verticalScroll">
                       <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
@@ -110,7 +111,7 @@ export default function SuperStructureOrganizationMainMasterDataCard({
 
                         <div className="w-full border border-line-20 rounded-lg">
                           <Select
-                          // onValueChange={handleSelectChange}
+                            onValueChange={handleSelectChange}
                           >
                             <SelectTrigger
                               className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
@@ -120,7 +121,7 @@ export default function SuperStructureOrganizationMainMasterDataCard({
                               />
                             </SelectTrigger>
                             <SelectContent className="bg-line-10">
-                              {/* <div className="pt-2">
+                              <div className="pt-2">
                                 {organizations &&
                                   organizations.length > 0 &&
                                   organizations.map(
@@ -138,7 +139,7 @@ export default function SuperStructureOrganizationMainMasterDataCard({
                                       );
                                     }
                                   )}
-                              </div> */}
+                              </div>
                             </SelectContent>
                           </Select>
                         </div>
@@ -163,15 +164,14 @@ export default function SuperStructureOrganizationMainMasterDataCard({
                 </AlertDialogHeader>
               </AlertDialogContent>
             </AlertDialog>
-          </div>
-
+          </div> */}
           <div className="w-full">
             <Button
               disabled={isDeleteLoading ? true : false}
               onClick={() =>
-                handleDeleteStructureOrganization(organization?.slug)
+                handleDeleteStructureOrganizationMain(organization?.select_id)
               }
-              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10">
+              className="w-fit rounded-lg bg-error-60 hover:bg-error-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 flex m-auto justify-center">
               {isDeleteLoading ? (
                 <Loader className="animate-spin" />
               ) : isDeleteLoading ? (

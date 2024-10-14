@@ -261,6 +261,17 @@ export interface StructureOrganizationInterface {
   updatedAt: string;
 }
 
+export interface StructureOrganizationInterfaceMain {
+  bkdstruktur_id: number;
+  createdAt: string;
+  image: string;
+  jabatan: string;
+  nama: string;
+  select_id: number;
+  slug: string;
+  updatedAt: string;
+}
+
 export interface FaqsInterface {
   id: number;
   question: string;
