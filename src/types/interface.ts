@@ -1,4 +1,6 @@
+import { LargeNumberLike } from "crypto";
 import React from "react";
+import { ZodStringCheck } from "zod";
 
 export interface debounceInterface {
   value: string;
@@ -639,4 +641,25 @@ export interface SuperAdminSettingInterface {
   nama: string;
   Bidang: SettingServiceInterface;
   Layanan_surat: SettingMessageServiceInterface;
+}
+
+export interface OutputLetterDetailServiceInterface {
+  id: number;
+  bidang_id: number;
+  createdAt: string;
+  deletedAt: string;
+  desc: string;
+  ketentuan: string;
+  langkah: string;
+  nama: string;
+  penanggung_jawab: string;
+  slug: string;
+  syarat: string;
+  updatedAt: string;
+}
+
+export interface OutputLetterDetailInterface {
+  Layanan: OutputLetterDetailServiceInterface;
+  fileoutput: ZodStringCheck;
+  id: LargeNumberLike;
 }

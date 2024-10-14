@@ -114,6 +114,8 @@ export default function AreasScreen() {
     try {
       const response = await postAreas(data);
 
+      console.log(response, "ini response");
+
       if (response.status === 201) {
         setData({
           nama: "",

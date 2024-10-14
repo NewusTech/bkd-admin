@@ -1,6 +1,5 @@
 "use client";
 
-import contract from "@/../../public/assets/icons/signature-contract-white-out.svg";
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useRef, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,12 +12,21 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { FilePlus, Pen, Plus } from "@phosphor-icons/react";
+import { FilePlus, Pen, Plus, Trash } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, Loader } from "lucide-react";
 import Image from "next/image";
 import ReactSignatureCanvas from "react-signature-canvas";
-import { getApplicationDocumentOutput } from "@/services/api";
+import {
+  getApplicationDocumentOutput,
+  getOutputLetterDetail,
+  updateSignatureLetterApplication,
+  updateUserApplicationHistoryDetail,
+} from "@/services/api";
+import { JwtPayload, OutputLetterDetailInterface } from "@/types/interface";
+import Swal from "sweetalert2";
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 
 export default function DepartmentSecretarySignatureValidationUploadScreen({
   params,
@@ -28,25 +36,45 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
   const router = useRouter();
   const dropRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const [role, setRole] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [signatureData, setSignatureData] = useState<any>(null);
+  const [signatureData, setSignatureData] = useState<string | null>(null);
   const [isSigned, setIsSigned] = useState(false);
-  const [pdfFile, setPdfFile] = useState(null);
+  const [pdfFile, setPdfFile] = useState<File | null>(null);
   const sigCanvas = useRef<ReactSignatureCanvas>(null);
-  const [fotoProfile, setFotoProfile] = useState<File | null>(null);
-  const [newProfileImage, setNewProfileImage] = useState({
-    image_url: "",
+  const [signature, setSignature] = useState<File | null>(null);
+  const [data, setData] = useState({
+    sign: "",
   });
-  const [output, setOutput] = useState<string>("");
-  const [previewPPImage, setPreviewPPImage] = useState<string>("");
+  const [data2, setData2] = useState({
+    status: 8,
+    pesan: "",
+  });
+  const [output, setOutput] = useState<OutputLetterDetailInterface>();
+  const [previewFile, setPreviewFile] = useState<string>("");
+
+  useEffect(() => {
+    const token = Cookies.get("Authorization");
+
+    if (token) {
+      try {
+        const decoded = jwtDecode<JwtPayload>(token);
+
+        if (decoded && decoded.role !== undefined) {
+          setRole(decoded.role);
+        }
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    } else {
+      router.push("/login");
+    }
+  }, [router]);
 
   const fetchOutput = async (id: number) => {
     try {
-      const reponse = await getApplicationDocumentOutput(id);
-
-      const fileURL = URL.createObjectURL(reponse);
-      // window.open(fileURL);
-      setOutput(fileURL);
+      const response = await getOutputLetterDetail(id);
+      setOutput(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -56,34 +84,154 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
     fetchOutput(params?.applicationId);
   }, [params?.applicationId]);
 
+  // Helper function to convert Base64 to Blob
+  const dataURLtoBlob = (dataurl: string) => {
+    const arr = dataurl.split(",");
+    const mimeMatch = arr[0].match(/:(.*?);/);
+    if (!mimeMatch) {
+      throw new Error("Invalid data URL");
+    }
+    const mime = mimeMatch[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
+  };
+
+  const handleUpdateSignature = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const formData = new FormData();
+
+    try {
+      if (signatureData) {
+        // Convert Base64 to Blob and append as File
+        const blob = dataURLtoBlob(signatureData);
+        const file = new File([blob], "signature.png", { type: blob.type });
+        formData.append("sign", file);
+      } else if (signature) {
+        // Append uploaded file
+        formData.append("sign", signature);
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "Tidak ada tanda tangan yang ditemukan!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      // Debugging: Log FormData entries
+      Object.keys(formData).forEach((key) => {
+        console.log(key, formData.get(key));
+      });
+
+      const response = await updateSignatureLetterApplication(
+        formData,
+        params?.applicationId
+      );
+
+      const response2: { status: number } =
+        await updateUserApplicationHistoryDetail(
+          {
+            ...data,
+            status: 9,
+          },
+          params?.applicationId
+        );
+
+      const result = await Promise.all([response, response2]);
+
+      if (response.status === 200) {
+        setData({
+          sign: "",
+        });
+        setSignatureData(null);
+        setSignature(null);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil Membubuhkan tanda tangan!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+
+        router.push("/areas-head/head-manage-approvals");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal Membubuhkan tanda tangan!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Terjadi kesalahan!",
+        text: "Gagal membubuhkan tanda tangan.",
+        timer: 2000,
+        showConfirmButton: false,
+        position: "center",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const clearSignature = () => {
     sigCanvas?.current?.clear();
     setIsSigned(false);
+    setSignatureData(null);
   };
 
   const saveSignature = () => {
-    const dataUrl = (sigCanvas.current as ReactSignatureCanvas)
+    if (sigCanvas.current?.isEmpty()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Tanda tangan kosong!",
+        text: "Silakan buat tanda tangan sebelum menyimpan.",
+        timer: 2000,
+        showConfirmButton: false,
+        position: "center",
+      });
+      return;
+    }
+    const dataUrl = sigCanvas.current
       ?.getTrimmedCanvas()
       .toDataURL("image/png");
-    setSignatureData(dataUrl);
+    if (dataUrl !== undefined) {
+      setSignatureData(dataUrl);
+    }
     setIsSigned(true);
-  };
-
-  const handleFileUpload = (event: any) => {
-    const file = event.target.files[0];
-    setPdfFile(file);
+    Swal.fire({
+      icon: "success",
+      title: "Tanda tangan berhasil disimpan!",
+      timer: 2000,
+      showConfirmButton: false,
+      position: "center",
+    });
   };
 
   const handleFilePPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setFotoProfile(file);
-      setNewProfileImage({
-        ...newProfileImage,
-        image_url: file.name,
+      setSignature(file);
+      setData({
+        ...data,
+        sign: file.name,
       });
       const fileUrl = URL.createObjectURL(file);
-      setPreviewPPImage(fileUrl);
+      setPreviewFile(fileUrl);
     }
   };
 
@@ -100,14 +248,20 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
 
     const file = e.dataTransfer.files?.[0];
     if (file) {
-      setFotoProfile(file);
-      setNewProfileImage({
-        ...newProfileImage,
-        image_url: file.name,
+      setSignature(file);
+      setData({
+        ...data,
+        sign: file.name,
       });
       const fileUrl = URL.createObjectURL(file);
-      setPreviewPPImage(fileUrl);
+      setPreviewFile(fileUrl);
     }
+  };
+
+  const handleRemoveImage = () => {
+    setSignature(null);
+    setPreviewFile("");
+    setData({ ...data, sign: "" });
   };
 
   return (
@@ -168,65 +322,63 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
                         </Button>
                       </div>
                     </TabsList>
-                    <TabsContent value="image" className="w-full">
-                      <div className="w-full flex flex-col gap-y-3">
-                        <div className="w-full flex flex-col gap-y-3">
-                          <ReactSignatureCanvas
-                            ref={sigCanvas}
-                            penColor="black"
-                            canvasProps={{
-                              width: 500,
-                              height: 200,
-                              className:
-                                "sigCanvas border border-line-20 rounded-lg",
-                            }}
-                            backgroundColor="white"
-                          />
-                          <div className="w-full flex flex-row gap-x-3">
-                            <Button
-                              className="border text-[14px] md:text-[16px] border-line-20"
-                              onClick={clearSignature}>
-                              Clear
-                            </Button>
 
+                    <TabsContent value="image" className="w-full">
+                      <form onSubmit={handleUpdateSignature}>
+                        <div className="w-full flex flex-col gap-y-3">
+                          <div className="w-full flex flex-col gap-y-3">
+                            <ReactSignatureCanvas
+                              ref={sigCanvas}
+                              penColor="black"
+                              canvasProps={{
+                                width: isMobile ? 300 : 500,
+                                height: isMobile ? 150 : 200,
+                                className:
+                                  "sigCanvas border border-line-20 rounded-lg",
+                              }}
+                              backgroundColor="white"
+                            />
+                            <div className="w-full flex flex-row gap-x-3">
+                              <Button
+                                type="button"
+                                className="border text-[14px] md:text-[16px] border-line-20"
+                                onClick={clearSignature}>
+                                Clear
+                              </Button>
+
+                              <Button
+                                type="button"
+                                className="border text-[14px] md:text-[16px] border-line-20"
+                                onClick={saveSignature}>
+                                Save
+                              </Button>
+                            </div>
+                          </div>
+
+                          {isSigned && (
+                            <p className="text-[14px] md:text-[16px]">
+                              Tanda tangan berhasil dibuat!
+                            </p>
+                          )}
+
+                          <div className="w-full">
                             <Button
-                              className="border text-[14px] md:text-[16px] border-line-20"
-                              onClick={saveSignature}>
-                              Save
+                              type="submit"
+                              className="w-full text-[14px] md:text-[16px] bg-primary-40 hover:bg-primary-70 text-line-10"
+                              disabled={isLoading}>
+                              {isLoading ? (
+                                <Loader className="animate-spin" />
+                              ) : (
+                                "Tanda Tangan"
+                              )}
                             </Button>
                           </div>
                         </div>
-
-                        {isSigned && (
-                          <p className="text-[14px] md:text-[16px]">
-                            Tanda tangan berhasil dibuat!
-                          </p>
-                        )}
-
-                        {/* <button onClick={submitSignature}>
-                          Submit PDF with Signature
-                        </button> */}
-                        <div className="w-full">
-                          <Button className="w-full text-[14px] md:text-[16px] bg-primary-40 hover:bg-primary-70 text-line-10">
-                            Tanda Tangan
-                          </Button>
-                        </div>
-                      </div>
+                      </form>
                     </TabsContent>
                     <TabsContent value="upload">
-                      {/* <div className="w-full flex flex-col gap-y-3">
-                        <h2>Tanda Tangan Digital</h2>
-
-                        <label>Upload PDF yang ingin ditandatangani:</label>
-                        <input
-                          type="file"
-                          accept="application/pdf"
-                          onChange={handleFileUpload}
-                        />
-                      </div> */}
-
                       <form
-                        // onSubmit={handleFileUpload}
+                        onSubmit={handleUpdateSignature}
                         className="flex flex-col w-full mt-2 md:mt-4">
                         <div className="flex flex-col w-full h-full mt-2 px-4">
                           <div className="flex flex-col w-full gap-y-5">
@@ -241,7 +393,7 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
                                   type="file"
                                   id="file-input-pp"
                                   name="imaga_url"
-                                  accept="application/pdf"
+                                  accept="image/*,application/pdf"
                                   onChange={handleFilePPChange}
                                   className="hidden"
                                 />
@@ -253,13 +405,34 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
                                 </label>
                               </>
                             </div>
+                            {previewFile && (
+                              <div className="relative w-full mt-1">
+                                <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
+                                  <div className="w-6/12 h-full">
+                                    <Image
+                                      src={previewFile}
+                                      width={1000}
+                                      height={500}
+                                      alt="Preview"
+                                      className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                    />
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={handleRemoveImage}
+                                    className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
+                                    <Trash />
+                                  </button>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         </div>
                         <div className="flex justify-center items-end self-end w-4/12 md:self-center my-4 md:pb-[30px] mt-4 pr-2 md:pr-0">
                           <Button
                             className="w-full bg-primary-40 hover:bg-primary-70 text-neutral-50 h-[30px] md:h-[40px] text-[14px] md:text-[16px]"
                             type="submit"
-                            disabled={isLoading ? true : false}>
+                            disabled={isLoading}>
                             {isLoading ? (
                               <Loader className="animate-spin" />
                             ) : (
@@ -278,13 +451,21 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
 
         <div className="w-full h-full flex flex-col items-center justify-center gap-y-5">
           <div className="w-full h-full">
-            <iframe
-              allowFullScreen
-              src={output}
-              title="PDF"
-              className="rounded-lg w-full h-[1450px]">
-              PDF
-            </iframe>
+            {output && output?.fileoutput && (
+              <iframe
+                allowFullScreen
+                allow="accelerometer"
+                style={{
+                  backgroundColor: "transparent",
+                  border: "none",
+                }}
+                src={`${output?.fileoutput?.toString()}#toolbar=0`}
+                height={"auto"}
+                title="PDF"
+                className="rounded-lg w-full h-[1450px]">
+                PDF
+              </iframe>
+            )}
           </div>
         </div>
       </div>
