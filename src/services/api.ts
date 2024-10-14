@@ -578,6 +578,27 @@ export const getStructureOrganizations = async (
   return await response.json();
 };
 
+// delete struktur organisasi Inti
+export const deleteStructureOrganizationsMain = async (id: number) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/selected/struktur/delete/${id}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  console.log(response, "hihihi");
+
+  return await response.json();
+};
+
 // post struktur organisasi
 export const postStructureOrganizations = async (data: any) => {
   const token = Cookies.get("Authorization");
@@ -1379,11 +1400,15 @@ export const getSatisfactionIndexReport = async (
 };
 
 // get reporting History
-export const getReportHistories = async (page: number, limit: number) => {
+export const getReportHistories = async (
+  page?: number,
+  limit?: number,
+  search?: string
+) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/layanan/report/get?page=${page}&limit=${limit}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/layanan/report/get?page=${page}&limit=${limit}&search=${search}`,
     {
       method: "GET",
       headers: {

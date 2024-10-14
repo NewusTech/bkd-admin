@@ -57,8 +57,8 @@ export default function ServiceRequiremnts() {
       setPagination((prev) => ({
         ...prev,
         currentPage: page,
-        totalPages: response.pagination.totalPages,
-        totalCount: response.pagination.totalCount,
+        totalPages: response?.pagination?.totalPages,
+        totalCount: response?.pagination?.totalCount,
       }));
     } catch (error) {
       console.log(error);

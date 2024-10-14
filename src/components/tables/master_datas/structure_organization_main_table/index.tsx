@@ -7,13 +7,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { StructureOrganizationInterface } from "@/types/interface";
+import { StructureOrganizationInterface, StructureOrganizationInterfaceMain } from "@/types/interface";
 import SuperStructureOrganizationMasterDataCard from "@/components/all_cards/superStructureOrganizationCard";
 import SuperStructureOrganizationMainMasterDataCard from "@/components/all_cards/superStructureOrganizationMainCard";
 
 export default function SuperStructureOrganizationMainMasterDataTablePages({
   organizations,
-  handleDeleteStructureOrganization,
+  handleDeleteStructureOrganizationMain,
   isDeleteLoading,
   data,
   setData,
@@ -22,8 +22,8 @@ export default function SuperStructureOrganizationMainMasterDataTablePages({
   setIsDialogEditOpen,
   // handleUpdateStructureOrganization,
 }: {
-  organizations: StructureOrganizationInterface[];
-  handleDeleteStructureOrganization: (slug: string) => void;
+  organizations: StructureOrganizationInterfaceMain[];
+  handleDeleteStructureOrganizationMain: (id: number) => void;
   isDeleteLoading: boolean;
   data: {
     bkdstruktur_id: string;
@@ -56,14 +56,14 @@ export default function SuperStructureOrganizationMainMasterDataTablePages({
           {organizations &&
             organizations.length > 0 &&
             organizations?.map(
-              (organization: StructureOrganizationInterface, i: number) => {
+              (organization: StructureOrganizationInterfaceMain, i: number) => {
                 return (
                   <SuperStructureOrganizationMainMasterDataCard
                     key={i}
                     organization={organization}
                     index={i}
-                    handleDeleteStructureOrganization={
-                      handleDeleteStructureOrganization
+                    handleDeleteStructureOrganizationMain={
+                      handleDeleteStructureOrganizationMain
                     }
                     isDeleteLoading={isDeleteLoading}
                     data={data}
