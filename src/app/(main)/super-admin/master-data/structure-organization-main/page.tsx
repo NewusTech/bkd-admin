@@ -129,6 +129,10 @@ export default function StructureOrganizationMainScreen() {
         bkdstruktur_id: Number(data.bkdstruktur_id),
       });
 
+      console.log(response, "ini response");
+      console.log(data.bkdstruktur_id, "ini id struktur bkd")
+      console.log(data, "ini data")
+
       if (response.status === 201) {
         setData({
           bkdstruktur_id: "",
@@ -184,7 +188,7 @@ export default function StructureOrganizationMainScreen() {
             position: "center",
           });
           setIsDeleteLoading(false);
-          fetchStructureOrganization(1, 10, "");
+          fetchStructureOrganization(1, 5, "");
         }
       }
     } catch (error) {
@@ -261,7 +265,7 @@ export default function StructureOrganizationMainScreen() {
                   className="w-full">
                   <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-full text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
-                    Tambah Data
+                    Tambah
                   </div>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
@@ -449,9 +453,9 @@ export default function StructureOrganizationMainScreen() {
                   isUpdateLoading={isUpdateLoading}
                   isDialogEditOpen={isDialogEditOpen}
                   setIsDialogEditOpen={setIsDialogEditOpen}
-                  // handleUpdateStructureOrganization={
-                  //   handleUpdateStructureOrganization
-                  // }
+                // handleUpdateStructureOrganization={
+                //   handleUpdateStructureOrganization
+                // }
                 />
               )}
             </>

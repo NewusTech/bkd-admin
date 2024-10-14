@@ -74,22 +74,22 @@ export default function SuperAreasMasterDataTablePages({
         <Table className="w-full border border-line-20">
           <TableHeader className="bg-primary-40 text-line-10">
             <TableRow className="w-full">
-              <TableHead className="text-center text-[14px] md:text-[16px]">
+              <TableHead className="text-center text-[14px]">
                 No.
               </TableHead>
-              <TableHead className="text-center text-[14px] md:text-[16px]">
+              <TableHead className="text-center text-[14px]">
                 Nama Bidang
               </TableHead>
-              <TableHead className="text-center text-[14px] md:text-[16px]">
+              <TableHead className="text-center text-[14px]">
                 Penanggung Jawab
               </TableHead>
-              <TableHead className="text-center text-[14px] md:text-[16px]">
+              <TableHead className="text-center text-[14px]">
                 NIP Penanggung Jawab
               </TableHead>
-              <TableHead className="text-center text-[14px] md:text-[16px]">
+              <TableHead className="text-center text-[14px]">
                 Deskripsi
               </TableHead>
-              <TableHead className="text-center text-[14px] md:text-[16px]">
+              <TableHead className="text-center text-[14px]">
                 Aksi
               </TableHead>
             </TableRow>

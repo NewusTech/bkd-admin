@@ -907,6 +907,24 @@ export const updateRegulations = async (formData: FormData, id: number) => {
   return await response.json();
 };
 
+// delete regulation
+export const deleteRegulations = async (id: number) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/regulasi/delete/${id}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
 // get user complaint
 export const getUserComplaints = async (
   page: number,

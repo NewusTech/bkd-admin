@@ -96,18 +96,18 @@ export default function SuperAreasMasterDataCard({
 
   return (
     <>
-      <TableRow className="border border-line-20 text-[14px] md:text-[16px] text-left">
-        <TableCell className="text-[14px] md:text-[16px]">
+      <TableRow className="border border-line-20 text-[14px]">
+        <TableCell className="text-[14px] text-center">
           {index + 1}
         </TableCell>
-        <TableCell className="text-[14px] md:text-[16px]">
+        <TableCell className="text-[14px] text-center">
           {area?.nama}
         </TableCell>
-        <TableCell className="text-[14px] md:text-[16px]">{area?.pj}</TableCell>
-        <TableCell className="text-[14px] md:text-[16px]">
+        <TableCell className="text-[14px] text-center">{area?.pj}</TableCell>
+        <TableCell className="text-[14px text-center">
           {area?.nip_pj}
         </TableCell>
-        <TableCell className="text-[14px] md:text-[16px]">
+        <TableCell className="text-[14px]">
           {area?.desc && (
             <CombinedReadMoreRichTextDisplay content={area?.desc} keys={true} />
           )}
@@ -119,7 +119,7 @@ export default function SuperAreasMasterDataCard({
               Lihat
             </Button>
           </div> */}
-            <div className="w-full">
+            <div className="w-1/2">
               <AlertDialog
                 open={isDialogEditOpen}
                 onOpenChange={setIsDialogEditOpen}>
@@ -130,9 +130,8 @@ export default function SuperAreasMasterDataCard({
                   }}
                   className="w-full">
                   <div
-                    // name="Edit"
-                    // title="Edit Data"
-                    className="h-10 text-[14px] md:text-[16px] px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10">
+                    title="Edit Data"
+                    className="w-full text-[14px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     Edit
                   </div>
                 </AlertDialogTrigger>
@@ -156,7 +155,7 @@ export default function SuperAreasMasterDataCard({
                       className="w-full flex flex-col gap-y-3 max-h-[500px]">
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
+                          <Label className="focus-within:text-primary-70 font-normal text-[16px] text-left">
                             Nama Bidang
                           </Label>
 
@@ -168,13 +167,13 @@ export default function SuperAreasMasterDataCard({
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => setData({ ...data, nama: e.target.value })}
                             type="text"
-                            className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan Nama Bidang"
                           />
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
+                          <Label className="focus-within:text-primary-70 font-normal text-[16px] text-left">
                             Penanggung Jawab
                           </Label>
 
@@ -186,7 +185,7 @@ export default function SuperAreasMasterDataCard({
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => setData({ ...data, pj: e.target.value })}
                             type="text"
-                            className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan Nama Penanggung Jawab"
                           />
                         </div>
@@ -194,7 +193,7 @@ export default function SuperAreasMasterDataCard({
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label
                             htmlFor="nip-pj"
-                            className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
+                            className="focus-within:text-primary-70 font-normal text-[16px] text-left">
                             NIP Penanggung Jawab
                           </Label>
 
@@ -207,13 +206,13 @@ export default function SuperAreasMasterDataCard({
                             ) => setData({ ...data, nip_pj: e.target.value })}
                             type="text"
                             inputMode="numeric"
-                            className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan NIP Penanggung Jawab"
                           />
                         </div>
 
                         <div className="w-full flex flex-col gap-y-3">
-                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
+                          <Label className="focus-within:text-primary-70 font-normal text-[16px] text-left">
                             Deskripsi Bidang
                           </Label>
 
@@ -228,18 +227,17 @@ export default function SuperAreasMasterDataCard({
                         </div>
                       </div>
 
-                      <div className="w-full flex flex-row justify-between items-center gap-x-5">
+                      <div className="w-full flex flex-row justify-between items-center">
                         <AlertDialogCancel>
-                          <AlertDialogDescription className="text-center text-[14px] md:text-[16px]">
+                          <AlertDialogDescription className="text-center text-[16px] pl-3 pr-3">
                             Batal
                           </AlertDialogDescription>
                         </AlertDialogCancel>
-
                         <Button
                           title="Simpan Data"
                           type="submit"
                           disabled={isUpdateLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] md:text-[16px] px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[16px] px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                           {isUpdateLoading ? (
                             <Loader className="animate-spin" />
                           ) : (
@@ -249,17 +247,16 @@ export default function SuperAreasMasterDataCard({
                       </div>
                     </form>
                   </AlertDialogHeader>
-                  {/* <AlertDialogFooter className="w-full flex flex-row justify-center items-center gap-x-5"></AlertDialogFooter> */}
                 </AlertDialogContent>
               </AlertDialog>
             </div>
 
-            <div className="w-full">
+            <div className="w-1/2">
               <Button
                 title="Hapus Data"
                 disabled={isDeleteLoading ? true : false}
                 onClick={() => handleDeleteArea(area?.slug)}
-                className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 h-10 text-[14px] md:text-[16px] px-3 border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 h-10 text-[14px] px-3 border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                 {isDeleteLoading ? (
                   <Loader className="animate-spin" />
                 ) : isDeleteLoading ? (
@@ -269,6 +266,7 @@ export default function SuperAreasMasterDataCard({
                 )}
               </Button>
             </div>
+
           </div>
         </TableCell>
       </TableRow>

@@ -109,7 +109,7 @@ export default function TermConditionScreen() {
   };
 
   return (
-    <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5 gap-y-5">
+    <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
       <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
         <div className="w-full flex flex-col items-center justify-center">
           <p className="text-black-80 font-semibold text-lg">
