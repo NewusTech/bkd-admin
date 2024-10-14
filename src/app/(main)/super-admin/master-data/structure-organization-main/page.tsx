@@ -188,7 +188,7 @@ export default function StructureOrganizationMainScreen() {
             position: "center",
           });
           setIsDeleteLoading(false);
-          fetchStructureOrganization(1, 10, "");
+          fetchStructureOrganization(1, 5, "");
         }
       }
     } catch (error) {
