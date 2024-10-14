@@ -88,7 +88,7 @@ export default function DashBoardSidebarPages() {
           <div className="w-full h-[8%] flex flex-row items-center justify-center gap-x-3 bg-primary-40">
             <BuildingApartment className="w-7 h-7 text-line-10" />
 
-            <h3 className="text-line-10 text-xl">Instansi BKD</h3>
+            <h3 className="text-line-10 text-xl">SIPADU BKD</h3>
           </div>
         )}
 

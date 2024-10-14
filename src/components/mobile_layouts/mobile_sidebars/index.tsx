@@ -30,11 +30,13 @@ export default function MobileDashboardSideBarPages() {
         </div>
 
         <div className="flex flex-col justify-center w-full h-full leading-none">
-          <h3 className={`font-semibold text-[16px] text-black-80 animate-pulse transition-all`}>
-            Badan Kepegawaian Daerah
+          <h3
+            className={`font-semibold text-[16px] text-black-80 animate-pulse transition-all`}>
+            SIPANDU BKD
           </h3>
 
-          <h3 className={`font-normal text-black-80 text-sm animate-pulse transition-all`}>
+          <h3
+            className={`font-normal text-black-80 text-sm animate-pulse transition-all`}>
             Kabupaten Lampung Timur
           </h3>
         </div>
@@ -52,7 +54,7 @@ export default function MobileDashboardSideBarPages() {
                   <BuildingApartment className="w-7 h-7 text-line-10" />
                 </SheetTitle>
                 <SheetDescription className="text-line-10 text-xl">
-                  Instansi BKD
+                  SIPANDU BKD
                 </SheetDescription>
               </div>
             </SheetHeader>
