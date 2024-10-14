@@ -1477,3 +1477,44 @@ export const getSettingMessage = async (id: number) => {
 
   return await response.json();
 };
+
+// get Detail output letter
+export const getOutputLetterDetail = async (id: number) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/pdf/${id}/surat`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// update signature letter
+export const updateSignatureLetterApplication = async (
+  formData: FormData,
+  id: number
+) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/form/${id}/signing`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
