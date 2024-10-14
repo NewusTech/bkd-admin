@@ -40,6 +40,8 @@ export default function MobileRegulationMasterDataCard({
   regulation,
   index,
   data,
+  handleDeleteRegulations,
+  isDeleteLoading,
   setData,
   isUpdateLoading,
   handleUpdateRegulations,
@@ -55,6 +57,8 @@ export default function MobileRegulationMasterDataCard({
 }: {
   regulation: RegulationInterface;
   index: number;
+  handleDeleteRegulations: (id: number) => void;
+  isDeleteLoading: boolean;
   data: {
     title: string;
     file: string;
@@ -133,7 +137,7 @@ export default function MobileRegulationMasterDataCard({
               </DrawerTitle>
 
               <DrawerDescription className="text-center">
-                Input data yang diperlukan
+                Edit data yang diperlukan
               </DrawerDescription>
 
               <form
@@ -229,6 +233,20 @@ export default function MobileRegulationMasterDataCard({
             </div>
           </DrawerContent>
         </Drawer>
+        <div className="w-full">
+          <Button
+            disabled={isDeleteLoading ? true : false}
+            onClick={() => handleDeleteRegulations(regulation?.id)}
+            className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 text-[14px] md:text-[16px]">
+            {isDeleteLoading ? (
+              <Loader className="animate-spin" />
+            ) : isDeleteLoading ? (
+              ""
+            ) : (
+              "Hapus"
+            )}
+          </Button>
+        </div>
       </div>
     </section>
   );

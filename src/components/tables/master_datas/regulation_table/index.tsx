@@ -14,6 +14,8 @@ import SuperregulationMasterDataCard from "@/components/all_cards/superRegulatio
 
 export default function SuperRegulationMasterDataTablePages({
   regulations,
+  handleDeleteRegulations,
+  isDeleteLoading,
   data,
   setData,
   isUpdateLoading,
@@ -29,6 +31,8 @@ export default function SuperRegulationMasterDataTablePages({
   previewImage,
 }: {
   regulations: RegulationInterface[];
+  handleDeleteRegulations: (id: number) => void;
+  isDeleteLoading: boolean;
   data: { title: string; file: string };
   setData: React.Dispatch<
     React.SetStateAction<{
@@ -71,6 +75,8 @@ export default function SuperRegulationMasterDataTablePages({
                   regulation={regulation}
                   index={i}
                   key={i}
+                  handleDeleteRegulations={handleDeleteRegulations}
+                  isDeleteLoading={isDeleteLoading}
                   data={data}
                   setData={setData}
                   isUpdateLoading={isUpdateLoading}

@@ -77,7 +77,7 @@ export default function TextEditorToogle() {
                 <button
                   type="button"
                   onClick={() => editor?.chain().focus().toggleBold().run()}
-                  className={`${editor?.isActive("bold") ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-xs md:text-sm`}>
+                  className={`${editor?.isActive("bold") ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-[14px] md:text-[16px]`}>
                   B
                 </button>
                 <button
@@ -85,13 +85,13 @@ export default function TextEditorToogle() {
                   onClick={() =>
                     editor?.chain().focus().toggleUnderline().run()
                   }
-                  className={`${editor?.isActive("underline") ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-xs md:text-sm`}>
+                  className={`${editor?.isActive("underline") ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-[14px] md:text-[16px]`}>
                   U
                 </button>
                 <button
                   type="button"
                   onClick={() => editor?.chain().focus().toggleItalic().run()}
-                  className={`${editor?.isActive("italic") ? "is-active" : ""} border border-line-20 rounded-lg px-4 text-xs md:text-sm`}>
+                  className={`${editor?.isActive("italic") ? "is-active" : ""} border border-line-20 rounded-lg px-4 text-[14px] md:text-[16px]`}>
                   I
                 </button>
               </div>
@@ -200,7 +200,7 @@ export default function TextEditorToogle() {
                                   .run()
                               }
                               className={`
-                  ${editor?.isActive("heading", { level: 1 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 p-2 text-xs md:text-sm
+                  ${editor?.isActive("heading", { level: 1 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 p-2 text-[14px] md:text-[16px]
                 `}>
                               H1
                             </button>
@@ -214,7 +214,7 @@ export default function TextEditorToogle() {
                                   .run()
                               }
                               className={`
-                  ${editor?.isActive("heading", { level: 2 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
+                  ${editor?.isActive("heading", { level: 2 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-[14px] md:text-[16px]
                 `}>
                               H2
                             </button>
@@ -228,7 +228,7 @@ export default function TextEditorToogle() {
                                   .run()
                               }
                               className={`
-                  ${editor?.isActive("heading", { level: 3 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
+                  ${editor?.isActive("heading", { level: 3 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-[14px] md:text-[16px]
                 `}>
                               H3
                             </button>
@@ -242,7 +242,7 @@ export default function TextEditorToogle() {
                                   .run()
                               }
                               className={`
-                  ${editor?.isActive("heading", { level: 4 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
+                  ${editor?.isActive("heading", { level: 4 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-[14px] md:text-[16px]
                 `}>
                               H4
                             </button>
@@ -256,7 +256,7 @@ export default function TextEditorToogle() {
                                   .run()
                               }
                               className={`
-                  ${editor?.isActive("heading", { level: 5 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
+                  ${editor?.isActive("heading", { level: 5 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-[14px] md:text-[16px]
                 `}>
                               H5
                             </button>
@@ -270,7 +270,7 @@ export default function TextEditorToogle() {
                                   .run()
                               }
                               className={`
-                  ${editor?.isActive("heading", { level: 6 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
+                  ${editor?.isActive("heading", { level: 6 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-[14px] md:text-[16px]
                 `}>
                               H6
                             </button>
@@ -362,7 +362,7 @@ export default function TextEditorToogle() {
                 <button
                   type="button"
                   onClick={() => editor?.chain().focus().toggleBold().run()}
-                  className={`${editor?.isActive("bold") ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-xs md:text-sm`}>
+                  className={`${editor?.isActive("bold") ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-[14px] md:text-[16px]`}>
                   B
                 </button>
 
@@ -371,14 +371,14 @@ export default function TextEditorToogle() {
                   onClick={() =>
                     editor?.chain().focus().toggleUnderline().run()
                   }
-                  className={`${editor?.isActive("underline") ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-xs md:text-sm`}>
+                  className={`${editor?.isActive("underline") ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-[14px] md:text-[16px]`}>
                   U
                 </button>
 
                 <button
                   type="button"
                   onClick={() => editor?.chain().focus().toggleItalic().run()}
-                  className={`${editor?.isActive("italic") ? "is-active" : ""} border border-line-20 rounded-lg px-4 text-xs md:text-sm`}>
+                  className={`${editor?.isActive("italic") ? "is-active" : ""} border border-line-20 rounded-lg px-4 text-[14px] md:text-[16px]`}>
                   I
                 </button>
               </div>
@@ -390,7 +390,7 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().setTextAlign("left").run()
                   }
                   className={`
-                  ${editor?.isActive({ textAlign: "left" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-xs md:text-sm`}>
+                  ${editor?.isActive({ textAlign: "left" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-[14px] md:text-[16px]`}>
                   <TextAlignLeft className="w-5 h-5 text-black-80" />
                 </button>
                 <button
@@ -399,7 +399,7 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().setTextAlign("center").run()
                   }
                   className={`
-                  ${editor?.isActive({ textAlign: "center" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-xs md:text-sm`}>
+                  ${editor?.isActive({ textAlign: "center" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-[14px] md:text-[16px]`}>
                   <TextAlignCenter className="w-5 h-5 text-black-80" />
                 </button>
                 <button
@@ -408,7 +408,7 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().setTextAlign("right").run()
                   }
                   className={`
-                  ${editor?.isActive({ textAlign: "right" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-xs md:text-sm`}>
+                  ${editor?.isActive({ textAlign: "right" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-[14px] md:text-[16px]`}>
                   <TextAlignRight className="w-5 h-5 text-black-80" />
                 </button>
                 <button
@@ -417,7 +417,7 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().setTextAlign("justify").run()
                   }
                   className={`
-                  ${editor?.isActive({ textAlign: "justify" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-xs md:text-sm`}>
+                  ${editor?.isActive({ textAlign: "justify" }) ? "is-active" : ""} border border-line-20 rounded-lg px-3 text-[14px] md:text-[16px]`}>
                   <TextAlignJustify className="w-5 h-5 text-black-80" />
                 </button>
               </div>
@@ -481,7 +481,7 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().toggleHeading({ level: 1 }).run()
                   }
                   className={`
-                  ${editor?.isActive("heading", { level: 1 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
+                  ${editor?.isActive("heading", { level: 1 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-[14px] md:text-[16px]
                 `}>
                   H1
                 </button>
@@ -491,7 +491,7 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().toggleHeading({ level: 2 }).run()
                   }
                   className={`
-                  ${editor?.isActive("heading", { level: 2 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
+                  ${editor?.isActive("heading", { level: 2 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-[14px] md:text-[16px]
                 `}>
                   H2
                 </button>
@@ -501,7 +501,7 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().toggleHeading({ level: 3 }).run()
                   }
                   className={`
-                  ${editor?.isActive("heading", { level: 3 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
+                  ${editor?.isActive("heading", { level: 3 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-[14px] md:text-[16px]
                 `}>
                   H3
                 </button>
@@ -511,7 +511,7 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().toggleHeading({ level: 4 }).run()
                   }
                   className={`
-                  ${editor?.isActive("heading", { level: 4 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
+                  ${editor?.isActive("heading", { level: 4 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-[14px] md:text-[16px]
                 `}>
                   H4
                 </button>
@@ -521,7 +521,7 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().toggleHeading({ level: 5 }).run()
                   }
                   className={`
-                  ${editor?.isActive("heading", { level: 5 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
+                  ${editor?.isActive("heading", { level: 5 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-[14px] md:text-[16px]
                 `}>
                   H5
                 </button>
@@ -531,7 +531,7 @@ export default function TextEditorToogle() {
                     editor?.chain().focus().toggleHeading({ level: 6 }).run()
                   }
                   className={`
-                  ${editor?.isActive("heading", { level: 6 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm
+                  ${editor?.isActive("heading", { level: 6 }) ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-[14px] md:text-[16px]
                 `}>
                   H6
                 </button>
@@ -543,7 +543,7 @@ export default function TextEditorToogle() {
                   onClick={() =>
                     editor?.chain().focus().toggleBulletList().run()
                   }
-                  className={`${editor?.isActive("bulletList") ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm`}>
+                  className={`${editor?.isActive("bulletList") ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-[14px] md:text-[16px]`}>
                   <List className="w-5 h-5 text-black-80" />
                 </button>
                 <button
@@ -551,7 +551,7 @@ export default function TextEditorToogle() {
                   onClick={() =>
                     editor?.chain().focus().toggleOrderedList().run()
                   }
-                  className={`${editor?.isActive("orderedList") ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-xs md:text-sm`}>
+                  className={`${editor?.isActive("orderedList") ? "is-active" : ""} border border-line-20 rounded-lg px-2 text-[14px] md:text-[16px]`}>
                   <ListOrdered className="w-5 h-5 text-black-80" />
                 </button>
               </div>
