@@ -114,6 +114,8 @@ export default function AreasScreen() {
     try {
       const response = await postAreas(data);
 
+      console.log(response, "ini response");
+
       if (response.status === 201) {
         setData({
           nama: "",
@@ -255,7 +257,7 @@ export default function AreasScreen() {
                   className="w-full">
                   <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
-                    Tambah Bidang
+                    Tambah
                   </div>
                 </DrawerTrigger>
                 <DrawerContent className="bg-line-10">
@@ -387,7 +389,7 @@ export default function AreasScreen() {
                   className="w-full">
                   <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
-                    Tambah Bidang
+                    Tambah
                   </div>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">

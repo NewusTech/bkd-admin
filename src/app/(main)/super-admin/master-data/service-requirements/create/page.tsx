@@ -152,20 +152,20 @@ export default function ServiceRequiremntsCreate() {
             <Select
               value={serviceId?.toString() || ""}
               onValueChange={
-                (value: any) => setServiceId(Number(value)) // Set serviceId ketika layanan dipilih
+                (value) => setServiceId(Number(value)) // Set serviceId ketika layanan dipilih
               }>
               <SelectTrigger
-                className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                className={`w-full text-[14px] md:text-[16px] gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                 <SelectValue
                   placeholder="Pilih Layanan"
-                  className="text-black-80 w-full"
+                  className="text-black-80 w-full text-[14px] md:text-[16px]"
                 />
               </SelectTrigger>
               <SelectContent className="bg-line-10">
                 {services.map((service) => (
                   <SelectItem
                     key={service.id}
-                    className="w-full px-4 pl-8"
+                    className="w-full px-4 pl-8 text-[14px] md:text-[16px]"
                     value={service.id.toString()}>
                     {service.nama}
                   </SelectItem>
