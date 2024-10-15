@@ -160,14 +160,14 @@ export default function ServiceRequiremnts() {
           <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
             <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
               <div className="w-full flex flex-row justify-between gap-x-5">
-                <div className="w-[80%] border border-b rounded-lg z-50">
+                {/* <div className="w-[80%] border border-b rounded-lg z-50">
                   <SearchPages
                     search={search}
                     change={(e: any) => setSearch(e.target.value)}
                     placeholder="Pencarian"
                   />
-                </div>
-                <div className="w-[15%]">
+                </div> */}
+                <div className="w-fit flex justify-end m-auto">
                   <div className="flex justify-end items-center w-full">
                     <Link
                       href="/super-admin/master-data/service-requirements/create"
