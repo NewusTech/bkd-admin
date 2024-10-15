@@ -68,9 +68,9 @@ export default function SuperStructureOrganizationMainMasterDataCard({
 
 
   return (
-    <TableRow className="border border-line-20">
-      <TableCell className="text-left">{index + 1}</TableCell>
-      <TableCell className="text-left">{organization.nama}</TableCell>
+    <TableRow className="border border-line-20 text-[14px]">
+      <TableCell className="text-center">{index + 1}</TableCell>
+      <TableCell className="text-center">{organization.nama}</TableCell>
       <TableCell className="text-left">{organization.jabatan}</TableCell>
       {/* <TableCell className="text-left">{item?.image}</TableCell> */}
       <TableCell className="text-left flex items-center w-full">
@@ -171,7 +171,7 @@ export default function SuperStructureOrganizationMainMasterDataCard({
               onClick={() =>
                 handleDeleteStructureOrganizationMain(organization?.select_id)
               }
-              className="w-fit rounded-lg bg-error-60 hover:bg-error-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 flex m-auto justify-center">
+              className="w-fit rounded-lg bg-error-60 hover:bg-error-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 flex m-auto justify-center text-[14px]">
               {isDeleteLoading ? (
                 <Loader className="animate-spin" />
               ) : isDeleteLoading ? (

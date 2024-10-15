@@ -288,14 +288,14 @@ export default function ServicesScreen() {
                     setIsDrawerOpen(true);
                   }}
                   className="w-full">
-                  <div className="w-full h-full text-[14px] md:text-[16px] bg-primary-40 hover:bg-primary-70 flex items-center justify-center text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full h-full text-[14px] bg-primary-40 hover:bg-primary-70 flex items-center justify-center text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah
                   </div>
                 </DrawerTrigger>
                 <DrawerContent className="bg-white">
                   <DrawerHeader>
-                    <DrawerTitle>Master Data Layanan</DrawerTitle>
+                    <DrawerTitle className="text-[16px]">Master Data Layanan</DrawerTitle>
 
                     <form
                       onSubmit={handleCreateService}
@@ -303,14 +303,14 @@ export default function ServicesScreen() {
                       <DrawerDescription>
                         <div className="text-center mb-4">
                           <TypingEffect
-                            className="text-[14px] md:text-[16px]"
+                            className="text-[14px]"
                             text={["Tambah data yang diperlukan...."]}
                           />
                         </div>
                       </DrawerDescription>
-                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px] text-left">
+                      <div className="w-full flex flex-col gap-y-5 verticalScroll">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] text-left">
                             Nama Layanan
                           </Label>
                           <Input
@@ -330,7 +330,7 @@ export default function ServicesScreen() {
                             className="focus-within:text-primary-70 font-normal text-[14px] text-left">
                             Syarat Layanan
                           </Label>
-                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[14px] md:text-[16px]">
+                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[14px]">
                             <EditorProvide
                               content={data.syarat}
                               onChange={(e: any) =>
@@ -347,7 +347,7 @@ export default function ServicesScreen() {
                           <div className="w-full border border-line-20 rounded-lg">
                             <Select onValueChange={handleSelectChange}>
                               <SelectTrigger
-                                className={`w-full text-[14px] md:text-[16px] gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                className={`w-full text-[14px] gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                                 <SelectValue
                                   placeholder="Pilih Bidang"
                                   className="text-black-80 w-full text-[14px]"
@@ -379,7 +379,7 @@ export default function ServicesScreen() {
                           <Label className="focus-within:text-primary-70 font-normal text-[14px] text-left">
                             Deskripsi Bidang
                           </Label>
-                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[14px] md:text-[16px]">
+                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[14px]">
                             <EditorProvide
                               content={data.desc}
                               onChange={(e: any) =>
@@ -410,7 +410,7 @@ export default function ServicesScreen() {
                             className="focus-within:text-primary-70 font-normal text-[14px] text-left">
                             Ketentuan
                           </Label>
-                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[14px] md:text-[16px]">
+                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[14px]">
                             <EditorProvide
                               content={data.ketentuan}
                               onChange={(e: any) =>
@@ -426,7 +426,7 @@ export default function ServicesScreen() {
                             className="focus-within:text-primary-70 font-normal text-[14px] text-left">
                             Langkah
                           </Label>
-                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[14px] md:text-[16px]">
+                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[14px]">
                             <EditorProvide
                               content={data.langkah}
                               onChange={(e: any) =>
@@ -478,28 +478,28 @@ export default function ServicesScreen() {
                 <AlertDialogTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full h-full text-[14px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full h-full text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah
                   </div>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
                   <AlertDialogHeader className="flex flex-col">
-                    <AlertDialogTitle className="text-center">
+                    <AlertDialogTitle className="text-center text-[16px]">
                       Master Data Layanan
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
                       <TypingEffect
-                        className="custom-class text-[14px] md:text-[16px]"
+                        className="custom-class text-[16px]"
                         text={["Input data yang diperlukan"]}
                       />
                     </AlertDialogDescription>
                     <form
                       onSubmit={handleCreateService}
                       className="w-full flex flex-col gap-y-3 max-h-[500px]">
-                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                      <div className="w-full flex flex-col gap-y-5 verticalScroll">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                             Nama Layanan
                           </Label>
                           <Input
@@ -508,7 +508,7 @@ export default function ServicesScreen() {
                             value={data.nama}
                             onChange={handleChange}
                             type="text"
-                            className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan Nama Layanan"
                           />
                         </div>
@@ -536,10 +536,10 @@ export default function ServicesScreen() {
                           <div className="w-full border border-line-20 rounded-lg">
                             <Select onValueChange={handleSelectChange}>
                               <SelectTrigger
-                                className={`w-full text-[14px] md:text-[16px] gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                className={`w-full text-[16px] gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                                 <SelectValue
                                   placeholder="Pilih Bidang"
-                                  className="text-black-80 w-full text-[14px] md:text-[16px]"
+                                  className="text-black-80 w-full text-[16px]"
                                 />
                               </SelectTrigger>
                               <SelectContent className="bg-line-10">
@@ -588,7 +588,7 @@ export default function ServicesScreen() {
                             value={data.penanggung_jawab}
                             onChange={handleChange}
                             type="text"
-                            className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan Nama Penanggung Jawab"
                           />
                         </div>

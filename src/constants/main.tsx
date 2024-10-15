@@ -453,12 +453,12 @@ export const userComplaintStatus = [
 
 export const staffStatus = [
   {
-    id: 1,
+    id: 0,
     value: "Tidak Aktif",
     keys: 0,
   },
   {
-    id: 2,
+    id: 1,
     value: "Aktif",
     keys: 1,
   },

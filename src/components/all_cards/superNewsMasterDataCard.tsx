@@ -99,16 +99,16 @@ export default function SuperNewsMasterDataCard({
         <div className="w-full">
           <AlertDialog>
             <AlertDialogTrigger className="w-full">
-              <div className="w-full text-[14px] md:text-[16px] flex items-center justify-center h-10 text-black-80 hover:underline hover:text-primary-40 rounded-lg">
+              <div className="w-full text-[14px] flex items-center justify-center h-10 text-black-80 hover:underline hover:text-primary-40 rounded-lg">
                 Lihat Foto Berita
               </div>
             </AlertDialogTrigger>
-            <AlertDialogContent className="w-full max-w-full bg-line-10 rounded-lg shadow-md">
+            <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
               <AlertDialogHeader className="flex flex-col max-h-[500px]">
-                <AlertDialogTitle className="text-center">
+                <AlertDialogTitle className="text-center text-[16px]">
                   Master Data
                 </AlertDialogTitle>
-                <AlertDialogDescription className="text-center">
+                <AlertDialogDescription className="text-center text-[14px]">
                   Berita
                 </AlertDialogDescription>
                 {item && (
@@ -118,13 +118,14 @@ export default function SuperNewsMasterDataCard({
                       alt="Slider"
                       width={1000}
                       height={1000}
-                      className="w-10/12 h-5/6"
+                      className="w-10/12 h-96"
+                    // className="w-10/12 h-5/6"
                     />
                   </div>
                 )}
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel className="hover:bg-line-70 hover:text-line-10 text-center w-fit flex m-auto">
+                <AlertDialogCancel className="hover:bg-line-70 hover:text-line-10 text-center w-fit flex m-auto text-[16px]">
                   Cancel
                 </AlertDialogCancel>
               </AlertDialogFooter>
@@ -145,27 +146,27 @@ export default function SuperNewsMasterDataCard({
                   setIsDialogEditOpen(true);
                 }}
                 className="w-full">
-                <div className="w-full text-[14px] md:text-[16px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                <div className="w-full text-[14px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                   Edit
                 </div>
               </AlertDialogTrigger>
               <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
                 <AlertDialogHeader className="flex flex-col">
-                  <AlertDialogTitle className="text-center">
+                  <AlertDialogTitle className="text-center text-[16px]">
                     Master Data Berita
                   </AlertDialogTitle>
                   <AlertDialogDescription className="text-center">
-                    <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
+                    <TypingEffect className="custom-class text-[14px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                   </AlertDialogDescription>
                   <form
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                       handleUpdateNews(e, item?.slug)
                     }
                     className="w-full flex flex-col gap-y-3 max-h-[500px]">
-                    <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                    <div className="w-full flex flex-col gap-y-5 verticalScroll">
 
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-sm">
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                        <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                           Judul Berita
                         </Label>
                         <Input
@@ -179,16 +180,16 @@ export default function SuperNewsMasterDataCard({
                             })
                           }
                           type="text"
-                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[16px]"
                           placeholder="Masukkan Judul Berita"
                         />
                       </div>
 
-                      <div className="w-full flex flex-col gap-y-2">
-                        <Label className="text-[14px] md:text-[16px] text-black-70 font-normal">
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                        <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                           Deskripsi Berita
                         </Label>
-                        <div className="w-full h-full border border-line-20 rounded-lg">
+                        <div className="w-full h-full border border-line-20 rounded-lg text-[16px]">
                           <EditorProvide
                             content={data.desc}
                             onChange={(e: any) => setData({ ...data, desc: e })}
@@ -196,8 +197,8 @@ export default function SuperNewsMasterDataCard({
                         </div>
                       </div>
 
-                      <div className="flex flex-col w-full">
-                        <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                        <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                           Foto Berita
                         </Label>
                         <div className="flex flex-col md:flex-row w-full">
@@ -219,7 +220,7 @@ export default function SuperNewsMasterDataCard({
                               />
                               <label
                                 htmlFor="file-input-image"
-                                className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
                                 Drag and drop file here or click to select file
                               </label>
                             </>
@@ -250,11 +251,11 @@ export default function SuperNewsMasterDataCard({
                     </div>
 
                     <div className="w-full flex flex-row justify-center md:justify-between items-center gap-x-5">
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogCancel className="text-[16px]">Cancel</AlertDialogCancel>
                       <Button
                         type="submit"
                         disabled={isUpdateLoading ? true : false}
-                        className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                        className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 text-[16px]">
                         {isUpdateLoading ? (
                           <Loader className="animate-spin" />
                         ) : (
@@ -273,7 +274,7 @@ export default function SuperNewsMasterDataCard({
             <Button
               disabled={isDeleteLoading ? true : false}
               onClick={() => handleDeleteNews(item?.slug)}
-              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 text-[14px]">
               {isDeleteLoading ? (
                 <Loader className="animate-spin" />
               ) : isDeleteLoading ? (

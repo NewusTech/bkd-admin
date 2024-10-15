@@ -171,7 +171,7 @@ export default function ServiceRequiremnts() {
                   <div className="flex justify-end items-center w-full">
                     <Link
                       href="/super-admin/master-data/service-requirements/create"
-                      className="bg-primary-40 w-full group h-11 text-[14px] md:text-[16px] px-3 rounded-lg text-white hover:bg-primary-70 border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300 py-2">
+                      className="bg-primary-40 w-full group h-11 text-[16px] px-3 rounded-lg text-white hover:bg-primary-70 border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300 py-2">
                       <AddIcon className="w-4 h-4 text-line-10" />
                       Tambah
                     </Link>
@@ -218,7 +218,7 @@ export default function ServiceRequiremnts() {
                       className="w-full text-[14px] md:text-[16px] bg-primary-40 flex flex-row items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 py-2 rounded-lg border border-primary-40 text-center font-medium gap-x-3 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
                       href="/super-admin/master-data/service-requirements/create">
                       <AddIcon className="w-4 h-4 text-line-10" />
-                      Tambah Persyaratan
+                      Tambah
                     </Link>
                   </div>
                 </div>

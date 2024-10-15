@@ -57,10 +57,10 @@ export default function SuperRegulationMasterDataTablePages({
 }) {
   return (
     <>
-      <Table className="w-full border border-line-20">
+      <Table className="w-full border border-line-20 text-[14px]">
         <TableHeader className="bg-primary-40 text-line-10">
           <TableRow className="w-full">
-            <TableHead className="">No.</TableHead>
+            <TableHead className="text-center">No.</TableHead>
             <TableHead className="text-center w-3/12">Judul Regulasi</TableHead>
             <TableHead className="text-center">File</TableHead>
             <TableHead className="text-center w-3/12">Aksi</TableHead>

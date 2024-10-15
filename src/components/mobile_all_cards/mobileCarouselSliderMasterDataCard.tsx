@@ -99,7 +99,7 @@ export default function MobileCarouselSliderMasterDataCard({
   return (
     <section className="w-full bg-line-10 rounded-lg shadow-md flex flex-col gap-y-7 p-4 mb-4">
       <div className="w-full flex justify-end items-end">
-        <div className="w-full text-xs md:text-sm flex justify-end">
+        <div className="w-full text-[14px] flex justify-end">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -110,7 +110,7 @@ export default function MobileCarouselSliderMasterDataCard({
             </DropdownMenuTrigger>
             <DropdownMenuContent className="transition-all duration-300 ease-in-out opacity-1 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 bg-white border border-gray-300 shadow-2xl rounded-md w-fit mr-6">
               <DropdownMenuLabel className="font-semibold text-primary text-sm w-full shadow-md">
-                Actions
+                Aksi
               </DropdownMenuLabel>
               {/* <hr className="border border-primary transition-all ease-in-out animate-pulse ml-2 mr-2" /> */}
               <div className="h-1 w-full bg-gradient-to-r from-transparent via-primary to-transparent transition-all animate-pulse"></div>
@@ -124,12 +124,12 @@ export default function MobileCarouselSliderMasterDataCard({
                             handleSetCarousel();
                             setIsDialogEditOpen(true);
                           }}
-                          className="h-10 text-xs md:text-sm rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-full">
+                          className="h-10 text-[14px] rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-full">
                           Edit
                         </DrawerTrigger>
                         <DrawerContent className="bg-white">
                           <DrawerHeader>
-                            <DrawerTitle className="text-center">
+                            <DrawerTitle className="text-center text-[16px]">
                               Master Data Berita
                             </DrawerTitle>
                             <form
@@ -138,10 +138,10 @@ export default function MobileCarouselSliderMasterDataCard({
                               }
                               className="w-full flex flex-col gap-y-3 max-h-full h-[700px]">
                               <DrawerDescription className="text-center">
-                                <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
+                                <TypingEffect className="custom-class text-[14px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                               </DrawerDescription>
-                              <div className="flex flex-col w-full">
-                                <Label className="text-neutral-700 font-normal mb-2 text-xs md:text-sm text-left">
+                              <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                                <Label className="text-neutral-700 font-normal mb-2 text-[14px] text-left">
                                   Slider
                                 </Label>
 
@@ -195,13 +195,13 @@ export default function MobileCarouselSliderMasterDataCard({
                               </div>
                               <div className="flex gap-4 justify-between">
                                 <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-xs">
-                                  <DrawerDescription className="text-xs md:text-sm">Batal</DrawerDescription>
+                                  <DrawerDescription className="text-[14px]">Batal</DrawerDescription>
                                 </DrawerClose>
                                 <Button
                                   title="Simpan Data"
                                   type="submit"
                                   disabled={isUpdateLoading ? true : false}
-                                  className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                                  className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                                   {isUpdateLoading ? (
                                     <Loader className="animate-spin" />
                                   ) : (
@@ -219,7 +219,7 @@ export default function MobileCarouselSliderMasterDataCard({
                     <Button
                       disabled={isDeleteLoading ? true : false}
                       onClick={() => handleDeleteSlider(carousel?.id)}
-                      className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 text-xs md:text-sm">
+                      className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 text-[14px]">
                       {isDeleteLoading ? (
                         <Loader className="animate-spin" />
                       ) : isDeleteLoading ? (
@@ -238,31 +238,31 @@ export default function MobileCarouselSliderMasterDataCard({
       </div>
 
       <div className="w-full grid grid-cols-3">
-        <div className="w-full text-xs md:text-sm text-left">No.</div>
+        <div className="w-full text-[14px] text-left">No.</div>
 
-        <div className="w-full col-span-2 text-xs md:text-sm">
+        <div className="w-full col-span-2 text-[14px]">
           : {index + 1}
         </div>
       </div>
 
       <div className="w-full grid grid-cols-3">
-        <div className="w-full text-xs md:text-sm text-left">Slider</div>
+        <div className="w-full text-[14px] text-left">Slider</div>
 
-        <div className="w-full gap-x-2 flex flex-row col-span-2 text-xs md:text-sm">
+        <div className="w-full gap-x-2 flex flex-row col-span-2 text-[14px]">
           :{" "}
           <div className="w-full">
             <AlertDialog>
               <AlertDialogTrigger className="w-full">
-                <div className="w-full text-sm flex h-10 text-black-80 hover:underline hover:text-primary-40 rounded-lg">
+                <div className="w-full text-[14px] flex h-10 text-black-80 hover:underline hover:text-primary-40 rounded-lg">
                   Lihat Slider
                 </div>
               </AlertDialogTrigger>
               <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
                 <AlertDialogHeader className="flex flex-col max-h-[500px]">
-                  <AlertDialogTitle className="text-center">
+                  <AlertDialogTitle className="text-center text-[16px]">
                     Master Data
                   </AlertDialogTitle>
-                  <AlertDialogDescription className="text-center">
+                  <AlertDialogDescription className="text-center text-[14px]">
                     Carousel Slider
                   </AlertDialogDescription>
 
@@ -279,7 +279,7 @@ export default function MobileCarouselSliderMasterDataCard({
                   )}
                 </AlertDialogHeader>
                 <AlertDialogFooter className="w-full flex flex-row justify-center">
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogCancel className="text-[14px]">Cancel</AlertDialogCancel>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>

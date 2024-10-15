@@ -267,7 +267,7 @@ export default function AreasScreen() {
                     <form
                       onSubmit={handleCreateAreas}
                       className="w-full flex flex-col gap-y-3 max-h-full">
-                      <div className="text-center text-[14px] mb-4">
+                      <div className="text-center mb-4">
                         <TypingEffect
                           className="text-[14px]"
                           text={["Tambah data yang diperlukan...."]}
@@ -392,13 +392,13 @@ export default function AreasScreen() {
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
                   <div className="flex flex-col gap-y-3">
-                    <AlertDialogTitle className="text-center">
+                    <AlertDialogTitle className="text-center text-[18px]">
                       Master Data Bidang
                     </AlertDialogTitle>
 
                     <div className="flex w-full justify-center">
                       <TypingEffect
-                        className="custom-class text-[14px] md:text-[16px]"
+                        className="custom-class text-[16px]"
                         text={["Input data yang diperlukan"]}
                       />
                     </div>

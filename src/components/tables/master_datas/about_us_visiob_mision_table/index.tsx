@@ -97,13 +97,13 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                   <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
                     <AlertDialogHeader className="flex flex-col">
                       <AlertDialogTitle className="text-center">
-                        <AlertDialogDescription className="text-center text-[14px] md:text-[16px]">
+                        <AlertDialogDescription className="text-center text-[16px]">
                           Master Data Visi Misi
                         </AlertDialogDescription>
                       </AlertDialogTitle>
 
                       <TypingEffect
-                        className="custom-class text-center text-[14px] md:text-[16px]"
+                        className="custom-class text-center text-[14px]"
                         speed={125}
                         deleteSpeed={50}
                         text={["Edit data yang diperlukan"]}
@@ -114,11 +114,11 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                           handleUpdateAbout(e, abouts.id)
                         }
                         className="w-full flex flex-col gap-y-3 max-h-[500px]">
-                        <div className="w-full flex flex-col gap-y-3 verticalScroll">
-                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <div className="w-full flex flex-col gap-y-5 verticalScroll">
+                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                             <Label
                               htmlFor="kontak"
-                              className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                              className="focus-within:text-primary-70 font-normal text-[16px]">
                               Kontak
                             </Label>
 
@@ -130,16 +130,16 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                                 e: React.ChangeEvent<HTMLInputElement>
                               ) => setData({ ...data, kontak: e.target.value })}
                               type="text"
-                              className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px] md:text-[16px]"
+                              className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[16px]"
                               placeholder="Masukkan Misi BKD"
                             />
                           </div>
-                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                            <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                               Tentang BKD
                             </Label>
 
-                            <div className="w-full h-full border border-line-20 rounded-lg text-left">
+                            <div className="w-full h-full border border-line-20 rounded-lg text-left text-[16px]">
                               <EditorProvide
                                 content={data.about_bkd}
                                 onChange={(e: any) =>
@@ -148,12 +148,12 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                               />
                             </div>
                           </div>
-                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                            <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                               Visi
                             </Label>
 
-                            <div className="w-full h-full border border-line-20 rounded-lg text-left">
+                            <div className="w-full h-full border border-line-20 rounded-lg text-left text-[16px]">
                               <EditorProvide
                                 content={data.visi}
                                 onChange={(e: any) =>
@@ -162,8 +162,8 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                               />
                             </div>
                           </div>
-                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                            <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                               Misi
                             </Label>
 
@@ -174,20 +174,20 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                               onChange={(
                                 e: React.ChangeEvent<HTMLTextAreaElement>
                               ) => setData({ ...data, misi: e.target.value })}
-                              className="w-full rounded-lg h-[100px] border border-line-20 md:h-[122px] text-[14px] md:text-[16px] placeholder:opacity-[70%]"
+                              className="w-full rounded-lg h-[100px] border border-line-20 md:h-[122px] placeholder:opacity-[70%] text-[16px]"
                             />
                           </div>
                         </div>
 
                         <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                          <AlertDialogCancel className="text-[14px] md:text-[16px]">
+                          <AlertDialogCancel className="text-[16px]">
                             Cancel
                           </AlertDialogCancel>
 
                           <Button
                             type="submit"
                             disabled={isUpdateLoading ? true : false}
-                            className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                            className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 text-[16px]">
                             {isUpdateLoading ? (
                               <Loader className="animate-spin" />
                             ) : (
@@ -209,20 +209,20 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                       setIsDialogEditOpen(true);
                     }}
                     className="w-full min-h-[40px] md:min-h-[60px] text-line-10 text-[13px] md:text-lg md:bg-primary-40 md:hover:bg-primary-70 rounded-lg">
-                    <div className="w-full text-[14px] md:text-[16px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                    <div className="w-full bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 text-[14px]">
                       Edit
                     </div>
                   </DrawerTrigger>
                   <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-5/6 px-3 pb-6">
                     <div className="w-full flex flex-col gap-y-3 verticalScroll">
-                      <DrawerTitle className="text-center text-[16px] md:text-[18px]">
+                      <DrawerTitle className="text-center text-[16px]">
                         <DrawerDescription className="text-center">
                           Master Data Tentang BKD
                         </DrawerDescription>
                       </DrawerTitle>
 
                       <TypingEffect
-                        className="custom-class text-[14px] md:text-[16px]"
+                        className="custom-class text-[14px]"
                         speed={125}
                         deleteSpeed={50}
                         text={["Edit data yang diperlukan"]}
@@ -233,11 +233,11 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                           handleUpdateAbout(e, abouts.id)
                         }
                         className="w-full flex flex-col gap-y-5 verticalScroll">
-                        <div className="w-full flex flex-col gap-y-3 verticalScroll">
-                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                        <div className="w-full flex flex-col gap-y-5 verticalScroll">
+                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                             <Label
                               htmlFor="kontak"
-                              className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                              className="focus-within:text-primary-70 font-normal text-[14px]">
                               Kontak
                             </Label>
 
@@ -249,16 +249,16 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                                 e: React.ChangeEvent<HTMLInputElement>
                               ) => setData({ ...data, kontak: e.target.value })}
                               type="text"
-                              className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                              className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
                               placeholder="Masukkan Misi BKD"
                             />
                           </div>
-                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                            <Label className="focus-within:text-primary-70 font-normal text-[14px]">
                               Tentang BKD
                             </Label>
 
-                            <div className="w-full h-full border border-line-20 rounded-lg text-left">
+                            <div className="w-full h-full border border-line-20 rounded-lg text-left text-[14px]">
                               <EditorProvide
                                 content={data.about_bkd}
                                 onChange={(e: any) =>
@@ -267,8 +267,8 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                               />
                             </div>
                           </div>
-                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                            <Label className="focus-within:text-primary-70 font-normal text-[14px]">
                               Visi
                             </Label>
 
@@ -281,8 +281,8 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                               />
                             </div>
                           </div>
-                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                            <Label className="focus-within:text-primary-70 font-normal text-[14px]">
                               Misi
                             </Label>
 
@@ -293,21 +293,21 @@ export default function SuperAboutUsVisionMisionMasterDataTablePages({
                               onChange={(
                                 e: React.ChangeEvent<HTMLTextAreaElement>
                               ) => setData({ ...data, misi: e.target.value })}
-                              className="w-full rounded-lg h-[200px] border border-line-20 md:h-[122px] text-[14px] md:text-[16px] placeholder:opacity-[70%]"
+                              className="w-full rounded-lg h-[200px] border border-line-20 md:h-[122px] placeholder:opacity-[70%] text-[14px]"
                             />
                           </div>
                         </div>
 
                         <div className="w-full flex flex-row justify-end items-center gap-x-5">
                           <DrawerClose className="w-full rounded-lg border border-line-20 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
-                            <DrawerDescription className="text-[14px] md:text-[16px]">
+                            <DrawerDescription className="text-[14px]">
                               Batal
                             </DrawerDescription>
                           </DrawerClose>
                           <Button
                             type="submit"
                             disabled={isUpdateLoading ? true : false}
-                            className="bg-primary-40 w-full hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                            className="bg-primary-40 w-full hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 text-[14px]">
                             {isUpdateLoading ? (
                               <Loader className="animate-spin" />
                             ) : (

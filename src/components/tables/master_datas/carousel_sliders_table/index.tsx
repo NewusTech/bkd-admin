@@ -51,7 +51,7 @@ export default function SuperCarouselSliderMasterDataTablePages({
 }) {
   return (
     <>
-      <Table className="w-full border border-line-20">
+      <Table className="w-full border border-line-20 text-[14px]">
         <TableHeader className="bg-primary-40 text-line-10">
           <TableRow className="w-full">
             <TableHead className="text-center">No.</TableHead>

@@ -562,14 +562,18 @@ export const updateLogo = async (id: number, data: any) => {
 export const getStructureOrganizations = async (
   page?: number,
   limit?: number,
-  search?: string
+  search?: string,
+  status?: number
 ) => {
+  const token = Cookies.get("Authorization");
+
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/bkd/struktur/get?page=${page}&limit=${limit}&search=${search}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/bkd/struktur/get?page=${page}&limit=${limit}&search=${search}&${status != undefined && `status=${status}`}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       cache: "no-store",
     }
@@ -656,9 +660,9 @@ export const updateStructureOrganizations = async (data: any, slug: string) => {
 };
 
 // get faqs
-export const getFaqs = async (limit: number) => {
+export const getFaqs = async (page: number, limit: number, search: string) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/faq/get?limit=${limit}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/faq/get?page=${page}&limit=${limit}&search=${search}`,
     {
       method: "GET",
       headers: {

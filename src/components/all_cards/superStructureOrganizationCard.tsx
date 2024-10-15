@@ -78,9 +78,9 @@ export default function SuperStructureOrganizationMasterDataCard({
   };
 
   return (
-    <TableRow className="border border-line-20">
-      <TableCell className="text-left">{index + 1}</TableCell>
-      <TableCell className="text-left">{organization.nama}</TableCell>
+    <TableRow className="border border-line-20 text-[14px]">
+      <TableCell className="text-center">{index + 1}</TableCell>
+      <TableCell className="text-center">{organization.nama}</TableCell>
       <TableCell className="text-left">{organization.jabatan}</TableCell>
       {/* <TableCell className="text-left">{item?.image}</TableCell> */}
       <TableCell className="text-left flex items-center w-full">
@@ -95,17 +95,17 @@ export default function SuperStructureOrganizationMasterDataCard({
                   setIsDialogEditOpen(true);
                 }}
                 className="w-full">
-                <div className="w-full text-[14px] md:text-[16px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                <div className="w-full text-[14px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                   Edit
                 </div>
               </AlertDialogTrigger>
               <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
                 <AlertDialogHeader className="flex flex-col">
-                  <AlertDialogTitle className="text-center">
+                  <AlertDialogTitle className="text-center text-[16px]">
                     Master Data Struktur Kegiatan
                   </AlertDialogTitle>
                   <AlertDialogDescription className="text-center">
-                    <TypingEffect className="custom-class text-[14px] md:text-[16px] text-xs" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
+                    <TypingEffect className="custom-class text-[14px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                   </AlertDialogDescription>
 
                   <form
@@ -113,10 +113,10 @@ export default function SuperStructureOrganizationMasterDataCard({
                       handleUpdateStructureOrganization(e, organization?.slug)
                     }
                     className="w-full flex flex-col gap-y-3 max-h-[500px]">
-                    <div className="w-full flex flex-col gap-y-3 verticalScroll">
+                    <div className="w-full flex flex-col gap-y-5 verticalScroll">
 
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                        <Label className="focus-within:text-primary-70 font-normal text-[14px]">
                           Nama Lengkap
                         </Label>
                         <Input
@@ -130,13 +130,13 @@ export default function SuperStructureOrganizationMasterDataCard({
                             })
                           }
                           type="text"
-                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
                           placeholder="Masukkan Judul Foto Kegiatan"
                         />
                       </div>
 
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                        <Label className="focus-within:text-primary-70 font-normal text-[14px]">
                           Jabatan
                         </Label>
                         <Input
@@ -150,13 +150,13 @@ export default function SuperStructureOrganizationMasterDataCard({
                             })
                           }
                           type="text"
-                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
                           placeholder="Masukkan Judul Foto Kegiatan"
                         />
                       </div>
 
-                      <div className="flex flex-col w-full">
-                        <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                        <Label className="text-[14px] text-neutral-700 font-normal mb-2">
                           Foto Diri
                         </Label>
                         <div className="flex flex-col md:flex-row w-full">
@@ -178,7 +178,7 @@ export default function SuperStructureOrganizationMasterDataCard({
                               />
                               <label
                                 htmlFor="file-input-image"
-                                className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                className="text-[14px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
                                 Drag and drop file here or click to select file
                               </label>
                             </>
@@ -209,11 +209,11 @@ export default function SuperStructureOrganizationMasterDataCard({
                     </div>
 
                     <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogCancel className="text-[14px]">Cancel</AlertDialogCancel>
                       <Button
                         type="submit"
                         disabled={isUpdateLoading ? true : false}
-                        className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                        className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 text-[14px]">
                         {isUpdateLoading ? (
                           <Loader className="animate-spin" />
                         ) : (
@@ -234,7 +234,7 @@ export default function SuperStructureOrganizationMasterDataCard({
               onClick={() =>
                 handleDeleteStructureOrganization(organization?.slug)
               }
-              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 text-[14px]">
               {isDeleteLoading ? (
                 <Loader className="animate-spin" />
               ) : isDeleteLoading ? (
