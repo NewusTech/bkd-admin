@@ -40,6 +40,7 @@ import {
   getAllGrade,
   getApplicationUserHistories,
   getAreas,
+  getDownloadStaffBkdPrint,
   getService,
   getStructureOrganizations,
   postStructureOrganizations,
@@ -78,6 +79,7 @@ export default function LeadBkdStaffScreen() {
   const [isLoadingCreate, setIsLoadingCreate] = useState(false);
   const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+  const [isLoadingDownload, setIsLoadingDownload] = useState(false);
   const [isDialogOpenCreate, setIsDialogOpenCreate] = useState(false);
   const [isDialogOpenUpdate, setIsDialogOpenUpdate] = useState(false);
   const [isDialogOpenDetail, setIsDialogOpenDetail] = useState(false);
@@ -118,10 +120,15 @@ export default function LeadBkdStaffScreen() {
     page: number,
     limit: number,
     search: string,
-    status?: number,
+    status?: number
   ) => {
     try {
-      const response = await getStructureOrganizations(page, limit, search, status);
+      const response = await getStructureOrganizations(
+        page,
+        limit,
+        search,
+        status
+      );
 
       setOrganizations(response.data);
       setPagination((prev) => ({
@@ -140,7 +147,6 @@ export default function LeadBkdStaffScreen() {
   useEffect(() => {
     fetchStructureOrganization(1, 5, debounceSearch, status);
   }, [debounceSearch, status]);
-
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
@@ -243,7 +249,7 @@ export default function LeadBkdStaffScreen() {
         fetchStructureOrganization(pagination?.currentPage, 5, "", status);
         setIsDialogOpenCreate(false);
         router.push("/department-head/lead-bkd-staff");
-        console.log(response, "hihi ini berhasil di tambah")
+        console.log(response, "hihi ini berhasil di tambah");
       } else {
         Swal.fire({
           icon: "error",
@@ -285,7 +291,12 @@ export default function LeadBkdStaffScreen() {
             position: "center",
           });
           setIsLoadingDelete(false);
-          fetchStructureOrganization(pagination?.currentPage, 5, "", status ?? 0);
+          fetchStructureOrganization(
+            pagination?.currentPage,
+            5,
+            "",
+            status ?? 0
+          );
         }
       }
     } catch (error) {
@@ -340,7 +351,7 @@ export default function LeadBkdStaffScreen() {
         fetchStructureOrganization(pagination?.currentPage, 5, "", status);
         setIsDialogOpenUpdate(false);
         router.push("/department-head/lead-bkd-staff");
-        console.log(response, "hihi ini berhasil di update")
+        console.log(response, "hihi ini berhasil di update");
       } else {
         Swal.fire({
           icon: "error",
@@ -381,6 +392,36 @@ export default function LeadBkdStaffScreen() {
     fetchAreas(1, 100, "");
     fetchGrades(19);
   }, []);
+
+  const downloadStaffBkd = async () => {
+    setIsLoadingDownload(true);
+    try {
+      const response = await getDownloadStaffBkdPrint();
+
+      const url = window.URL.createObjectURL(response);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Tabel Staff BKD.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      if (response.type === "application/pdf") {
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil Download Staff BKD!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+        setIsLoadingDownload(false);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoadingDownload(false);
+    }
+  };
 
   return (
     <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
@@ -472,10 +513,18 @@ export default function LeadBkdStaffScreen() {
 
             <div className="w-full flex flex-row gap-x-3 md:gap-x-5">
               <div className="w-full">
-                <Button className="w-full text-[14px] md:text-[16px] flex flex-row gap-x-4 bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                  <Printer className="w-6 h-6 text-line-10" />
+                <Button
+                  onClick={() => downloadStaffBkd()}
+                  className="w-full text-[14px] md:text-[16px] flex flex-row gap-x-4 bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
+                  {isLoadingDownload ? (
+                    <Loader className="animate-spin h-5 w-5" />
+                  ) : (
+                    <>
+                      <Printer className="w-6 h-6 text-line-10" />
 
-                  <span className="text-[14px] md:text-[16px]">Print</span>
+                      <span>Print</span>
+                    </>
+                  )}
                 </Button>
               </div>
 
@@ -686,8 +735,9 @@ export default function LeadBkdStaffScreen() {
                                   onDragOver={handleDragOver}
                                   onDragLeave={handleDragLeave}
                                   onDrop={handleDropImage}
-                                  className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                                    }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                                  className={`w-full ${
+                                    previewImage ? "md:w-8/12" : "w-full"
+                                  }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                                   <div>
                                     <input
                                       type="file"
@@ -956,8 +1006,9 @@ export default function LeadBkdStaffScreen() {
                                   onDragOver={handleDragOver}
                                   onDragLeave={handleDragLeave}
                                   onDrop={handleDropImage}
-                                  className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                                    }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                                  className={`w-full ${
+                                    previewImage ? "md:w-8/12" : "w-full"
+                                  }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                                   <div>
                                     <input
                                       type="file"
