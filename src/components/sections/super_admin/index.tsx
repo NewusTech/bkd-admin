@@ -36,6 +36,7 @@ import {
 } from "@/types/interface";
 import {
   getApplicationUserHistories,
+  getDownloadApplicationPrint,
   getService,
   getSuperAdminDashboard,
 } from "@/services/api";
@@ -46,11 +47,14 @@ import PaginationComponent from "@/components/elements/pagination";
 import DataNotFound from "@/components/elements/data_not_found";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileDivisionVerificationAdminApplicationHistoryCard from "@/components/mobile_all_cards/mobileDivisionVerificationAdminApplicationHistoryCard";
+import Swal from "sweetalert2";
+import { Loader } from "lucide-react";
 
 export default function SuperAdminDashboardPages() {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
   const [layananId, setLayananId] = useState<number | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(false);
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
   const [startDate, setStartDate] = useState<Date | undefined>(firstDayOfMonth);
@@ -168,6 +172,36 @@ export default function SuperAdminDashboardPages() {
     },
   } satisfies ChartConfig;
 
+  const downloadApplicationHistory = async () => {
+    setIsLoading(true);
+    try {
+      const response = await getDownloadApplicationPrint();
+
+      const url = window.URL.createObjectURL(response);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Tabel Riwayat Permohonan Menunggu.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      if (response.type === "application/pdf") {
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil Download Hasil Surat Permohonan!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="w-full flex flex-col gap-y-5 mb-24">
       <div className="w-full h-[450px] md:h-full verticalScroll md:horizontalScroll flex flex-col md:flex-row gap-y-3 md:gap-x-5 items-center md:items-start bg-primary-40 bg-opacity-20 rounded-lg p-3">
@@ -198,19 +232,19 @@ export default function SuperAdminDashboardPages() {
               <BarChart
                 accessibilityLayer
                 data={chartData}
-              // margin={{
-              //   left: 1,
-              //   right: 1,
-              // }}
+                // margin={{
+                //   left: 1,
+                //   right: 1,
+                // }}
               >
                 <CartesianGrid vertical={false} />
                 <XAxis
                   dataKey="nama"
                   tickLine={false}
                   axisLine={false}
-                // tickMargin={1}
-                // minTickGap={1}
-                // className="w-full"
+                  // tickMargin={1}
+                  // minTickGap={1}
+                  // className="w-full"
                 />
                 <ChartTooltip
                   content={
@@ -283,10 +317,18 @@ export default function SuperAdminDashboardPages() {
             </div>
 
             <div className="w-full">
-              <Button className="w-full flex flex-row gap-x-4 text-sm bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                <Printer className="w-6 h-6 text-line-10" />
+              <Button
+                onClick={() => downloadApplicationHistory()}
+                className="w-full flex flex-row gap-x-4 text-sm bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
+                {isLoading ? (
+                  <Loader className="animate-spin h-5 w-5" />
+                ) : (
+                  <>
+                    <Printer className="w-6 h-6 text-line-10" />
 
-                <span>Print</span>
+                    <span>Print</span>
+                  </>
+                )}
               </Button>
             </div>
           </div>
