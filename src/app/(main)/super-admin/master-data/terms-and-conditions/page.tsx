@@ -129,18 +129,18 @@ export default function TermConditionScreen() {
                       setIsDialogEditOpen(true);
                     }}
                     className="w-full">
-                    <div className="h-10 text-xs md:text-sm rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-full">
+                    <div className="h-10 text-[16px] rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-full">
                       Edit
                     </div>
                   </AlertDialogTrigger>
                   <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
                     <AlertDialogHeader className="flex flex-col">
-                      <AlertDialogTitle className="text-center">
+                      <AlertDialogTitle className="text-center text-[16px]">
                         Master Data Syarat dan Ketentuan
                       </AlertDialogTitle>
                       <AlertDialogDescription className="text-center">
                         <TypingEffect
-                          className="custom-class text-[14px] md:text-[16px]"
+                          className="custom-class text-[16px]"
                           speed={125}
                           deleteSpeed={50}
                           text={["Edit data yang diperlukan"]}
@@ -153,11 +153,11 @@ export default function TermConditionScreen() {
                         <div className="w-full verticalScroll flex flex-col gap-y-5">
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                             <div className="w-full flex flex-row justify-between items-center">
-                              <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                              <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                                 Ketentuan
                               </Label>
                             </div>
-                            <div className="w-full h-full verticalScroll border border-line-20 rounded-lg">
+                            <div className="w-full h-full verticalScroll border border-line-20 rounded-lg text-[16px]">
                               <EditorProvide
                                 content={data.desc}
                                 onChange={(e: any) =>
@@ -169,11 +169,11 @@ export default function TermConditionScreen() {
 
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                             <div className="w-full flex flex-row justify-between items-center">
-                              <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                              <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                                 Syarat
                               </Label>
                             </div>
-                            <div className="w-full h-full verticalScroll border border-line-20 rounded-lg">
+                            <div className="w-full h-full verticalScroll border border-line-20 rounded-lg text-[16px]">
                               <EditorProvide
                                 content={data.privacy_policy}
                                 onChange={(e: any) =>
@@ -185,7 +185,7 @@ export default function TermConditionScreen() {
                         </div>
 
                         <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogCancel className="text-[16px]">Cancel</AlertDialogCancel>
                           <Button
                             type="submit"
                             disabled={isUpdateLoading ? true : false}
@@ -209,20 +209,20 @@ export default function TermConditionScreen() {
                     onClick={() => {
                       setIsDialogEditOpen(true);
                     }}
-                    className="w-full min-h-[40px] md:min-h-[60px] text-line-10 text-[14px] md:text-[16px] md:text-lg md:bg-primary-40 md:hover:bg-primary-70 rounded-lg">
-                    <div className="w-full text-sm bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg">
+                    className="w-full min-h-[40px] md:min-h-[60px] text-line-10 text-[14px] md:bg-primary-40 md:hover:bg-primary-70 rounded-lg">
+                    <div className="w-full bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg">
                       Edit
                     </div>
                   </DrawerTrigger>
                   <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-5/6 px-3 pb-6">
                     <div className="w-full flex flex-col gap-y-3 verticalScroll">
-                      <DrawerTitle className="text-center">
+                      <DrawerTitle className="text-center text-[14px]">
                         Master Data Syarat dan Ketentuan
                       </DrawerTitle>
 
                       <DrawerDescription className="text-center">
                         <TypingEffect
-                          className="custom-class text-[14px] md:text-[16px]"
+                          className="custom-class text-[14px]"
                           speed={125}
                           deleteSpeed={50}
                           text={["Edit data yang diperlukan"]}
@@ -235,11 +235,11 @@ export default function TermConditionScreen() {
                         <div className="w-full flex flex-col gap-y-3 verticalScroll">
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                             <div className="w-full flex flex-row justify-between items-center">
-                              <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                              <Label className="focus-within:text-primary-70 font-normal text-[14px]">
                                 Ketentuan
                               </Label>
                             </div>
-                            <div className="w-full h-full verticalScroll border border-line-20 rounded-lg">
+                            <div className="w-full h-full verticalScroll border border-line-20 rounded-lg text-[14px]">
                               <EditorProvide
                                 content={data.desc}
                                 onChange={(e: any) =>
@@ -251,11 +251,11 @@ export default function TermConditionScreen() {
 
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                             <div className="w-full flex flex-row justify-between items-center">
-                              <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                              <Label className="focus-within:text-primary-70 font-normal text-[14px]">
                                 Syarat
                               </Label>
                             </div>
-                            <div className="w-full h-full verticalScroll border border-line-20 rounded-lg">
+                            <div className="w-full h-full verticalScroll border border-line-20 rounded-lg text-[14px]">
                               <EditorProvide
                                 content={data.privacy_policy}
                                 onChange={(e: any) =>
@@ -267,8 +267,8 @@ export default function TermConditionScreen() {
                         </div>
 
                         <div className="flex gap-4 justify-between">
-                          <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-xs">
-                            <DrawerDescription className="text-xs md:text-sm">
+                          <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-[14px]">
+                            <DrawerDescription className="text-[14px]">
                               Batal
                             </DrawerDescription>
                           </DrawerClose>
@@ -276,7 +276,7 @@ export default function TermConditionScreen() {
                             title="Simpan Data"
                             type="submit"
                             disabled={isUpdateLoading ? true : false}
-                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                             {isUpdateLoading ? (
                               <Loader className="animate-spin" />
                             ) : (
@@ -295,18 +295,18 @@ export default function TermConditionScreen() {
 
         <div className="w-full flex flex-col gap-y-5 bg-line-10 p-3 rounded-lg shadow-md">
           <div className="w-full flex flex-col gap-y-3">
-            <h5 className="text-primary-40 text-lg">Ketentuan</h5>
+            <h5 className="text-primary-40 text-[16px]">Ketentuan</h5>
             <div className="w-full border border-black-80 rounded-lg p-3">
-              <div className="text-black-80 font-normal text-[14px] md:text-[16px]">
+              <div className="text-black-80 font-normal text-[16px]">
                 {terms && <RichTextDisplay content={terms?.desc} />}
               </div>
             </div>
           </div>
 
           <div className="w-full flex flex-col gap-y-3">
-            <h5 className="text-primary-40 text-lg">Syarat</h5>
+            <h5 className="text-primary-40 text-[16px]">Syarat</h5>
             <div className="w-full border border-black-80 rounded-lg p-3">
-              <div className="text-black-80 font-normal text-[14px] md:text-[16px]">
+              <div className="text-black-80 font-normal text-[16px]">
                 {terms && <RichTextDisplay content={terms?.privacy_policy} />}
               </div>
             </div>
@@ -326,7 +326,7 @@ export default function TermConditionScreen() {
           className="w-full flex flex-col gap-y-3">
           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
             <div className="w-full flex flex-row justify-between items-center">
-              <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+              <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                 Deskripsi
               </Label>
 

@@ -44,13 +44,13 @@ export default function SuperServiceRequirementsCard({
   //   };
 
   return (
-    <TableRow className="border border-line-20">
+    <TableRow className="border border-line-20 text-[14px]">
       <TableCell className="text-center">{index + 1}</TableCell>
-      <TableCell className="text-left">
+      <TableCell className="text-center">
         {item?.Bidang_name && item?.Bidang_name}
       </TableCell>
-      <TableCell className="text-left">{item?.nama && item?.nama}</TableCell>
-      <TableCell className="text-left flex items-center w-full">
+      <TableCell className="text-center">{item?.nama && item?.nama}</TableCell>
+      <TableCell className="text-center flex items-center w-full">
         {/* <div className="w-full flex flex-row items-center justify-center gap-x-2">
           <div className="w-full">
             <AlertDialog

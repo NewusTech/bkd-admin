@@ -115,8 +115,8 @@ export default function MobileSuperAreasMasterDataCard({
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="transition-all duration-300 ease-in-out opacity-1 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 bg-white border border-gray-300 shadow-2xl rounded-md w-fit mr-6">
-                <DropdownMenuLabel className="font-semibold text-primary text-sm w-full shadow-md">
-                  Actions
+                <DropdownMenuLabel className="font-semibold text-primary text-[14px] w-full shadow-md">
+                  Aksi
                 </DropdownMenuLabel>
                 {/* <hr className="border border-primary transition-all ease-in-out animate-pulse ml-2 mr-2" /> */}
                 <div className="h-1 w-full bg-gradient-to-r from-transparent via-primary to-transparent transition-all animate-pulse"></div>
@@ -136,27 +136,27 @@ export default function MobileSuperAreasMasterDataCard({
                             <div
                               //   name="Edit"
                               //   title="Edit Data"
-                              className="w-full h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10">
+                              className="w-full h-10 text-[14px] px-3 rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10">
                               Edit
                             </div>
                           </DrawerTrigger>
                           <DrawerContent className="bg-line-10">
                             <DrawerHeader>
-                              <DrawerTitle>Master Data Bidang</DrawerTitle>
+                              <DrawerTitle className="text-[16px]">Master Data Bidang</DrawerTitle>
                               <form
                                 onSubmit={(
                                   e: React.FormEvent<HTMLFormElement>
                                 ) => handleUpdateArea(e, area?.slug)}
                                 className="w-full flex flex-col gap-y-3 max-h-full">
                                 <div className="text-center mb-4">
-                                  <TypingEffect className="custom-class md:text-sm text-xs"
+                                  <TypingEffect className="custom-class text-[14px]"
                                     text={["Edit data yang diperlukan...."]}
                                   />
                                 </div>
 
-                                <div className="w-full flex flex-col gap-y-3 verticalScroll">
-                                  <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                                    <Label className="focus-within:text-primary-70 font-normal text-xs lg:text-sm text-left">
+                                <div className="w-full flex flex-col gap-y-5 verticalScroll">
+                                  <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                                    <Label className="focus-within:text-primary-70 font-normal text-[14px] text-left">
                                       Nama Bidang
                                     </Label>
                                     <Input
@@ -172,13 +172,13 @@ export default function MobileSuperAreasMasterDataCard({
                                         })
                                       }
                                       type="text"
-                                      className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                                      className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
                                       placeholder="Masukkan Nama Bidang"
                                     />
                                   </div>
 
-                                  <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                                    <Label className="focus-within:text-primary-70 font-normal text-xs lg:text-sm text-left">
+                                  <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                                    <Label className="focus-within:text-primary-70 font-normal text-[14px] text-left">
                                       Penanggung Jawab
                                     </Label>
                                     <Input
@@ -191,15 +191,15 @@ export default function MobileSuperAreasMasterDataCard({
                                         setData({ ...data, pj: e.target.value })
                                       }
                                       type="text"
-                                      className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                                      className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
                                       placeholder="Masukkan Nama Penanggung Jawab"
                                     />
                                   </div>
 
-                                  <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                                  <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                                     <Label
                                       htmlFor="nip-pj"
-                                      className="focus-within:text-primary-70 font-normal text-xs lg:text-sm text-left">
+                                      className="focus-within:text-primary-70 font-normal text-left text-[14px]">
                                       NIP Penanggung Jawab
                                     </Label>
                                     <Input
@@ -216,13 +216,13 @@ export default function MobileSuperAreasMasterDataCard({
                                       }
                                       type="text"
                                       inputMode="numeric"
-                                      className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                                      className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
                                       placeholder="Masukkan NIP Penanggung Jawab"
                                     />
                                   </div>
 
-                                  <div className="w-full flex flex-col gap-y-3">
-                                    <Label className="focus-within:text-primary-70 font-normal text-xs lg:text-sm text-left">
+                                  <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                                    <Label className="focus-within:text-primary-70 font-normal text-left text-[14px]">
                                       Deskripsi Bidang
                                     </Label>
                                     <div className="w-full h-full border border-line-20 rounded-lg text-left">
@@ -236,13 +236,13 @@ export default function MobileSuperAreasMasterDataCard({
                                   </div>
                                   <div className="flex gap-4 justify-between">
                                     <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-xs">
-                                      <DrawerDescription className="text-xs md:text-sm">Batal</DrawerDescription>
+                                      <DrawerDescription className="text-[14px]">Batal</DrawerDescription>
                                     </DrawerClose>
                                     <Button
                                       title="Simpan Data"
                                       type="submit"
                                       disabled={isUpdateLoading ? true : false}
-                                      className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                                      className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                                       {isUpdateLoading ? (
                                         <Loader className="animate-spin" />
                                       ) : (
@@ -262,7 +262,7 @@ export default function MobileSuperAreasMasterDataCard({
                         title="Hapus Data"
                         disabled={isDeleteLoading ? true : false}
                         onClick={() => handleDeleteArea(area?.slug)}
-                        className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 h-10 text-xs md:text-sm px-3 border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                        className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 h-10 text-[14px] px-3 border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                         {isDeleteLoading ? (
                           <Loader className="animate-spin" />
                         ) : isDeleteLoading ? (
@@ -276,10 +276,9 @@ export default function MobileSuperAreasMasterDataCard({
                 </div>
               </DropdownMenuContent>
             </DropdownMenu>
-            {/* <hr className="border border-primary transition-all ease-in-out animate-pulse ml-2 mr-2" /> */}
           </div>
         </div>
-        <div className="text-xs md:text-sm flex flex-col gap-y-4">
+        <div className="text-[14px] flex flex-col gap-y-4">
           <div className="w-full grid grid-cols-3">
             <div className="w-full font-medium text-black">No.</div>
             <div className="w-full col-span-2">: {index + 1}</div>

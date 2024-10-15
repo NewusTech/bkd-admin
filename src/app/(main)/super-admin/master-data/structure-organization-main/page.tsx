@@ -54,19 +54,18 @@ import MobileStructureOrganizationMainMasterDataCard from "@/components/mobile_a
 import AddIcon from "@/components/elements/add_button";
 import TypingEffect from "@/components/ui/TypingEffect";
 import { useDebounce } from "@/hooks/useDebounce";
+import PaginationComponent from "@/components/elements/pagination";
 
 export default function StructureOrganizationMainScreen() {
   const router = useRouter();
   const dropRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
-  const debounceSearch = useDebounce(search, 500);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
-  const limitItem = 30;
   const [organizations, setOrganizations] = useState<
     StructureOrganizationInterface[]
   >([]);
@@ -75,6 +74,14 @@ export default function StructureOrganizationMainScreen() {
     bkdstruktur_id: "",
   });
 
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    perPage: 5,
+    totalPages: 1,
+    totalCount: 0,
+  });
+  const debounceSearch = useDebounce(search);
+
   const fetchStructureOrganizationMain = async (
     page: number,
     limit: number,
@@ -82,18 +89,34 @@ export default function StructureOrganizationMainScreen() {
   ) => {
     try {
       const response = await getStructureOrganizationsMain(page, limit, search);
-
-      console.log(response, "ini get")
-
       setMainOrganizations(response.data);
+      setPagination((prev) => ({
+        ...prev,
+        currentPage: page,
+        totalPages: response?.pagination?.totalPages,
+        totalCount: response?.pagination?.totalCount,
+      }));
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchStructureOrganizationMain(1, 5, debounceSearch);
-  }, [debounceSearch]);
+    fetchStructureOrganizationMain(1, 5, search);
+  }, [search]);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage !== pagination.currentPage) {
+      fetchStructureOrganizationMain(newPage, 5, "");
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const fetchStructureOrganization = async (
     page: number,
@@ -110,9 +133,9 @@ export default function StructureOrganizationMainScreen() {
   };
 
   useEffect(() => {
-    fetchStructureOrganization(1, 50, "");
+    fetchStructureOrganization(1, 5, "");
   }, []);
-  
+
 
   const handleSelectChange = (value: string) => {
     setData({
@@ -183,8 +206,6 @@ export default function StructureOrganizationMainScreen() {
 
       if (result.isConfirmed) {
         const response = await deleteStructureOrganizationsMain(id);
-
-        console.log(response, "lala lili")
 
         if (response.status === 200) {
           await Swal.fire({
@@ -269,7 +290,7 @@ export default function StructureOrganizationMainScreen() {
                 <AlertDialogTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-full text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-full text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah
                   </div>
@@ -277,13 +298,13 @@ export default function StructureOrganizationMainScreen() {
                 <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
                   <AlertDialogHeader className="flex flex-col">
                     <AlertDialogTitle className="text-center">
-                      <AlertDialogDescription className="text-center">
+                      <AlertDialogDescription className="text-center text-[16px]">
                         Master Data Struktur Organisasi Inti
                       </AlertDialogDescription>
                     </AlertDialogTitle>
 
                     <TypingEffect
-                      className="custom-class text-[14px] md:text-[16px] text-center"
+                      className="custom-class text-[16px] text-center"
                       speed={125}
                       deleteSpeed={50}
                       text={["Input data yang diperlukan"]}
@@ -295,17 +316,17 @@ export default function StructureOrganizationMainScreen() {
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
-                            <Label className="focus-within:text-black-800 font-normal text-sm">
+                            <Label className="focus-within:text-black-800 font-normal text-[16px]">
                               Pilih Struktur Yang Akan Ditampilkan
                             </Label>
 
                             <div className="w-full border border-line-20 rounded-lg">
                               <Select onValueChange={handleSelectChange} value={data.bkdstruktur_id}>
                                 <SelectTrigger
-                                  className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                  className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none text-[16px]`}>
                                   <SelectValue
                                     placeholder="Pilih Nama"
-                                    className="text-black-80 w-full"
+                                    className="text-black-80 w-full text-[16px]"
                                   />
                                 </SelectTrigger>
                                 <SelectContent className="bg-line-10">
@@ -316,7 +337,7 @@ export default function StructureOrganizationMainScreen() {
                                         (organization: StructureOrganizationInterface, i: number) => (
                                           <SelectItem
                                             key={i}
-                                            className={`w-full px-4`}
+                                            className={`w-full px-4 text-[16px]`}
                                             value={organization.id.toString()}>
                                             {organization.nama}
                                           </SelectItem>
@@ -331,11 +352,11 @@ export default function StructureOrganizationMainScreen() {
                         </div>
                       </div>
                       <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogCancel className="text-[16px]">Cancel</AlertDialogCancel>
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 text-[16px]">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (
@@ -352,20 +373,20 @@ export default function StructureOrganizationMainScreen() {
                 <DrawerTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-[14px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
                     Tambah Data
                   </div>
                 </DrawerTrigger>
                 <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
                   <div className="w-full flex flex-col gap-y-3 verticalScroll">
-                    <DrawerTitle className="text-center">
+                    <DrawerTitle className="text-center text-[16px]">
                       Master Data Struktur Organisasi
                     </DrawerTitle>
 
                     <DrawerDescription className="text-center">
                       <TypingEffect
-                        className="custom-class text-[14px] md:text-[16px] text-center"
+                        className="custom-class text-[14px] text-center"
                         speed={125}
                         deleteSpeed={50}
                         text={["Input data yang diperlukan"]}
@@ -375,22 +396,22 @@ export default function StructureOrganizationMainScreen() {
                     <form
                       onSubmit={handleCreateStructureOrganization}
                       className="w-full flex flex-col gap-y-5 verticalScroll">
-                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
-                        <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-black-800 font-normal text-sm">
+                      <div className="w-full flex flex-col gap-y-5 verticalScroll">
+                        <div className="w-full focus-within:text-black-70 flex flex-col gap-y-3">
+                          <Label className="focus-within:text-black-800 font-normal text-[14px]">
                             Pilih Struktur Yang Akan Ditampilkan
                           </Label>
 
                           <div className="w-full border border-line-20 rounded-lg">
                             <Select onValueChange={handleSelectChange}>
                               <SelectTrigger
-                                className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none text-[14px]`}>
                                 <SelectValue
                                   placeholder="Pilih Jabatan"
                                   className="text-black-80 w-full"
                                 />
                               </SelectTrigger>
-                              <SelectContent className="bg-line-10">
+                              <SelectContent className="bg-line-10 text-[14px]">
                                 <div className="pt-2">
                                   {/* {organizations &&
                                     organizations.length > 0 &&
@@ -402,7 +423,7 @@ export default function StructureOrganizationMainScreen() {
                                         return (
                                           <SelectItem
                                             key={i}
-                                            className={`w-full px-4`}
+                                            className={`w-full px-4 text-[14px]`}
                                             value={organization.id.toString()}>
                                             {organization?.jabatan}
                                           </SelectItem>
@@ -418,13 +439,13 @@ export default function StructureOrganizationMainScreen() {
 
                       <div className="flex gap-4 justify-between">
                         <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
-                          <DrawerDescription>Batal</DrawerDescription>
+                          <DrawerDescription className="text-[14px]">Batal</DrawerDescription>
                         </DrawerClose>
                         <Button
                           title="Simpan Data"
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] md:text-[16px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (
@@ -481,6 +502,14 @@ export default function StructureOrganizationMainScreen() {
             //     )}
             // </div>
           )}
+        </div>
+
+        <div className="w-full">
+          <PaginationComponent
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
     </section>

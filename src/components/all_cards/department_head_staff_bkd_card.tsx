@@ -171,7 +171,7 @@ export default function DepartmentHeadStaffBkdCard({
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="transition-all duration-300 ease-in-out opacity-1 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 bg-white border border-gray-300 shadow-2xl rounded-md w-fit mr-6">
-                  <DropdownMenuLabel className="font-semibold text-primary text-sm w-full shadow-md">
+                  <DropdownMenuLabel className="font-semibold text-primary text-[14px] w-full shadow-md">
                     Aksi
                   </DropdownMenuLabel>
                   <div className="h-1 w-full bg-gradient-to-r from-transparent via-primary to-transparent transition-all animate-pulse"></div>
@@ -191,7 +191,7 @@ export default function DepartmentHeadStaffBkdCard({
                                       }}
                                       className="w-full"
                                     >
-                                      <div className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition-all duration-300 hover:-translate-y-1 hover:scale-105">
+                                      <div className="w-full text-[14px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition-all duration-300 hover:-translate-y-1 hover:scale-105">
                                         Detail
                                       </div>
                                     </AlertDialogTrigger>
@@ -199,16 +199,16 @@ export default function DepartmentHeadStaffBkdCard({
                                     <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-lg p-6">
                                       <AlertDialogHeader className="flex flex-col max-h-[500px] space-y-4">
                                         <AlertDialogTitle className="text-center">
-                                          <AlertDialogDescription className="text-xl font-semibold">
+                                          <AlertDialogDescription className="text-[20px] font-semibold">
                                             Detail Staff BKD
                                           </AlertDialogDescription>
                                         </AlertDialogTitle>
 
                                         <TypingEffect
-                                          className="text-center text-base md:text-lg font-light"
+                                          className="text-center text-[18px] font-light"
                                           speed={125}
                                           deleteSpeed={50}
-                                          text={[data?.nama || "Detail Staff BKD"]} 
+                                          text={[data?.nama || "Detail Staff BKD"]}
                                         />
 
                                         <form
@@ -233,39 +233,39 @@ export default function DepartmentHeadStaffBkdCard({
                                           <div className="px-6">
                                             <div className="w-full text-primary-70 flex flex-col gap-y-5">
                                               <div className="flex justify-between items-center border-b pb-2">
-                                                <span className="font-semibold text-[14px] md:text-[16px] text-gray-700">Bidang:</span>
-                                                <span className="text-[14px] md:text-[16px] text-gray-500">{data?.bidang_id || "-"}</span>
+                                                <span className="font-semibold text-[16px] text-gray-700">Bidang:</span>
+                                                <span className="text-[16px] text-gray-500">{data?.bidang_id || "-"}</span>
                                               </div>
 
                                               <div className="flex justify-between items-center border-b pb-2">
-                                                <span className="font-semibold text-[14px] md:text-[16px] text-gray-700">Nama Lengkap:</span>
-                                                <span className="text-[14px] md:text-[16px] text-gray-500">{data?.nama || "-"}</span>
+                                                <span className="font-semibold text-[16px] text-gray-700">Nama Lengkap:</span>
+                                                <span className="text-[16px] text-gray-500">{data?.nama || "-"}</span>
                                               </div>
 
                                               <div className="flex justify-between items-center border-b pb-2">
-                                                <span className="font-semibold text-[14px] md:text-[16px] text-gray-700">NIP:</span>
-                                                <span className="text-[14px] md:text-[16px] text-gray-500">{data?.nip || "-"}</span>
+                                                <span className="font-semibold text-[16px] text-gray-700">NIP:</span>
+                                                <span className="text-[16px] text-gray-500">{data?.nip || "-"}</span>
                                               </div>
 
                                               <div className="flex justify-between items-center border-b pb-2">
-                                                <span className="font-semibold text-[14px] md:text-[16px] text-gray-700">Jabatan:</span>
-                                                <span className="text-[14px] md:text-[16px] text-gray-500">{data?.jabatan || "-"}</span>
+                                                <span className="font-semibold text-[16px] text-gray-700">Jabatan:</span>
+                                                <span className="text-[16px] text-gray-500">{data?.jabatan || "-"}</span>
                                               </div>
 
                                               <div className="flex justify-between items-center border-b pb-2">
-                                                <span className="font-semibold text-[14px] md:text-[16px] text-gray-700">Golongan:</span>
-                                                <span className="text-[14px] md:text-[16px] text-gray-500">{data?.golongan || "-"}</span>
+                                                <span className="font-semibold text-[16px] text-gray-700">Golongan:</span>
+                                                <span className="text-[16px] text-gray-500">{data?.golongan || "-"}</span>
                                               </div>
 
                                               <div className="flex justify-between items-center border-b pb-2">
-                                                <span className="font-semibold text-[14px] md:text-[16px] text-gray-700">Status:</span>
-                                                <span className="text-[14px] md:text-[16px] text-gray-500">{data?.status || "-"}</span>
+                                                <span className="font-semibold text-[16px] text-gray-700">Status:</span>
+                                                <span className="text-[16px] text-gray-500">{data?.status || "-"}</span>
                                               </div>
                                             </div>
                                           </div>
 
                                           <div className="flex justify-center items-center space-x-5 mt-6">
-                                            <AlertDialogCancel className="text-[14px] md:text-[16px] bg-gray-200 hover:bg-gray-300 px-6 py-3 rounded-lg shadow-lg transition-transform duration-300 transform hover:scale-105">
+                                            <AlertDialogCancel className="text-[16px] bg-gray-200 hover:bg-gray-300 px-6 py-3 rounded-lg shadow-lg transition-transform duration-300 transform hover:scale-105">
                                               Batal
                                             </AlertDialogCancel>
                                           </div>
@@ -297,7 +297,7 @@ export default function DepartmentHeadStaffBkdCard({
                                         </AlertDialogTitle>
 
                                         <TypingEffect
-                                          className="custom-class text-center text-[14px] md:text-[16px]"
+                                          className="custom-class text-center text-[16px]"
                                           speed={125}
                                           deleteSpeed={50}
                                           text={["Edit data yang diperlukan"]}
@@ -307,9 +307,9 @@ export default function DepartmentHeadStaffBkdCard({
                                           onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                                             handleUpdateStructureOrganization(e, item?.slug);
                                           }}
-                                          className="w-full flex flex-col gap-y-3 verticalScroll">
-                                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                                          className="w-full flex flex-col gap-y-5 verticalScroll">
+                                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                                            <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                                               Bidang
                                             </Label>
                                             <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
@@ -320,10 +320,10 @@ export default function DepartmentHeadStaffBkdCard({
                                                   setData({ ...data, bidang_id: value })
                                                 }>
                                                 <SelectTrigger
-                                                  className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                                  className={`w-full gap-x-4 text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                                                   <SelectValue
                                                     placeholder="Pilih Bidang"
-                                                    className="text-black-80 text-[14px] md:text-[16px] w-full"
+                                                    className="text-black-80 text-[16px] w-full"
                                                   />
                                                 </SelectTrigger>
                                                 <SelectContent className="bg-line-10">
@@ -334,7 +334,7 @@ export default function DepartmentHeadStaffBkdCard({
                                                           return (
                                                             <SelectItem
                                                               key={i}
-                                                              className={`w-full px-4 text-[14px] md:text-[16px]`}
+                                                              className={`w-full px-4 text-[16px]`}
                                                               value={area.id.toString()}>
                                                               {area?.nama}
                                                             </SelectItem>
@@ -347,8 +347,8 @@ export default function DepartmentHeadStaffBkdCard({
                                             </div>
                                           </div>
 
-                                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                                            <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                                               Nama Lengkap
                                             </Label>
                                             <Input
@@ -364,13 +364,13 @@ export default function DepartmentHeadStaffBkdCard({
                                                 });
                                               }}
                                               type="text"
-                                              className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                                              className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                                               placeholder="Masukkan Nama Lengkap Anda"
                                             />
                                           </div>
 
-                                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                                            <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                                               NIP
                                             </Label>
                                             <Input
@@ -386,13 +386,13 @@ export default function DepartmentHeadStaffBkdCard({
                                                 });
                                               }}
                                               type="text"
-                                              className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                                              className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                                               placeholder="Masukkan NIP Anda"
                                             />
                                           </div>
 
-                                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                                            <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                                               Jabatan
                                             </Label>
                                             <Input
@@ -408,13 +408,13 @@ export default function DepartmentHeadStaffBkdCard({
                                                 });
                                               }}
                                               type="text"
-                                              className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                                              className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                                               placeholder="Masukkan Jabatan Anda"
                                             />
                                           </div>
 
-                                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                                            <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                                               Golongan
                                             </Label>
                                             <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
@@ -425,10 +425,10 @@ export default function DepartmentHeadStaffBkdCard({
                                                   setData({ ...data, golongan: value })
                                                 }>
                                                 <SelectTrigger
-                                                  className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                                  className={`w-full gap-x-4 text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                                                   <SelectValue
                                                     placeholder="Pilih Golongan"
-                                                    className="text-black-80 text-[14px] md:text-[16px] w-full"
+                                                    className="text-black-80 text-[16px] w-full"
                                                   />
                                                 </SelectTrigger>
                                                 <SelectContent className="bg-line-10">
@@ -439,7 +439,7 @@ export default function DepartmentHeadStaffBkdCard({
                                                           return (
                                                             <SelectItem
                                                               key={i}
-                                                              className={`w-full px-4 text-[14px] md:text-[16px]`}
+                                                              className={`w-full px-4 text-[16px]`}
                                                               value={grade?.nama}>
                                                               {grade?.nama}
                                                             </SelectItem>
@@ -452,8 +452,8 @@ export default function DepartmentHeadStaffBkdCard({
                                             </div>
                                           </div>
 
-                                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                                            <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                                            <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                                               Status
                                             </Label>
                                             <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
@@ -464,10 +464,10 @@ export default function DepartmentHeadStaffBkdCard({
                                                   setData({ ...data, status: value })
                                                 }>
                                                 <SelectTrigger
-                                                  className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                                  className={`w-full gap-x-4 text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                                                   <SelectValue
                                                     placeholder="Pilih Status Staff"
-                                                    className="text-black-80 text-[14px] md:text-[16px] w-full"
+                                                    className="text-black-80 text-[16px] w-full"
                                                   />
                                                 </SelectTrigger>
                                                 <SelectContent className="bg-line-10">
@@ -485,7 +485,7 @@ export default function DepartmentHeadStaffBkdCard({
                                                           return (
                                                             <SelectItem
                                                               key={i}
-                                                              className={`w-full px-4 text-[14px] md:text-[16px]`}
+                                                              className={`w-full px-4 text-[16px]`}
                                                               value={status.keys.toString()}>
                                                               {status?.value}
                                                             </SelectItem>
@@ -499,7 +499,7 @@ export default function DepartmentHeadStaffBkdCard({
                                           </div>
 
                                           <div className="flex flex-col w-full">
-                                            <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
+                                            <Label className="text-[16px] text-neutral-700 font-normal mb-2">
                                               Foto Staff
                                             </Label>
                                             <div className="flex flex-col md:flex-row w-full">
@@ -521,7 +521,7 @@ export default function DepartmentHeadStaffBkdCard({
                                                   />
                                                   <label
                                                     htmlFor="file-input-image"
-                                                    className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                                    className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
                                                     Drag and drop file here or click to select file
                                                   </label>
                                                 </div>
@@ -552,13 +552,13 @@ export default function DepartmentHeadStaffBkdCard({
                                           </div>
 
                                           <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                                            <AlertDialogCancel className="text-[14px] md:text-[16px]">
+                                            <AlertDialogCancel className="text-[16px]">
                                               Batal
                                             </AlertDialogCancel>
                                             <Button
                                               type="submit"
                                               disabled={isLoadingUpdate ? true : false}
-                                              className="bg-primary-40 text-[14px] md:text-[16px] hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                                              className="bg-primary-40 text-[16px] hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                                               {isLoadingUpdate ? (
                                                 <Loader className="animate-spin" />
                                               ) : (
@@ -619,7 +619,7 @@ export default function DepartmentHeadStaffBkdCard({
                                       onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                                         handleUpdateStructureOrganization(e, item?.slug);
                                       }}
-                                      className="w-full flex flex-col gap-y-5 verticalScroll">
+                                      className="w-full flex flex-col gap-y-5">
                                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
                                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                                           <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">

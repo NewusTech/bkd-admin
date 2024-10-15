@@ -108,27 +108,27 @@ export default function SuperregulationMasterDataCard({
                   setIsDialogEditOpen(true);
                 }}
                 className="w-full">
-                <div className="w-full text-[14px] md:text-[16px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg">
+                <div className="w-full text-[14px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg">
                   Edit
                 </div>
               </AlertDialogTrigger>
               <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
                 <AlertDialogHeader className="flex flex-col max-h-[500px]">
-                  <AlertDialogTitle className="text-center">
+                  <AlertDialogTitle className="text-center text-[16px]">
                     Master Data Regulasi
                   </AlertDialogTitle>
                   <AlertDialogDescription className="text-center">
-                    <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
+                    <TypingEffect className="custom-class text-[14px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                   </AlertDialogDescription>
 
                   <form
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                       handleUpdateRegulations(e, regulation?.id)
                     }
-                    className="w-full flex flex-col gap-y-3 verticalScroll">
+                    className="w-full flex flex-col gap-y-5 verticalScroll">
 
                     <div className="flex flex-col gap-y-3 w-full">
-                      <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
+                      <Label className="text-[16px] text-neutral-700 font-normal mb-2">
                         Title
                       </Label>
                       <Input
@@ -139,12 +139,12 @@ export default function SuperregulationMasterDataCard({
                         onChange={(e) =>
                           setData({ ...data, title: e.target.value })
                         }
-                        className="w-full"
+                        className="w-full text-[16px]"
                       />
                     </div>
 
                     <div className="flex flex-col w-full">
-                      <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
+                      <Label className="text-[16px] text-neutral-700 font-normal mb-2">
                         File
                       </Label>
                       <div className="flex flex-col md:flex-row w-full">
@@ -193,12 +193,12 @@ export default function SuperregulationMasterDataCard({
                       </div>
                     </div>
 
-                    <div className="w-full flex flex-row justify-center items-center gap-x-5">
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <div className="w-full flex flex-row justify-between items-center gap-x-5">
+                      <AlertDialogCancel className="text-[16px]">Batal</AlertDialogCancel>
                       <Button
                         type="submit"
                         disabled={isUpdateLoading ? true : false}
-                        className="bg-primary-40 hover:bg-primary-70 text-line-10">
+                        className="bg-primary-40 hover:bg-primary-70 text-line-10 text-[16px]">
                         {isUpdateLoading ? (
                           <Loader className="animate-spin" />
                         ) : (
@@ -216,7 +216,7 @@ export default function SuperregulationMasterDataCard({
             <Button
               disabled={isDeleteLoading ? true : false}
               onClick={() => handleDeleteRegulations(regulation?.id)}
-              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 text-[14px]">
               {isDeleteLoading ? (
                 <Loader className="animate-spin" />
               ) : isDeleteLoading ? (

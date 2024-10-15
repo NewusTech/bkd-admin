@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import TypingEffect from "../ui/TypingEffect";
 
 export default function SuperFaqsMasterDataCard({
   faq,
@@ -56,8 +57,8 @@ export default function SuperFaqsMasterDataCard({
   };
 
   return (
-    <TableRow className="border border-line-20">
-      <TableCell className="text-left">{index + 1}</TableCell>
+    <TableRow className="border border-line-20 text-[14px]">
+      <TableCell className="text-center">{index + 1}</TableCell>
       <TableCell className="text-left">{faq?.question}</TableCell>
       <TableCell className="text-left">{faq?.answer}</TableCell>
       <TableCell className="text-left flex items-center w-full">
@@ -72,27 +73,32 @@ export default function SuperFaqsMasterDataCard({
                   setIsDialogEditOpen(true);
                 }}
                 className="w-full">
-                <div className="w-full text-[14px] md:text-[16px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2x ">
+                <div className="w-full text-[14px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2x ">
                   Edit
                 </div>
               </AlertDialogTrigger>
               <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
                 <AlertDialogHeader className="flex flex-col max-h-[500px]">
-                  <AlertDialogTitle className="text-center">
+                  <AlertDialogTitle className="text-center text-[18px]">
                     Master Data Faqs
                   </AlertDialogTitle>
                   <AlertDialogDescription className="text-center">
-                    Input data yang diperlukan
+                    <TypingEffect
+                      className="custom-class text-[16px]"
+                      speed={125}
+                      deleteSpeed={50}
+                      text={["Edit data yang diperlukan"]}
+                    />
                   </AlertDialogDescription>
 
                   <form
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                       handleUpdateFaqs(e, faq?.id)
                     }
-                    className="w-full flex flex-col gap-y-3 verticalScroll">
+                    className="w-full flex flex-col gap-y-5 verticalScroll">
 
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                      <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                         Pertanyaan
                       </Label>
                       <Input
@@ -103,13 +109,13 @@ export default function SuperFaqsMasterDataCard({
                           setData({ ...data, question: e.target.value })
                         }
                         type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[16px]"
                         placeholder="Masukkan Pertanyaan Anda"
                       />
                     </div>
 
-                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                      <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                      <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                         Jawaban
                       </Label>
                       <Input
@@ -120,17 +126,17 @@ export default function SuperFaqsMasterDataCard({
                           setData({ ...data, answer: e.target.value })
                         }
                         type="text"
-                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                        className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[16px]"
                         placeholder="Masukkan Jawaban Anda"
                       />
                     </div>
 
                     <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogCancel className="text-[16px]">Cancel</AlertDialogCancel>
                       <Button
                         type="submit"
                         disabled={isUpdateLoading ? true : false}
-                        className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                        className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 text-[16px]">
                         {isUpdateLoading ? (
                           <Loader className="animate-spin" />
                         ) : (
@@ -149,7 +155,7 @@ export default function SuperFaqsMasterDataCard({
             <Button
               disabled={isDeleteLoading ? true : false}
               onClick={() => handleDeleteFaqs(faq?.id)}
-              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 text-[14px]">
               {isDeleteLoading ? (
                 <Loader className="animate-spin" />
               ) : isDeleteLoading ? (

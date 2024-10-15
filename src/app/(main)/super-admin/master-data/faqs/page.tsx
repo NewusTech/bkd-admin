@@ -35,6 +35,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileFaqMasterDataCard from "@/components/mobile_all_cards/mobileFaqMasterDataCard";
 import AddIcon from "@/components/elements/add_button";
 import TypingEffect from "@/components/ui/TypingEffect";
+import { useDebounce } from "@/hooks/useDebounce";
 
 export default function FaqsScreen() {
   const router = useRouter();
@@ -45,16 +46,22 @@ export default function FaqsScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
-  const limitItem = 30;
   const [faqs, setFaqs] = useState<FaqsInterface[]>([]);
   const [data, setData] = useState({
     answer: "",
     question: "",
   });
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    perPage: 10,
+    totalPages: 1,
+    totalCount: 0,
+  });
+  const debounceSearch = useDebounce(search);
 
-  const fetchFaqs = async (limit: number) => {
+  const fetchFaqs = async (page: number, limit: number, search: string) => {
     try {
-      const response = await getFaqs(limit);
+      const response = await getFaqs(page, limit, search);
 
       setFaqs(response.data);
     } catch (error) {
@@ -63,8 +70,14 @@ export default function FaqsScreen() {
   };
 
   useEffect(() => {
-    fetchFaqs(limitItem);
-  }, []);
+    fetchFaqs(1, 10, search);
+  }, [search]);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage !== pagination.currentPage) {
+      fetchFaqs(newPage, 10, "");
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({
@@ -92,7 +105,7 @@ export default function FaqsScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchFaqs(limitItem);
+        fetchFaqs(1, 10, search);
         setIsDialogOpen(false);
         router.push("/super-admin/master-data/faqs");
       } else {
@@ -136,7 +149,7 @@ export default function FaqsScreen() {
             position: "center",
           });
           setIsDeleteLoading(false);
-          fetchFaqs(limitItem);
+          fetchFaqs(1, 10, search);
         }
       }
     } catch (error) {
@@ -168,7 +181,7 @@ export default function FaqsScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchFaqs(limitItem);
+        fetchFaqs(1, 10, search);
         setIsDialogEditOpen(false);
         router.push("/super-admin/master-data/faqs");
       } else {
@@ -206,19 +219,19 @@ export default function FaqsScreen() {
                 <AlertDialogTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
-                    Tambah FAQ
+                    Tambah
                   </div>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
                   <AlertDialogHeader className="flex flex-col max-h-[500px]">
-                    <AlertDialogTitle className="text-center">
+                    <AlertDialogTitle className="text-center text-[16px]">
                       Master Data FAQ
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
                       <TypingEffect
-                        className="custom-class text-[14px] md:text-[16px]"
+                        className="custom-class text-[16px]"
                         speed={125}
                         deleteSpeed={50}
                         text={["Input data yang diperlukan"]}
@@ -227,9 +240,9 @@ export default function FaqsScreen() {
 
                     <form
                       onSubmit={handleCreateFaqs}
-                      className="w-full flex flex-col gap-y-3 verticalScroll">
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                      className="w-full flex flex-col gap-y-5 verticalScroll">
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                        <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                           Pertanyaan
                         </Label>
                         <Input
@@ -238,13 +251,13 @@ export default function FaqsScreen() {
                           value={data.question}
                           onChange={handleChange}
                           type="text"
-                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[16px]"
                           placeholder="Masukkan Pertanyaan Anda"
                         />
                       </div>
 
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                        <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                           Jawaban
                         </Label>
                         <Input
@@ -253,17 +266,17 @@ export default function FaqsScreen() {
                           value={data.answer}
                           onChange={handleChange}
                           type="text"
-                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[16px]"
                           placeholder="Masukkan Jawaban Anda"
                         />
                       </div>
 
                       <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogCancel className="text-[16px]">Cancel</AlertDialogCancel>
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 text-[16px]">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (
@@ -280,20 +293,20 @@ export default function FaqsScreen() {
                 <DrawerTrigger
                   onClick={() => setIsDialogOpen(true)}
                   className="w-full">
-                  <div className="w-full text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                  <div className="w-full text-[14px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                     <AddIcon />
-                    Tambah FAQ
+                    Tambah
                   </div>
                 </DrawerTrigger>
                 <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
                   <div className="w-full flex flex-col gap-y-3 verticalScroll">
-                    <DrawerTitle className="text-center">
+                    <DrawerTitle className="text-center text-[16px]">
                       Master Data FAQ
                     </DrawerTitle>
 
                     <DrawerDescription className="text-center">
                       <TypingEffect
-                        className="custom-class text-[14px] md:text-[16px]"
+                        className="custom-class text-[14px]"
                         speed={125}
                         deleteSpeed={50}
                         text={["Input data yang diperlukan"]}
@@ -303,9 +316,9 @@ export default function FaqsScreen() {
                     <form
                       onSubmit={handleCreateFaqs}
                       className="w-full flex flex-col gap-y-5 verticalScroll">
-                      <div className="w-full flex flex-col gap-y-3 verticalScroll">
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                      <div className="w-full flex flex-col gap-y-5 verticalScroll">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px]">
                             Pertanyaan
                           </Label>
 
@@ -315,13 +328,13 @@ export default function FaqsScreen() {
                             value={data.question}
                             onChange={handleChange}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
                             placeholder="Masukkan Pertanyaan Anda"
                           />
                         </div>
 
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                          <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px]">
                             Jawaban
                           </Label>
 
@@ -331,7 +344,7 @@ export default function FaqsScreen() {
                             value={data.answer}
                             onChange={handleChange}
                             type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
                             placeholder="Masukkan Jawaban Anda"
                           />
                         </div>
@@ -339,13 +352,13 @@ export default function FaqsScreen() {
 
                       <div className="flex gap-4 justify-between">
                         <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
-                          <DrawerDescription>Batal</DrawerDescription>
+                          <DrawerDescription className="text-[14px]">Batal</DrawerDescription>
                         </DrawerClose>
                         <Button
                           title="Simpan Data"
                           type="submit"
                           disabled={isLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] md:text-[16px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
                           {isLoading ? (
                             <Loader className="animate-spin" />
                           ) : (

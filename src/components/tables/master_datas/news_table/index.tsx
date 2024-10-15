@@ -57,7 +57,7 @@ export default function SuperNewsMasterDataTablePages({
     <>
       <Table className="w-full border border-line-20">
         <TableHeader className="bg-primary-40 text-line-10">
-          <TableRow className="w-full">
+          <TableRow className="w-full text-[14px]">
             <TableHead className="">No.</TableHead>
             <TableHead className="text-center">Nama Layanan</TableHead>
             <TableHead className="text-center">Deskripsi</TableHead>

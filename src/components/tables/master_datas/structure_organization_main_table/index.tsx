@@ -46,7 +46,7 @@ export default function SuperStructureOrganizationMainMasterDataTablePages({
       <Table className="w-full border border-line-20">
         <TableHeader className="bg-primary-40 text-line-10">
           <TableRow className="w-full">
-            <TableHead className="">No.</TableHead>
+            <TableHead className="text-center">No.</TableHead>
             <TableHead className="text-center">Nama Lengkap</TableHead>
             <TableHead className="text-center">Jabatan</TableHead>
             <TableHead className="text-center w-3/12">Aksi</TableHead>

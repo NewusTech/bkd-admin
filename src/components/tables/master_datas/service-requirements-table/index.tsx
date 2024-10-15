@@ -18,11 +18,11 @@ export default function SuperServiceRequirementsMasterDataTablePages({
 }) {
   return (
     <>
-      <Table className="w-full border border-line-20">
+      <Table className="w-full border border-line-20 text-[14px]">
         <TableHeader className="bg-primary-40 text-line-10">
           <TableRow className="w-full">
             <TableHead className="text-center">No.</TableHead>
-            <TableHead className="text-left">Nama Bidang</TableHead>
+            <TableHead className="text-center">Nama Bidang</TableHead>
             <TableHead className="text-center">Nama Layanan</TableHead>
             <TableHead className="text-center">Aksi</TableHead>
           </TableRow>

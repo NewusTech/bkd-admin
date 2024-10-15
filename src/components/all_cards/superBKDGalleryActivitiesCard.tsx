@@ -77,21 +77,21 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
 
   return (
     <TableRow className="border border-line-20 text-[14px]">
-      <TableCell className="text-left">{index + 1}</TableCell>
+      <TableCell className="text-center">{index + 1}</TableCell>
       <TableCell className="text-left">{gallery.title}</TableCell>
       <TableCell className="text-left">
         <div className="w-full">
           <AlertDialog>
-            <AlertDialogTrigger className="w-full text-black">
+            <AlertDialogTrigger className="w-full text-black text-[14px]">
               Lihat Foto
             </AlertDialogTrigger>
             <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
               <AlertDialogHeader className="flex flex-col max-h-[500px]">
-                <AlertDialogTitle className="text-center">
+                <AlertDialogTitle className="text-center text-[16px]">
                   Master Data
                 </AlertDialogTitle>
 
-                <AlertDialogDescription className="text-center">
+                <AlertDialogDescription className="text-center text-[16px]">
                   Galeri
                 </AlertDialogDescription>
                 {gallery && (
@@ -108,7 +108,7 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
 
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel className="hover:bg-line-70 hover:text-line-10 text-[14px] md:text-[16px] flex justify-center items-center text-center w-fit m-auto">
+                <AlertDialogCancel className="hover:bg-line-70 hover:text-line-10 text-[16px] flex justify-center items-center text-center w-fit m-auto">
                   Cancel
                 </AlertDialogCancel>
               </AlertDialogFooter>
@@ -128,7 +128,7 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
                   setIsDialogEditOpen(true);
                 }}
                 className="w-full">
-                <div className="w-full text-[14px] md:text-[16px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                <div className="w-full text-[14px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                   Edit
                 </div>
               </AlertDialogTrigger>
@@ -138,17 +138,16 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
                     Master Data Foto Kegiatan
                   </AlertDialogTitle>
                   <AlertDialogDescription className="text-center">
-                    <TypingEffect className="custom-class text-[14px] md:text-[16px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
+                    <TypingEffect className="custom-class text-[16px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
                   </AlertDialogDescription>
                   <form
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                       handleUpdateGallery(e, gallery?.slug)
                     }
                     className="w-full flex flex-col gap-y-3 max-h-[500px]">
-                    <div className="w-full flex flex-col gap-y-3 verticalScroll">
-
-                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
-                        <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
+                    <div className="w-full flex flex-col gap-y-5 verticalScroll">
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                        <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                           Judul Foto Kegiatan
                         </Label>
                         <Input
@@ -162,13 +161,13 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
                             })
                           }
                           type="text"
-                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                          className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[16px]"
                           placeholder="Masukkan Judul Foto Kegiatan"
                         />
                       </div>
 
-                      <div className="flex flex-col w-full">
-                        <Label className="text-[14px] md:text-[16px] text-neutral-700 font-normal mb-2">
+                      <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                        <Label className="text-[16px] text-neutral-700 font-normal mb-2">
                           Foto Kegiatan
                         </Label>
                         <div className="flex flex-col md:flex-row w-full">
@@ -225,11 +224,11 @@ export default function SuperBKDGalleryActivitiesMasterDataCard({
                       <Button
                         type="submit"
                         disabled={isUpdateLoading ? true : false}
-                        className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                        className="bg-primary-40 hover:bg-primary-70 text-line-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 text-[16px]">
                         {isUpdateLoading ? (
                           <Loader className="animate-spin" />
                         ) : (
-                          "Update"
+                          "Simpan"
                         )}
                       </Button>
                     </div>
