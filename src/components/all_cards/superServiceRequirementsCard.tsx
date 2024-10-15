@@ -50,8 +50,8 @@ export default function SuperServiceRequirementsCard({
         {item?.Bidang_name && item?.Bidang_name}
       </TableCell>
       <TableCell className="text-center">{item?.nama && item?.nama}</TableCell>
-      <TableCell className="text-center flex items-center w-full">
-        {/* <div className="w-full flex flex-row items-center justify-center gap-x-2">
+      {/* <TableCell className="text-center flex items-center w-full">
+        <div className="w-full flex flex-row items-center justify-center gap-x-2">
           <div className="w-full">
             <AlertDialog
               open={isDialogEditOpen}
@@ -182,8 +182,8 @@ export default function SuperServiceRequirementsCard({
               )}
             </Button>
           </div>
-        </div> */}
-      </TableCell>
+        </div>
+      </TableCell> */}
     </TableRow>
   );
 }

@@ -76,7 +76,7 @@ export default function StructureOrganizationMainScreen() {
 
   const [pagination, setPagination] = useState({
     currentPage: 1,
-    perPage: 5,
+    perPage: 10,
     totalPages: 1,
     totalCount: 0,
   });
@@ -102,12 +102,12 @@ export default function StructureOrganizationMainScreen() {
   };
 
   useEffect(() => {
-    fetchStructureOrganizationMain(1, 5, search);
-  }, [search]);
+    fetchStructureOrganizationMain(1, 10, debounceSearch);
+  }, [debounceSearch]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchStructureOrganizationMain(newPage, 5, "");
+      fetchStructureOrganizationMain(newPage, 10, "");
     }
   };
 
@@ -133,7 +133,7 @@ export default function StructureOrganizationMainScreen() {
   };
 
   useEffect(() => {
-    fetchStructureOrganization(1, 5, "");
+    fetchStructureOrganization(1, 10, "");
   }, []);
 
 
@@ -171,7 +171,7 @@ export default function StructureOrganizationMainScreen() {
           showConfirmButton: false,
           position: "center",
         });
-        fetchStructureOrganizationMain(1, 5, "");
+        fetchStructureOrganizationMain(1, 10, "");
         setIsDialogOpen(false);
         router.push("/super-admin/master-data/structure-organization-main");
       } else {
@@ -215,7 +215,7 @@ export default function StructureOrganizationMainScreen() {
             position: "center",
           });
           setIsDeleteLoading(false);
-          fetchStructureOrganizationMain(1, 5, "");
+          fetchStructureOrganizationMain(1, 10, "");
         }
       }
     } catch (error) {
