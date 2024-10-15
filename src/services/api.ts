@@ -963,7 +963,7 @@ export const getUserComplaints = async (
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/pengaduan/get?page=${page}&limit=${limit}&search=${search}&start_date=${start_date}&end_date=${end_date}&${status != undefined && `status=${status}`}&bidang_id=${bidang_id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/pengaduan/get?page=${page}&limit=${limit}&search=${search}&start_date=${start_date}&end_date=${end_date}&${status != undefined && `status=${status}`} &${bidang_id != undefined && `bidang_id=${bidang_id}`}`,
     {
       method: "GET",
       headers: {
@@ -1522,3 +1522,99 @@ export const updateSignatureLetterApplication = async (
 
   return await response.json();
 };
+
+// get Application history output
+export const getDownloadApplicationPrint = async () =>
+  // bidang_id?: number,
+  // layanan_id?: number,
+  // search?: string,
+  // start_date?: string,
+  // end_date?: string
+  {
+    const token = Cookies.get("Authorization");
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/admin/document/print/application/get`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        cache: "no-store",
+      }
+    );
+
+    return await response.blob();
+  };
+
+// get staff bkd output print
+export const getDownloadStaffBkdPrint = async () =>
+  // bidang_id?: number,
+  // layanan_id?: number,
+  // search?: string,
+  // start_date?: string,
+  // end_date?: string
+  {
+    const token = Cookies.get("Authorization");
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/admin/document/print/staff-bkd/get`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        cache: "no-store",
+      }
+    );
+
+    return await response.blob();
+  };
+
+// get indeks kepuasan detail output print
+export const getDownloadSatisfactionIndexPrint = async (id: number) =>
+  // bidang_id?: number,
+  // layanan_id?: number,
+  // search?: string,
+  // start_date?: string,
+  // end_date?: string
+  {
+    const token = Cookies.get("Authorization");
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/admin/document/print/satisfaction-index/${id}/get`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        cache: "no-store",
+      }
+    );
+
+    return await response.blob();
+  };
+
+// get user complaint output print
+export const getDownloadUserComplaintPrint = async () =>
+  // bidang_id?: number,
+  // layanan_id?: number,
+  // search?: string,
+  // start_date?: string,
+  // end_date?: string
+  {
+    const token = Cookies.get("Authorization");
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/admin/document/print/user-complaint/get`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        cache: "no-store",
+      }
+    );
+
+    return await response.blob();
+  };
