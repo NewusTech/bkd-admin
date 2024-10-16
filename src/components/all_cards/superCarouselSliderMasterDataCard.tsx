@@ -72,6 +72,7 @@ export default function SuperCarouselSliderMasterDataCard({
   handleRemoveImageMobile: () => void;
 }) {
   const dropRef = useRef<HTMLDivElement>(null);
+  const dropRefMobile = useRef<HTMLDivElement>(null);
   const handleSetCarousel = () => {
     setData({
       image: carousel?.image,
@@ -83,11 +84,11 @@ export default function SuperCarouselSliderMasterDataCard({
     <TableRow className="border border-line-20">
       <TableCell className="text-center">{index + 1}</TableCell>
       <TableCell className="text-center">
-        <div className="w-full">
+        <div className="w-full flex gap-4">
           <AlertDialog>
             <AlertDialogTrigger className="w-full">
               <div className="w-full text-[16px] flex items-center justify-center h-10 text-black-80 hover:underline hover:text-primary-40 rounded-lg">
-                Lihat Slider
+                Lihat Slider Dekstop
               </div>
             </AlertDialogTrigger>
             <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
@@ -96,12 +97,43 @@ export default function SuperCarouselSliderMasterDataCard({
                   Master Data
                 </AlertDialogTitle>
                 <AlertDialogDescription className="text-center text-[14px]">
-                  Carousel Slider
+                  Carousel Slider Desktop
                 </AlertDialogDescription>
                 {carousel && (
                   <div className="w-full h-full flex justify-center">
                     <Image
                       src={carousel?.image}
+                      alt="Slider"
+                      width={1000}
+                      height={1000}
+                      className="w-10/12 h-5/6"
+                    />
+                  </div>
+                )}
+              </AlertDialogHeader>
+              <AlertDialogFooter className="w-full flex flex-row justify-center">
+                <AlertDialogCancel className="text-[16px]">Batal</AlertDialogCancel>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+          <AlertDialog>
+            <AlertDialogTrigger className="w-full">
+              <div className="w-full text-[16px] flex items-center justify-center h-10 text-black-80 hover:underline hover:text-primary-40 rounded-lg">
+                Lihat Slider Mobile
+              </div>
+            </AlertDialogTrigger>
+            <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
+              <AlertDialogHeader className="flex flex-col max-h-[500px]">
+                <AlertDialogTitle className="text-center text-[16px]">
+                  Master Data
+                </AlertDialogTitle>
+                <AlertDialogDescription className="text-center text-[14px]">
+                  Carousel Slider Mobile
+                </AlertDialogDescription>
+                {carousel && (
+                  <div className="w-full h-full flex justify-center">
+                    <Image
+                      src={carousel?.image_potrait}
                       alt="Slider"
                       width={1000}
                       height={1000}
@@ -149,7 +181,7 @@ export default function SuperCarouselSliderMasterDataCard({
 
                     <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                       <Label className="text-[16px] text-neutral-700 font-normal mb-2">
-                        Slider
+                        Slider Dekstop
                       </Label>
                       <div className="flex flex-col md:flex-row w-full">
                         <div
@@ -199,8 +231,61 @@ export default function SuperCarouselSliderMasterDataCard({
                       </div>
                     </div>
 
+                    <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                      <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                        Slider Mobile
+                      </Label>
+                      <div className="flex flex-col md:flex-row w-full">
+                        <div
+                          ref={dropRefMobile}
+                          onDragOver={handleDragOver}
+                          onDragLeave={handleDragLeave}
+                          onDrop={handleDropImageMobile}
+                          className={`w-full ${data?.image_potrait || previewImageMobile ? "md:w-8/12" : "w-full"
+                            }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                          <>
+                            <input
+                              type="file"
+                              id="file-input-image-potrait"
+                              name="image_potrait"
+                              accept="image/*"
+                              onChange={handleImageChangeMobile}
+                              className="hidden"
+                            />
+                            <label
+                              htmlFor="file-input-image-potrait"
+                              className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                              Drag and drop file here or click to select
+                              file
+                            </label>
+                          </>
+                        </div>
+                        {(previewImageMobile || data?.image_potrait) && (
+                          <div className="relative md:ml-4 w-full mt-1">
+                            <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
+                              <div className="w-full h-full">
+                                <Image
+                                  src={previewImageMobile || data?.image_potrait}
+                                  width={1000}
+                                  height={1000}
+                                  alt="Preview"
+                                  className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                />
+                              </div>
+                              <button
+                                type="button"
+                                onClick={handleRemoveImageMobile}
+                                className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
+                                <Trash />
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
                     <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                      <AlertDialogCancel className="text-[16px]">Cancel</AlertDialogCancel>
+                      <AlertDialogCancel className="text-[16px]">Batal</AlertDialogCancel>
                       <Button
                         type="submit"
                         disabled={isUpdateLoading ? true : false}
@@ -222,7 +307,7 @@ export default function SuperCarouselSliderMasterDataCard({
             <Button
               disabled={isDeleteLoading ? true : false}
               onClick={() => handleDeleteSlider(carousel?.id)}
-              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 text-[14px]">
+              className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 text-[14px] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
               {isDeleteLoading ? (
                 <Loader className="animate-spin" />
               ) : isDeleteLoading ? (
