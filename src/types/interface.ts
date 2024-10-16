@@ -296,6 +296,7 @@ export interface FaqsCreateInterface {
 export interface CarouselSliderInterface {
   id: number;
   image: string;
+  image_potrait: string;
   createdAt: string;
 }
 

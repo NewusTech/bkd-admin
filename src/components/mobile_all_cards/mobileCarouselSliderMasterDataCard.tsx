@@ -64,6 +64,10 @@ export default function MobileCarouselSliderMasterDataCard({
   handleImageChange,
   handleRemoveImage,
   previewImage,
+  previewImageMobile,
+  handleDropImageMobile,
+  handleImageChangeMobile,
+  handleRemoveImageMobile,
 }: {
   carousel: CarouselSliderInterface;
   index: number;
@@ -71,10 +75,12 @@ export default function MobileCarouselSliderMasterDataCard({
   isDeleteLoading: boolean;
   data: {
     image: string;
+    image_potrait: string;
   };
   setData: React.Dispatch<
     React.SetStateAction<{
       image: string;
+      image_potrait: string;
     }>
   >;
   isUpdateLoading: boolean;
@@ -82,17 +88,22 @@ export default function MobileCarouselSliderMasterDataCard({
   isDialogEditOpen: boolean;
   setIsDialogEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
   previewImage: string;
+  previewImageMobile: string;
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
   handleDragLeave: (e: React.DragEvent<HTMLDivElement>) => void;
   handleDropImage: (e: React.DragEvent<HTMLDivElement>) => void;
   handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleRemoveImage: () => void;
+  handleDropImageMobile: (e: React.DragEvent<HTMLDivElement>) => void;
+  handleImageChangeMobile: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleRemoveImageMobile: () => void;
 }) {
   const router = useRouter();
   const dropRef = useRef<HTMLDivElement>(null);
   const handleSetCarousel = () => {
     setData({
       image: carousel?.image,
+      image_potrait: carousel?.image_potrait,
     });
   };
 
