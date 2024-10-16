@@ -129,11 +129,11 @@ export default function LoginScreen() {
       <div className="relative z-50 flex flex-col w-11/12 md:w-6/12 items-center justify-center gap-y-8 bg-white p-4 py-8 md:p-12 md:py-12 shadow-lg rounded-lg">
         <div className="w-full flex flex-col items-center gap-y-2">
           <h2 className="text-black-80 text-xl text-center">
-            Selamat Datang Di Aplikasi BKD
+            Selamat Datang di Aplikasi SIPADU BKD LAMPUNG TIMUR
           </h2>
 
           <p className="text-black-80 text-center text-sm">
-            Aplikasi BKD mempermudah pengelolaan administrasi kepegawaian dengan
+            Aplikasi SIPADU mempermudah pengelolaan administrasi kepegawaian dengan
             proses cepat, efisien, dan transparan. Login untuk mengakses fitur
             sesuai kebutuhan Anda.
           </p>
