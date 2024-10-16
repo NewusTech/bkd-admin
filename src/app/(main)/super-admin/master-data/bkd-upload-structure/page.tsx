@@ -3,13 +3,9 @@
 import { Button } from "@/components/ui/button";
 import {
   createBKDStructure,
-  createRegulations,
   deleteBKDStructure,
-  deleteRegulations,
   getBKDStructure,
-  getRegulations,
   updateBKDStructure,
-  updateRegulations,
 } from "@/services/api";
 import {
   Drawer,
