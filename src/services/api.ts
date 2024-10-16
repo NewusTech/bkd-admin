@@ -1407,12 +1407,15 @@ export const getSatisfactionIndexReport = async (
 export const getReportHistories = async (
   page?: number,
   limit?: number,
-  search?: string
+  search?: string,
+  layanan_id?: number,
+  start_date?: string,
+  end_date?: string
 ) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/layanan/report/get?page=${page}&limit=${limit}&search=${search}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/layanan/report/get?page=${page}&limit=${limit}&search=${search}&layanan_id=${layanan_id}&start_date=${start_date}&end_date=${end_date}`,
     {
       method: "GET",
       headers: {
@@ -1618,3 +1621,75 @@ export const getDownloadUserComplaintPrint = async () =>
 
     return await response.blob();
   };
+
+// get bkd struktur
+export const getBKDStructure = async () => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/struktur/file/get`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// create bkd struktur
+export const createBKDStructure = async (formData: FormData) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/struktur/file/create`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// update bkd struktur
+export const updateBKDStructure = async (formData: FormData, id: number) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/struktur/file/update/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// delete bkd struktur
+export const deleteBKDStructure = async (id: number) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/struktur/file/delete/${id}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};

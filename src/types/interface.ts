@@ -316,6 +316,14 @@ export interface RegulationInterface {
   updatedAt: string;
 }
 
+export interface UploadBKDInterface {
+  id: number;
+  title: string;
+  file: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface UserComplaintInterface {
   id: number;
   bidang_id: number;

@@ -115,6 +115,9 @@ export default function DivisionVerificationAdminDashboardPages() {
     }
   }, [router]);
 
+  console.log(areaId, "ini area id");
+  console.log(role, "ini role");
+
   const startDateFormatted = startDate
     ? formatDate(new Date(startDate))
     : undefined;
@@ -1068,8 +1071,8 @@ export default function DivisionVerificationAdminDashboardPages() {
           </div>
         )}
 
-        {/* <div className="w-full">{users.length === 0 && <DataNotFound />}</div> */}
-        <div className="w-full">{users === undefined && <DataNotFound />}</div>
+        <div className="w-full">{users.length === 0 && <DataNotFound />}</div>
+        {/* <div className="w-full">{users === undefined && <DataNotFound />}</div> */}
       </div>
     </div>
   );

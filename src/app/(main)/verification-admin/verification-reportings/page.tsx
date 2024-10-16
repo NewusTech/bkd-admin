@@ -11,8 +11,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import VerificationReportingTablePages from "@/components/tables/verification_admin_reporting_table";
-import { ReportDataInterface } from "@/types/interface";
-import { getReportHistories } from "@/services/api";
+import { ReportDataInterface, ServiceInterface } from "@/types/interface";
+import { getReportHistories, getService } from "@/services/api";
 import PaginationComponent from "@/components/elements/pagination";
 import DataNotFound from "@/components/elements/data_not_found";
 import { useRouter } from "next/navigation";
@@ -20,6 +20,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 import DatePages from "@/components/elements/date";
 import SearchPages from "@/components/elements/search";
 import MobileReportingCard from "@/components/mobile_all_cards/mobileReportingsCard";
+import { start } from "repl";
 
 export default function VerificationUserApplicationRevitionHistoriesScreen() {
   const router = useRouter();
@@ -34,7 +35,9 @@ export default function VerificationUserApplicationRevitionHistoriesScreen() {
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
   const [startDate, setStartDate] = useState<Date | undefined>(firstDayOfMonth);
   const [endDate, setEndDate] = useState<Date | undefined>(new Date());
+  const [layananId, setLayananId] = useState<number | undefined>(undefined);
   const [reports, setReports] = useState<ReportDataInterface[]>([]);
+  const [services, setServices] = useState<ServiceInterface[]>([]);
   const [pagination, setPagination] = useState({
     currentPage: 1,
     perPage: 10,
@@ -48,9 +51,37 @@ export default function VerificationUserApplicationRevitionHistoriesScreen() {
     : undefined;
   const endDateFormatted = endDate ? formatDate(new Date(endDate)) : undefined;
 
-  const fetchReportData = async (page: number, limit: number, search: string) => {
+  const fetchService = async (page: number, limit: number, search?: string) => {
     try {
-      const response = await getReportHistories(page, limit, search);
+      const response = await getService(page, limit, search);
+
+      setServices(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchService(1, 100, "");
+  }, []);
+
+  const fetchReportData = async (
+    page: number,
+    limit: number,
+    search: string,
+    layanan_id?: number,
+    start_date?: string,
+    end_date?: string
+  ) => {
+    try {
+      const response = await getReportHistories(
+        page,
+        limit,
+        search,
+        layanan_id,
+        start_date,
+        end_date
+      );
 
       setReports(response?.data?.report);
       setPagination((prev) => ({
@@ -65,12 +96,26 @@ export default function VerificationUserApplicationRevitionHistoriesScreen() {
   };
 
   useEffect(() => {
-    fetchReportData(1, 5, search);
-  }, [search]);
+    fetchReportData(
+      1,
+      5,
+      debounceSearch,
+      layananId,
+      startDateFormatted,
+      endDateFormatted
+    );
+  }, [debounceSearch, layananId, startDateFormatted, endDateFormatted]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchReportData(newPage, 5, "");
+      fetchReportData(
+        newPage,
+        5,
+        "",
+        layananId,
+        startDateFormatted,
+        endDateFormatted
+      );
     }
   };
 
@@ -80,34 +125,32 @@ export default function VerificationUserApplicationRevitionHistoriesScreen() {
         className={`w-full flex flex-col ${!isMobile ? "bg-white shadow-md rounded-lg p-5" : ""} gap-y-3`}>
         <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
           <Select
-          // onValueChange={handleSelectStatusChange}
-          >
+            onValueChange={(value) =>
+              setLayananId(value === "all" ? undefined : Number(value))
+            }>
             <SelectTrigger
-              className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-              {/* <Checks className="w-6 h-6 text-black-80" /> */}
+              className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
               <SelectValue
                 placeholder="Pilih Layanan"
-                className="text-black-80 text-[14px] md:text-[16px] w-full"
+                className="text-black-80 tex-[14px] w-full"
               />
             </SelectTrigger>
             <SelectContent className="bg-line-10">
               <div className="pt-2">
-                {/* {statusDatas &&
-                statusDatas.map(
-                  (status: { id: number; value: string }, i: number) => {
+                <SelectItem className="w-full px-4" value="all">
+                  Semua Status
+                </SelectItem>
+                {services &&
+                  services.map((service: ServiceInterface, i: number) => {
                     return (
                       <SelectItem
                         key={i}
-                        className={`w-full px-4 text-[14px] md:text-[16px]`}
-                        value={status.id.toString()}>
-                        {status.value}
+                        className={`w-full px-4`}
+                        value={service.id.toString()}>
+                        {service?.nama}
                       </SelectItem>
                     );
-                  }
-                )} */}
-                <SelectItem className="w-full px-4 pl-8" value="1">
-                  Hello World
-                </SelectItem>
+                  })}
               </div>
             </SelectContent>
           </Select>
