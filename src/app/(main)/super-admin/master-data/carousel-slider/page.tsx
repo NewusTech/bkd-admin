@@ -44,6 +44,7 @@ import TypingEffect from "@/components/ui/TypingEffect";
 export default function CarouselSliderScreen() {
   const router = useRouter();
   const dropRef = useRef<HTMLDivElement>(null);
+  const dropRefMobile = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
@@ -53,8 +54,11 @@ export default function CarouselSliderScreen() {
   const [carousels, setCarousels] = useState<CarouselSliderInterface[]>([]);
   const [fileImage, setFileImage] = useState(null);
   const [previewImage, setPreviewImage] = useState("");
+  const [fileImageMobile, setFileImageMobile] = useState(null);
+  const [previewImageMobile, setPreviewImageMobile] = useState("");
   const [data, setData] = useState({
     image: "",
+    image_potrait: "",
   });
 
   const fetchCarouselSliders = async () => {
@@ -113,6 +117,42 @@ export default function CarouselSliderScreen() {
     setData({ ...data, image: "" });
   };
 
+  // mobile
+  const handleImageChangeMobile = (e: any) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFileImageMobile(file);
+      setData({
+        ...data,
+        image_potrait: file.name,
+      });
+      const fileUrl = URL.createObjectURL(file);
+      setPreviewImageMobile(fileUrl);
+    }
+  };
+
+  const handleDropImageMobile = (e: any) => {
+    e.preventDefault();
+
+    const file = e.dataTransfer.files?.[0];
+    if (file) {
+      setFileImageMobile(file);
+      setData({
+        ...data,
+        image_potrait: file.name,
+      });
+      const fileUrl = URL.createObjectURL(file);
+      setPreviewImageMobile(fileUrl);
+    }
+  };
+
+  const handleRemoveImageMobile = () => {
+    setFileImageMobile(null);
+    setPreviewImageMobile("");
+    setData({ ...data, image_potrait: "" });
+  };
+  // Mobile
+
   const handleCreateSlider = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
@@ -122,12 +162,19 @@ export default function CarouselSliderScreen() {
       formData.append("image", fileImage);
     }
 
+    if (fileImageMobile) {
+      formData.append("image_potrait", fileImageMobile);
+    }
+
     try {
       const response = await postCarouselSliders(formData);
+
+      console.log(response, "lala lili");
 
       if (response.status === 201) {
         setData({
           image: "",
+          image_potrait: "",
         });
         Swal.fire({
           icon: "success",
@@ -202,12 +249,17 @@ export default function CarouselSliderScreen() {
       formData.append("image", fileImage);
     }
 
+    if (fileImageMobile) {
+      formData.append("image_potrait", fileImageMobile);
+    }
+
     try {
       const response = await updateCarouselSliders(id, formData);
 
       if (response.status === 200) {
         setData({
           image: "",
+          image_potrait: "",
         });
         setFileImage(null);
         setPreviewImage("");
@@ -272,7 +324,7 @@ export default function CarouselSliderScreen() {
                       <div className="w-full flex flex-col gap-y-5 verticalScroll">
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                           <Label className="text-[16px] text-neutral-700 font-normal mb-2">
-                            Slider
+                            Slider Dekstop
                           </Label>
                           <div className="flex flex-col md:flex-row w-full">
                             <div
@@ -322,8 +374,61 @@ export default function CarouselSliderScreen() {
                             )}
                           </div>
                         </div>
+
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                            Slider Mobile
+                          </Label>
+                          <div className="flex flex-col md:flex-row w-full">
+                            <div
+                              ref={dropRefMobile}
+                              onDragOver={handleDragOver}
+                              onDragLeave={handleDragLeave}
+                              onDrop={handleDropImageMobile}
+                              className={`w-full ${previewImageMobile ? "md:w-8/12" : "w-full"
+                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              <>
+                                <input
+                                  type="file"
+                                  id="file-input-image-potrait"
+                                  name="image_potrait"
+                                  accept="image/*"
+                                  onChange={handleImageChangeMobile}
+                                  className="hidden"
+                                />
+                                <label
+                                  htmlFor="file-input-image-potrait"
+                                  className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                  Drag and drop file here or click to select
+                                  file
+                                </label>
+                              </>
+                            </div>
+                            {previewImageMobile && (
+                              <div className="relative md:ml-4 w-full mt-1">
+                                <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
+                                  <div className="w-full h-full">
+                                    <Image
+                                      src={previewImageMobile}
+                                      width={1000}
+                                      height={1000}
+                                      alt="Preview"
+                                      className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                    />
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={handleRemoveImageMobile}
+                                    className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
+                                    <Trash />
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       </div>
-                      <div className="w-full flex flex-row justify-center items-center gap-x-5">
+                      <div className="w-full flex flex-row justify-between items-center gap-x-5">
                         <AlertDialogCancel className="text-[16px]">Cancel</AlertDialogCancel>
                         <Button
                           type="submit"
@@ -458,6 +563,12 @@ export default function CarouselSliderScreen() {
                   handleDropImage={handleDropImage}
                   handleImageChange={handleImageChange}
                   handleRemoveImage={handleRemoveImage}
+
+                  previewImageMobile={previewImageMobile}
+                  handleDropImageMobile={handleDropImageMobile}
+                  handleImageChangeMobile={handleImageChangeMobile}
+                  handleRemoveImageMobile={handleRemoveImageMobile}
+
                   handleDeleteSlider={handleDeleteSlider}
                   isDeleteLoading={isDeleteLoading}
                   data={data}
@@ -486,6 +597,12 @@ export default function CarouselSliderScreen() {
                         handleDropImage={handleDropImage}
                         handleImageChange={handleImageChange}
                         handleRemoveImage={handleRemoveImage}
+
+                        previewImageMobile={previewImageMobile}
+                        handleDropImageMobile={handleDropImageMobile}
+                        handleImageChangeMobile={handleImageChangeMobile}
+                        handleRemoveImageMobile={handleRemoveImageMobile}
+
                         handleDeleteSlider={handleDeleteSlider}
                         isDeleteLoading={isDeleteLoading}
                         data={data}

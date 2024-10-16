@@ -26,16 +26,22 @@ export default function SuperCarouselSliderMasterDataTablePages({
   handleDropImage,
   handleImageChange,
   handleRemoveImage,
+  previewImageMobile,
+  handleDropImageMobile,
+  handleImageChangeMobile,
+  handleRemoveImageMobile,
 }: {
   carousels: CarouselSliderInterface[];
   handleDeleteSlider: (id: number) => void;
   isDeleteLoading: boolean;
   data: {
     image: string;
+    image_potrait: string;
   };
   setData: React.Dispatch<
     React.SetStateAction<{
       image: string;
+      image_potrait: string;
     }>
   >;
   isUpdateLoading: boolean;
@@ -43,11 +49,15 @@ export default function SuperCarouselSliderMasterDataTablePages({
   setIsDialogEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
   handleUpdateSlider: (e: React.FormEvent<HTMLFormElement>, id: number) => void;
   previewImage: string;
+  previewImageMobile: string;
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
   handleDragLeave: (e: React.DragEvent<HTMLDivElement>) => void;
   handleDropImage: (e: React.DragEvent<HTMLDivElement>) => void;
   handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleRemoveImage: () => void;
+  handleDropImageMobile: (e: React.DragEvent<HTMLDivElement>) => void;
+  handleImageChangeMobile: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleRemoveImageMobile: () => void;
 }) {
   return (
     <>
@@ -74,6 +84,12 @@ export default function SuperCarouselSliderMasterDataTablePages({
                   handleDropImage={handleDropImage}
                   handleImageChange={handleImageChange}
                   handleRemoveImage={handleRemoveImage}
+
+                  previewImageMobile={previewImageMobile}
+                  handleDropImageMobile={handleDropImageMobile}
+                  handleImageChangeMobile={handleImageChangeMobile}
+                  handleRemoveImageMobile={handleRemoveImageMobile}
+
                   handleDeleteSlider={handleDeleteSlider}
                   isDeleteLoading={isDeleteLoading}
                   data={data}
