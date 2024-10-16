@@ -475,7 +475,7 @@ export default function CarouselSliderScreen() {
                       <div className="w-full flex flex-col gap-y-5 verticalScroll">
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                           <Label className="text-[14px] text-neutral-700 font-normal mb-2">
-                            Slider
+                            Slider Dekstop
                           </Label>
                           <div className="flex flex-col md:flex-row w-full">
                             <div
@@ -517,6 +517,58 @@ export default function CarouselSliderScreen() {
                                   <button
                                     type="button"
                                     onClick={handleRemoveImage}
+                                    className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
+                                    <Trash />
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label className="text-[16px] text-neutral-700 font-normal mb-2">
+                            Slider Mobile
+                          </Label>
+                          <div className="flex flex-col md:flex-row w-full">
+                            <div
+                              ref={dropRefMobile}
+                              onDragOver={handleDragOver}
+                              onDragLeave={handleDragLeave}
+                              onDrop={handleDropImageMobile}
+                              className={`w-full ${previewImageMobile ? "md:w-8/12" : "w-full"
+                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              <>
+                                <input
+                                  type="file"
+                                  id="file-input-image-potrait"
+                                  name="image_potrait"
+                                  accept="image/*"
+                                  onChange={handleImageChangeMobile}
+                                  className="hidden"
+                                />
+                                <label
+                                  htmlFor="file-input-image-potrait"
+                                  className="text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                  Drag and drop file here or click to select
+                                  file
+                                </label>
+                              </>
+                            </div>
+                            {previewImageMobile && (
+                              <div className="relative md:ml-4 w-full mt-1">
+                                <div className="border-2 border-dashed flex justify-center rounded-xl p-2">
+                                  <div className="w-full h-full">
+                                    <Image
+                                      src={previewImageMobile}
+                                      width={1000}
+                                      height={1000}
+                                      alt="Preview"
+                                      className="max-h-full rounded-xl p-4 md:p-2 max-w-full object-contain"
+                                    />
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={handleRemoveImageMobile}
                                     className="absolute bg-none -top-0 -right-0 md:-top-0 md:-right-0 text-neutral-800 p-1">
                                     <Trash />
                                   </button>
