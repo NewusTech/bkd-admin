@@ -355,6 +355,10 @@ export const masterDataSupers = [
     id: 15,
     name: "Lokasi - Maps",
   },
+  {
+    id: 16,
+    name: "Struktur Pengurus BKD",
+  },
 ];
 
 export const masterDataAreasHeads = [

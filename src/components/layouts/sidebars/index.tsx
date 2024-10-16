@@ -1281,6 +1281,10 @@ export default function DashBoardSidebarPages() {
                                   linking =
                                     "/super-admin/master-data/location-maps";
                                   break;
+                                case "Struktur Pengurus BKD":
+                                  linking =
+                                    "/super-admin/master-data/bkd-upload-structure";
+                                  break;
                                 default:
                                   break;
                               }
