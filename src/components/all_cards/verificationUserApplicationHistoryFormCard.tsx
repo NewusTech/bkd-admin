@@ -81,7 +81,7 @@ export default function UserApplicationHistoryFormCard({
 
         <div className="w-full">
           <AlertDialog>
-            <AlertDialogTrigger className="w-2/12">
+            <AlertDialogTrigger className="w-full md:w-2/12">
               <div className="w-full bg-primary-40 hover:bg-primary-70 text-line-10 text-[14px] md:text-[16px] flex justify-center items-center h-10 hover:underline rounded-lg">
                 Lihat File
               </div>
