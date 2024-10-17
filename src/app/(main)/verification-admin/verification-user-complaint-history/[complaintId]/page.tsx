@@ -158,7 +158,7 @@ export default function VerificationUserComplaintDetailScreen({
               <ChevronLeft className="w-7 h-7 text-black-80 mr-2" />
             </button>
 
-            <h5 className="text-xl text-start text-black-80 font-normal">
+            <h5 className="text-[16px] md:text-xl text-start text-black-80 font-normal">
               Detail Hasil Pengaduan
             </h5>
           </div>
@@ -167,7 +167,7 @@ export default function VerificationUserComplaintDetailScreen({
             (role === "Super Admin" ||
               role === "Admin Verifikasi" ||
               role === "Kepala Bidang") && (
-              <div className="w-3/12">
+              <div className="w-1/2 md:w-3/12">
                 <AlertDialog
                   open={isModalOpenUpdate}
                   onOpenChange={setIsModalOpenUpdate}>
@@ -316,7 +316,7 @@ export default function VerificationUserComplaintDetailScreen({
 
                 <AlertDialog>
                   <AlertDialogTrigger className="w-full flex justify-end">
-                    <div className="w-5/12 text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
+                    <div className="w-full md:w-5/12 text-[14px] md:text-[16px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
                       Lihat Dokumen
                     </div>
                   </AlertDialogTrigger>

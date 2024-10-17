@@ -133,14 +133,14 @@ export default function SuperAccountManagingRolesCard({
         <TableCell className="text-sm">
           {account?.Role && account?.Role}
         </TableCell>
-        <TableCell className="text-center flex items-center w-full">
+        <TableCell className="">
           <div className="w-full flex flex-row items-center justify-center gap-x-2">
             {/* <div className="w-full">
             <Button title="Lihat Data" className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
               Lihat
             </Button>
           </div> */}
-            <div className="w-full">
+            {/* <div className="w-full">
               <AlertDialog
                 open={isDialogEditOpen}
                 onOpenChange={setIsDialogEditOpen}>
@@ -151,8 +151,6 @@ export default function SuperAccountManagingRolesCard({
                   }}
                   className="w-full">
                   <div
-                    // name="Edit"
-                    // title="Edit Data"
                     className="h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10">
                     Lihat
                   </div>
@@ -171,9 +169,9 @@ export default function SuperAccountManagingRolesCard({
                     </div>
 
                     <form
-                      // onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
-                      //   handleUpdateArea(e, area?.slug)
-                      // }
+                      onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
+                        handleUpdateArea(e, area?.slug)
+                      }
                       className="w-full flex flex-col gap-y-3 max-h-[500px]">
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
                         <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
@@ -369,10 +367,9 @@ export default function SuperAccountManagingRolesCard({
                       </div>
                     </form>
                   </AlertDialogHeader>
-                  {/* <AlertDialogFooter className="w-full flex flex-row justify-center items-center gap-x-5"></AlertDialogFooter> */}
                 </AlertDialogContent>
               </AlertDialog>
-            </div>
+            </div> */}
 
             <div className="w-full">
               <AlertDialog
@@ -387,7 +384,7 @@ export default function SuperAccountManagingRolesCard({
                   <div
                     // name="Edit"
                     // title="Edit Data"
-                    className="h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10">
+                    className="h-10 text-[16px] px-3 rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-fit m-auto">
                     Edit
                   </div>
                 </AlertDialogTrigger>
@@ -608,7 +605,7 @@ export default function SuperAccountManagingRolesCard({
               </AlertDialog>
             </div>
 
-            <div className="w-full">
+            {/* <div className="w-full">
               <Button
                 title="Hapus Data"
                 disabled={isDeleteLoading ? true : false}
@@ -622,7 +619,7 @@ export default function SuperAccountManagingRolesCard({
                   "Hapus"
                 )}
               </Button>
-            </div>
+            </div> */}
           </div>
         </TableCell>
       </TableRow>

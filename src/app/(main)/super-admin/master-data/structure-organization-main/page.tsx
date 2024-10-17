@@ -413,23 +413,18 @@ export default function StructureOrganizationMainScreen() {
                               </SelectTrigger>
                               <SelectContent className="bg-line-10 text-[14px]">
                                 <div className="pt-2">
-                                  {/* {organizations &&
+                                  {organizations &&
                                     organizations.length > 0 &&
                                     organizations.map(
-                                      (
-                                        organization: StructureOrganizationInterface,
-                                        i: number
-                                      ) => {
-                                        return (
-                                          <SelectItem
-                                            key={i}
-                                            className={`w-full px-4 text-[14px]`}
-                                            value={organization.id.toString()}>
-                                            {organization?.jabatan}
-                                          </SelectItem>
-                                        );
-                                      }
-                                    )} */}
+                                      (organization: StructureOrganizationInterface, i: number) => (
+                                        <SelectItem
+                                          key={i}
+                                          className={`w-full px-4 text-[16px]`}
+                                          value={organization.id.toString()}>
+                                          {organization.nama}
+                                        </SelectItem>
+                                      )
+                                    )}
                                 </div>
                               </SelectContent>
                             </Select>
@@ -483,24 +478,35 @@ export default function StructureOrganizationMainScreen() {
               )}
             </>
           ) : (
-            <></>
-            // <div className="w-full flex flex-col gap-y-5">
-            //   {mainOrganizations &&
-            //     mainOrganizations.length > 0 &&
-            //     mainOrganizations?.map(
-            //       (organization: StructureOrganizationInterface, i: number) => {
-            //         return (
-            //           <MobileStructureOrganizationMainMasterDataCard
-            //             key={i}
-            //             organization={organization}
-            //             index={i}
-            //             data={data}
-            //             setData={setData}
-            //           />
-            //         );
-            //       }
-            //     )}
-            // </div>
+            <>
+              <div className="w-full flex flex-col gap-y-5">
+                {mainOrganizations &&
+                  mainOrganizations.length > 0 &&
+                  mainOrganizations?.map(
+                    (organization: StructureOrganizationInterfaceMain, i: number) => {
+                      return (
+                        <MobileStructureOrganizationMainMasterDataCard
+                          key={i}
+                          organization={organization}
+                          index={i}
+                          handleDeleteStructureOrganizationMain={
+                            handleDeleteStructureOrganization
+                          }
+                          isDeleteLoading={isDeleteLoading}
+                          data={data}
+                          setData={setData}
+                          isUpdateLoading={isUpdateLoading}
+                          // handleUpdateStructureOrganization={
+                          //   handleUpdateStructureOrganization
+                          // }
+                          isDialogEditOpen={isDialogEditOpen}
+                          setIsDialogEditOpen={setIsDialogEditOpen}
+                        />
+                      );
+                    }
+                  )}
+              </div>
+            </>
           )}
         </div>
 
