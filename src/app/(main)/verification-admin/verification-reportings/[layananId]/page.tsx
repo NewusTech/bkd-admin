@@ -111,7 +111,7 @@ export default function VerificationReportingsDetailScreen({
           </button>
 
           <h5 className="text-xl text-start text-black-80 font-normal">
-            Detail Verification Reporting
+            Kembali
           </h5>
         </div>
       </div>
@@ -120,7 +120,7 @@ export default function VerificationReportingsDetailScreen({
         className={`w-full flex flex-col ${!isMobile ? "bg-white shadow-md rounded-lg p-5" : ""} gap-y-5 pb-10`}>
         {!isMobile && (
           <h2 className="text-2xl text-black-80 text-center md:mb-6">
-            Verification Reportings
+            Detail Laporan
           </h2>
         )}
 
