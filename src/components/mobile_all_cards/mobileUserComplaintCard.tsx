@@ -70,7 +70,7 @@ export default function MobileUserComplaintCardPages({
 
       <div className="w-full">
         <Button
-          onClick={() => router.push(`/user-complaint/${complaint.id}`)}
+          onClick={() => router.push(`/verification-admin/verification-user-complaint-history/${complaint.id}`)}
           className="bg-black-80 bg-opacity-20 text-[14px] md:text-[16px] hover:bg-black-80 hover:bg-opacity-50 text-black-80 w-full rounded-lg">
           Detail
         </Button>

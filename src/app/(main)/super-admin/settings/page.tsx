@@ -46,10 +46,10 @@ export default function SuperSettingScreen() {
         <div className="w-full border border-line-20 rounded-lg">
           <Select onValueChange={(value) => setServiceId(Number(value))}>
             <SelectTrigger
-              className={`w-full text-[14px] md:text-[16px] gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+              className={`w-full text-[14px] md:text-[16px] gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none bg-white`}>
               <SelectValue
                 placeholder="Pilih Layanan"
-                className="text-black-80 text-[14px] md:text-[16px] w-full"
+                className="text-black-80 text-[14px] md:text-[16px] w-full bg-white"
               />
             </SelectTrigger>
             <SelectContent className="bg-line-10">
@@ -74,7 +74,7 @@ export default function SuperSettingScreen() {
         {serviceId ? (
           <Link
             href={`/super-admin/settings/${serviceId}`}
-            className="w-3/12 cursor-pointer p-10 group flex flex-col gap-y-5 border border-line-20 rounded-lg shadow-md bg-line-10 hover:bg-primary-40">
+            className="w-full md:w-3/12 cursor-pointer p-10 group flex flex-col gap-y-5 border border-line-20 rounded-lg shadow-md bg-line-10 hover:bg-primary-40">
             <div className="w-full h-[100px]">
               <Image
                 src={active}
@@ -85,12 +85,12 @@ export default function SuperSettingScreen() {
               />
             </div>
 
-            <h6 className="text-black-80 group-hover:text-line-10 text-center font-normal text-[20px]">
+            <h6 className="text-black-80 group-hover:text-line-10 text-center font-normal text-[18px] md:text-[20px]">
               Format Surat
             </h6>
           </Link>
         ) : (
-          <div className="w-3/12 p-10 cursor-not-allowed group flex flex-col gap-y-5 border border-line-20 rounded-lg shadow-md bg-line-10">
+          <div className="w-full md:w-3/12 p-10 cursor-not-allowed group flex flex-col gap-y-5 border border-line-20 rounded-lg shadow-md bg-line-10">
             <div className="w-full h-[100px]">
               <Image
                 src={Deactive}
@@ -101,7 +101,7 @@ export default function SuperSettingScreen() {
               />
             </div>
 
-            <h6 className="text-black-80 text-center font-normal text-[20px]">
+            <h6 className="text-black-80 text-center font-normal text-[18px] md:text-[20px]">
               Format Surat
             </h6>
           </div>

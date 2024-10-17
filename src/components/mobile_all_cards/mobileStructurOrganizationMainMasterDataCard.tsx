@@ -34,6 +34,7 @@ import {
 import {
   NewsInterface,
   StructureOrganizationInterface,
+  StructureOrganizationInterfaceMain,
 } from "@/types/interface";
 import Image from "next/image";
 import { Label } from "../ui/label";
@@ -60,19 +61,19 @@ import TypingEffect from "../ui/TypingEffect";
 export default function MobileStructureOrganizationMainMasterDataCard({
   organization,
   index,
-  // handleDeleteStructureOrganization,
-  // isDeleteLoading,
+  handleDeleteStructureOrganizationMain,
+  isDeleteLoading,
   data,
   setData,
-  // isUpdateLoading,
+  isUpdateLoading,
   // handleUpdateStructureOrganization,
-  // isDialogEditOpen,
-  // setIsDialogEditOpen,
+  isDialogEditOpen,
+  setIsDialogEditOpen,
 }: {
-  organization: StructureOrganizationInterface;
+  organization: StructureOrganizationInterfaceMain;
   index: number;
-  // handleDeleteStructureOrganization: (slug: string) => void;
-  // isDeleteLoading: boolean;
+  handleDeleteStructureOrganizationMain: (id: number) => void;
+  isDeleteLoading: boolean;
   data: {
     bkdstruktur_id: string;
   };
@@ -81,15 +82,14 @@ export default function MobileStructureOrganizationMainMasterDataCard({
       bkdstruktur_id: string;
     }>
   >;
-  // isUpdateLoading: boolean;
+  isUpdateLoading: boolean;
   // handleUpdateStructureOrganization: (
   //   e: React.FormEvent<HTMLFormElement>,
   //   slug: string
   // ) => void;
-  // isDialogEditOpen: boolean;
-  // setIsDialogEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isDialogEditOpen: boolean;
+  setIsDialogEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const router = useRouter();
   const dropRef = useRef<HTMLDivElement>(null);
   const handleSetGallery = () => {
     setData({
@@ -111,22 +111,21 @@ export default function MobileStructureOrganizationMainMasterDataCard({
             </DropdownMenuTrigger>
             <DropdownMenuContent className="transition-all duration-300 ease-in-out opacity-1 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 bg-white border border-gray-300 shadow-2xl rounded-md w-fit mr-6">
               <DropdownMenuLabel className="font-semibold text-primary text-sm w-full shadow-md">
-                Actions
+                Aksi
               </DropdownMenuLabel>
-              {/* <hr className="border border-primary transition-all ease-in-out animate-pulse ml-2 mr-2" /> */}
               <div className="h-1 w-full bg-gradient-to-r from-transparent via-primary to-transparent transition-all animate-pulse"></div>
               <div className="bg-white w-full h-full">
                 <div className="gap-4 w-full px-2 py-2">
-                  <div className="w-full mb-2">
+                  {/* <div className="w-full mb-2">
                     <div className="w-full">
                       <Drawer
-                      // open={isDialogEditOpen} onOpenChange={setIsDialogEditOpen}
+                        open={isDialogEditOpen} onOpenChange={setIsDialogEditOpen}
                       >
                         <DrawerTrigger
-                          // onClick={() => {
-                          //   handleSetService();
-                          //   setIsDialogEditOpen(true);
-                          // }}
+                          onClick={() => {
+                            handleSetService();
+                            setIsDialogEditOpen(true);
+                          }}
                           className="h-10 text-xs md:text-sm rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-full">
                           Edit
                         </DrawerTrigger>
@@ -136,9 +135,9 @@ export default function MobileStructureOrganizationMainMasterDataCard({
                               Master Data Berita
                             </DrawerTitle>
                             <form
-                              // onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
-                              //   handleUpdateNews(e, item?.slug)
-                              // }
+                              onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
+                                handleUpdateNews(e, item?.slug)
+                              }
                               className="w-full flex flex-col gap-y-3 max-h-full h-[700px]">
                               <DrawerDescription className="text-center">
                                 <TypingEffect className="custom-class md:text-sm text-xs" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
@@ -151,7 +150,7 @@ export default function MobileStructureOrganizationMainMasterDataCard({
                                   </Label>
 
                                   <Select
-                                  // onValueChange={handleSelectChange}
+                                    onValueChange={handleSelectChange}
                                   >
                                     <SelectTrigger
                                       className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
@@ -161,25 +160,25 @@ export default function MobileStructureOrganizationMainMasterDataCard({
                                       />
                                     </SelectTrigger>
                                     <SelectContent className="bg-line-10">
-                                      {/* <div className="pt-2">
-                                {organizations &&
-                                  organizations.length > 0 &&
-                                  organizations.map(
-                                    (
-                                      organization: StructureOrganizationInterface,
-                                      i: number
-                                    ) => {
-                                      return (
-                                        <SelectItem
-                                          key={i}
-                                          className={`w-full px-4`}
-                                          value={organization.id.toString()}>
-                                          {organization?.jabatan}
-                                        </SelectItem>
-                                      );
-                                    }
-                                  )}
-                              </div> */}
+                                      <div className="pt-2">
+                                        {organizations &&
+                                          organizations.length > 0 &&
+                                          organizations.map(
+                                            (
+                                              organization: StructureOrganizationInterface,
+                                              i: number
+                                            ) => {
+                                              return (
+                                                <SelectItem
+                                                  key={i}
+                                                  className={`w-full px-4`}
+                                                  value={organization.id.toString()}>
+                                                  {organization?.jabatan}
+                                                </SelectItem>
+                                              );
+                                            }
+                                          )}
+                                      </div>
                                     </SelectContent>
                                   </Select>
                                 </div>
@@ -191,13 +190,13 @@ export default function MobileStructureOrganizationMainMasterDataCard({
                                 <Button
                                   title="Simpan Data"
                                   type="submit"
-                                  // disabled={isUpdateLoading ? true : false}
+                                  disabled={isUpdateLoading ? true : false}
                                   className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
-                                  {/* {isUpdateLoading ? (
+                                  {isUpdateLoading ? (
                                     <Loader className="animate-spin" />
                                   ) : (
                                     "Simpan"
-                                  )} */}
+                                  )}
                                 </Button>
                               </div>
                             </form>
@@ -205,34 +204,29 @@ export default function MobileStructureOrganizationMainMasterDataCard({
                         </DrawerContent>
                       </Drawer>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="w-full">
                     <Button
-                      // disabled={isDeleteLoading ? true : false}
-                      // onClick={() =>
-                      //   handleDeleteStructureOrganization(organization?.slug)
-                      // }
+                      disabled={isDeleteLoading ? true : false}
+                      onClick={() =>
+                        handleDeleteStructureOrganizationMain(organization?.select_id)
+                      }
                       className="w-full rounded-lg bg-error-60 hover:bg-error-70 text-line-10 text-xs md:text-sm">
-                      {/* {isDeleteLoading ? (
-                <Loader className="animate-spin" />
-              ) : isDeleteLoading ? (
-                ""
-              ) : (
-                "Hapus"
-              )} */}
-                      Hapus
+                      {isDeleteLoading ? (
+                        <Loader className="animate-spin" />
+                      ) : isDeleteLoading ? (
+                        ""
+                      ) : (
+                        "Hapus"
+                      )}
                     </Button>
                   </div>
                 </div>
               </div>
             </DropdownMenuContent>
           </DropdownMenu>
-          {/* <hr className="border border-primary transition-all ease-in-out animate-pulse ml-2 mr-2" /> */}
         </div>
       </div>
-
-
-
 
       <div className="w-full grid grid-cols-3">
         <div className="w-full text-[14px] md:text-[16px]">No.</div>

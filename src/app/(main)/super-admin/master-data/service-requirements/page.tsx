@@ -19,6 +19,8 @@ import AddIcon from "@/components/elements/add_button";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import SearchPages from "@/components/elements/search";
 import { useDebounce } from "@/hooks/useDebounce";
+import MobileSuperServiceRequirementsMasterDataTablePages from "@/components/mobile_all_cards/mobileSuperServiceRequirementsMasterDataTablePages";
+import NotFoundSearch from "@/components/ui/SearchNotFound";
 
 export default function ServiceRequiremnts() {
   const [instance, setInstance] = useState<string>("");
@@ -159,7 +161,7 @@ export default function ServiceRequiremnts() {
           {/* Dekstop */}
           <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
             <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
-              <div className="w-full flex flex-row justify-between gap-x-5">
+              <div className="w-full flex flex-row justify-end gap-x-5">
                 {/* <div className="w-[80%] border border-b rounded-lg z-50">
                   <SearchPages
                     search={search}
@@ -167,15 +169,13 @@ export default function ServiceRequiremnts() {
                     placeholder="Pencarian"
                   />
                 </div> */}
-                <div className="w-fit flex justify-end m-auto">
-                  <div className="flex justify-end items-center w-full">
-                    <Link
-                      href="/super-admin/master-data/service-requirements/create"
-                      className="bg-primary-40 w-full group h-11 text-[16px] px-3 rounded-lg text-white hover:bg-primary-70 border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110duration-300 py-2">
-                      <AddIcon className="w-4 h-4 text-line-10" />
-                      Tambah
-                    </Link>
-                  </div>
+                <div className="w-fit flex justify-end ">
+                  <Link
+                    href="/super-admin/master-data/service-requirements/create"
+                    className="bg-primary-40 w-fit group h-11 text-[16px] px-3 rounded-lg text-white hover:bg-primary-70 border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                    <AddIcon className="w-4 h-4 text-line-10" />
+                    Tambah
+                  </Link>
                 </div>
               </div>
 
@@ -195,10 +195,10 @@ export default function ServiceRequiremnts() {
           {/* mobile */}
           <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
             <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
-              <h1 className="text-lg text-center">Kelola Persyaratan</h1>
+              {/* <h1 className="text-lg text-center">Kelola Persyaratan</h1> */}
 
               <div className="w-full gap-x-5">
-                <div className="w-full border border-b rounded-lg z-50">
+                {/* <div className="w-full border border-b rounded-lg z-50">
                   <InputComponent
                     typeInput="selectSearch"
                     valueInput={searchInputInstance}
@@ -211,7 +211,7 @@ export default function ServiceRequiremnts() {
                     value={instance}
                     onChange={(e: any) => setInstance(e)}
                   />
-                </div>
+                </div> */}
                 <div className="w-full mt-2">
                   <div className="flex justify-end items-center w-full">
                     <Link
@@ -226,21 +226,31 @@ export default function ServiceRequiremnts() {
             </div>
             <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5 mt-2">
               <div className="w-full">
-                {/* {areas && areas.length > 0 && (
-                                    <MobileSuperServiceRequirementsMasterDataTablePages
-                                        areas={areas}
-                                        handleDeleteArea={handleDeleteAreas}
-                                        isDeleteLoading={isDeleteLoading}
-                                        data={data}
-                                        setData={setData}
-                                        isUpdateLoading={isUpdateLoading}
-                                        isDialogEditOpen={isDialogEditOpen}
-                                        setIsDialogEditOpen={setIsDialogEditOpen}
-                                        handleUpdateArea={handleUpdateArea}
-                                        quillEdit={quillEdit}
-                                        quillEditRef={quillEditRef}
-                                    />
-                                )} */}
+                {/* {services && services.length > 0 && (
+                  <MobileSuperServiceRequirementsMasterDataTablePages
+                    services={services}
+                  />
+                )} */}
+
+                {services && services.length > 0 ? (
+                  services.map((item: ServiceInterface, i: number) => {
+                    return (
+                      <MobileSuperServiceRequirementsMasterDataTablePages
+                        key={i}
+                        item={item}
+                        index={i}
+                      // data={data}
+                      // setData={setData}
+                      // isUpdateLoading={isUpdateLoading}
+                      // handleUpdateNews={handleUpdateNews}
+                      // isDialogEditOpen={isDialogEditOpen}
+                      // setIsDialogEditOpen={setIsDialogEditOpen}
+                      />
+                    );
+                  })
+                ) : (
+                  <NotFoundSearch />
+                )}
               </div>
             </div>
           </section>
@@ -248,7 +258,7 @@ export default function ServiceRequiremnts() {
         </>
       )}
 
-      <div className="w-full">
+      <div className="w-full mb-10">
         <PaginationComponent
           currentPage={pagination.currentPage}
           totalPages={pagination.totalPages}

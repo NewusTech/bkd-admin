@@ -15,6 +15,7 @@ import {
 } from "@/types/interface";
 import MobileSuperAreasMasterDataCard from "@/components/all_cards/mobile/superAreasMasterDataCard";
 import SuperAccountManagingRolesCard from "@/components/all_cards/superAccountManagingRolesCard";
+import MobileSuperAccountManagingRolesCard from "@/components/mobile_all_cards/mobileSuperAccountManagingRolesCard";
 
 export default function SuperAccountManagingRolesTablePages({
   accounts,
@@ -68,27 +69,32 @@ export default function SuperAccountManagingRolesTablePages({
   return (
     <>
       {/* mobile*/}
-      {/* <div className="md:hidden">
+      <div className="md:hidden">
         <>
-          {areas &&
-            areas.length > 0 &&
-            areas.map((area: AreasInterface, i: number) => (
-              <MobileSuperAreasMasterDataCard
-                key={i}
-                area={area}
-                index={i}
-                handleDeleteArea={handleDeleteArea}
-                isDeleteLoading={isDeleteLoading}
-                data={data}
-                setData={setData}
-                isUpdateLoading={isUpdateLoading}
-                handleUpdateArea={handleUpdateArea}
-                isDrawerEditOpen={isDrawerEditOpen}
-                setIsDrawerEditOpen={setIsDrawerEditOpen}
-              />
-            ))}
+          {accounts &&
+            accounts.length > 0 &&
+            accounts.map(
+              (account: AccountManagingRolesInterface, i: number) => (
+                <MobileSuperAccountManagingRolesCard
+                  key={i}
+                  account={account}
+                  areas={areas}
+                  roles={roles}
+                  index={i}
+                  // handleDeleteArea={handleDeleteArea}
+                  isDeleteLoading={isDeleteLoading}
+                  data={data}
+                  setData={setData}
+                  isUpdateLoading={isUpdateLoading}
+                  // handleUpdateArea={handleUpdateArea}
+                  isDialogEditOpen={isDialogEditOpen}
+                  setIsDialogEditOpen={setIsDialogEditOpen}
+                  seen={seen}
+                  setSeen={setSeen}
+                />
+              ))}
         </>
-      </div> */}
+      </div>
       {/* mobile*/}
 
       {/* dekstop*/}
@@ -101,7 +107,7 @@ export default function SuperAccountManagingRolesTablePages({
               <TableHead className="text-center">NIP</TableHead>
               <TableHead className="text-center">Bidang</TableHead>
               <TableHead className="text-center">Role</TableHead>
-              <TableHead className="text-center w-5/12">Aksi</TableHead>
+              <TableHead className="text-center">Aksi</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
