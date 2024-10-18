@@ -17,7 +17,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Button } from "@/components/ui/button";
 import FilterDataPages from "@/components/elements/data_filters";
 import VerificationUserApplicationHistoryTablePages from "@/components/tables/verification_admin_user_application_history_table";
-import { getApplicationUserHistories, getService } from "@/services/api";
+import { getApplicationUserHistories, getDownloadApplicationPrint, getService } from "@/services/api";
 import {
   JwtPayload,
   ServiceInterface,
@@ -30,6 +30,7 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import MobileDivisionVerificationAdminApplicationHistoryCard from "@/components/mobile_all_cards/mobileDivisionVerificationAdminApplicationHistoryCard";
+import UnduhMenus from "@/components/ui/UnduhMenus";
 
 export default function VerificationUserRevisionApplicationHistoriesScreen() {
   const router = useRouter();
@@ -124,6 +125,15 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
   useEffect(() => {
     fetchService(1, 100, "");
   }, []);
+
+  // Api PDF
+  const fetchPdf = async (id: number) => {
+    return await getDownloadApplicationPrint(id);
+  };
+  // Api Excel
+  const fetchExcel = async (id: number) => {
+    return await getDownloadApplicationPrint(id);
+  };
 
   return (
     <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
@@ -246,13 +256,15 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
                 />
               </div>
 
-              <div className="w-full">
-                <Button className="w-full flex flex-row gap-x-4 text-[14px] md:text-[16px] bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                  <Printer className="w-6 h-6 text-line-10" />
+              <>
+                {/* PDF Excel Komponen */}
+                <div className="w-full">
+                  <UnduhMenus fetchPdf={fetchPdf} fetchExcel={fetchExcel} pdfFileName="Laporan Permohonan Pengguna.pdf" excelFileName="Laporan Permohonan Pengguna.xlsx" successTitlePdf="File PDF Berhasil Diunduh!"
+                    successTitleExcel="File Excel Sukses Diunduh!" id={0} />
+                </div>
+                {/* PDF Excel Komponen */}
+              </>
 
-                  <span className="text-[14px] md:text-[16px]">Print</span>
-                </Button>
-              </div>
             </div>
           </div>
         </div>

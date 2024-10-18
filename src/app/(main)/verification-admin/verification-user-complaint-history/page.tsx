@@ -14,6 +14,7 @@ import {
 import { JwtPayload, UserComplaintInterface } from "@/types/interface";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import {
+  getDownloadApplicationPrint,
   getDownloadUserComplaintPrint,
   getUserComplaints,
 } from "@/services/api";
@@ -30,6 +31,7 @@ import Swal from "sweetalert2";
 import { Button } from "@/components/ui/button";
 import { Loader } from "lucide-react";
 import { Printer } from "@phosphor-icons/react";
+import UnduhMenus from "@/components/ui/UnduhMenus";
 
 export default function VerificationUserComplaintScreen() {
   const router = useRouter();
@@ -168,34 +170,13 @@ export default function VerificationUserComplaintScreen() {
     }
   };
 
-  const downloadUserComplaintHistoryPrint = async () => {
-    setIsLoading(true);
-    try {
-      const response = await getDownloadUserComplaintPrint();
-
-      const url = window.URL.createObjectURL(response);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "Tabel Riwayat Pengaduan.pdf";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-
-      if (response.type === "application/pdf") {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil Download Hasil Riwayat Pengaduan!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
-        setIsLoading(false);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
+  // Api PDF
+  const fetchPdf = async () => {
+    return await getDownloadUserComplaintPrint();
+  };
+  // Api Excel
+  const fetchExcel = async () => {
+    return await getDownloadUserComplaintPrint();
   };
 
   return (
@@ -264,21 +245,14 @@ export default function VerificationUserComplaintScreen() {
             </Select>
           </div>
 
-          <div className="w-full md:w-5/12">
-            <Button
-              onClick={() => downloadUserComplaintHistoryPrint()}
-              className="w-full flex flex-row gap-x-4 text-sm bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-              {isLoading ? (
-                <Loader className="animate-spin h-5 w-5" />
-              ) : (
-                <>
-                  <Printer className="w-6 h-6 text-line-10" />
-
-                  <span>Print</span>
-                </>
-              )}
-            </Button>
-          </div>
+          <>
+            {/* PDF Excel Komponen */}
+            <div className="w-full">
+              <UnduhMenus fetchPdf={fetchPdf} fetchExcel={fetchExcel} pdfFileName="Laporan Pengaduan Pengguna.pdf" excelFileName="Laporan Pengaduan Pengguna.xlsx" successTitlePdf="File PDF Berhasil Diunduh!"
+              successTitleExcel="File Excel Sukses Diunduh!" id={0} />
+            </div>
+            {/* PDF Excel Komponen */}
+          </>
         </div>
 
         <div className="w-full">

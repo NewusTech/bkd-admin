@@ -1527,7 +1527,9 @@ export const updateSignatureLetterApplication = async (
 };
 
 // get Application history output
-export const getDownloadApplicationPrint = async () =>
+export const getDownloadApplicationPrint = async (
+  layanan_id: number | undefined
+) =>
   // bidang_id?: number,
   // layanan_id?: number,
   // search?: string,
@@ -1536,8 +1538,10 @@ export const getDownloadApplicationPrint = async () =>
   {
     const token = Cookies.get("Authorization");
 
+    console.log(layanan_id, "ini dari download, layanan id");
+
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/admin/document/print/application/get`,
+      `${process.env.NEXT_PUBLIC_API_URL}/admin/document/print/application/get?${!layanan_id ? `layanan_id=${layanan_id}` : ""}`,
       {
         method: "GET",
         headers: {
@@ -1588,7 +1592,7 @@ export const getDownloadSatisfactionIndexPrint = async (id: number) =>
       `${process.env.NEXT_PUBLIC_API_URL}/admin/document/print/satisfaction-index/${id}/get`,
       {
         method: "GET",
-        headers: {
+        headers: {  
           Authorization: `Bearer ${token}`,
         },
         cache: "no-store",

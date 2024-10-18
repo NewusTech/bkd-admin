@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import {
   getAreas,
+  getDownloadSatisfactionIndexPrint,
   getSatisfactionIndexReport,
   getService,
 } from "@/services/api";
@@ -33,6 +34,7 @@ import VerificationSatisfactionIndexTablePages from "@/components/tables/verific
 import DataNotFound from "@/components/elements/data_not_found";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import UnduhMenus from "@/components/ui/UnduhMenus";
 
 export default function VerificationSatisfactionIndexScreen() {
   const router = useRouter();
@@ -147,6 +149,15 @@ export default function VerificationSatisfactionIndexScreen() {
     }
   };
 
+  // Api PDF
+  const fetchPdf = async (id: number) => {
+    return await getDownloadSatisfactionIndexPrint(id);
+  };
+  // Api Excel
+  const fetchExcel = async (id: number) => {
+    return await getDownloadSatisfactionIndexPrint(id);
+  };
+
   return (
     <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
       <div
@@ -241,13 +252,14 @@ export default function VerificationSatisfactionIndexScreen() {
                 />
               </div>
 
-              <div className="w-full md:w-5/12">
-                <Button className="w-full flex flex-row gap-x-4 text-sm bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                  <Printer className="w-6 h-6 text-line-10" />
-
-                  <span className="text-[14px] md:text-[16px]">Print</span>
-                </Button>
-              </div>
+              <>
+                {/* PDF Excel Komponen */}
+                <div className="w-full md:w-5/12">
+                  <UnduhMenus fetchPdf={fetchPdf} fetchExcel={fetchExcel} pdfFileName="Laporan Indeks Kepuasan.pdf" excelFileName="Laporan Indeks Kepuasan.xlsx" successTitlePdf="File PDF Berhasil Diunduh!"
+                  successTitleExcel="File Excel Sukses Diunduh!" id={0} />
+                </div>
+                {/* PDF Excel Komponen */}
+              </>
             </div>
           </div>
         </div>
