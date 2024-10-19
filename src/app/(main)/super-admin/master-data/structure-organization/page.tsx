@@ -307,16 +307,19 @@ export default function StructureOrganizationScreen() {
                 <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
                   <AlertDialogHeader className="flex flex-col max-h-[500px]">
                     <AlertDialogTitle className="text-center text-[16px]">
-                      Master Data Struktur Organisasi
+                      <AlertDialogDescription className="text-center">
+                        Master Data Struktur Organisasi
+                      </AlertDialogDescription>
                     </AlertDialogTitle>
-                    <AlertDialogDescription className="text-center">
+
+                    <div className="w-full flex flex-row items-center justify-center">
                       <TypingEffect
                         className="custom-class text-[14px]"
                         speed={125}
                         deleteSpeed={50}
                         text={["Input data yang diperlukan"]}
                       />
-                    </AlertDialogDescription>
+                    </div>
 
                     <form
                       onSubmit={handleCreateStructureOrganization}
@@ -361,8 +364,9 @@ export default function StructureOrganizationScreen() {
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
                             onDrop={handleDropImage}
-                            className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                            className={`w-full ${
+                              previewImage ? "md:w-8/12" : "w-full"
+                            }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                             <>
                               <input
                                 type="file"
@@ -404,7 +408,9 @@ export default function StructureOrganizationScreen() {
                       </div>
 
                       <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                        <AlertDialogCancel className="text-[16px]">Cancel</AlertDialogCancel>
+                        <AlertDialogCancel className="text-[16px]">
+                          Cancel
+                        </AlertDialogCancel>
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
@@ -433,17 +439,19 @@ export default function StructureOrganizationScreen() {
                 <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
                   <div className="w-full flex flex-col gap-y-3 verticalScroll">
                     <DrawerTitle className="text-center text-[16px]">
-                      Master Data Struktur Organisasi
+                      <DrawerDescription className="text-center">
+                        Master Data Struktur Organisasi
+                      </DrawerDescription>
                     </DrawerTitle>
 
-                    <DrawerDescription className="text-center">
+                    <div className="w-full flex flex-row items-center justify-center">
                       <TypingEffect
                         className="custom-class text-[14px]"
                         speed={125}
                         deleteSpeed={50}
                         text={["Input data yang diperlukan"]}
                       />
-                    </DrawerDescription>
+                    </div>
 
                     <form
                       onSubmit={handleCreateStructureOrganization}
@@ -489,8 +497,9 @@ export default function StructureOrganizationScreen() {
                               onDragOver={handleDragOver}
                               onDragLeave={handleDragLeave}
                               onDrop={handleDropImage}
-                              className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              className={`w-full ${
+                                previewImage ? "md:w-8/12" : "w-full"
+                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                               <>
                                 <input
                                   type="file"
@@ -535,7 +544,9 @@ export default function StructureOrganizationScreen() {
 
                       <div className="flex gap-4 justify-between">
                         <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
-                          <DrawerDescription className="text-[14px]">Batal</DrawerDescription>
+                          <DrawerDescription className="text-[14px]">
+                            Batal
+                          </DrawerDescription>
                         </DrawerClose>
                         <Button
                           title="Simpan Data"

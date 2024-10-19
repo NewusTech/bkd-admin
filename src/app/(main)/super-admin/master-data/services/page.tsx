@@ -11,7 +11,7 @@ import {
   updateService,
 } from "@/services/api";
 import { AreasInterface, ServiceInterface } from "@/types/interface";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -51,15 +51,13 @@ import AddIcon from "@/components/elements/add_button";
 import EditorProvide from "@/components/pages/areas";
 import { useDebounce } from "@/hooks/useDebounce";
 import NotFoundSearch from "@/components/ui/SearchNotFound";
+import { schemaServiceData } from "@/validations";
+import { z } from "zod";
 
 export default function ServicesScreen() {
   const router = useRouter();
-  // serach
   const [search, setSearch] = useState("");
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  };
-  // serach
+  const debounceSearch = useDebounce(search);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -67,7 +65,6 @@ export default function ServicesScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
-  const limitItem = 30;
   const [serviceId, setServiceId] = useState<number>(0);
   const [areas, setAreas] = useState<AreasInterface[]>([]);
   const [services, setServices] = useState<ServiceInterface[]>([]);
@@ -86,7 +83,36 @@ export default function ServicesScreen() {
     totalPages: 1,
     totalCount: 0,
   });
-  const debounceSearch = useDebounce(search);
+  const [formValid, setFormValid] = useState(false);
+  const [errors, setErrors] = useState<any>({});
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  const validateForm = useCallback(async () => {
+    try {
+      await schemaServiceData.parseAsync({
+        ...data,
+      });
+      setErrors({});
+      return true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const formattedErrors = error.format();
+        setErrors(formattedErrors);
+      }
+      setIsLoading(false);
+      return false;
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (hasSubmitted) {
+      validateForm();
+    }
+  }, [hasSubmitted, validateForm]);
+
+  useEffect(() => {
+    setFormValid(Object.keys(errors).length === 0);
+  }, [errors]);
 
   const fetchAreas = async (page: number, limit: number, search: string) => {
     try {
@@ -115,14 +141,18 @@ export default function ServicesScreen() {
   };
 
   useEffect(() => {
-    fetchAreas(1, limitItem, search);
-    fetchService(1, 10, search);
-  }, [limitItem, search]);
+    fetchAreas(1, 100, "");
+    fetchService(1, 10, debounceSearch);
+  }, [debounceSearch]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
       fetchService(newPage, 10, "");
     }
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -141,46 +171,53 @@ export default function ServicesScreen() {
 
   const handleCreateService = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    try {
-      const response = await postCreateService(data);
-      if (response.status === 201) {
-        setData({
-          nama: "",
-          desc: "",
-          syarat: "",
-          bidang_id: "",
-          penanggung_jawab: "",
-          ketentuan: "",
-          langkah: "",
-        });
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil Menambahkan Layanan!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
-        fetchService(pagination.currentPage, 10, "");
+    setHasSubmitted(true);
+
+    const isValid = await validateForm();
+
+    if (isValid) {
+      setIsLoading(true);
+
+      try {
+        const response = await postCreateService(data);
+        if (response.status === 201) {
+          setData({
+            nama: "",
+            desc: "",
+            syarat: "",
+            bidang_id: "",
+            penanggung_jawab: "",
+            ketentuan: "",
+            langkah: "",
+          });
+          Swal.fire({
+            icon: "success",
+            title: "Berhasil Menambahkan Layanan!",
+            timer: 2000,
+            showConfirmButton: false,
+            position: "center",
+          });
+          fetchService(pagination.currentPage, 10, "");
+          setIsDialogOpen(false);
+          setIsDrawerOpen(false);
+          router.push("/super-admin/master-data/services");
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal Menambahkan Layanan!",
+            timer: 2000,
+            showConfirmButton: false,
+            position: "center",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
         setIsDialogOpen(false);
         setIsDrawerOpen(false);
-        router.push("/super-admin/master-data/services");
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal Menambahkan Layanan!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
       }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-      setIsDialogOpen(false);
-      setIsDrawerOpen(false);
     }
   };
 
@@ -314,37 +351,6 @@ export default function ServicesScreen() {
                       <div className="w-full flex flex-col gap-y-5 verticalScroll">
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                           <Label className="focus-within:text-primary-70 font-normal text-[14px] text-left">
-                            Nama Layanan
-                          </Label>
-                          <Input
-                            id="nama-layanan"
-                            name="nama"
-                            value={data.nama}
-                            onChange={handleChange}
-                            type="text"
-                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
-                            placeholder="Masukkan Nama Layanan"
-                          />
-                        </div>
-
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
-                          <Label
-                            htmlFor="syarat"
-                            className="focus-within:text-primary-70 font-normal text-[14px] text-left">
-                            Syarat Layanan
-                          </Label>
-                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[14px]">
-                            <EditorProvide
-                              content={data.syarat}
-                              onChange={(e: any) =>
-                                setData({ ...data, syarat: e })
-                              }
-                            />
-                          </div>
-                        </div>
-
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
-                          <Label className="focus-within:text-primary-70 font-normal text-[14px] text-left">
                             Pilih Bidang
                           </Label>
                           <div className="w-full border border-line-20 rounded-lg">
@@ -376,6 +382,55 @@ export default function ServicesScreen() {
                               </SelectContent>
                             </Select>
                           </div>
+
+                          {hasSubmitted && errors?.bidang_id?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.bidang_id._errors[0]}
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label className="focus-within:text-primary-70 font-normal text-[14px] text-left">
+                            Nama Layanan
+                          </Label>
+                          <Input
+                            id="nama-layanan"
+                            name="nama"
+                            value={data.nama}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
+                            placeholder="Masukkan Nama Layanan"
+                          />
+
+                          {hasSubmitted && errors?.nama?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.nama._errors[0]}
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label
+                            htmlFor="syarat"
+                            className="focus-within:text-primary-70 font-normal text-[14px] text-left">
+                            Syarat Layanan
+                          </Label>
+                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[14px]">
+                            <EditorProvide
+                              content={data.syarat}
+                              onChange={(e: any) =>
+                                setData({ ...data, syarat: e })
+                              }
+                            />
+                          </div>
+
+                          {hasSubmitted && errors?.syarat?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.syarat._errors[0]}
+                            </div>
+                          )}
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -390,6 +445,12 @@ export default function ServicesScreen() {
                               }
                             />
                           </div>
+
+                          {hasSubmitted && errors?.desc?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.desc._errors[0]}
+                            </div>
+                          )}
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -405,6 +466,13 @@ export default function ServicesScreen() {
                             className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
                             placeholder="Masukkan Nama Penanggung Jawab"
                           />
+
+                          {hasSubmitted &&
+                            errors?.penanggung_jawab?._errors && (
+                              <div className="text-red-500 text-[14px] md:text-[16px]">
+                                {errors.penanggung_jawab._errors[0]}
+                              </div>
+                            )}
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -421,6 +489,12 @@ export default function ServicesScreen() {
                               }
                             />
                           </div>
+
+                          {hasSubmitted && errors?.ketentuan?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.ketentuan._errors[0]}
+                            </div>
+                          )}
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -437,6 +511,12 @@ export default function ServicesScreen() {
                               }
                             />
                           </div>
+
+                          {hasSubmitted && errors?.langkah?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.langkah._errors[0]}
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div className="flex gap-4 justify-between">
@@ -489,49 +569,22 @@ export default function ServicesScreen() {
                 <AlertDialogContent className="w-full max-w-3xl bg-line-10 rounded-lg shadow-md">
                   <AlertDialogHeader className="flex flex-col">
                     <AlertDialogTitle className="text-center text-[16px]">
-                      Master Data Layanan
+                      <AlertDialogDescription className="text-center">
+                        Master Data Layanan
+                      </AlertDialogDescription>
                     </AlertDialogTitle>
-                    <AlertDialogDescription className="text-center">
+
+                    <div className="w-full flex flex-row items-center justify-center">
                       <TypingEffect
                         className="custom-class text-[16px]"
                         text={["Input data yang diperlukan"]}
                       />
-                    </AlertDialogDescription>
+                    </div>
+
                     <form
                       onSubmit={handleCreateService}
                       className="w-full flex flex-col gap-y-3 max-h-[500px]">
                       <div className="w-full flex flex-col gap-y-5 verticalScroll">
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
-                          <Label className="focus-within:text-primary-70 font-normal text-[16px]">
-                            Nama Layanan
-                          </Label>
-                          <Input
-                            id="nama-layanan"
-                            name="nama"
-                            value={data.nama}
-                            onChange={handleChange}
-                            type="text"
-                            className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                            placeholder="Masukkan Nama Layanan"
-                          />
-                        </div>
-
-                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
-                          <Label
-                            htmlFor="syarat"
-                            className="focus-within:text-primary-70 font-normal text-[16px]">
-                            Syarat Layanan
-                          </Label>
-                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[16px]">
-                            <EditorProvide
-                              content={data.syarat}
-                              onChange={(e: any) =>
-                                setData({ ...data, syarat: e })
-                              }
-                            />
-                          </div>
-                        </div>
-
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                           <Label className="focus-within:text-primary-70 font-normal text-[16px] text-left">
                             Pilih Bidang
@@ -565,6 +618,55 @@ export default function ServicesScreen() {
                               </SelectContent>
                             </Select>
                           </div>
+
+                          {hasSubmitted && errors?.bidang_id?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.bidang_id._errors[0]}
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label className="focus-within:text-primary-70 font-normal text-[16px]">
+                            Nama Layanan
+                          </Label>
+                          <Input
+                            id="nama-layanan"
+                            name="nama"
+                            value={data.nama}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan Nama Layanan"
+                          />
+
+                          {hasSubmitted && errors?.nama?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.nama._errors[0]}
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                          <Label
+                            htmlFor="syarat"
+                            className="focus-within:text-primary-70 font-normal text-[16px]">
+                            Syarat Layanan
+                          </Label>
+                          <div className="w-full h-full border border-line-20 rounded-lg text-left text-[16px]">
+                            <EditorProvide
+                              content={data.syarat}
+                              onChange={(e: any) =>
+                                setData({ ...data, syarat: e })
+                              }
+                            />
+                          </div>
+
+                          {hasSubmitted && errors?.syarat?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.syarat._errors[0]}
+                            </div>
+                          )}
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -579,6 +681,12 @@ export default function ServicesScreen() {
                               }
                             />
                           </div>
+
+                          {hasSubmitted && errors?.desc?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.desc._errors[0]}
+                            </div>
+                          )}
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -594,6 +702,13 @@ export default function ServicesScreen() {
                             className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan Nama Penanggung Jawab"
                           />
+
+                          {hasSubmitted &&
+                            errors?.penanggung_jawab?._errors && (
+                              <div className="text-red-500 text-[14px] md:text-[16px]">
+                                {errors.penanggung_jawab._errors[0]}
+                              </div>
+                            )}
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -610,6 +725,12 @@ export default function ServicesScreen() {
                               }
                             />
                           </div>
+
+                          {hasSubmitted && errors?.ketentuan?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.ketentuan._errors[0]}
+                            </div>
+                          )}
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -626,6 +747,12 @@ export default function ServicesScreen() {
                               }
                             />
                           </div>
+
+                          {hasSubmitted && errors?.langkah?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.langkah._errors[0]}
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div className="w-full flex flex-row justify-between items-center gap-x-5">
