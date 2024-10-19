@@ -8,7 +8,7 @@ import SuperAreasMasterDataTablePages from "@/components/tables/master_datas/are
 import { Button } from "@/components/ui/button";
 import { deleteAreas, getAreas, postAreas, updateAreas } from "@/services/api";
 import { AreasInterface } from "@/types/interface";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -42,6 +42,8 @@ import AddIcon from "@/components/elements/add_button";
 import TypingEffect from "@/components/ui/TypingEffect";
 import { useDebounce } from "@/hooks/useDebounce";
 import NotFoundSearch from "@/components/ui/SearchNotFound";
+import { schemaAreaData } from "@/validations";
+import { z } from "zod";
 
 export default function AreasScreen() {
   const router = useRouter();
@@ -68,6 +70,36 @@ export default function AreasScreen() {
     totalPages: 1,
     totalCount: 0,
   });
+  const [formValid, setFormValid] = useState(false);
+  const [errors, setErrors] = useState<any>({});
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  const validateForm = useCallback(async () => {
+    try {
+      await schemaAreaData.parseAsync({
+        ...data,
+      });
+      setErrors({});
+      return true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const formattedErrors = error.format();
+        setErrors(formattedErrors);
+      }
+      setIsLoading(false);
+      return false;
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (hasSubmitted) {
+      validateForm();
+    }
+  }, [hasSubmitted, validateForm]);
+
+  useEffect(() => {
+    setFormValid(Object.keys(errors).length === 0);
+  }, [errors]);
 
   const fetchAreas = async (page: number, limit: number, search: string) => {
     try {
@@ -108,44 +140,51 @@ export default function AreasScreen() {
 
   const handleCreateAreas = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    try {
-      const response = await postAreas(data);
+    setHasSubmitted(true);
 
-      if (response.status === 201) {
-        setData({
-          nama: "",
-          desc: "",
-          nip_pj: "",
-          pj: "",
-        });
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil Menambahkan Bidang!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
-        fetchAreas(pagination.currentPage, 10, "");
+    const isValid = await validateForm();
+
+    if (isValid) {
+      setIsLoading(true);
+
+      try {
+        const response = await postAreas(data);
+
+        if (response.status === 201) {
+          setData({
+            nama: "",
+            desc: "",
+            nip_pj: "",
+            pj: "",
+          });
+          Swal.fire({
+            icon: "success",
+            title: "Berhasil Menambahkan Bidang!",
+            timer: 2000,
+            showConfirmButton: false,
+            position: "center",
+          });
+          fetchAreas(pagination.currentPage, 10, "");
+          setIsDialogOpen(false);
+          setIsDrawerOpen(false);
+          router.push("/super-admin/master-data/areas");
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal Menambahkan Bidang!",
+            timer: 2000,
+            showConfirmButton: false,
+            position: "center",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
         setIsDialogOpen(false);
         setIsDrawerOpen(false);
-        router.push("/super-admin/master-data/areas");
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal Menambahkan Bidang!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
       }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-      setIsDialogOpen(false);
-      setIsDrawerOpen(false);
     }
   };
 
@@ -285,6 +324,12 @@ export default function AreasScreen() {
                             className="w-full text-[14px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan Nama Bidang"
                           />
+
+                          {hasSubmitted && errors?.nama?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.nama._errors[0]}
+                            </div>
+                          )}
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -300,6 +345,12 @@ export default function AreasScreen() {
                             className="w-full text-[14px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan Nama Penanggung Jawab"
                           />
+
+                          {hasSubmitted && errors?.pj?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.pj._errors[0]}
+                            </div>
+                          )}
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -318,6 +369,12 @@ export default function AreasScreen() {
                             className="w-full text-[14px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan NIP Penanggung Jawab"
                           />
+
+                          {hasSubmitted && errors?.nip_pj?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.nip_pj._errors[0]}
+                            </div>
+                          )}
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -332,6 +389,12 @@ export default function AreasScreen() {
                               }
                             />
                           </div>
+
+                          {hasSubmitted && errors?.desc?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.desc._errors[0]}
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -416,6 +479,12 @@ export default function AreasScreen() {
                             className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan Nama Bidang"
                           />
+
+                          {hasSubmitted && errors?.nama?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.nama._errors[0]}
+                            </div>
+                          )}
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -431,6 +500,12 @@ export default function AreasScreen() {
                             className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan Nama Penanggung Jawab"
                           />
+
+                          {hasSubmitted && errors?.pj?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.pj._errors[0]}
+                            </div>
+                          )}
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -449,6 +524,12 @@ export default function AreasScreen() {
                             className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan NIP Penanggung Jawab"
                           />
+
+                          {hasSubmitted && errors?.nip_pj?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.nip_pj._errors[0]}
+                            </div>
+                          )}
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -463,6 +544,12 @@ export default function AreasScreen() {
                               }
                             />
                           </div>
+
+                          {hasSubmitted && errors?.desc?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.desc._errors[0]}
+                            </div>
+                          )}
                         </div>
                       </div>
 

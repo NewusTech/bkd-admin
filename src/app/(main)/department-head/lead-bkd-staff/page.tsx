@@ -3,7 +3,7 @@
 import DatePages from "@/components/elements/date";
 import SearchPages from "@/components/elements/search";
 import { formatDate } from "@/lib/utils";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -67,6 +67,8 @@ import { useRouter } from "next/navigation";
 import { staffStatus } from "@/constants/main";
 import Image from "next/image";
 import MobileStaffBkdCardPages from "@/components/mobile_all_cards/mobileStaffBkdCard";
+import { z } from "zod";
+import { schemaStaffData } from "@/validations";
 import UnduhMenus from "@/components/ui/UnduhMenus";
 
 export default function LeadBkdStaffScreen() {
@@ -111,6 +113,37 @@ export default function LeadBkdStaffScreen() {
     totalPages: 1,
     totalCount: 0,
   });
+
+  const [formValid, setFormValid] = useState(false);
+  const [errors, setErrors] = useState<any>({});
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  const validateForm = useCallback(async () => {
+    try {
+      await schemaStaffData.parseAsync({
+        ...data,
+      });
+      setErrors({});
+      return true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const formattedErrors = error.format();
+        setErrors(formattedErrors);
+      }
+      setIsLoadingCreate(false);
+      return false;
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (hasSubmitted) {
+      validateForm();
+    }
+  }, [hasSubmitted, validateForm]);
+
+  useEffect(() => {
+    setFormValid(Object.keys(errors).length === 0);
+  }, [errors]);
 
   const startDateFormatted = startDate
     ? formatDate(new Date(startDate))
@@ -206,7 +239,10 @@ export default function LeadBkdStaffScreen() {
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
-    setIsLoadingCreate(true);
+
+    setHasSubmitted(true);
+
+    const isValid = await validateForm();
 
     const formData = new FormData();
     formData.append("nama", data.nama);
@@ -222,46 +258,49 @@ export default function LeadBkdStaffScreen() {
     // Object.keys(formData).forEach((key) => {
     //   console.log(key, formData.get(key));
     // });
+    if (isValid) {
+      setIsLoadingCreate(true);
 
-    try {
-      const response = await postStructureOrganizations(formData);
+      try {
+        const response = await postStructureOrganizations(formData);
 
-      if (response.status === 201) {
-        setData({
-          nama: "",
-          jabatan: "",
-          image: "",
-          golongan: "",
-          nip: "",
-          bidang_id: "",
-          status: "",
-        });
-        setFileImage(null);
-        setPreviewImage("");
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil Menambahkan Staff BKD!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
-        fetchStructureOrganization(pagination?.currentPage, 5, "", status);
+        if (response.status === 201) {
+          setData({
+            nama: "",
+            jabatan: "",
+            image: "",
+            golongan: "",
+            nip: "",
+            bidang_id: "",
+            status: "",
+          });
+          setFileImage(null);
+          setPreviewImage("");
+          Swal.fire({
+            icon: "success",
+            title: "Berhasil Menambahkan Staff BKD!",
+            timer: 2000,
+            showConfirmButton: false,
+            position: "center",
+          });
+          fetchStructureOrganization(pagination?.currentPage, 5, "", status);
+          setIsDialogOpenCreate(false);
+          router.push("/department-head/lead-bkd-staff");
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal Menambahkan Staff BKD!",
+            timer: 2000,
+            showConfirmButton: false,
+            position: "center",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoadingCreate(false);
         setIsDialogOpenCreate(false);
-        router.push("/department-head/lead-bkd-staff");
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal Menambahkan Staff BKD!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
       }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoadingCreate(false);
-      setIsDialogOpenCreate(false);
     }
   };
 
@@ -518,12 +557,15 @@ export default function LeadBkdStaffScreen() {
                           </AlertDialogDescription>
                         </AlertDialogTitle>
 
-                        <TypingEffect
-                          className="custom-class text-[18px] text-center"
-                          speed={125}
-                          deleteSpeed={50}
-                          text={["Input data yang diperlukan"]}
-                        />
+                        <div className="w-full flex flex-row items-center justify-center">
+                          <TypingEffect
+                            className="custom-class text-[18px] text-center"
+                            speed={125}
+                            deleteSpeed={50}
+                            text={["Input data yang diperlukan"]}
+                          />
+                        </div>
+
                         <form
                           onSubmit={handleCreateStructureOrganization}
                           className="w-full flex flex-col gap-y-3 max-h-[500px]">
@@ -563,6 +605,12 @@ export default function LeadBkdStaffScreen() {
                                   </SelectContent>
                                 </Select>
                               </div>
+
+                              {hasSubmitted && errors?.bidang_id?._errors && (
+                                <div className="text-red-500 text-[14px] md:text-[16px]">
+                                  {errors.bidang_id._errors[0]}
+                                </div>
+                              )}
                             </div>
 
                             <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -578,6 +626,12 @@ export default function LeadBkdStaffScreen() {
                                 className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                                 placeholder="Masukkan Nama Lengkap Anda"
                               />
+
+                              {hasSubmitted && errors?.nama?._errors && (
+                                <div className="text-red-500 text-[14px] md:text-[16px]">
+                                  {errors.nama._errors[0]}
+                                </div>
+                              )}
                             </div>
 
                             <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -593,6 +647,12 @@ export default function LeadBkdStaffScreen() {
                                 className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                                 placeholder="Masukkan NIP Anda"
                               />
+
+                              {hasSubmitted && errors?.nip?._errors && (
+                                <div className="text-red-500 text-[14px] md:text-[16px]">
+                                  {errors.nip._errors[0]}
+                                </div>
+                              )}
                             </div>
 
                             <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -608,6 +668,12 @@ export default function LeadBkdStaffScreen() {
                                 className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                                 placeholder="Masukkan Jabatan Anda"
                               />
+
+                              {hasSubmitted && errors?.jabatan?._errors && (
+                                <div className="text-red-500 text-[14px] md:text-[16px]">
+                                  {errors.jabatan._errors[0]}
+                                </div>
+                              )}
                             </div>
 
                             <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -648,6 +714,12 @@ export default function LeadBkdStaffScreen() {
                                   </SelectContent>
                                 </Select>
                               </div>
+
+                              {hasSubmitted && errors?.golongan?._errors && (
+                                <div className="text-red-500 text-[14px] md:text-[16px]">
+                                  {errors.golongan._errors[0]}
+                                </div>
+                              )}
                             </div>
 
                             <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -692,6 +764,12 @@ export default function LeadBkdStaffScreen() {
                                   </SelectContent>
                                 </Select>
                               </div>
+
+                              {hasSubmitted && errors?.status?._errors && (
+                                <div className="text-red-500 text-[14px] md:text-[16px]">
+                                  {errors.status._errors[0]}
+                                </div>
+                              )}
                             </div>
 
                             <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -787,12 +865,14 @@ export default function LeadBkdStaffScreen() {
                           </DrawerDescription>
                         </DrawerTitle>
 
-                        <TypingEffect
-                          className="custom-class text-[16px]"
-                          speed={125}
-                          deleteSpeed={50}
-                          text={["Input data yang diperlukan"]}
-                        />
+                        <div className="w-full flex flex-row items-center justify-center">
+                          <TypingEffect
+                            className="custom-class text-[16px]"
+                            speed={125}
+                            deleteSpeed={50}
+                            text={["Input data yang diperlukan"]}
+                          />
+                        </div>
 
                         <form
                           onSubmit={handleCreateStructureOrganization}
@@ -833,6 +913,12 @@ export default function LeadBkdStaffScreen() {
                                   </SelectContent>
                                 </Select>
                               </div>
+
+                              {hasSubmitted && errors?.bidang_id?._errors && (
+                                <div className="text-red-500 text-[14px] md:text-[16px]">
+                                  {errors.bidang_id._errors[0]}
+                                </div>
+                              )}
                             </div>
 
                             <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -848,6 +934,12 @@ export default function LeadBkdStaffScreen() {
                                 className="w-full text-[14px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                                 placeholder="Masukkan Nama Lengkap Anda"
                               />
+
+                              {hasSubmitted && errors?.nama?._errors && (
+                                <div className="text-red-500 text-[14px] md:text-[16px]">
+                                  {errors.nama._errors[0]}
+                                </div>
+                              )}
                             </div>
 
                             <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -863,6 +955,12 @@ export default function LeadBkdStaffScreen() {
                                 className="w-full text-[14px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                                 placeholder="Masukkan NIP Anda"
                               />
+
+                              {hasSubmitted && errors?.nip?._errors && (
+                                <div className="text-red-500 text-[14px] md:text-[16px]">
+                                  {errors.nip._errors[0]}
+                                </div>
+                              )}
                             </div>
 
                             <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -878,6 +976,12 @@ export default function LeadBkdStaffScreen() {
                                 className="w-full text-[14px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                                 placeholder="Masukkan Jabatan Anda"
                               />
+
+                              {hasSubmitted && errors?.jabatan?._errors && (
+                                <div className="text-red-500 text-[14px] md:text-[16px]">
+                                  {errors.jabatan._errors[0]}
+                                </div>
+                              )}
                             </div>
 
                             <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -918,6 +1022,12 @@ export default function LeadBkdStaffScreen() {
                                   </SelectContent>
                                 </Select>
                               </div>
+
+                              {hasSubmitted && errors?.golongan?._errors && (
+                                <div className="text-red-500 text-[14px] md:text-[16px]">
+                                  {errors.golongan._errors[0]}
+                                </div>
+                              )}
                             </div>
 
                             <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -962,6 +1072,12 @@ export default function LeadBkdStaffScreen() {
                                   </SelectContent>
                                 </Select>
                               </div>
+
+                              {hasSubmitted && errors?.status?._errors && (
+                                <div className="text-red-500 text-[14px] md:text-[16px]">
+                                  {errors.status._errors[0]}
+                                </div>
+                              )}
                             </div>
 
                             <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">

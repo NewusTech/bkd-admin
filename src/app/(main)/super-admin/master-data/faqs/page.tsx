@@ -5,7 +5,7 @@ import SearchPages from "@/components/elements/search";
 import { Button } from "@/components/ui/button";
 import { deleteFaqs, getFaqs, postFaqs, updateFaqs } from "@/services/api";
 import { FaqsInterface } from "@/types/interface";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -36,11 +36,14 @@ import MobileFaqMasterDataCard from "@/components/mobile_all_cards/mobileFaqMast
 import AddIcon from "@/components/elements/add_button";
 import TypingEffect from "@/components/ui/TypingEffect";
 import { useDebounce } from "@/hooks/useDebounce";
+import { z } from "zod";
+import { schemaFaqData } from "@/validations";
 
 export default function FaqsScreen() {
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +60,37 @@ export default function FaqsScreen() {
     totalPages: 1,
     totalCount: 0,
   });
-  const debounceSearch = useDebounce(search);
+
+  const [formValid, setFormValid] = useState(false);
+  const [errors, setErrors] = useState<any>({});
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  const validateForm = useCallback(async () => {
+    try {
+      await schemaFaqData.parseAsync({
+        ...data,
+      });
+      setErrors({});
+      return true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const formattedErrors = error.format();
+        setErrors(formattedErrors);
+      }
+      setIsLoading(false);
+      return false;
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (hasSubmitted) {
+      validateForm();
+    }
+  }, [hasSubmitted, validateForm]);
+
+  useEffect(() => {
+    setFormValid(Object.keys(errors).length === 0);
+  }, [errors]);
 
   const fetchFaqs = async (page: number, limit: number, search: string) => {
     try {
@@ -70,12 +103,12 @@ export default function FaqsScreen() {
   };
 
   useEffect(() => {
-    fetchFaqs(1, 10, search);
-  }, [search]);
+    fetchFaqs(1, 10, debounceSearch);
+  }, [debounceSearch]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchFaqs(newPage, 10, "");
+      fetchFaqs(newPage, 10, debounceSearch);
     }
   };
 
@@ -88,40 +121,47 @@ export default function FaqsScreen() {
 
   const handleCreateFaqs = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    try {
-      const response = await postFaqs(data);
+    setHasSubmitted(true);
 
-      if (response.status === 201) {
-        setData({
-          answer: "",
-          question: "",
-        });
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil Menambahkan Faq!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
-        fetchFaqs(1, 10, search);
+    const isValid = await validateForm();
+
+    if (isValid) {
+      setIsLoading(true);
+
+      try {
+        const response = await postFaqs(data);
+
+        if (response.status === 201) {
+          setData({
+            answer: "",
+            question: "",
+          });
+          Swal.fire({
+            icon: "success",
+            title: "Berhasil Menambahkan Faq!",
+            timer: 2000,
+            showConfirmButton: false,
+            position: "center",
+          });
+          fetchFaqs(1, 10, search);
+          setIsDialogOpen(false);
+          router.push("/super-admin/master-data/faqs");
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal Menambahkan Faq!",
+            timer: 2000,
+            showConfirmButton: false,
+            position: "center",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
         setIsDialogOpen(false);
-        router.push("/super-admin/master-data/faqs");
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal Menambahkan Faq!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
       }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-      setIsDialogOpen(false);
     }
   };
 
@@ -227,16 +267,19 @@ export default function FaqsScreen() {
                 <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
                   <AlertDialogHeader className="flex flex-col max-h-[500px]">
                     <AlertDialogTitle className="text-center text-[16px]">
-                      Master Data FAQ
+                      <AlertDialogDescription className="text-center">
+                        Master Data FAQ
+                      </AlertDialogDescription>
                     </AlertDialogTitle>
-                    <AlertDialogDescription className="text-center">
+
+                    <div className="w-full flex flex-row items-center justify-center">
                       <TypingEffect
                         className="custom-class text-[16px]"
                         speed={125}
                         deleteSpeed={50}
                         text={["Input data yang diperlukan"]}
                       />
-                    </AlertDialogDescription>
+                    </div>
 
                     <form
                       onSubmit={handleCreateFaqs}
@@ -254,6 +297,12 @@ export default function FaqsScreen() {
                           className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[16px]"
                           placeholder="Masukkan Pertanyaan Anda"
                         />
+
+                        {hasSubmitted && errors?.question?._errors && (
+                          <div className="text-red-500 text-[14px] md:text-[16px]">
+                            {errors.question._errors[0]}
+                          </div>
+                        )}
                       </div>
 
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -269,10 +318,18 @@ export default function FaqsScreen() {
                           className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[16px]"
                           placeholder="Masukkan Jawaban Anda"
                         />
+
+                        {hasSubmitted && errors?.answer?._errors && (
+                          <div className="text-red-500 text-[14px] md:text-[16px]">
+                            {errors.answer._errors[0]}
+                          </div>
+                        )}
                       </div>
 
                       <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                        <AlertDialogCancel className="text-[16px]">Cancel</AlertDialogCancel>
+                        <AlertDialogCancel className="text-[16px]">
+                          Cancel
+                        </AlertDialogCancel>
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
@@ -301,17 +358,19 @@ export default function FaqsScreen() {
                 <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
                   <div className="w-full flex flex-col gap-y-3 verticalScroll">
                     <DrawerTitle className="text-center text-[16px]">
-                      Master Data FAQ
+                      <DrawerDescription className="text-center">
+                        Master Data FAQ
+                      </DrawerDescription>
                     </DrawerTitle>
 
-                    <DrawerDescription className="text-center">
+                    <div className="w-full flex flex-row items-center justify-center">
                       <TypingEffect
                         className="custom-class text-[14px]"
                         speed={125}
                         deleteSpeed={50}
                         text={["Input data yang diperlukan"]}
                       />
-                    </DrawerDescription>
+                    </div>
 
                     <form
                       onSubmit={handleCreateFaqs}
@@ -331,6 +390,12 @@ export default function FaqsScreen() {
                             className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
                             placeholder="Masukkan Pertanyaan Anda"
                           />
+
+                          {hasSubmitted && errors?.question?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.question._errors[0]}
+                            </div>
+                          )}
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -347,12 +412,20 @@ export default function FaqsScreen() {
                             className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
                             placeholder="Masukkan Jawaban Anda"
                           />
+
+                          {hasSubmitted && errors?.answer?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.answer._errors[0]}
+                            </div>
+                          )}
                         </div>
                       </div>
 
                       <div className="flex gap-4 justify-between">
                         <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
-                          <DrawerDescription className="text-[14px]">Batal</DrawerDescription>
+                          <DrawerDescription className="text-[14px]">
+                            Batal
+                          </DrawerDescription>
                         </DrawerClose>
                         <Button
                           title="Simpan Data"

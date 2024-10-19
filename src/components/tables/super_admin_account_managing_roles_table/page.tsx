@@ -92,7 +92,8 @@ export default function SuperAccountManagingRolesTablePages({
                   seen={seen}
                   setSeen={setSeen}
                 />
-              ))}
+              )
+            )}
         </>
       </div>
       {/* mobile*/}
@@ -105,7 +106,6 @@ export default function SuperAccountManagingRolesTablePages({
               <TableHead className="text-center">No.</TableHead>
               <TableHead className="text-center">Nama</TableHead>
               <TableHead className="text-center">NIP</TableHead>
-              <TableHead className="text-center">Bidang</TableHead>
               <TableHead className="text-center">Role</TableHead>
               <TableHead className="text-center">Aksi</TableHead>
             </TableRow>

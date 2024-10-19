@@ -585,10 +585,6 @@ export default function DashBoardSidebarPages() {
                                   linking =
                                     "/super-admin/master-data/about-us-vision-mission";
                                   break;
-                                case "Struktur Organisasi":
-                                  linking =
-                                    "/super-admin/master-data/structure-organization";
-                                  break;
                                 case "Struktur Organisasi Inti":
                                   linking =
                                     "/super-admin/master-data/structure-organization-main";
@@ -874,10 +870,6 @@ export default function DashBoardSidebarPages() {
                                 case "Tentang, Visi, & Misi":
                                   linking =
                                     "/super-admin/master-data/about-us-vision-mission";
-                                  break;
-                                case "Struktur Organisasi":
-                                  linking =
-                                    "/super-admin/master-data/structure-organization";
                                   break;
                                 case "Struktur Organisasi Inti":
                                   linking =
@@ -1246,10 +1238,6 @@ export default function DashBoardSidebarPages() {
                                 case "Tentang, Visi, & Misi":
                                   linking =
                                     "/super-admin/master-data/about-us-vision-mission";
-                                  break;
-                                case "Struktur Organisasi":
-                                  linking =
-                                    "/super-admin/master-data/structure-organization";
                                   break;
                                 case "Struktur Organisasi Inti":
                                   linking =

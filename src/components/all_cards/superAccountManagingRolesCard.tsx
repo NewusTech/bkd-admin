@@ -128,9 +128,6 @@ export default function SuperAccountManagingRolesCard({
           {account?.nip && account?.nip}
         </TableCell>
         <TableCell className="text-sm">
-          {account?.Bidang && account?.Bidang}
-        </TableCell>
-        <TableCell className="text-sm">
           {account?.Role && account?.Role}
         </TableCell>
         <TableCell className="">

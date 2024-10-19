@@ -321,42 +321,38 @@ export const masterDataSupers = [
   },
   {
     id: 7,
-    name: "Struktur Organisasi",
-  },
-  {
-    id: 8,
     name: "Struktur Organisasi Inti",
   },
   {
-    id: 9,
+    id: 8,
     name: "FAQ",
   },
   {
-    id: 10,
+    id: 9,
     name: "Syarat dan Ketentuan",
   },
   {
-    id: 11,
+    id: 10,
     name: "Manual Book",
   },
   {
-    id: 12,
+    id: 11,
     name: "Regulasi",
   },
   {
-    id: 13,
+    id: 12,
     name: "Logo",
   },
   {
-    id: 14,
+    id: 13,
     name: "Carousel - Slider",
   },
   {
-    id: 15,
+    id: 14,
     name: "Lokasi - Maps",
   },
   {
-    id: 16,
+    id: 15,
     name: "Struktur Pengurus BKD",
   },
 ];
