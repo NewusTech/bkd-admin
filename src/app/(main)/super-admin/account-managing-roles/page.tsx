@@ -1,10 +1,6 @@
 "use client";
 
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import { useQuill } from "react-quilljs";
 import SearchPages from "@/components/elements/search";
-import SuperAreasMasterDataTablePages from "@/components/tables/master_datas/areas_table";
 import { Button } from "@/components/ui/button";
 import {
   deleteAreas,
@@ -20,7 +16,7 @@ import {
   AreasInterface,
   RolesInterface,
 } from "@/types/interface";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -39,30 +35,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Loader } from "lucide-react";
 import PaginationComponent from "@/components/elements/pagination";
-import Editor from "@/components/elements/toolbar_editors";
-import EditorProvide from "@/components/pages/areas";
 import AddIcon from "@/components/elements/add_button";
 import TypingEffect from "@/components/ui/TypingEffect";
 import { useDebounce } from "@/hooks/useDebounce";
-import NotFoundSearch from "@/components/ui/SearchNotFound";
 import SuperAccountManagingRolesTablePages from "@/components/tables/super_admin_account_managing_roles_table/page";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { z } from "zod";
+import { schemaRoleData } from "@/validations";
 
 export default function SuperAccountManagingRolesScreen() {
   const router = useRouter();
@@ -76,7 +61,6 @@ export default function SuperAccountManagingRolesScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
-  const limitItem = 30;
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [roles, setRoles] = useState<RolesInterface[]>([]);
   const [areas, setAreas] = useState<AreasInterface[]>([]);
@@ -95,6 +79,37 @@ export default function SuperAccountManagingRolesScreen() {
     totalPages: 1,
     totalCount: 0,
   });
+
+  const [formValid, setFormValid] = useState(false);
+  const [errors, setErrors] = useState<any>({});
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  const validateForm = useCallback(async () => {
+    try {
+      await schemaRoleData.parseAsync({
+        ...data,
+      });
+      setErrors({});
+      return true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const formattedErrors = error.format();
+        setErrors(formattedErrors);
+      }
+      setIsLoading(false);
+      return false;
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (hasSubmitted) {
+      validateForm();
+    }
+  }, [hasSubmitted, validateForm]);
+
+  useEffect(() => {
+    setFormValid(Object.keys(errors).length === 0);
+  }, [errors]);
 
   const fetchAccountManagingRoles = async (page: number, limit: number) => {
     try {
@@ -143,9 +158,9 @@ export default function SuperAccountManagingRolesScreen() {
   };
 
   useEffect(() => {
-    fetchAreas(1, 10, search);
+    fetchAreas(1, 10, debounceSearch);
     fetchRoles();
-  }, [search]);
+  }, [debounceSearch]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({
@@ -160,35 +175,42 @@ export default function SuperAccountManagingRolesScreen() {
 
   const handleCreateAreas = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    try {
-      const response = await postRegisterCreate(data);
+    setHasSubmitted(true);
 
-      if (response.status === 201) {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil menambahkan akun!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
-        return router.push("/super-admin/account-managing-roles");
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: `${response.message} dan Gagal membuat akun!`,
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
+    const isValid = await validateForm();
+
+    if (isValid) {
+      setIsLoading(true);
+
+      try {
+        const response = await postRegisterCreate(data);
+
+        if (response.status === 201) {
+          Swal.fire({
+            icon: "success",
+            title: "Berhasil menambahkan akun!",
+            timer: 2000,
+            showConfirmButton: false,
+            position: "center",
+          });
+          return router.push("/super-admin/account-managing-roles");
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: `${response.message} dan Gagal membuat akun!`,
+            timer: 2000,
+            showConfirmButton: false,
+            position: "center",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+        setIsDialogOpen(false);
+        setIsDrawerOpen(false);
       }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-      setIsDialogOpen(false);
-      setIsDrawerOpen(false);
     }
   };
 
@@ -480,6 +502,12 @@ export default function SuperAccountManagingRolesScreen() {
                                 </SelectContent>
                               </Select>
                             </div>
+
+                            {hasSubmitted && errors?.bidang_id?._errors && (
+                              <div className="text-red-500 text-[14px] md:text-[16px]">
+                                {errors.bidang_id._errors[0]}
+                              </div>
+                            )}
                           </div>
 
                           <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
@@ -518,6 +546,12 @@ export default function SuperAccountManagingRolesScreen() {
                                 </SelectContent>
                               </Select>
                             </div>
+
+                            {hasSubmitted && errors?.role_id?._errors && (
+                              <div className="text-red-500 text-[14px] md:text-[16px]">
+                                {errors.role_id._errors[0]}
+                              </div>
+                            )}
                           </div>
 
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
@@ -535,6 +569,12 @@ export default function SuperAccountManagingRolesScreen() {
                               className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                               placeholder="Masukkan Nama Lengkap"
                             />
+
+                            {hasSubmitted && errors?.name?._errors && (
+                              <div className="text-red-500 text-[14px] md:text-[16px]">
+                                {errors.name._errors[0]}
+                              </div>
+                            )}
                           </div>
 
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
@@ -553,6 +593,12 @@ export default function SuperAccountManagingRolesScreen() {
                               className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                               placeholder="Masukkan NIP"
                             />
+
+                            {hasSubmitted && errors?.nip?._errors && (
+                              <div className="text-red-500 text-[14px] md:text-[16px]">
+                                {errors.nip._errors[0]}
+                              </div>
+                            )}
                           </div>
 
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
@@ -570,6 +616,12 @@ export default function SuperAccountManagingRolesScreen() {
                               className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                               placeholder="Masukkan Email"
                             />
+
+                            {hasSubmitted && errors?.email?._errors && (
+                              <div className="text-red-500 text-[14px] md:text-[16px]">
+                                {errors.email._errors[0]}
+                              </div>
+                            )}
                           </div>
 
                           <div className="w-full focus-within:text-black-70 flex flex-col gap-y-2">
@@ -608,6 +660,12 @@ export default function SuperAccountManagingRolesScreen() {
                                 )}
                               </div>
                             </div>
+
+                            {hasSubmitted && errors?.password?._errors && (
+                              <div className="text-red-500 text-[14px] md:text-[16px]">
+                                {errors.password._errors[0]}
+                              </div>
+                            )}
                           </div>
                         </div>
 
@@ -633,8 +691,7 @@ export default function SuperAccountManagingRolesScreen() {
                   </AlertDialogContent>
                 </AlertDialog>
               ) : (
-                <>
-                </>
+                <></>
               )}
             </div>
           </div>

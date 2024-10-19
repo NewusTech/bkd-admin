@@ -10,7 +10,13 @@ import {
   updateBKDGalleryActivities,
 } from "@/services/api";
 import { BKDGalleryActivitiesInterface } from "@/types/interface";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -45,12 +51,15 @@ import AddIcon from "@/components/elements/add_button";
 import { useDebounce } from "@/hooks/useDebounce";
 import NotFoundSearch from "@/components/ui/SearchNotFound";
 import TypingEffect from "@/components/ui/TypingEffect";
+import { z } from "zod";
+import { schemaGalleryData } from "@/validations";
 
 export default function BKDGalleryActivitiesScreen() {
   const router = useRouter();
   const dropRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -72,7 +81,36 @@ export default function BKDGalleryActivitiesScreen() {
     totalPages: 1,
     totalCount: 0,
   });
-  const debounceSearch = useDebounce(search);
+  const [formValid, setFormValid] = useState(false);
+  const [errors, setErrors] = useState<any>({});
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  const validateForm = useCallback(async () => {
+    try {
+      await schemaGalleryData.parseAsync({
+        ...data,
+      });
+      setErrors({});
+      return true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const formattedErrors = error.format();
+        setErrors(formattedErrors);
+      }
+      setIsLoading(false);
+      return false;
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (hasSubmitted) {
+      validateForm();
+    }
+  }, [hasSubmitted, validateForm]);
+
+  useEffect(() => {
+    setFormValid(Object.keys(errors).length === 0);
+  }, [errors]);
 
   const fetchGalleries = async (
     page: number,
@@ -95,8 +133,8 @@ export default function BKDGalleryActivitiesScreen() {
   };
 
   useEffect(() => {
-    fetchGalleries(1, 10, search);
-  }, [search]);
+    fetchGalleries(1, 10, debounceSearch);
+  }, [debounceSearch]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
@@ -155,7 +193,10 @@ export default function BKDGalleryActivitiesScreen() {
 
   const handleCreateGallery = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
+
+    setHasSubmitted(true);
+
+    const isValid = await validateForm();
 
     const formData = new FormData();
     formData.append("title", data.title);
@@ -163,38 +204,42 @@ export default function BKDGalleryActivitiesScreen() {
       formData.append("image", fileImage);
     }
 
-    try {
-      const response = await postCreateBKDGalleryActivities(formData);
+    if (isValid) {
+      setIsLoading(true);
 
-      if (response.status === 201) {
-        setData({
-          title: "",
-          image: "",
-        });
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil Menambahkan Galeri!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
-        fetchGalleries(pagination.currentPage, 10, "");
+      try {
+        const response = await postCreateBKDGalleryActivities(formData);
+
+        if (response.status === 201) {
+          setData({
+            title: "",
+            image: "",
+          });
+          Swal.fire({
+            icon: "success",
+            title: "Berhasil Menambahkan Galeri!",
+            timer: 2000,
+            showConfirmButton: false,
+            position: "center",
+          });
+          fetchGalleries(pagination.currentPage, 10, "");
+          setIsDialogOpen(false);
+          router.push("/super-admin/master-data/bkd-gallery-activities");
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal Menambahkan Galeri!",
+            timer: 2000,
+            showConfirmButton: false,
+            position: "center",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
         setIsDialogOpen(false);
-        router.push("/super-admin/master-data/bkd-gallery-activities");
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal Menambahkan Galeri!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
       }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-      setIsDialogOpen(false);
     }
   };
 
@@ -306,23 +351,26 @@ export default function BKDGalleryActivitiesScreen() {
                 <AlertDialogContent className="w-full max-w-2xl bg-line-10 rounded-lg shadow-md">
                   <AlertDialogHeader className="flex flex-col max-h-[500px]">
                     <AlertDialogTitle className="text-center text-[16px]">
-                      Master Data Galeri Kegiatan
+                      <AlertDialogDescription className="text-center">
+                        Master Data Galeri Kegiatan
+                      </AlertDialogDescription>
                     </AlertDialogTitle>
-                    <AlertDialogDescription className="text-center">
+
+                    <div className="w-full flex flex-row items-center justify-center">
                       <TypingEffect
                         className="custom-class text-[14px]"
                         speed={125}
                         deleteSpeed={50}
                         text={["Input data yang diperlukan"]}
                       />
-                    </AlertDialogDescription>
+                    </div>
 
                     <form
                       onSubmit={handleCreateGallery}
                       className="w-full flex flex-col gap-y-5 verticalScroll">
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                         <Label className="focus-within:text-primary-70 font-normal text-[16px]">
-                          Judul Berita
+                          Judul Foto Kegiatan
                         </Label>
                         <Input
                           id="nama-bidang"
@@ -333,6 +381,12 @@ export default function BKDGalleryActivitiesScreen() {
                           className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[16px]"
                           placeholder="Masukkan Judul Foto Kegiatan"
                         />
+
+                        {hasSubmitted && errors?.title?._errors && (
+                          <div className="text-red-500 text-[14px] md:text-[16px]">
+                            {errors.title._errors[0]}
+                          </div>
+                        )}
                       </div>
 
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -345,8 +399,9 @@ export default function BKDGalleryActivitiesScreen() {
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
                             onDrop={handleDropImage}
-                            className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                            className={`w-full ${
+                              previewImage ? "md:w-8/12" : "w-full"
+                            }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                             <>
                               <input
                                 type="file"
@@ -388,7 +443,9 @@ export default function BKDGalleryActivitiesScreen() {
                       </div>
 
                       <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                        <AlertDialogCancel className="text-[16px]">Cancel</AlertDialogCancel>
+                        <AlertDialogCancel className="text-[16px]">
+                          Cancel
+                        </AlertDialogCancel>
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
@@ -417,17 +474,19 @@ export default function BKDGalleryActivitiesScreen() {
                 <DrawerContent className="flex flex-col gap-y-3 bg-line-10 rounded-lg w-full max-w-4xl h-4/6 px-3 pb-6">
                   <div className="w-full flex flex-col gap-y-3 verticalScroll">
                     <DrawerTitle className="text-center text-[14px]">
-                      Master Data Berita
+                      <DrawerDescription className="text-center">
+                        Master Data Berita
+                      </DrawerDescription>
                     </DrawerTitle>
 
-                    <DrawerDescription className="text-center">
+                    <div className="w-full flex flex-row items-center justify-center">
                       <TypingEffect
                         className="custom-class text-[14px]"
                         speed={125}
                         deleteSpeed={50}
                         text={["Input data yang diperlukan"]}
                       />
-                    </DrawerDescription>
+                    </div>
 
                     <form
                       onSubmit={handleCreateGallery}
@@ -435,7 +494,7 @@ export default function BKDGalleryActivitiesScreen() {
                       <div className="w-full flex flex-col gap-y-5 verticalScroll">
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                           <Label className="focus-within:text-primary-70 font-normal text-[14px]">
-                            Judul Berita
+                            Judul Foto Kegiatan
                           </Label>
                           <Input
                             id="nama-bidang"
@@ -446,6 +505,12 @@ export default function BKDGalleryActivitiesScreen() {
                             className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
                             placeholder="Masukkan Judul Foto Kegiatan"
                           />
+
+                          {hasSubmitted && errors?.title?._errors && (
+                            <div className="text-red-500 text-[14px] md:text-[16px]">
+                              {errors.title._errors[0]}
+                            </div>
+                          )}
                         </div>
 
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
@@ -458,8 +523,9 @@ export default function BKDGalleryActivitiesScreen() {
                               onDragOver={handleDragOver}
                               onDragLeave={handleDragLeave}
                               onDrop={handleDropImage}
-                              className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              className={`w-full ${
+                                previewImage ? "md:w-8/12" : "w-full"
+                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                               <>
                                 <input
                                   type="file"
