@@ -129,11 +129,8 @@ export default function ServiceRequiremntsCreate() {
   //   }
   // };
 
-  console.log(cards, "ini cards yang di set");
-
   const handleRemoveCard = (id: number) => {
     const updatedCards = cards.filter((card) => card.id !== id);
-    console.log(updatedCards, "ini updated remove cards inti");
 
     setCards(updatedCards);
     setDataStep2(updatedCards);
@@ -162,7 +159,6 @@ export default function ServiceRequiremntsCreate() {
           }
         : card
     );
-    console.log(updatedCards, "ini updated add cards");
 
     setCards(updatedCards);
   };
@@ -178,7 +174,6 @@ export default function ServiceRequiremntsCreate() {
           }
         : card
     );
-    console.log(updatedCards, "ini updated remove cards");
 
     setCards(updatedCards);
   };
@@ -222,12 +217,9 @@ export default function ServiceRequiremntsCreate() {
           key: option.key,
         }));
       }
-      console.log(formattedCard, "ini formatted card");
 
       return formattedCard;
     });
-
-    console.log(formattedData, "ini format data");
 
     const token = Cookies.get("Authorization");
 
@@ -246,8 +238,6 @@ export default function ServiceRequiremntsCreate() {
       );
 
       const responseData = await response.json();
-
-      console.log(responseData, "ini response data");
 
       if (response.ok) {
         Swal.fire({

@@ -16,8 +16,6 @@ export default function SuperSettingCreateScreen({
 }: {
   params: { serviceId: number };
 }) {
-  console.log(params.serviceId, "ini params");
-
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [setting, setSetting] = useState<SuperAdminSettingInterface>();
@@ -63,8 +61,6 @@ export default function SuperSettingCreateScreen({
   useEffect(() => {
     fetchSetting(params.serviceId);
   }, [params.serviceId]);
-
-  console.log(setting, "ini setting");
 
   const updateNewOuputLetter = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

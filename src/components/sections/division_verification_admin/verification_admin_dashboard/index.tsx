@@ -101,7 +101,6 @@ export default function DivisionVerificationAdminDashboardPages() {
     if (token) {
       try {
         const decoded = jwtDecode<JwtPayload>(token);
-        console.log(decoded, "ini decoded");
 
         if (decoded && decoded.role !== undefined) {
           setRole(decoded.role);
@@ -114,9 +113,6 @@ export default function DivisionVerificationAdminDashboardPages() {
       router.push("/login");
     }
   }, [router]);
-
-  console.log(areaId, "ini area id");
-  console.log(role, "ini role");
 
   const startDateFormatted = startDate
     ? formatDate(new Date(startDate))
@@ -219,8 +215,6 @@ export default function DivisionVerificationAdminDashboardPages() {
       );
     }
   };
-
-  console.log(users, "ini users");
 
   const fetchDashboardData = async () => {
     try {

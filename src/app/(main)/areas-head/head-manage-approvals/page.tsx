@@ -142,8 +142,6 @@ export default function HeadManageApprovalsScreen() {
     fetchService(1, 100, "");
   }, []);
 
-  console.log(users, "ini users");
-
   return (
     <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
       <div

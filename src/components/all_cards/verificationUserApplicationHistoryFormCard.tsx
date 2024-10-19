@@ -23,7 +23,6 @@ export default function UserApplicationHistoryFormCard({
   item: UserApplicationHistoryFormServiceInputInterface;
 }) {
   let render;
-  console.log(item.layananform_name, "ini namaa")
 
   if (item?.layananform_tipedata === "radio") {
     const radioOption = item?.layananform_datajson?.find(
@@ -100,7 +99,7 @@ export default function UserApplicationHistoryFormCard({
                     <Image
                       src={item?.data}
                       alt={item?.layananform_name}
-                      width={500} 
+                      width={500}
                       height={500}
                       className="w-10/12 h-5/6"
                     />
