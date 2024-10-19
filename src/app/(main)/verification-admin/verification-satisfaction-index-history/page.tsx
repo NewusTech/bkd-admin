@@ -40,7 +40,7 @@ export default function VerificationSatisfactionIndexScreen() {
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
-  const deboucedSearch = useDebounce(search, 500);
+  const [layananId, setLayananId] = useState<number | undefined>(undefined);
   const [role, setRole] = useState<string | null>(null);
   const [areaId, setAreaId] = useState<number | undefined>(undefined);
   const now = new Date();
@@ -59,6 +59,7 @@ export default function VerificationSatisfactionIndexScreen() {
     totalPages: 1,
     totalCount: 0,
   });
+  const debounceSearch = useDebounce(search);
 
   useEffect(() => {
     const token = Cookies.get("Authorization");
@@ -87,10 +88,12 @@ export default function VerificationSatisfactionIndexScreen() {
   const fetchSatisfactionIndexHistoryReports = async (
     page: number,
     limit: number,
-    bidang_id?: number
+    bidang_id?: number,
+    layanan_id?: number,
+    search?: string,
   ) => {
     try {
-      const response = await getSatisfactionIndexReport(page, limit, bidang_id);
+      const response = await getSatisfactionIndexReport(page, limit, bidang_id, layanan_id, search);
 
       setReports(response.data);
       setPagination((prev) => ({
@@ -107,12 +110,12 @@ export default function VerificationSatisfactionIndexScreen() {
   useEffect(() => {
     if (role === "Admin Verifikasi" || role === "Kepala Bidang") {
       if (areaId) {
-        fetchSatisfactionIndexHistoryReports(1, 5, areaId);
+        fetchSatisfactionIndexHistoryReports(1, 5, areaId, layananId, search);
       }
     } else {
-      fetchSatisfactionIndexHistoryReports(1, 5);
+      fetchSatisfactionIndexHistoryReports(1, 5, areaId, layananId, search);
     }
-  }, [role, areaId]);
+  }, [role, areaId, layananId, search]);
 
   const fetchAreas = async (page: number, limit: number, search: string) => {
     try {
@@ -198,26 +201,29 @@ export default function VerificationSatisfactionIndexScreen() {
 
               <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
                 <Select
-                // onValueChange={handleSelectStatusChange}
-                >
+                  onValueChange={(value) =>
+                    setLayananId(value === "all" ? undefined : Number(value))
+                  }>
                   <SelectTrigger
-                    className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-                    {/* <Checks className="w-6 h-6 text-black-80" /> */}
+                    className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                     <SelectValue
                       placeholder="Pilih Layanan"
-                      className="text-black-80 text-[14px] md:text-[16px] w-full"
+                      className="text-black-80 tex-[14px] w-full"
                     />
                   </SelectTrigger>
                   <SelectContent className="bg-line-10">
                     <div className="pt-2">
+                      <SelectItem className="w-full px-4" value="all">
+                        Semua Status
+                      </SelectItem>
                       {services &&
-                        services.map((item: ServiceInterface, i: number) => {
+                        services.map((service: ServiceInterface, i: number) => {
                           return (
                             <SelectItem
                               key={i}
-                              className={`w-full px-4 text-[14px] md:text-[16px]`}
-                              value={item.id.toString()}>
-                              {item?.nama}
+                              className={`w-full px-4`}
+                              value={service.id.toString()}>
+                              {service?.nama}
                             </SelectItem>
                           );
                         })}
@@ -231,7 +237,10 @@ export default function VerificationSatisfactionIndexScreen() {
               <div className="w-full md:w-7/12">
                 <SearchPages
                   search={search}
-                  change={(e: any) => setSearch(e.target.value)}
+                  setSearch={setSearch}
+                  change={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setSearch(e.target.value)
+                  }
                   placeholder="Pencarian"
                 />
               </div>
@@ -252,7 +261,7 @@ export default function VerificationSatisfactionIndexScreen() {
                 {/* PDF Excel Komponen */}
                 <div className="w-full md:w-5/12">
                   <UnduhMenus fetchPdf={fetchPdf} fetchExcel={fetchExcel} pdfFileName="Laporan Indeks Kepuasan.pdf" excelFileName="Laporan Indeks Kepuasan.xlsx" successTitlePdf="File PDF Berhasil Diunduh!"
-                  successTitleExcel="File Excel Sukses Diunduh!" id={0} />
+                    successTitleExcel="File Excel Sukses Diunduh!" id={0} />
                 </div>
                 {/* PDF Excel Komponen */}
               </>

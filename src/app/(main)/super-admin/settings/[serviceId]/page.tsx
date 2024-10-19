@@ -62,12 +62,17 @@ export default function SuperSettingCreateScreen({
     fetchSetting(params.serviceId);
   }, [params.serviceId]);
 
+  console.log(data, "ini datanya");
+
   const updateNewOuputLetter = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
       const response = await updateOutputLetter(data, params.serviceId);
+
+      console.log(response, "ini datanya");
+      console.log(data, "ini datanya");
 
       if (response.status === 200) {
         setData({
@@ -199,7 +204,7 @@ export default function SuperSettingCreateScreen({
                 }}
                 type="text"
                 className="w-full text-[14px] md:text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
-                placeholder="Masukkan NIP Penanggung Jawab"
+                placeholder="Masukkan Unit Kerja Penanggung Jawab"
               />
             </div>
 
@@ -208,11 +213,14 @@ export default function SuperSettingCreateScreen({
                 Kepala Surat
               </Label>
               <div className="w-full h-full border border-line-20 rounded-lg text-left">
-                <EditorProvide
-                  key={data?.header}
-                  content={data?.header}
-                  onChange={(e: any) => setData({ ...data, header: e })}
-                />
+                {data?.header && (
+                  <EditorProvide
+                    content={data.header}
+                    onChange={(e: any) =>
+                      setData({ ...data, header: e })
+                    }
+                  />
+                )}
               </div>
             </div>
 
@@ -253,11 +261,14 @@ export default function SuperSettingCreateScreen({
                 Isi Surat
               </Label>
               <div className="w-full h-full border border-line-20 rounded-lg text-left">
-                <EditorProvide
-                  key={data?.body}
-                  content={data?.body}
-                  onChange={(e: any) => setData({ ...data, body: e })}
-                />
+                {data?.body && (
+                  <EditorProvide
+                    content={data.body}
+                    onChange={(e: any) =>
+                      setData({ ...data, body: e })
+                    }
+                  />
+                )}
               </div>
             </div>
 
@@ -266,11 +277,14 @@ export default function SuperSettingCreateScreen({
                 Tembusan
               </Label>
               <div className="w-full h-full border border-line-20 rounded-lg text-left">
-                <EditorProvide
-                  key={data?.tembusan}
-                  content={data?.tembusan}
-                  onChange={(e: any) => setData({ ...data, tembusan: e })}
-                />
+                {data?.tembusan && (
+                  <EditorProvide
+                    content={data.tembusan}
+                    onChange={(e: any) =>
+                      setData({ ...data, tembusan: e })
+                    }
+                  />
+                )}
               </div>
             </div>
 
@@ -279,11 +293,14 @@ export default function SuperSettingCreateScreen({
                 Catatan
               </Label>
               <div className="w-full h-full border border-line-20 rounded-lg text-left">
-                <EditorProvide
-                  key={data?.catatan}
-                  content={data?.catatan}
-                  onChange={(e: any) => setData({ ...data, catatan: e })}
-                />
+                {data?.catatan && (
+                  <EditorProvide
+                    content={data.catatan}
+                    onChange={(e: any) =>
+                      setData({ ...data, catatan: e })
+                    }
+                  />
+                )}
               </div>
             </div>
 
@@ -292,11 +309,14 @@ export default function SuperSettingCreateScreen({
                 Footer
               </Label>
               <div className="w-full h-full border border-line-20 rounded-lg text-left">
-                <EditorProvide
-                  key={data?.footer}
-                  content={data?.footer}
-                  onChange={(e: any) => setData({ ...data, footer: e })}
-                />
+                {data?.footer && (
+                  <EditorProvide
+                    content={data.footer}
+                    onChange={(e: any) =>
+                      setData({ ...data, footer: e })
+                    }
+                  />
+                )}
               </div>
             </div>
           </div>
