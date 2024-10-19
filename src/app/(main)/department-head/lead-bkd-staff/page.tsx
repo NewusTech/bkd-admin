@@ -67,12 +67,9 @@ import { useRouter } from "next/navigation";
 import { staffStatus } from "@/constants/main";
 import Image from "next/image";
 import MobileStaffBkdCardPages from "@/components/mobile_all_cards/mobileStaffBkdCard";
-<<<<<<< HEAD
+import UnduhMenus from "@/components/ui/UnduhMenus";
 import { z } from "zod";
 import { schemaStaffData } from "@/validations";
-=======
-import UnduhMenus from "@/components/ui/UnduhMenus";
->>>>>>> 3f5a8cded68bcb1a9b9ba8d18ce881d5dfc0fcdc
 
 export default function LeadBkdStaffScreen() {
   const router = useRouter();
@@ -533,8 +530,15 @@ export default function LeadBkdStaffScreen() {
               <>
                 {/* PDF Excel Komponen */}
                 <div className="w-full">
-                  <UnduhMenus fetchPdf={fetchPdf} fetchExcel={fetchExcel} pdfFileName="Laporan Staff BKD.pdf" excelFileName="Laporan Staff BKD.xlsx" successTitlePdf="File PDF Berhasil Diunduh!"
-                    successTitleExcel="File Excel Sukses Diunduh!" id={0} />
+                  <UnduhMenus
+                    fetchPdf={fetchPdf}
+                    fetchExcel={fetchExcel}
+                    pdfFileName="Laporan Staff BKD.pdf"
+                    excelFileName="Laporan Staff BKD.xlsx"
+                    successTitlePdf="File PDF Berhasil Diunduh!"
+                    successTitleExcel="File Excel Sukses Diunduh!"
+                    id={0}
+                  />
                 </div>
                 {/* PDF Excel Komponen */}
               </>
@@ -785,8 +789,9 @@ export default function LeadBkdStaffScreen() {
                                   onDragOver={handleDragOver}
                                   onDragLeave={handleDragLeave}
                                   onDrop={handleDropImage}
-                                  className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                                    }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                                  className={`w-full ${
+                                    previewImage ? "md:w-8/12" : "w-full"
+                                  }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                                   <div>
                                     <input
                                       type="file"
@@ -1093,8 +1098,9 @@ export default function LeadBkdStaffScreen() {
                                   onDragOver={handleDragOver}
                                   onDragLeave={handleDragLeave}
                                   onDrop={handleDropImage}
-                                  className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                                    }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                                  className={`w-full ${
+                                    previewImage ? "md:w-8/12" : "w-full"
+                                  }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                                   <div>
                                     <input
                                       type="file"
