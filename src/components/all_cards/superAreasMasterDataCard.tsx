@@ -1,11 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
-import Link from "next/link";
 import { Button } from "../ui/button";
 import { AreasInterface } from "@/types/interface";
-import { EllipsisVertical, Loader } from "lucide-react";
+import { Loader } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,28 +18,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Textarea } from "../ui/textarea";
 import EditorProvide from "../pages/areas";
 import TypingEffect from "../ui/TypingEffect";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import CombinedReadMoreRichTextDisplay from "../ui/CombinedReadMoreRichTextDisplay";
 
 export default function SuperAreasMasterDataCard({
@@ -54,9 +33,13 @@ export default function SuperAreasMasterDataCard({
   handleUpdateArea,
   isDialogEditOpen,
   setIsDialogEditOpen,
+  slug,
+  setSlug,
 }: {
   area: AreasInterface;
   index: number;
+  slug: string;
+  setSlug: React.Dispatch<React.SetStateAction<string>>;
   handleDeleteArea: (slug: string) => void;
   isDeleteLoading: boolean;
   data: {
@@ -85,6 +68,8 @@ export default function SuperAreasMasterDataCard({
       pj: area?.pj,
       nip_pj: area?.nip_pj,
     });
+
+    setSlug(area?.slug);
   };
 
   function truncateString(str: string, num: number): string {
@@ -97,16 +82,10 @@ export default function SuperAreasMasterDataCard({
   return (
     <>
       <TableRow className="border border-line-20 text-[14px]">
-        <TableCell className="text-[14px] text-center">
-          {index + 1}
-        </TableCell>
-        <TableCell className="text-[14px] text-center">
-          {area?.nama}
-        </TableCell>
+        <TableCell className="text-[14px] text-center">{index + 1}</TableCell>
+        <TableCell className="text-[14px] text-center">{area?.nama}</TableCell>
         <TableCell className="text-[14px] text-center">{area?.pj}</TableCell>
-        <TableCell className="text-[14px text-center">
-          {area?.nip_pj}
-        </TableCell>
+        <TableCell className="text-[14px text-center">{area?.nip_pj}</TableCell>
         <TableCell className="text-[14px]">
           {area?.desc && (
             <CombinedReadMoreRichTextDisplay content={area?.desc} keys={true} />
@@ -114,16 +93,12 @@ export default function SuperAreasMasterDataCard({
         </TableCell>
         <TableCell className="text-center flex items-center w-full">
           <div className="w-full flex flex-row items-center justify-center gap-x-2">
-            {/* <div className="w-full">
-            <Button title="Lihat Data" className="w-full text-sm bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 md:text-sm px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
-              Lihat
-            </Button>
-          </div> */}
             <div className="w-1/2">
               <AlertDialog
                 open={isDialogEditOpen}
                 onOpenChange={setIsDialogEditOpen}>
                 <AlertDialogTrigger
+                  key={area?.slug}
                   onClick={() => {
                     handleSetArea();
                     setIsDialogEditOpen(true);
@@ -150,7 +125,7 @@ export default function SuperAreasMasterDataCard({
 
                     <form
                       onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
-                        handleUpdateArea(e, area?.slug)
+                        handleUpdateArea(e, slug)
                       }
                       className="w-full flex flex-col gap-y-3 max-h-[500px]">
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
@@ -266,7 +241,6 @@ export default function SuperAreasMasterDataCard({
                 )}
               </Button>
             </div>
-
           </div>
         </TableCell>
       </TableRow>

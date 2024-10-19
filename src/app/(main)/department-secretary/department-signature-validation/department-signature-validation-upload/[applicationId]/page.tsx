@@ -129,9 +129,9 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
       }
 
       // Debugging: Log FormData entries
-      Object.keys(formData).forEach((key) => {
-        console.log(key, formData.get(key));
-      });
+      // Object.keys(formData).forEach((key) => {
+      //   console.log(key, formData.get(key));
+      // });
 
       const response = await updateSignatureLetterApplication(
         formData,

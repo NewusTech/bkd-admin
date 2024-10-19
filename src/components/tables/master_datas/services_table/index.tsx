@@ -24,9 +24,13 @@ export default function SuperServicesMasterDataTablePages({
   isDrawerEditOpen,
   setIsDrawerEditOpen,
   handleUpdateService,
+  serviceId,
+  setServiceId,
 }: {
   services: ServiceInterface[];
   areas: AreasInterface[];
+  serviceId: number;
+  setServiceId: React.Dispatch<React.SetStateAction<number>>;
   handleDeleteService: (id: number) => void;
   isDeleteLoading: boolean;
   data: {
@@ -81,6 +85,8 @@ export default function SuperServicesMasterDataTablePages({
                   handleUpdateService={handleUpdateService}
                   isDrawerEditOpen={isDrawerEditOpen}
                   setIsDrawerEditOpen={setIsDrawerEditOpen}
+                  serviceId={serviceId}
+                  setServiceId={setServiceId}
                 />
               );
             })}
@@ -118,6 +124,8 @@ export default function SuperServicesMasterDataTablePages({
                     handleUpdateService={handleUpdateService}
                     isDialogEditOpen={isDialogEditOpen}
                     setIsDialogEditOpen={setIsDialogEditOpen}
+                    serviceId={serviceId}
+                    setServiceId={setServiceId}
                   />
                 );
               })}

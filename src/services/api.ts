@@ -218,7 +218,7 @@ export const deleteAreas = async (slug: string) => {
 };
 
 // PUT areas / bidang
-export const updateAreas = async (slug: string, data: AreasCreateInterface) => {
+export const updateAreas = async (data: AreasCreateInterface, slug: string) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
@@ -597,8 +597,6 @@ export const deleteStructureOrganizationsMain = async (id: number) => {
       cache: "no-store",
     }
   );
-
-  console.log(response, "hihihi");
 
   return await response.json();
 };

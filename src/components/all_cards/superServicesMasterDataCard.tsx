@@ -33,6 +33,8 @@ export default function SuperServicesMasterDataCard({
   service,
   areas,
   index,
+  serviceId,
+  setServiceId,
   handleDeleteService,
   isDeleteLoading,
   data,
@@ -45,6 +47,8 @@ export default function SuperServicesMasterDataCard({
   service: ServiceInterface;
   areas: AreasInterface[];
   index: number;
+  serviceId: number;
+  setServiceId: React.Dispatch<React.SetStateAction<number>>;
   handleDeleteService: (id: number) => void;
   isDeleteLoading: boolean;
   data: {
@@ -86,6 +90,7 @@ export default function SuperServicesMasterDataCard({
       langkah: service.langkah,
     });
 
+    setServiceId(service.id);
   };
 
   return (
@@ -121,11 +126,14 @@ export default function SuperServicesMasterDataCard({
                     Master Data Layanan
                   </AlertDialogTitle>
                   <AlertDialogDescription className="text-center">
-                    <TypingEffect className="text-[16px]" text={["Edit data yang diperlukan"]} />
+                    <TypingEffect
+                      className="text-[16px]"
+                      text={["Edit data yang diperlukan"]}
+                    />
                   </AlertDialogDescription>
                   <form
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
-                      handleUpdateService(e, service?.id)
+                      handleUpdateService(e, serviceId)
                     }
                     className="w-full flex flex-col gap-y-3 max-h-[500px]">
                     <div className="w-full flex flex-col gap-y-5 verticalScroll">
@@ -158,7 +166,9 @@ export default function SuperServicesMasterDataCard({
                         <div className="w-full h-full border border-line-20 rounded-lg text-left text-[16px]">
                           <EditorProvide
                             content={data.syarat}
-                            onChange={(e: any) => setData({ ...data, syarat: e })}
+                            onChange={(e: any) =>
+                              setData({ ...data, syarat: e })
+                            }
                           />
                         </div>
                       </div>
@@ -186,16 +196,18 @@ export default function SuperServicesMasterDataCard({
                               <div className="pt-2">
                                 {areas &&
                                   areas.length > 0 &&
-                                  areas.map((area: AreasInterface, i: number) => {
-                                    return (
-                                      <SelectItem
-                                        key={i}
-                                        className={`w-full px-4 text-[16px]`}
-                                        value={area.id.toString()}>
-                                        {area.nama}
-                                      </SelectItem>
-                                    );
-                                  })}
+                                  areas.map(
+                                    (area: AreasInterface, i: number) => {
+                                      return (
+                                        <SelectItem
+                                          key={i}
+                                          className={`w-full px-4 text-[16px]`}
+                                          value={area.id.toString()}>
+                                          {area.nama}
+                                        </SelectItem>
+                                      );
+                                    }
+                                  )}
                               </div>
                             </SelectContent>
                           </Select>
@@ -243,7 +255,9 @@ export default function SuperServicesMasterDataCard({
                         <div className="w-full h-full border border-line-20 rounded-lg text-left text-[16px]">
                           <EditorProvide
                             content={data.ketentuan}
-                            onChange={(e: any) => setData({ ...data, ketentuan: e })}
+                            onChange={(e: any) =>
+                              setData({ ...data, ketentuan: e })
+                            }
                           />
                         </div>
                       </div>
@@ -257,11 +271,12 @@ export default function SuperServicesMasterDataCard({
                         <div className="w-full h-full border border-line-20 rounded-lg text-left text-[16px]">
                           <EditorProvide
                             content={data.langkah}
-                            onChange={(e: any) => setData({ ...data, langkah: e })}
+                            onChange={(e: any) =>
+                              setData({ ...data, langkah: e })
+                            }
                           />
                         </div>
                       </div>
-
                     </div>
                     <div className="w-full flex flex-row justify-between items-center gap-x-5">
                       <AlertDialogCancel>
@@ -281,7 +296,6 @@ export default function SuperServicesMasterDataCard({
                         )}
                       </Button>
                     </div>
-
                   </form>
                 </AlertDialogHeader>
               </AlertDialogContent>
@@ -302,7 +316,6 @@ export default function SuperServicesMasterDataCard({
               )}
             </Button>
           </div>
-
         </div>
       </TableCell>
     </TableRow>

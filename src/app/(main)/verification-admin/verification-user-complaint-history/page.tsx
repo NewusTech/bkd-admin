@@ -125,8 +125,6 @@ export default function VerificationUserComplaintScreen() {
     [role]
   );
 
-  console.log(areaId, "ini area id");
-
   useEffect(() => {
     if (role === "Admin Verifikasi" || role === "Kepala Bidang") {
       fetchUserComplaints(
@@ -157,8 +155,6 @@ export default function VerificationUserComplaintScreen() {
     areaId,
     fetchUserComplaints,
   ]);
-
-  console.log(complaints, "ini complaint");
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
