@@ -69,6 +69,7 @@ import Image from "next/image";
 import MobileStaffBkdCardPages from "@/components/mobile_all_cards/mobileStaffBkdCard";
 import { z } from "zod";
 import { schemaStaffData } from "@/validations";
+import UnduhMenus from "@/components/ui/UnduhMenus";
 
 export default function LeadBkdStaffScreen() {
   const router = useRouter();
@@ -428,34 +429,13 @@ export default function LeadBkdStaffScreen() {
     fetchGrades(19);
   }, []);
 
-  const downloadStaffBkd = async () => {
-    setIsLoadingDownload(true);
-    try {
-      const response = await getDownloadStaffBkdPrint();
-
-      const url = window.URL.createObjectURL(response);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "Tabel Staff BKD.pdf";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-
-      if (response.type === "application/pdf") {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil Download Staff BKD!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
-        setIsLoadingDownload(false);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoadingDownload(false);
-    }
+  // Api PDF
+  const fetchPdf = async () => {
+    return await getDownloadStaffBkdPrint();
+  };
+  // Api Excel
+  const fetchExcel = async () => {
+    return await getDownloadStaffBkdPrint();
   };
 
   return (
@@ -547,21 +527,14 @@ export default function LeadBkdStaffScreen() {
             </div>
 
             <div className="w-full flex flex-row gap-x-3 md:gap-x-5">
-              <div className="w-full">
-                <Button
-                  onClick={() => downloadStaffBkd()}
-                  className="w-full text-[14px] md:text-[16px] flex flex-row gap-x-4 bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                  {isLoadingDownload ? (
-                    <Loader className="animate-spin h-5 w-5" />
-                  ) : (
-                    <>
-                      <Printer className="w-6 h-6 text-line-10" />
-
-                      <span>Print</span>
-                    </>
-                  )}
-                </Button>
-              </div>
+              <>
+                {/* PDF Excel Komponen */}
+                <div className="w-full">
+                  <UnduhMenus fetchPdf={fetchPdf} fetchExcel={fetchExcel} pdfFileName="Laporan Staff BKD.pdf" excelFileName="Laporan Staff BKD.xlsx" successTitlePdf="File PDF Berhasil Diunduh!"
+                    successTitleExcel="File Excel Sukses Diunduh!" id={0} />
+                </div>
+                {/* PDF Excel Komponen */}
+              </>
 
               <div className="w-full">
                 {!isMobile ? (
@@ -809,9 +782,8 @@ export default function LeadBkdStaffScreen() {
                                   onDragOver={handleDragOver}
                                   onDragLeave={handleDragLeave}
                                   onDrop={handleDropImage}
-                                  className={`w-full ${
-                                    previewImage ? "md:w-8/12" : "w-full"
-                                  }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                                  className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
+                                    }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                                   <div>
                                     <input
                                       type="file"
@@ -1118,9 +1090,8 @@ export default function LeadBkdStaffScreen() {
                                   onDragOver={handleDragOver}
                                   onDragLeave={handleDragLeave}
                                   onDrop={handleDropImage}
-                                  className={`w-full ${
-                                    previewImage ? "md:w-8/12" : "w-full"
-                                  }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                                  className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
+                                    }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                                   <div>
                                     <input
                                       type="file"
