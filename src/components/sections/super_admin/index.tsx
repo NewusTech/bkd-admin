@@ -48,13 +48,13 @@ import DataNotFound from "@/components/elements/data_not_found";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileDivisionVerificationAdminApplicationHistoryCard from "@/components/mobile_all_cards/mobileDivisionVerificationAdminApplicationHistoryCard";
 import Swal from "sweetalert2";
-import { Loader } from "lucide-react";
+import UnduhMenus from "@/components/ui/UnduhMenus";
+import { Console } from "console";
 
 export default function SuperAdminDashboardPages() {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
   const [layananId, setLayananId] = useState<number | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState(false);
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
   const [startDate, setStartDate] = useState<Date | undefined>(firstDayOfMonth);
@@ -172,35 +172,21 @@ export default function SuperAdminDashboardPages() {
     },
   } satisfies ChartConfig;
 
-  const downloadApplicationHistory = async () => {
-    setIsLoading(true);
-    try {
-      const response = await getDownloadApplicationPrint();
-
-      const url = window.URL.createObjectURL(response);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "Tabel Riwayat Permohonan Menunggu.pdf";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-
-      if (response.type === "application/pdf") {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil Download Hasil Surat Permohonan!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
-        setIsLoading(false);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
+  // Api PDF
+  const fetchPdf = async () => {
+    // const bidang_id = services[0].bidang_id
+    console.log(layananId, "ini layanan id dari fatch");
+    return await getDownloadApplicationPrint(layananId);
   };
+  // Api Excel
+  const fetchExcel = async () => {
+    // const bidang_id = services[0].bidang_id
+    return await getDownloadApplicationPrint(layananId);
+  };
+
+  useEffect(() => {
+    console.log(layananId, "ini layanan id");
+  }, [layananId])
 
   return (
     <div className="w-full flex flex-col gap-y-5 mb-24">
@@ -232,19 +218,19 @@ export default function SuperAdminDashboardPages() {
               <BarChart
                 accessibilityLayer
                 data={chartData}
-                // margin={{
-                //   left: 1,
-                //   right: 1,
-                // }}
+              // margin={{
+              //   left: 1,
+              //   right: 1,
+              // }}
               >
                 <CartesianGrid vertical={false} />
                 <XAxis
                   dataKey="nama"
                   tickLine={false}
                   axisLine={false}
-                  // tickMargin={1}
-                  // minTickGap={1}
-                  // className="w-full"
+                // tickMargin={1}
+                // minTickGap={1}
+                // className="w-full"
                 />
                 <ChartTooltip
                   content={
@@ -316,21 +302,15 @@ export default function SuperAdminDashboardPages() {
               />
             </div>
 
-            <div className="w-full">
-              <Button
-                onClick={() => downloadApplicationHistory()}
-                className="w-full flex flex-row gap-x-4 text-sm bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-                {isLoading ? (
-                  <Loader className="animate-spin h-5 w-5" />
-                ) : (
-                  <>
-                    <Printer className="w-6 h-6 text-line-10" />
+            <>
+              {/* PDF Excel Komponen */}
+              <div className="w-full">
+                <UnduhMenus fetchPdf={fetchPdf} fetchExcel={fetchExcel} pdfFileName="Laporan Permohonan Pengguna.pdf" excelFileName="Laporan Permohonan Pengguna.xlsx" successTitlePdf="File PDF Berhasil Diunduh!"
+                  successTitleExcel="File Excel Sukses Diunduh!" id={0} />
+              </div>
+              {/* PDF Excel Komponen */}
+            </>
 
-                    <span>Print</span>
-                  </>
-                )}
-              </Button>
-            </div>
           </div>
         </div>
 

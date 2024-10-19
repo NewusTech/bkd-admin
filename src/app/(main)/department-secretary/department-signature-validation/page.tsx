@@ -24,8 +24,9 @@ import {
   ServiceInterface,
   UserApplicationHistoryInterface,
 } from "@/types/interface";
-import { getApplicationUserHistories, getService } from "@/services/api";
+import { getApplicationUserHistories, getDownloadApplicationPrint, getService } from "@/services/api";
 import { jwtDecode } from "jwt-decode";
+import UnduhMenus from "@/components/ui/UnduhMenus";
 
 export default function DepartmentSecretarySignatureValidationScreen() {
   const router = useRouter();
@@ -159,6 +160,15 @@ export default function DepartmentSecretarySignatureValidationScreen() {
     fetchService(1, 100, "");
   }, []);
 
+  // Api PDF
+  const fetchPdf = async (id: number) => {
+    return await getDownloadApplicationPrint(id);
+  };
+  // Api Excel
+  const fetchExcel = async (id: number) => {
+    return await getDownloadApplicationPrint(id);
+  };
+
   return (
     <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
       <div
@@ -216,13 +226,14 @@ export default function DepartmentSecretarySignatureValidationScreen() {
             />
           </div>
 
-          <div className="w-full">
-            <Button className="w-full flex flex-row gap-x-4 text-sm bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-              <Printer className="w-6 h-6 text-line-10" />
-
-              <span>Print</span>
-            </Button>
-          </div>
+          <>
+            {/* PDF Excel Komponen */}
+            <div className="w-full">
+              <UnduhMenus fetchPdf={fetchPdf} fetchExcel={fetchExcel} pdfFileName="Dokumen Pengesahan Tanda Tangan.pdf" excelFileName="Dokumen Pengesahan Tanda Tangan.xlsx" successTitlePdf="PDF Berhasil Diunduh!"
+                successTitleExcel="File Excel Sukses Diunduh!" id={0} />
+            </div>
+            {/* PDF Excel Komponen */}
+          </>
         </div>
       </div>
 
