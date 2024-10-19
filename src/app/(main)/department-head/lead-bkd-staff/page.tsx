@@ -137,8 +137,6 @@ export default function LeadBkdStaffScreen() {
         totalPages: response?.pagination?.totalPages,
         totalCount: response?.pagination?.totalCount,
       }));
-
-      console.log(response, "ini get woy");
     } catch (error) {
       console.log(error);
     }
@@ -249,7 +247,6 @@ export default function LeadBkdStaffScreen() {
         fetchStructureOrganization(pagination?.currentPage, 5, "", status);
         setIsDialogOpenCreate(false);
         router.push("/department-head/lead-bkd-staff");
-        console.log(response, "hihi ini berhasil di tambah");
       } else {
         Swal.fire({
           icon: "error",
@@ -351,7 +348,6 @@ export default function LeadBkdStaffScreen() {
         fetchStructureOrganization(pagination?.currentPage, 5, "", status);
         setIsDialogOpenUpdate(false);
         router.push("/department-head/lead-bkd-staff");
-        console.log(response, "hihi ini berhasil di update");
       } else {
         Swal.fire({
           icon: "error",

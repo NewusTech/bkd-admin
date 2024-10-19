@@ -23,8 +23,12 @@ export default function SuperAreasMasterDataTablePages({
   setIsDialogEditOpen,
   setIsDrawerEditOpen,
   handleUpdateArea,
+  slug,
+  setSlug,
 }: {
   areas: AreasInterface[];
+  slug: string;
+  setSlug: React.Dispatch<React.SetStateAction<string>>;
   handleDeleteArea: (slug: string) => void;
   isDeleteLoading: boolean;
   data: { nama: string; desc: string; pj: string; nip_pj: string };
@@ -63,6 +67,8 @@ export default function SuperAreasMasterDataTablePages({
                 handleUpdateArea={handleUpdateArea}
                 isDrawerEditOpen={isDrawerEditOpen}
                 setIsDrawerEditOpen={setIsDrawerEditOpen}
+                slug={slug}
+                setSlug={setSlug}
               />
             ))}
         </>
@@ -74,9 +80,7 @@ export default function SuperAreasMasterDataTablePages({
         <Table className="w-full border border-line-20">
           <TableHeader className="bg-primary-40 text-line-10">
             <TableRow className="w-full">
-              <TableHead className="text-center text-[14px]">
-                No.
-              </TableHead>
+              <TableHead className="text-center text-[14px]">No.</TableHead>
               <TableHead className="text-center text-[14px]">
                 Nama Bidang
               </TableHead>
@@ -89,9 +93,7 @@ export default function SuperAreasMasterDataTablePages({
               <TableHead className="text-center text-[14px]">
                 Deskripsi
               </TableHead>
-              <TableHead className="text-center text-[14px]">
-                Aksi
-              </TableHead>
+              <TableHead className="text-center text-[14px]">Aksi</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -110,6 +112,8 @@ export default function SuperAreasMasterDataTablePages({
                   handleUpdateArea={handleUpdateArea}
                   isDialogEditOpen={isDialogEditOpen}
                   setIsDialogEditOpen={setIsDialogEditOpen}
+                  slug={slug}
+                  setSlug={setSlug}
                 />
               ))}
           </TableBody>

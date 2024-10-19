@@ -45,12 +45,8 @@ import NotFoundSearch from "@/components/ui/SearchNotFound";
 
 export default function AreasScreen() {
   const router = useRouter();
-  // serach
   const [search, setSearch] = useState("");
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  };
-  // serach
+  const debounceSearch = useDebounce(search);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -58,7 +54,7 @@ export default function AreasScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
-  const limitItem = 30;
+  const [slug, setSlug] = useState<string>("");
   const [areas, setAreas] = useState<AreasInterface[]>([]);
   const [data, setData] = useState({
     nama: "",
@@ -72,7 +68,6 @@ export default function AreasScreen() {
     totalPages: 1,
     totalCount: 0,
   });
-  const debounceSearch = useDebounce(search);
 
   const fetchAreas = async (page: number, limit: number, search: string) => {
     try {
@@ -91,13 +86,17 @@ export default function AreasScreen() {
   };
 
   useEffect(() => {
-    fetchAreas(1, 10, search);
-  }, [search]);
+    fetchAreas(1, 10, debounceSearch);
+  }, [debounceSearch]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
       fetchAreas(newPage, 10, "");
     }
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,8 +112,6 @@ export default function AreasScreen() {
 
     try {
       const response = await postAreas(data);
-
-      console.log(response, "ini response");
 
       if (response.status === 201) {
         setData({
@@ -194,7 +191,7 @@ export default function AreasScreen() {
     setIsUpdateLoading(true);
 
     try {
-      const response = await updateAreas(slug, data);
+      const response = await updateAreas(data, slug);
 
       if (response.status === 200) {
         setData({
@@ -356,7 +353,6 @@ export default function AreasScreen() {
                           )}
                         </Button>
                       </div>
-
                     </form>
                   </DrawerHeader>
                 </DrawerContent>
@@ -487,7 +483,6 @@ export default function AreasScreen() {
                           )}
                         </Button>
                       </div>
-
                     </form>
                   </div>
                 </AlertDialogContent>
@@ -511,6 +506,8 @@ export default function AreasScreen() {
               isDrawerEditOpen={isDrawerEditOpen}
               setIsDrawerEditOpen={setIsDrawerEditOpen}
               handleUpdateArea={handleUpdateArea}
+              slug={slug}
+              setSlug={setSlug}
             />
           ) : (
             <>

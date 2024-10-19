@@ -38,8 +38,6 @@ export default function SuperSettingScreen() {
     fetchService(1, 30, "");
   }, []);
 
-  console.log(services, "ini services");
-
   return (
     <section className="w-full flex flex-col items-center md:px-5 md:mt-5">
       <div className="bg-line-20 md:bg-line-10 md:shadow-md md:rounded-lg w-full flex flex-col p-5 gap-y-5">

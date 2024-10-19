@@ -12,7 +12,10 @@ import {
   postStructureOrganizationsMain,
   updateStructureOrganizations,
 } from "@/services/api";
-import { StructureOrganizationInterface, StructureOrganizationInterfaceMain } from "@/types/interface";
+import {
+  StructureOrganizationInterface,
+  StructureOrganizationInterfaceMain,
+} from "@/types/interface";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertDialog,
@@ -69,7 +72,9 @@ export default function StructureOrganizationMainScreen() {
   const [organizations, setOrganizations] = useState<
     StructureOrganizationInterface[]
   >([]);
-  const [mainOrganizations, setMainOrganizations] = useState<StructureOrganizationInterfaceMain[]>([]);
+  const [mainOrganizations, setMainOrganizations] = useState<
+    StructureOrganizationInterfaceMain[]
+  >([]);
   const [data, setData] = useState({
     bkdstruktur_id: "",
   });
@@ -136,7 +141,6 @@ export default function StructureOrganizationMainScreen() {
     fetchStructureOrganization(1, 10, "");
   }, []);
 
-
   const handleSelectChange = (value: string) => {
     setData({
       ...data,
@@ -155,10 +159,6 @@ export default function StructureOrganizationMainScreen() {
         ...data,
         bkdstruktur_id: Number(data.bkdstruktur_id),
       });
-
-      console.log(response, "ini response");
-      console.log(data.bkdstruktur_id, "ini id struktur bkd")
-      console.log(data, "ini data")
 
       if (response.status === 201) {
         setData({
@@ -321,7 +321,9 @@ export default function StructureOrganizationMainScreen() {
                             </Label>
 
                             <div className="w-full border border-line-20 rounded-lg">
-                              <Select onValueChange={handleSelectChange} value={data.bkdstruktur_id}>
+                              <Select
+                                onValueChange={handleSelectChange}
+                                value={data.bkdstruktur_id}>
                                 <SelectTrigger
                                   className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none text-[16px]`}>
                                   <SelectValue
@@ -334,7 +336,10 @@ export default function StructureOrganizationMainScreen() {
                                     {organizations &&
                                       organizations.length > 0 &&
                                       organizations.map(
-                                        (organization: StructureOrganizationInterface, i: number) => (
+                                        (
+                                          organization: StructureOrganizationInterface,
+                                          i: number
+                                        ) => (
                                           <SelectItem
                                             key={i}
                                             className={`w-full px-4 text-[16px]`}
@@ -346,13 +351,14 @@ export default function StructureOrganizationMainScreen() {
                                   </div>
                                 </SelectContent>
                               </Select>
-
                             </div>
                           </div>
                         </div>
                       </div>
                       <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                        <AlertDialogCancel className="text-[16px]">Cancel</AlertDialogCancel>
+                        <AlertDialogCancel className="text-[16px]">
+                          Cancel
+                        </AlertDialogCancel>
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
@@ -416,7 +422,10 @@ export default function StructureOrganizationMainScreen() {
                                   {organizations &&
                                     organizations.length > 0 &&
                                     organizations.map(
-                                      (organization: StructureOrganizationInterface, i: number) => (
+                                      (
+                                        organization: StructureOrganizationInterface,
+                                        i: number
+                                      ) => (
                                         <SelectItem
                                           key={i}
                                           className={`w-full px-4 text-[16px]`}
@@ -434,7 +443,9 @@ export default function StructureOrganizationMainScreen() {
 
                       <div className="flex gap-4 justify-between">
                         <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
-                          <DrawerDescription className="text-[14px]">Batal</DrawerDescription>
+                          <DrawerDescription className="text-[14px]">
+                            Batal
+                          </DrawerDescription>
                         </DrawerClose>
                         <Button
                           title="Simpan Data"
@@ -471,9 +482,9 @@ export default function StructureOrganizationMainScreen() {
                   isUpdateLoading={isUpdateLoading}
                   isDialogEditOpen={isDialogEditOpen}
                   setIsDialogEditOpen={setIsDialogEditOpen}
-                // handleUpdateStructureOrganization={
-                //   handleUpdateStructureOrganization
-                // }
+                  // handleUpdateStructureOrganization={
+                  //   handleUpdateStructureOrganization
+                  // }
                 />
               )}
             </>
@@ -483,7 +494,10 @@ export default function StructureOrganizationMainScreen() {
                 {mainOrganizations &&
                   mainOrganizations.length > 0 &&
                   mainOrganizations?.map(
-                    (organization: StructureOrganizationInterfaceMain, i: number) => {
+                    (
+                      organization: StructureOrganizationInterfaceMain,
+                      i: number
+                    ) => {
                       return (
                         <MobileStructureOrganizationMainMasterDataCard
                           key={i}

@@ -147,8 +147,6 @@ export default function VerificationUserComplaintDetailScreen({
     }
   };
 
-  console.log(complaint?.image)
-
   return (
     <div className="w-full flex flex-col items-center">
       <div className="w-[95%] md:w-[96%] h-full flex flex-col md:mx-8 bg-line-10 py-6 rounded-lg shadow-md mt-6 gap-y-8">

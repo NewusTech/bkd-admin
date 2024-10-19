@@ -63,8 +63,12 @@ export default function MobileSuperAreasMasterDataCard({
   handleUpdateArea,
   isDrawerEditOpen,
   setIsDrawerEditOpen,
+  slug,
+  setSlug,
 }: {
   area: AreasInterface;
+  slug: string;
+  setSlug: React.Dispatch<React.SetStateAction<string>>;
   index: number;
   handleDeleteArea: (slug: string) => void;
   isDeleteLoading: boolean;
@@ -94,6 +98,8 @@ export default function MobileSuperAreasMasterDataCard({
       pj: area?.pj,
       nip_pj: area?.nip_pj,
     });
+
+    setSlug(area?.slug);
   };
 
   function truncateString(str: string, num: number): string {
@@ -142,14 +148,17 @@ export default function MobileSuperAreasMasterDataCard({
                           </DrawerTrigger>
                           <DrawerContent className="bg-line-10">
                             <DrawerHeader>
-                              <DrawerTitle className="text-[16px]">Master Data Bidang</DrawerTitle>
+                              <DrawerTitle className="text-[16px]">
+                                Master Data Bidang
+                              </DrawerTitle>
                               <form
                                 onSubmit={(
                                   e: React.FormEvent<HTMLFormElement>
-                                ) => handleUpdateArea(e, area?.slug)}
+                                ) => handleUpdateArea(e, slug)}
                                 className="w-full flex flex-col gap-y-3 max-h-full">
                                 <div className="text-center mb-4">
-                                  <TypingEffect className="custom-class text-[14px]"
+                                  <TypingEffect
+                                    className="custom-class text-[14px]"
                                     text={["Edit data yang diperlukan...."]}
                                   />
                                 </div>
@@ -236,7 +245,9 @@ export default function MobileSuperAreasMasterDataCard({
                                   </div>
                                   <div className="flex gap-4 justify-between">
                                     <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg text-xs">
-                                      <DrawerDescription className="text-[14px]">Batal</DrawerDescription>
+                                      <DrawerDescription className="text-[14px]">
+                                        Batal
+                                      </DrawerDescription>
                                     </DrawerClose>
                                     <Button
                                       title="Simpan Data"
@@ -305,9 +316,13 @@ export default function MobileSuperAreasMasterDataCard({
 
           <div className="w-full grid grid-cols-3">
             <div className="w-full font-medium text-black">Deskripsi</div>
-            <div className="w-full col-span-2">:
+            <div className="w-full col-span-2">
+              :
               {area?.desc && (
-                <CombinedReadMoreRichTextDisplay content={area?.desc} keys={true} />
+                <CombinedReadMoreRichTextDisplay
+                  content={area?.desc}
+                  keys={true}
+                />
               )}
             </div>
           </div>

@@ -169,8 +169,6 @@ export default function CarouselSliderScreen() {
     try {
       const response = await postCarouselSliders(formData);
 
-      console.log(response, "lala lili");
-
       if (response.status === 201) {
         setData({
           image: "",
@@ -332,8 +330,9 @@ export default function CarouselSliderScreen() {
                               onDragOver={handleDragOver}
                               onDragLeave={handleDragLeave}
                               onDrop={handleDropImage}
-                              className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              className={`w-full ${
+                                previewImage ? "md:w-8/12" : "w-full"
+                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                               <>
                                 <input
                                   type="file"
@@ -385,8 +384,9 @@ export default function CarouselSliderScreen() {
                               onDragOver={handleDragOver}
                               onDragLeave={handleDragLeave}
                               onDrop={handleDropImageMobile}
-                              className={`w-full ${previewImageMobile ? "md:w-8/12" : "w-full"
-                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              className={`w-full ${
+                                previewImageMobile ? "md:w-8/12" : "w-full"
+                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                               <>
                                 <input
                                   type="file"
@@ -429,7 +429,9 @@ export default function CarouselSliderScreen() {
                         </div>
                       </div>
                       <div className="w-full flex flex-row justify-between items-center gap-x-5">
-                        <AlertDialogCancel className="text-[16px]">Cancel</AlertDialogCancel>
+                        <AlertDialogCancel className="text-[16px]">
+                          Cancel
+                        </AlertDialogCancel>
                         <Button
                           type="submit"
                           disabled={isLoading ? true : false}
@@ -483,8 +485,9 @@ export default function CarouselSliderScreen() {
                               onDragOver={handleDragOver}
                               onDragLeave={handleDragLeave}
                               onDrop={handleDropImage}
-                              className={`w-full ${previewImage ? "md:w-8/12" : "w-full"
-                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              className={`w-full ${
+                                previewImage ? "md:w-8/12" : "w-full"
+                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                               <>
                                 <input
                                   type="file"
@@ -535,8 +538,9 @@ export default function CarouselSliderScreen() {
                               onDragOver={handleDragOver}
                               onDragLeave={handleDragLeave}
                               onDrop={handleDropImageMobile}
-                              className={`w-full ${previewImageMobile ? "md:w-8/12" : "w-full"
-                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                              className={`w-full ${
+                                previewImageMobile ? "md:w-8/12" : "w-full"
+                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                               <>
                                 <input
                                   type="file"
@@ -581,7 +585,9 @@ export default function CarouselSliderScreen() {
 
                       <div className="flex gap-4 justify-between">
                         <DrawerClose className="w-full border border-line-20 bg-line-50 bg-opacity-20 rounded-lg">
-                          <DrawerDescription className="text-[14px]">Batal</DrawerDescription>
+                          <DrawerDescription className="text-[14px]">
+                            Batal
+                          </DrawerDescription>
                         </DrawerClose>
                         <Button
                           title="Simpan Data"
@@ -615,12 +621,10 @@ export default function CarouselSliderScreen() {
                   handleDropImage={handleDropImage}
                   handleImageChange={handleImageChange}
                   handleRemoveImage={handleRemoveImage}
-
                   previewImageMobile={previewImageMobile}
                   handleDropImageMobile={handleDropImageMobile}
                   handleImageChangeMobile={handleImageChangeMobile}
                   handleRemoveImageMobile={handleRemoveImageMobile}
-
                   handleDeleteSlider={handleDeleteSlider}
                   isDeleteLoading={isDeleteLoading}
                   data={data}
@@ -649,12 +653,10 @@ export default function CarouselSliderScreen() {
                         handleDropImage={handleDropImage}
                         handleImageChange={handleImageChange}
                         handleRemoveImage={handleRemoveImage}
-
                         previewImageMobile={previewImageMobile}
                         handleDropImageMobile={handleDropImageMobile}
                         handleImageChangeMobile={handleImageChangeMobile}
                         handleRemoveImageMobile={handleRemoveImageMobile}
-
                         handleDeleteSlider={handleDeleteSlider}
                         isDeleteLoading={isDeleteLoading}
                         data={data}

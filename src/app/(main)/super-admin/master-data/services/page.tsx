@@ -68,6 +68,7 @@ export default function ServicesScreen() {
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
   const limitItem = 30;
+  const [serviceId, setServiceId] = useState<number>(0);
   const [areas, setAreas] = useState<AreasInterface[]>([]);
   const [services, setServices] = useState<ServiceInterface[]>([]);
   const [data, setData] = useState({
@@ -295,7 +296,9 @@ export default function ServicesScreen() {
                 </DrawerTrigger>
                 <DrawerContent className="bg-white">
                   <DrawerHeader>
-                    <DrawerTitle className="text-[16px]">Master Data Layanan</DrawerTitle>
+                    <DrawerTitle className="text-[16px]">
+                      Master Data Layanan
+                    </DrawerTitle>
 
                     <form
                       onSubmit={handleCreateService}
@@ -665,6 +668,8 @@ export default function ServicesScreen() {
               isDrawerEditOpen={isDrawerEditOpen}
               setIsDrawerEditOpen={setIsDrawerEditOpen}
               handleUpdateService={handleUpdateService}
+              serviceId={serviceId}
+              setServiceId={setServiceId}
             />
           ) : (
             <>

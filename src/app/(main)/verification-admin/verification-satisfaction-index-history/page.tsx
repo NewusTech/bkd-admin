@@ -65,8 +65,6 @@ export default function VerificationSatisfactionIndexScreen() {
       try {
         const decoded = jwtDecode<JwtPayload>(token);
 
-        console.log(decoded, "ini decode");
-
         if (decoded && decoded.role !== undefined) {
           setRole(decoded.role);
           setAreaId(decoded.bidang_id);
@@ -103,8 +101,6 @@ export default function VerificationSatisfactionIndexScreen() {
       console.log(error);
     }
   };
-
-  console.log(areaId, "ini area");
 
   useEffect(() => {
     if (role === "Admin Verifikasi" || role === "Kepala Bidang") {
