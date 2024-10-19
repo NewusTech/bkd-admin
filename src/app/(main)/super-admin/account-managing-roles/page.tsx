@@ -67,7 +67,6 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 export default function SuperAccountManagingRolesScreen() {
   const router = useRouter();
   const [search, setSearch] = useState("");
-  const debounceSearch = useDebounce(search);
   const [seen, setSeen] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
@@ -95,10 +94,11 @@ export default function SuperAccountManagingRolesScreen() {
     totalPages: 1,
     totalCount: 0,
   });
+  const debounceSearch = useDebounce(search);
 
-  const fetchAccountManagingRoles = async (page: number, limit: number) => {
+  const fetchAccountManagingRoles = async (page: number, limit: number, search: string) => {
     try {
-      const response = await getAccountManagingRoles(page, limit);
+      const response = await getAccountManagingRoles(page, limit, search);
 
       setAccounts(response.data);
       setPagination((prev) => ({
@@ -113,12 +113,12 @@ export default function SuperAccountManagingRolesScreen() {
   };
 
   useEffect(() => {
-    fetchAccountManagingRoles(1, 5);
-  }, []);
+    fetchAccountManagingRoles(1, 5, search);
+  }, [search]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchAccountManagingRoles(newPage, 5);
+      fetchAccountManagingRoles(newPage, 5, "");
     }
   };
 

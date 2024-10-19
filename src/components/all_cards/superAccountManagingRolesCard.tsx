@@ -384,7 +384,7 @@ export default function SuperAccountManagingRolesCard({
                   <div
                     // name="Edit"
                     // title="Edit Data"
-                    className="h-10 text-[16px] px-3 rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-fit m-auto">
+                    className="h-10 text-[14px] px-3 rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-fit m-auto">
                     Edit
                   </div>
                 </AlertDialogTrigger>

@@ -80,7 +80,11 @@ export const getAllRoles = async () => {
 };
 
 //get all account managing roles
-export const getAccountManagingRoles = async (page: number, limit: number) => {
+export const getAccountManagingRoles = async (
+  page: number,
+  limit: number,
+  search: string
+) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
@@ -1382,12 +1386,14 @@ export const getAllGrade = async (limit: number) => {
 export const getSatisfactionIndexReport = async (
   page: number,
   limit: number,
-  bidang_id?: number
+  bidang_id?: number,
+  layanan_id?: number,
+  search?: string
 ) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/history/feedback?page=${page}&limit=${limit}&bidang_id=${bidang_id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/history/feedback?page=${page}&limit=${limit}&bidang_id=${bidang_id}&layanan_id=${layanan_id}&search=${search}`,
     {
       method: "GET",
       headers: {
@@ -1590,7 +1596,7 @@ export const getDownloadSatisfactionIndexPrint = async (id: number) =>
       `${process.env.NEXT_PUBLIC_API_URL}/admin/document/print/satisfaction-index/${id}/get`,
       {
         method: "GET",
-        headers: {  
+        headers: {
           Authorization: `Bearer ${token}`,
         },
         cache: "no-store",
