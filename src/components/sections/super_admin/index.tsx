@@ -36,6 +36,7 @@ import {
 } from "@/types/interface";
 import {
   getApplicationUserHistories,
+  getDownloadApplicationExcelPrint,
   getDownloadApplicationPrint,
   getService,
   getSuperAdminDashboard,
@@ -181,12 +182,12 @@ export default function SuperAdminDashboardPages() {
   // Api Excel
   const fetchExcel = async () => {
     // const bidang_id = services[0].bidang_id
-    return await getDownloadApplicationPrint(layananId);
+    return await getDownloadApplicationExcelPrint(layananId);
   };
 
   useEffect(() => {
     console.log(layananId, "ini layanan id");
-  }, [layananId])
+  }, [layananId]);
 
   return (
     <div className="w-full flex flex-col gap-y-5 mb-24">
@@ -218,19 +219,19 @@ export default function SuperAdminDashboardPages() {
               <BarChart
                 accessibilityLayer
                 data={chartData}
-              // margin={{
-              //   left: 1,
-              //   right: 1,
-              // }}
+                // margin={{
+                //   left: 1,
+                //   right: 1,
+                // }}
               >
                 <CartesianGrid vertical={false} />
                 <XAxis
                   dataKey="nama"
                   tickLine={false}
                   axisLine={false}
-                // tickMargin={1}
-                // minTickGap={1}
-                // className="w-full"
+                  // tickMargin={1}
+                  // minTickGap={1}
+                  // className="w-full"
                 />
                 <ChartTooltip
                   content={
@@ -305,12 +306,18 @@ export default function SuperAdminDashboardPages() {
             <>
               {/* PDF Excel Komponen */}
               <div className="w-full">
-                <UnduhMenus fetchPdf={fetchPdf} fetchExcel={fetchExcel} pdfFileName="Laporan Permohonan Pengguna.pdf" excelFileName="Laporan Permohonan Pengguna.xlsx" successTitlePdf="File PDF Berhasil Diunduh!"
-                  successTitleExcel="File Excel Sukses Diunduh!" id={0} />
+                <UnduhMenus
+                  fetchPdf={fetchPdf}
+                  fetchExcel={fetchExcel}
+                  pdfFileName="Laporan Permohonan Pengguna.pdf"
+                  excelFileName="Laporan Permohonan Pengguna.xlsx"
+                  successTitlePdf="File PDF Berhasil Diunduh!"
+                  successTitleExcel="File Excel Sukses Diunduh!"
+                  id={0}
+                />
               </div>
               {/* PDF Excel Komponen */}
             </>
-
           </div>
         </div>
 

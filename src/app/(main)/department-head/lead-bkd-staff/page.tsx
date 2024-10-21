@@ -40,6 +40,7 @@ import {
   getAllGrade,
   getApplicationUserHistories,
   getAreas,
+  getDownloadStaffBkdExcelPrint,
   getDownloadStaffBkdPrint,
   getService,
   getStructureOrganizations,
@@ -435,7 +436,7 @@ export default function LeadBkdStaffScreen() {
   };
   // Api Excel
   const fetchExcel = async () => {
-    return await getDownloadStaffBkdPrint();
+    return await getDownloadStaffBkdExcelPrint();
   };
 
   return (

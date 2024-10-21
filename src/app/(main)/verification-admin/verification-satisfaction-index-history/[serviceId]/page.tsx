@@ -6,6 +6,8 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { SatisfactionIndexHistoryReportDetailInterface } from "@/types/interface";
 import {
+  getDownloadApplicationExcelPrint,
+  getDownloadSatisfactionIndexExcelPrint,
   getDownloadSatisfactionIndexPrint,
   getSatisfactionIndexHistoryReportDetail,
 } from "@/services/api";
@@ -19,6 +21,7 @@ import { Printer } from "@phosphor-icons/react";
 import MobileSatisfactionIndexDetailCardPages from "@/components/mobile_all_cards/mobileSatisfactionIndexDetailCard";
 import DataNotFound from "@/components/elements/data_not_found";
 import Swal from "sweetalert2";
+import UnduhMenus from "@/components/ui/UnduhMenus";
 
 export default function VerificationSatisfactionIndexDetailScreen({
   params,
@@ -93,34 +96,13 @@ export default function VerificationSatisfactionIndexDetailScreen({
     }
   };
 
-  const downloadSatisfactionIndexDetailPrint = async (id: number) => {
-    setIsLoadingDownload(true);
-    try {
-      const response = await getDownloadSatisfactionIndexPrint(id);
-
-      const url = window.URL.createObjectURL(response);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "Tabel Riwayat Indeks Kepuasan Detail.pdf";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-
-      if (response.type === "application/pdf") {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil Download Riwayat Indeks Kepuasan Detail!",
-          timer: 2000,
-          showConfirmButton: false,
-          position: "center",
-        });
-        setIsLoadingDownload(false);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoadingDownload(false);
-    }
+  // Api PDF
+  const fetchPdf = async (id: number) => {
+    return await getDownloadSatisfactionIndexPrint(id);
+  };
+  // Api Excel
+  const fetchExcel = async (id: number) => {
+    return await getDownloadSatisfactionIndexExcelPrint(id);
   };
 
   return (
@@ -159,23 +141,21 @@ export default function VerificationSatisfactionIndexDetailScreen({
             />
           </div>
 
-          <div className="w-full md:w-5/12">
-            <Button
-              onClick={() =>
-                downloadSatisfactionIndexDetailPrint(params?.serviceId)
-              }
-              className="w-full flex flex-row gap-x-4 text-sm bg-primary-40 items-center justify-center hover:bg-primary-70 h-10 text-line-10 rounded-lg">
-              {isLoadingDownload ? (
-                <Loader className="animate-spin h-5 w-5" />
-              ) : (
-                <>
-                  <Printer className="w-6 h-6 text-line-10" />
-
-                  <span>Print</span>
-                </>
-              )}
-            </Button>
-          </div>
+          <>
+            {/* PDF Excel Komponen */}
+            <div className="w-full">
+              <UnduhMenus
+                fetchPdf={fetchPdf}
+                fetchExcel={fetchExcel}
+                pdfFileName="Laporan Pengaduan Pengguna.pdf"
+                excelFileName="Laporan Pengaduan Pengguna.xlsx"
+                successTitlePdf="File PDF Berhasil Diunduh!"
+                successTitleExcel="File Excel Sukses Diunduh!"
+                id={params?.serviceId}
+              />
+            </div>
+            {/* PDF Excel Komponen */}
+          </>
         </div>
 
         <div className="w-full">

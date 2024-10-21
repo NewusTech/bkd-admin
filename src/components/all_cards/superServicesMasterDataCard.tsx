@@ -28,6 +28,7 @@ import EditorProvide from "../pages/areas";
 import CombinedReadMoreRichTextDisplay from "../ui/CombinedReadMoreRichTextDisplay";
 import ReadMore from "../ui/ReadMore";
 import TypingEffect from "../ui/TypingEffect";
+import parse from "html-react-parser";
 
 export default function SuperServicesMasterDataCard({
   service,
@@ -99,10 +100,11 @@ export default function SuperServicesMasterDataCard({
       <TableCell className="text-center">{service.nama}</TableCell>
       <TableCell className="text-center">{service.penanggung_jawab}</TableCell>
       <TableCell className="text-left">
-        <ReadMore text={service.desc}></ReadMore>
+        {/* <ReadMore text={service.desc}></ReadMore> */}
         {/* {service.desc && (
           <CombinedReadMoreRichTextDisplay content={service.desc} keys={true} />
         )} */}
+        {parse(service?.desc)}
       </TableCell>
       <TableCell className="text-center flex items-center w-full">
         <div className="w-full flex flex-row items-center justify-center gap-x-2">
