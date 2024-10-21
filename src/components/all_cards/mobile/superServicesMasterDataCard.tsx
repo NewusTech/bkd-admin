@@ -57,6 +57,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import CombinedReadMoreRichTextDisplay from "@/components/ui/CombinedReadMoreRichTextDisplay";
+import parse from "html-react-parser";
 
 export default function MobileSuperServicesMasterDataCard({
   service,
@@ -390,14 +391,15 @@ export default function MobileSuperServicesMasterDataCard({
               Deskripsi
             </div>
             <div className="w-full col-span-2 text-[14px]">
-              <span>
+              {service?.desc && parse(service.desc)}
+              {/* <span>
                 {service.desc && (
                   <CombinedReadMoreRichTextDisplay
                     content={service.desc}
                     keys={true}
                   />
                 )}
-              </span>
+              </span> */}
             </div>
           </div>
         </div>

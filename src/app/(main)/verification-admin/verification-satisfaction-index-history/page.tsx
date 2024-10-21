@@ -3,7 +3,7 @@
 import DatePages from "@/components/elements/date";
 import SearchPages from "@/components/elements/search";
 import { formatDate } from "@/lib/utils";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   AreasInterface,
@@ -40,6 +40,7 @@ export default function VerificationSatisfactionIndexScreen() {
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search);
   const [layananId, setLayananId] = useState<number | undefined>(undefined);
   const [role, setRole] = useState<string | null>(null);
   const [areaId, setAreaId] = useState<number | undefined>(undefined);
@@ -59,7 +60,6 @@ export default function VerificationSatisfactionIndexScreen() {
     totalPages: 1,
     totalCount: 0,
   });
-  const debounceSearch = useDebounce(search);
 
   useEffect(() => {
     const token = Cookies.get("Authorization");
@@ -85,37 +85,70 @@ export default function VerificationSatisfactionIndexScreen() {
     : undefined;
   const endDateFormatted = endDate ? formatDate(new Date(endDate)) : undefined;
 
-  const fetchSatisfactionIndexHistoryReports = async (
-    page: number,
-    limit: number,
-    bidang_id?: number,
-    layanan_id?: number,
-    search?: string,
-  ) => {
-    try {
-      const response = await getSatisfactionIndexReport(page, limit, bidang_id, layanan_id, search);
+  const fetchSatisfactionIndexHistoryReports = useCallback(
+    async (
+      page: number,
+      limit: number,
+      layanan_id?: number,
+      search?: string,
+      bidang_id?: number
+    ) => {
+      try {
+        let response: any;
+        if (role === "Admin Verifikasi" || role === "Kepala Bidang") {
+          response = await getSatisfactionIndexReport(
+            page,
+            limit,
+            layanan_id,
+            search,
+            bidang_id
+          );
+        } else {
+          response = await getSatisfactionIndexReport(
+            page,
+            limit,
+            layanan_id,
+            search
+          );
+        }
 
-      setReports(response.data);
-      setPagination((prev) => ({
-        ...prev,
-        currentPage: page,
-        totalPages: response?.pagination?.totalPages,
-        totalCount: response?.pagination?.totalCount,
-      }));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+        setReports(response.data);
+        setPagination((prev) => ({
+          ...prev,
+          currentPage: page,
+          totalPages: response?.pagination?.totalPages,
+          totalCount: response?.pagination?.totalCount,
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [role]
+  );
 
   useEffect(() => {
     if (role === "Admin Verifikasi" || role === "Kepala Bidang") {
       if (areaId) {
-        fetchSatisfactionIndexHistoryReports(1, 5, areaId, layananId, search);
+        fetchSatisfactionIndexHistoryReports(
+          1,
+          5,
+          layananId,
+          debounceSearch,
+          areaId
+        );
       }
     } else {
-      fetchSatisfactionIndexHistoryReports(1, 5, areaId, layananId, search);
+      fetchSatisfactionIndexHistoryReports(1, 5, layananId, debounceSearch);
     }
-  }, [role, areaId, layananId, search]);
+  }, [
+    role,
+    areaId,
+    fetchSatisfactionIndexHistoryReports,
+    layananId,
+    debounceSearch,
+  ]);
+
+  console.log("reports", reports);
 
   const fetchAreas = async (page: number, limit: number, search: string) => {
     try {
@@ -144,7 +177,17 @@ export default function VerificationSatisfactionIndexScreen() {
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchSatisfactionIndexHistoryReports(newPage, 5);
+      if (role === "Admin Verifikasi" || role === "Kepala Bidang") {
+        fetchSatisfactionIndexHistoryReports(
+          newPage,
+          5,
+          layananId,
+          search,
+          areaId
+        );
+      } else {
+        fetchSatisfactionIndexHistoryReports(newPage, 5, layananId, search);
+      }
     }
   };
 
@@ -260,8 +303,15 @@ export default function VerificationSatisfactionIndexScreen() {
               <>
                 {/* PDF Excel Komponen */}
                 <div className="w-full md:w-5/12">
-                  <UnduhMenus fetchPdf={fetchPdf} fetchExcel={fetchExcel} pdfFileName="Laporan Indeks Kepuasan.pdf" excelFileName="Laporan Indeks Kepuasan.xlsx" successTitlePdf="File PDF Berhasil Diunduh!"
-                    successTitleExcel="File Excel Sukses Diunduh!" id={0} />
+                  <UnduhMenus
+                    fetchPdf={fetchPdf}
+                    fetchExcel={fetchExcel}
+                    pdfFileName="Laporan Indeks Kepuasan.pdf"
+                    excelFileName="Laporan Indeks Kepuasan.xlsx"
+                    successTitlePdf="File PDF Berhasil Diunduh!"
+                    successTitleExcel="File Excel Sukses Diunduh!"
+                    id={0}
+                  />
                 </div>
                 {/* PDF Excel Komponen */}
               </>

@@ -28,6 +28,8 @@ import { RichTextDisplay } from "../ui/RichTextDisplay";
 import ReadMore from "../ui/ReadMore";
 import CombinedReadMoreRichTextDisplay from "../ui/CombinedReadMoreRichTextDisplay";
 import TypingEffect from "../ui/TypingEffect";
+import { truncateTitle } from "@/lib/utils";
+import parse from "html-react-parser";
 
 export default function SuperNewsMasterDataCard({
   item,
@@ -88,12 +90,13 @@ export default function SuperNewsMasterDataCard({
       <TableCell className="text-start">{index + 1}</TableCell>
       <TableCell className="text-start">{item.title}</TableCell>
       <TableCell className="text-start">
-        <ReadMore text={item.desc}></ReadMore>
+        {/* <ReadMore text={item.desc}></ReadMore> */}
         {/* {item.desc && (
           <ReadMore text={item.desc}/>
           <RichTextDisplay content={item.desc} />
           <CombinedReadMoreRichTextDisplay content={item.desc} keys={true} />
         )} */}
+        <div className="line-clamp-3">{item.desc && parse(item?.desc)}</div>
       </TableCell>
       <TableCell className="text-start">
         <div className="w-full">
@@ -119,7 +122,7 @@ export default function SuperNewsMasterDataCard({
                       width={1000}
                       height={1000}
                       className="w-10/12 h-96"
-                    // className="w-10/12 h-5/6"
+                      // className="w-10/12 h-5/6"
                     />
                   </div>
                 )}
@@ -134,7 +137,6 @@ export default function SuperNewsMasterDataCard({
         </div>
       </TableCell>
       <TableCell className="text-center flex items-center w-full">
-
         <div className="w-full flex flex-row items-center justify-center gap-x-2">
           <div className="w-full">
             <AlertDialog
@@ -156,7 +158,12 @@ export default function SuperNewsMasterDataCard({
                     Master Data Berita
                   </AlertDialogTitle>
                   <AlertDialogDescription className="text-center">
-                    <TypingEffect className="custom-class text-[14px]" speed={125} deleteSpeed={50} text={["Edit data yang diperlukan"]} />
+                    <TypingEffect
+                      className="custom-class text-[14px]"
+                      speed={125}
+                      deleteSpeed={50}
+                      text={["Edit data yang diperlukan"]}
+                    />
                   </AlertDialogDescription>
                   <form
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
@@ -164,7 +171,6 @@ export default function SuperNewsMasterDataCard({
                     }
                     className="w-full flex flex-col gap-y-3 max-h-[500px]">
                     <div className="w-full flex flex-col gap-y-5 verticalScroll">
-
                       <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                         <Label className="focus-within:text-primary-70 font-normal text-[16px]">
                           Judul Berita
@@ -207,8 +213,11 @@ export default function SuperNewsMasterDataCard({
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
                             onDrop={handleDropImage}
-                            className={`w-full ${data?.image || previewImage ? "md:w-8/12" : "w-full"
-                              }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                            className={`w-full ${
+                              data?.image || previewImage
+                                ? "md:w-8/12"
+                                : "w-full"
+                            }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
                             <>
                               <input
                                 type="file"
@@ -251,7 +260,9 @@ export default function SuperNewsMasterDataCard({
                     </div>
 
                     <div className="w-full flex flex-row justify-center md:justify-between items-center gap-x-5">
-                      <AlertDialogCancel className="text-[16px]">Cancel</AlertDialogCancel>
+                      <AlertDialogCancel className="text-[16px]">
+                        Cancel
+                      </AlertDialogCancel>
                       <Button
                         type="submit"
                         disabled={isUpdateLoading ? true : false}
@@ -263,7 +274,6 @@ export default function SuperNewsMasterDataCard({
                         )}
                       </Button>
                     </div>
-
                   </form>
                 </AlertDialogHeader>
               </AlertDialogContent>

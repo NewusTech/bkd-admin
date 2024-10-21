@@ -1386,14 +1386,14 @@ export const getAllGrade = async (limit: number) => {
 export const getSatisfactionIndexReport = async (
   page: number,
   limit: number,
-  bidang_id?: number,
   layanan_id?: number,
-  search?: string
+  search?: string,
+  bidang_id?: number
 ) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/history/feedback?page=${page}&limit=${limit}&bidang_id=${bidang_id}&layanan_id=${layanan_id}&search=${search}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/history/feedback?page=${page}&limit=${limit}&${layanan_id && `layanan_id=${layanan_id}`}&search=${search}&${bidang_id != undefined || (bidang_id != null && `bidang_id=${bidang_id}`)}`,
     {
       method: "GET",
       headers: {
@@ -1701,3 +1701,101 @@ export const deleteBKDStructure = async (id: number) => {
 
   return await response.json();
 };
+
+// get Application history output
+export const getDownloadApplicationExcelPrint = async (
+  layanan_id: number | undefined
+) =>
+  // bidang_id?: number,
+  // layanan_id?: number,
+  // search?: string,
+  // start_date?: string,
+  // end_date?: string
+  {
+    const token = Cookies.get("Authorization");
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/admin/document/excel/print/application/get?${!layanan_id ? `layanan_id=${layanan_id}` : ""}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        cache: "no-store",
+      }
+    );
+
+    return await response.blob();
+  };
+
+// get staff bkd output print excel
+export const getDownloadStaffBkdExcelPrint = async () =>
+  // bidang_id?: number,
+  // layanan_id?: number,
+  // search?: string,
+  // start_date?: string,
+  // end_date?: string
+  {
+    const token = Cookies.get("Authorization");
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/admin/document/excel/print/staff-bkd/get`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        cache: "no-store",
+      }
+    );
+
+    return await response.blob();
+  };
+
+// get user complaint output excel print
+export const getDownloadUserComplaintExcelPrint = async () =>
+  // bidang_id?: number,
+  // layanan_id?: number,
+  // search?: string,
+  // start_date?: string,
+  // end_date?: string
+  {
+    const token = Cookies.get("Authorization");
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/admin/document/excel/print/user-complaint/get`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        cache: "no-store",
+      }
+    );
+
+    return await response.blob();
+  };
+
+// get indeks kepuasan detail output excel print
+export const getDownloadSatisfactionIndexExcelPrint = async (id: number) =>
+  // bidang_id?: number,
+  // layanan_id?: number,
+  // search?: string,
+  // start_date?: string,
+  // end_date?: string
+  {
+    const token = Cookies.get("Authorization");
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/admin/document/excel/print/satisfaction-index/${id}/get`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        cache: "no-store",
+      }
+    );
+
+    return await response.blob();
+  };

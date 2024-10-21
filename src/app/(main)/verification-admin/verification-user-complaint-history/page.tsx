@@ -15,6 +15,7 @@ import { JwtPayload, UserComplaintInterface } from "@/types/interface";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import {
   getDownloadApplicationPrint,
+  getDownloadUserComplaintExcelPrint,
   getDownloadUserComplaintPrint,
   getUserComplaints,
 } from "@/services/api";
@@ -172,7 +173,7 @@ export default function VerificationUserComplaintScreen() {
   };
   // Api Excel
   const fetchExcel = async () => {
-    return await getDownloadUserComplaintPrint();
+    return await getDownloadUserComplaintExcelPrint();
   };
 
   return (
@@ -244,8 +245,15 @@ export default function VerificationUserComplaintScreen() {
           <>
             {/* PDF Excel Komponen */}
             <div className="w-full">
-              <UnduhMenus fetchPdf={fetchPdf} fetchExcel={fetchExcel} pdfFileName="Laporan Pengaduan Pengguna.pdf" excelFileName="Laporan Pengaduan Pengguna.xlsx" successTitlePdf="File PDF Berhasil Diunduh!"
-              successTitleExcel="File Excel Sukses Diunduh!" id={0} />
+              <UnduhMenus
+                fetchPdf={fetchPdf}
+                fetchExcel={fetchExcel}
+                pdfFileName="Laporan Pengaduan Pengguna.pdf"
+                excelFileName="Laporan Pengaduan Pengguna.xlsx"
+                successTitlePdf="File PDF Berhasil Diunduh!"
+                successTitleExcel="File Excel Sukses Diunduh!"
+                id={0}
+              />
             </div>
             {/* PDF Excel Komponen */}
           </>
