@@ -57,13 +57,11 @@ export default function LogoScreen() {
         ...data,
         logo: file,
       });
-      console.log(file);
+
       const fileUrl = URL.createObjectURL(file);
       setPreviewImage(fileUrl);
     }
   };
-
-  console.log(data);
 
   const handleDragOver = (e: any) => {
     e.preventDefault();

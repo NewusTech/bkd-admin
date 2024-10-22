@@ -960,12 +960,13 @@ export const getUserComplaints = async (
   start_date?: string,
   end_date?: string,
   status?: number,
+  month?: number,
   bidang_id?: number
 ) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/pengaduan/get?page=${page}&limit=${limit}&search=${search}&start_date=${start_date}&end_date=${end_date}&${status != undefined && `status=${status}`} &${bidang_id != undefined && `bidang_id=${bidang_id}`}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/pengaduan/get?page=${page}&limit=${limit}&search=${search}&start_date=${start_date}&end_date=${end_date}&${status != undefined && `status=${status}`}&month=${month}&${bidang_id != undefined && `bidang_id=${bidang_id}`}`,
     {
       method: "GET",
       headers: {
@@ -1114,13 +1115,14 @@ export const getApplicationUserHistories = async (
   search?: string,
   start_date?: string,
   end_date?: string,
+  month?: number,
   layanan_id?: number,
   bidang_id?: number
 ) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/history/form?page=${page}&limit=${limit}&status=${status}&search=${search}&start_date=${start_date}&end_date=${end_date}&layanan_id=${layanan_id}&bidang_id=${bidang_id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/history/form?page=${page}&limit=${limit}&status=${status}&search=${search}&start_date=${start_date}&end_date=${end_date}&month=${month}&layanan_id=${layanan_id}&bidang_id=${bidang_id}`,
     {
       method: "GET",
       headers: {
@@ -1541,8 +1543,6 @@ export const getDownloadApplicationPrint = async (
   // end_date?: string
   {
     const token = Cookies.get("Authorization");
-
-    console.log(layanan_id, "ini dari download, layanan id");
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/admin/document/print/application/get?${!layanan_id ? `layanan_id=${layanan_id}` : ""}`,

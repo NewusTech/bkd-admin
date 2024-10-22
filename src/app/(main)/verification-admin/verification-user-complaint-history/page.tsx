@@ -33,6 +33,8 @@ import { Button } from "@/components/ui/button";
 import { Loader } from "lucide-react";
 import { Printer } from "@phosphor-icons/react";
 import UnduhMenus from "@/components/ui/UnduhMenus";
+import HistoryUserComplaintFilter from "@/components/elements/filters/website/historyUserComplaintFilter";
+import HistoryUserComplaintMobileFilter from "@/components/elements/filters/mobile/historyUserComplaintMobileFilter";
 
 export default function VerificationUserComplaintScreen() {
   const router = useRouter();
@@ -41,6 +43,7 @@ export default function VerificationUserComplaintScreen() {
   const deboucedSearch = useDebounce(search, 500);
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<number | undefined>(undefined);
+  const [month, setMonth] = useState<number | undefined>(undefined);
   const [role, setRole] = useState<string | null>(null);
   const [areaId, setAreaId] = useState<number | undefined>(undefined);
   const now = new Date();
@@ -87,6 +90,7 @@ export default function VerificationUserComplaintScreen() {
       start_date?: string,
       end_date?: string,
       status?: number,
+      month?: number,
       bidang_id?: number
     ) => {
       try {
@@ -99,6 +103,7 @@ export default function VerificationUserComplaintScreen() {
             start_date,
             end_date,
             status,
+            month,
             bidang_id
           );
         } else {
@@ -108,7 +113,8 @@ export default function VerificationUserComplaintScreen() {
             search,
             start_date,
             end_date,
-            status
+            status,
+            month
           );
         }
 
@@ -135,6 +141,7 @@ export default function VerificationUserComplaintScreen() {
         startDateFormatted,
         endDateFormatted,
         status,
+        month,
         areaId
       );
     } else {
@@ -144,7 +151,8 @@ export default function VerificationUserComplaintScreen() {
         deboucedSearch,
         startDateFormatted,
         endDateFormatted,
-        status
+        status,
+        month
       );
     }
   }, [
@@ -155,6 +163,7 @@ export default function VerificationUserComplaintScreen() {
     role,
     areaId,
     fetchUserComplaints,
+    month,
   ]);
 
   const handlePageChange = (newPage: number) => {
@@ -184,80 +193,35 @@ export default function VerificationUserComplaintScreen() {
           Pengaduan Layanan
         </h2>
 
-        <div
-          className={`w-full flex flex-col md:flex-row ${!isMobile ? "" : "p-3 rounded-lg shadow-md"} bg-line-10 gap-y-5 gap-x-5`}>
-          <SearchPages
+        {!isMobile && (
+          <HistoryUserComplaintFilter
+            fetchPdf={fetchPdf}
+            fetchExcel={fetchExcel}
             search={search}
-            change={(e: any) => setSearch(e.target.value)}
-            placeholder="Pencarian"
+            setSearch={setSearch}
+            startDate={startDate}
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate}
+            setStatus={setStatus}
+            setMonth={setMonth}
           />
+        )}
 
-          <div className="flex flex-row justify-center items-center w-full gap-x-3">
-            <DatePages
-              date={startDate ?? null}
-              setDate={(e) => setStartDate(e ?? undefined)}
-            />
-            <p className="text-center">to</p>
-            <DatePages
-              date={endDate ?? null}
-              setDate={(e) => setEndDate(e ?? undefined)}
-            />
-          </div>
-
-          <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
-            <Select
-              onValueChange={(value) =>
-                setStatus(value === "all" ? undefined : Number(value))
-              }>
-              <SelectTrigger
-                className={`w-full text-[14px] md:text-[16px] px-2 gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-                <SelectValue
-                  placeholder="Status"
-                  className="text-black-80 text-[14px] md:text-[16px] w-full"
-                />
-              </SelectTrigger>
-              <SelectContent className="bg-line-10">
-                <div className="pt-2">
-                  <SelectItem className="w-full px-4" value="all">
-                    Semua Status
-                  </SelectItem>
-                  {userComplaintStatus &&
-                    userComplaintStatus.map(
-                      (
-                        status: { id: number; name: string; key: number },
-                        i: number
-                      ) => {
-                        return (
-                          <SelectItem
-                            key={i}
-                            className={`w-full px-4 text-[14px] md:text-[16px]`}
-                            value={status.key.toString()}>
-                            {status.name}
-                          </SelectItem>
-                        );
-                      }
-                    )}
-                </div>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <>
-            {/* PDF Excel Komponen */}
-            <div className="w-full">
-              <UnduhMenus
-                fetchPdf={fetchPdf}
-                fetchExcel={fetchExcel}
-                pdfFileName="Laporan Pengaduan Pengguna.pdf"
-                excelFileName="Laporan Pengaduan Pengguna.xlsx"
-                successTitlePdf="File PDF Berhasil Diunduh!"
-                successTitleExcel="File Excel Sukses Diunduh!"
-                id={0}
-              />
-            </div>
-            {/* PDF Excel Komponen */}
-          </>
-        </div>
+        {isMobile && (
+          <HistoryUserComplaintMobileFilter
+            fetchPdf={fetchPdf}
+            fetchExcel={fetchExcel}
+            search={search}
+            setSearch={setSearch}
+            startDate={startDate}
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate}
+            setStatus={setStatus}
+            setMonth={setMonth}
+          />
+        )}
 
         <div className="w-full">
           {!isMobile ? (

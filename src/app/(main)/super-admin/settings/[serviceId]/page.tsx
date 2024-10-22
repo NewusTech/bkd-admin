@@ -62,17 +62,12 @@ export default function SuperSettingCreateScreen({
     fetchSetting(params.serviceId);
   }, [params.serviceId]);
 
-  console.log(data, "ini datanya");
-
   const updateNewOuputLetter = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
       const response = await updateOutputLetter(data, params.serviceId);
-
-      console.log(response, "ini datanya");
-      console.log(data, "ini datanya");
 
       if (response.status === 200) {
         setData({
@@ -216,9 +211,7 @@ export default function SuperSettingCreateScreen({
                 {data?.header && (
                   <EditorProvide
                     content={data.header}
-                    onChange={(e: any) =>
-                      setData({ ...data, header: e })
-                    }
+                    onChange={(e: any) => setData({ ...data, header: e })}
                   />
                 )}
               </div>
@@ -264,9 +257,7 @@ export default function SuperSettingCreateScreen({
                 {data?.body && (
                   <EditorProvide
                     content={data.body}
-                    onChange={(e: any) =>
-                      setData({ ...data, body: e })
-                    }
+                    onChange={(e: any) => setData({ ...data, body: e })}
                   />
                 )}
               </div>
@@ -280,9 +271,7 @@ export default function SuperSettingCreateScreen({
                 {data?.tembusan && (
                   <EditorProvide
                     content={data.tembusan}
-                    onChange={(e: any) =>
-                      setData({ ...data, tembusan: e })
-                    }
+                    onChange={(e: any) => setData({ ...data, tembusan: e })}
                   />
                 )}
               </div>
@@ -296,9 +285,7 @@ export default function SuperSettingCreateScreen({
                 {data?.catatan && (
                   <EditorProvide
                     content={data.catatan}
-                    onChange={(e: any) =>
-                      setData({ ...data, catatan: e })
-                    }
+                    onChange={(e: any) => setData({ ...data, catatan: e })}
                   />
                 )}
               </div>
@@ -312,9 +299,7 @@ export default function SuperSettingCreateScreen({
                 {data?.footer && (
                   <EditorProvide
                     content={data.footer}
-                    onChange={(e: any) =>
-                      setData({ ...data, footer: e })
-                    }
+                    onChange={(e: any) => setData({ ...data, footer: e })}
                   />
                 )}
               </div>

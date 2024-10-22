@@ -148,8 +148,6 @@ export default function VerificationSatisfactionIndexScreen() {
     debounceSearch,
   ]);
 
-  console.log("reports", reports);
-
   const fetchAreas = async (page: number, limit: number, search: string) => {
     try {
       const response = await getAreas(page, limit, search);
