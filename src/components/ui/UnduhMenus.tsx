@@ -73,8 +73,6 @@ const UnduhMenus: React.FC<UnduhMenusProps> = ({
       a.click();
       a.remove();
 
-      console.log(response, "ini response");
-
       Swal.fire({
         icon: "success",
         title: successTitleExcel,

@@ -17,7 +17,11 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Button } from "@/components/ui/button";
 import FilterDataPages from "@/components/elements/data_filters";
 import VerificationUserApplicationHistoryTablePages from "@/components/tables/verification_admin_user_application_history_table";
-import { getApplicationUserHistories, getDownloadApplicationPrint, getService } from "@/services/api";
+import {
+  getApplicationUserHistories,
+  getDownloadApplicationPrint,
+  getService,
+} from "@/services/api";
 import {
   JwtPayload,
   ServiceInterface,
@@ -31,6 +35,7 @@ import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import MobileDivisionVerificationAdminApplicationHistoryCard from "@/components/mobile_all_cards/mobileDivisionVerificationAdminApplicationHistoryCard";
 import UnduhMenus from "@/components/ui/UnduhMenus";
+import { months } from "@/constants/main";
 
 export default function VerificationUserRevisionApplicationHistoriesScreen() {
   const router = useRouter();
@@ -38,7 +43,7 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
   const [layananId, setLayananId] = useState<number | undefined>(undefined);
-
+  const [month, setMonth] = useState<number | undefined>(undefined);
   const [status, setStatus] = useState<number>(3);
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
@@ -65,6 +70,7 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
     search?: string,
     start_date?: string,
     end_date?: string,
+    month?: number,
     layanan_id?: number
   ) => {
     try {
@@ -75,6 +81,7 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
         search,
         start_date,
         end_date,
+        month,
         layanan_id
       );
 
@@ -99,15 +106,32 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
         debounceSearch,
         startDateFormatted,
         endDateFormatted,
+        month,
         layananId
       );
     }
-  }, [debounceSearch, startDateFormatted, endDateFormatted, layananId, status]);
+  }, [
+    debounceSearch,
+    startDateFormatted,
+    endDateFormatted,
+    month,
+    layananId,
+    status,
+  ]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
       if (status) {
-        fetchApplicationHistoryUser(newPage, 10, status, "", "", "", layananId);
+        fetchApplicationHistoryUser(
+          newPage,
+          10,
+          status,
+          "",
+          "",
+          "",
+          month,
+          layananId
+        );
       }
     }
   };
@@ -140,39 +164,49 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
       <div
         className={`w-full flex flex-col ${!isMobile ? "bg-white shadow-md rounded-lg p-5" : ""} gap-y-3`}>
         <div className="w-full flex flex-col gap-y-5">
-          <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
-            <Select
-              onValueChange={(value) =>
-                setLayananId(value === "all" ? undefined : Number(value))
-              }>
-              <SelectTrigger
-                className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-                <SelectValue
-                  placeholder="Pilih Layanan"
-                  className="text-black-80 text-[14px] md:text-[16px] w-full"
-                />
-              </SelectTrigger>
-              <SelectContent className="bg-line-10">
-                <div className="pt-2">
-                  <SelectItem
-                    className="w-full px-4 text-[14px] md:text-[16px]"
-                    value="all">
-                    Semua Status
-                  </SelectItem>
-                  {services &&
-                    services.map((service: ServiceInterface, i: number) => {
-                      return (
-                        <SelectItem
-                          key={i}
-                          className={`w-full px-4 text-[14px] md:text-[16px]`}
-                          value={service.id.toString()}>
-                          {service?.nama}
-                        </SelectItem>
-                      );
-                    })}
-                </div>
-              </SelectContent>
-            </Select>
+          <div className="w-full flex flex-col md:flex-row gap-x-8 gap-y-3">
+            <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
+              <Select
+                onValueChange={(value) =>
+                  setLayananId(value === "all" ? undefined : Number(value))
+                }>
+                <SelectTrigger
+                  className={`w-full gap-x-4 text-[14px] md:text-[16px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                  <SelectValue
+                    placeholder="Pilih Layanan"
+                    className="text-black-80 text-[14px] md:text-[16px] w-full"
+                  />
+                </SelectTrigger>
+                <SelectContent className="bg-line-10">
+                  <div className="pt-2">
+                    <SelectItem
+                      className="w-full px-4 text-[14px] md:text-[16px]"
+                      value="all">
+                      Semua Status
+                    </SelectItem>
+                    {services &&
+                      services.map((service: ServiceInterface, i: number) => {
+                        return (
+                          <SelectItem
+                            key={i}
+                            className={`w-full px-4 text-[14px] md:text-[16px]`}
+                            value={service.id.toString()}>
+                            {service?.nama}
+                          </SelectItem>
+                        );
+                      })}
+                  </div>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="w-full">
+              <SearchPages
+                search={search}
+                change={(e: any) => setSearch(e.target.value)}
+                placeholder="Pencarian"
+              />
+            </div>
           </div>
 
           <div className="flex flex-col h-full items-center w-full gap-y-6">
@@ -202,7 +236,7 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
 
               <TabsContent
                 value="butuh-perbaikan"
-                className="w-full flex flex-col mt-4">
+                className="w-full flex flex-col mt-0">
                 {/* {user && subDistricts && villages && (
               <PersonalDataProfileScreen
                 userData={userData}
@@ -218,7 +252,7 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
               </TabsContent>
               <TabsContent
                 value="sudah-diperbaiki"
-                className="w-full flex flex-col mt-4">
+                className="w-full flex flex-col mt-0">
                 {/* {user && subDistricts && villages && (
               <PersonalDataProfileScreen
                 userData={userData}
@@ -238,12 +272,6 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
           <div className="w-full flex flex-row gap-x-5">
             <div
               className={`w-full flex flex-col md:flex-row ${!isMobile ? "" : "p-3 rounded-lg shadow-md"} bg-line-10 gap-y-5 gap-x-5`}>
-              <SearchPages
-                search={search}
-                change={(e: any) => setSearch(e.target.value)}
-                placeholder="Pencarian"
-              />
-
               <div className="flex flex-row justify-center items-center w-full gap-x-3">
                 <DatePages
                   date={startDate ?? null}
@@ -256,15 +284,99 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
                 />
               </div>
 
+              <div className="w-full flex flex-row gap-x-3">
+                <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
+                  <Select
+                    onValueChange={(value) =>
+                      setMonth(value === "all" ? undefined : Number(value))
+                    }>
+                    <SelectTrigger
+                      className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                      <SelectValue
+                        placeholder="Bulan"
+                        className="text-black-80 tex-[14px] w-full"
+                      />
+                    </SelectTrigger>
+                    <SelectContent className="bg-line-10">
+                      <div className="pt-2">
+                        <SelectItem className="w-full px-4" value="all">
+                          Semua Bulan
+                        </SelectItem>
+                        {months &&
+                          months.map(
+                            (
+                              month: { id: number; name: string },
+                              i: number
+                            ) => {
+                              return (
+                                <SelectItem
+                                  key={i}
+                                  className={`w-full px-4`}
+                                  value={month.id.toString()}>
+                                  {month?.name}
+                                </SelectItem>
+                              );
+                            }
+                          )}
+                      </div>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
+                  <Select
+                    onValueChange={(value) =>
+                      setLayananId(value === "all" ? undefined : Number(value))
+                    }>
+                    <SelectTrigger
+                      className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                      <SelectValue
+                        placeholder="Tahun"
+                        className="text-black-80 tex-[14px] w-full"
+                      />
+                    </SelectTrigger>
+                    <SelectContent className="bg-line-10">
+                      <div className="pt-2">
+                        <SelectItem className="w-full px-4" value="all">
+                          Semua Tahun
+                        </SelectItem>
+                        {months &&
+                          months.map(
+                            (
+                              month: { id: number; name: string },
+                              i: number
+                            ) => {
+                              return (
+                                <SelectItem
+                                  key={i}
+                                  className={`w-full px-4`}
+                                  value={month.id.toString()}>
+                                  {month?.name}
+                                </SelectItem>
+                              );
+                            }
+                          )}
+                      </div>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
               <>
                 {/* PDF Excel Komponen */}
-                <div className="w-full">
-                  <UnduhMenus fetchPdf={fetchPdf} fetchExcel={fetchExcel} pdfFileName="Laporan Permohonan Pengguna.pdf" excelFileName="Laporan Permohonan Pengguna.xlsx" successTitlePdf="File PDF Berhasil Diunduh!"
-                    successTitleExcel="File Excel Sukses Diunduh!" id={0} />
+                <div className="w-full md:w-8/12">
+                  <UnduhMenus
+                    fetchPdf={fetchPdf}
+                    fetchExcel={fetchExcel}
+                    pdfFileName="Laporan Permohonan Pengguna.pdf"
+                    excelFileName="Laporan Permohonan Pengguna.xlsx"
+                    successTitlePdf="File PDF Berhasil Diunduh!"
+                    successTitleExcel="File Excel Sukses Diunduh!"
+                    id={0}
+                  />
                 </div>
                 {/* PDF Excel Komponen */}
               </>
-
             </div>
           </div>
         </div>
