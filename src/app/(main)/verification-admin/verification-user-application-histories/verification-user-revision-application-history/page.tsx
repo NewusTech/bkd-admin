@@ -2,7 +2,7 @@
 
 import DatePages from "@/components/elements/date";
 import SearchPages from "@/components/elements/search";
-import { formatDate } from "@/lib/utils";
+import { formatDate, getLast10Years } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 import {
   Select,
@@ -44,6 +44,8 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
   const debounceSearch = useDebounce(search, 500);
   const [layananId, setLayananId] = useState<number | undefined>(undefined);
   const [month, setMonth] = useState<number | undefined>(undefined);
+  const [year, setYear] = useState<string | undefined>("");
+  const [years, setYears] = useState<{ id: number; value: string }[]>([]);
   const [status, setStatus] = useState<number>(3);
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
@@ -63,6 +65,11 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
     : undefined;
   const endDateFormatted = endDate ? formatDate(new Date(endDate)) : undefined;
 
+  useEffect(() => {
+    const years = getLast10Years(new Date().toISOString());
+    setYears(years);
+  }, []);
+
   const fetchApplicationHistoryUser = async (
     page: number,
     limit: number,
@@ -71,6 +78,7 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
     start_date?: string,
     end_date?: string,
     month?: number,
+    year?: string,
     layanan_id?: number
   ) => {
     try {
@@ -82,6 +90,7 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
         start_date,
         end_date,
         month,
+        year,
         layanan_id
       );
 
@@ -107,6 +116,7 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
         startDateFormatted,
         endDateFormatted,
         month,
+        year,
         layananId
       );
     }
@@ -116,6 +126,7 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
     endDateFormatted,
     month,
     layananId,
+    year,
     status,
   ]);
 
@@ -130,6 +141,7 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
           "",
           "",
           month,
+          year,
           layananId
         );
       }
@@ -326,7 +338,7 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
                 <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
                   <Select
                     onValueChange={(value) =>
-                      setLayananId(value === "all" ? undefined : Number(value))
+                      setYear(value === "all" ? undefined : value)
                     }>
                     <SelectTrigger
                       className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
@@ -340,18 +352,18 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
                         <SelectItem className="w-full px-4" value="all">
                           Semua Tahun
                         </SelectItem>
-                        {months &&
-                          months.map(
+                        {years &&
+                          years.map(
                             (
-                              month: { id: number; name: string },
+                              year: { id: number; value: string },
                               i: number
                             ) => {
                               return (
                                 <SelectItem
                                   key={i}
                                   className={`w-full px-4`}
-                                  value={month.id.toString()}>
-                                  {month?.name}
+                                  value={year?.value}>
+                                  {year?.value}
                                 </SelectItem>
                               );
                             }

@@ -77,6 +77,9 @@ export default function DivisionVerificationAdminDashboardPages() {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
+  const [month, setMonth] = useState<number | undefined>(undefined);
+  const [year, setYear] = useState<string | undefined>("");
+  const [years, setYears] = useState<{ id: number; value: string }[]>([]);
   const [role, setRole] = useState<string | null>(null);
   const [layananId, setLayananId] = useState<number | undefined>(undefined);
   const [areaId, setAreaId] = useState<number | undefined>(undefined);
@@ -139,6 +142,8 @@ export default function DivisionVerificationAdminDashboardPages() {
     search?: string,
     start_date?: string,
     end_date?: string,
+    month?: number,
+    year?: string,
     layanan_id?: number,
     bidang_id?: number
   ) => {
@@ -150,6 +155,8 @@ export default function DivisionVerificationAdminDashboardPages() {
         search,
         start_date,
         end_date,
+        month,
+        year,
         layanan_id,
         bidang_id
       );
@@ -176,6 +183,8 @@ export default function DivisionVerificationAdminDashboardPages() {
           debounceSearch,
           startDateFormatted,
           endDateFormatted,
+          month,
+          year,
           layananId,
           areaId
         );
@@ -187,6 +196,8 @@ export default function DivisionVerificationAdminDashboardPages() {
           debounceSearch,
           startDateFormatted,
           endDateFormatted,
+          month,
+          year,
           layananId,
           areaId
         );
@@ -199,6 +210,8 @@ export default function DivisionVerificationAdminDashboardPages() {
     endDateFormatted,
     layananId,
     areaId,
+    month,
+    year,
   ]);
 
   const handlePageChange = (newPage: number) => {
@@ -210,6 +223,8 @@ export default function DivisionVerificationAdminDashboardPages() {
         "",
         "",
         "",
+        month,
+        year,
         layananId,
         areaId
       );

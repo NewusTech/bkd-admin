@@ -697,6 +697,8 @@ export interface HistoryApplicationFilterInterface {
   fetchExcel: (id?: number) => Promise<any>;
   services: ServiceInterface[];
   setMonth: (value?: number) => void;
+  years: { id: number; value: string }[];
+  setYear: (value?: string) => void;
 }
 
 export interface HistoryUserComplaintFilterInterface {
@@ -710,4 +712,32 @@ export interface HistoryUserComplaintFilterInterface {
   fetchExcel: (id?: number) => Promise<any>;
   setStatus: (value?: number) => void;
   setMonth: (value?: number) => void;
+}
+
+export interface PaginationTabsInterface {
+  currentPage: number;
+  perPage: number;
+  totalPages: number;
+  totalCount: number;
+}
+
+export interface TabsApplicationSuperAdminDashBoardInterface {
+  layananId: number | undefined;
+  setLayananId: (value?: number | undefined) => void;
+  services: ServiceInterface[];
+  fetchPdf: (id?: number) => Promise<any>;
+  fetchExcel: (id?: number) => Promise<any>;
+  search: string;
+  setSearch: (value: string) => void;
+  startDate: Date | undefined;
+  setStartDate: (value?: Date | undefined) => void;
+  endDate: Date | undefined;
+  setEndDate: (value?: Date | undefined) => void;
+  setMonth: (value?: number) => void;
+  years: { id: number; value: string }[];
+  setYear: (value?: string | undefined) => void;
+  users: UserApplicationHistoryInterface[];
+  pagination: PaginationTabsInterface;
+  handlePageChange: (newPage: number) => void;
+  superAdmin: SuperAdminDashboardInterface;
 }

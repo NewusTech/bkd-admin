@@ -31,6 +31,8 @@ export default function HistoryApplicationFilter({
   fetchExcel,
   services,
   setMonth,
+  years,
+  setYear,
 }: HistoryApplicationFilterInterface) {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -132,7 +134,7 @@ export default function HistoryApplicationFilter({
           <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
             <Select
               onValueChange={(value) =>
-                setLayananId(value === "all" ? undefined : Number(value))
+                setYear(value === "all" ? undefined : value)
               }>
               <SelectTrigger
                 className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
@@ -146,15 +148,15 @@ export default function HistoryApplicationFilter({
                   <SelectItem className="w-full px-4" value="all">
                     Semua Tahun
                   </SelectItem>
-                  {months &&
-                    months.map(
-                      (month: { id: number; name: string }, i: number) => {
+                  {years &&
+                    years.map(
+                      (year: { id: number; value: string }, i: number) => {
                         return (
                           <SelectItem
                             key={i}
                             className={`w-full px-4`}
-                            value={month.id.toString()}>
-                            {month?.name}
+                            value={year?.value}>
+                            {year?.value}
                           </SelectItem>
                         );
                       }

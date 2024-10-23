@@ -39,6 +39,9 @@ export default function HistoryApplicationMobileFilter({
   fetchPdf,
   fetchExcel,
   services,
+  setMonth,
+  years,
+  setYear,
 }: HistoryApplicationFilterInterface) {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -152,27 +155,36 @@ export default function HistoryApplicationMobileFilter({
 
         {activeFilter === "month" && (
           <div className="w-full flex items-center h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
-            <Select>
-              <SelectTrigger className="w-full gap-x-4 text-[14px] rounded-lg border-none">
+            <Select
+              onValueChange={(value) =>
+                setMonth(value === "all" ? undefined : Number(value))
+              }>
+              <SelectTrigger
+                className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                 <SelectValue
-                  placeholder="Pilih Bulan"
+                  placeholder="Bulan"
                   className="text-black-80 tex-[14px] w-full"
                 />
               </SelectTrigger>
               <SelectContent className="bg-line-10">
-                <SelectItem className="w-full px-4" value="all">
-                  Semua Bulan
-                </SelectItem>
-                {months.map(
-                  (month: { id: number; name: string }, i: number) => (
-                    <SelectItem
-                      key={i}
-                      className="w-full px-4"
-                      value={month.id.toString()}>
-                      {month?.name}
-                    </SelectItem>
-                  )
-                )}
+                <div className="pt-2">
+                  <SelectItem className="w-full px-4" value="all">
+                    Semua Bulan
+                  </SelectItem>
+                  {months &&
+                    months.map(
+                      (month: { id: number; name: string }, i: number) => {
+                        return (
+                          <SelectItem
+                            key={i}
+                            className={`w-full px-4`}
+                            value={month.id.toString()}>
+                            {month?.name}
+                          </SelectItem>
+                        );
+                      }
+                    )}
+                </div>
               </SelectContent>
             </Select>
           </div>
@@ -180,26 +192,36 @@ export default function HistoryApplicationMobileFilter({
 
         {activeFilter === "year" && (
           <div className="w-full flex items-center h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
-            <Select>
-              <SelectTrigger className="w-full gap-x-4 text-[14px] rounded-lg border-none">
+            <Select
+              onValueChange={(value) =>
+                setYear(value === "all" ? undefined : value)
+              }>
+              <SelectTrigger
+                className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
                 <SelectValue
-                  placeholder="Pilih Tahun"
+                  placeholder="Tahun"
                   className="text-black-80 tex-[14px] w-full"
                 />
               </SelectTrigger>
               <SelectContent className="bg-line-10">
-                <SelectItem className="w-full px-4" value="all">
-                  Semua Tahun
-                </SelectItem>
-                {/* Assuming you have an array of years */}
-                {[2021, 2022, 2023].map((year, i) => (
-                  <SelectItem
-                    key={i}
-                    className="w-full px-4"
-                    value={year.toString()}>
-                    {year}
+                <div className="pt-2">
+                  <SelectItem className="w-full px-4" value="all">
+                    Semua Tahun
                   </SelectItem>
-                ))}
+                  {years &&
+                    years.map(
+                      (year: { id: number; value: string }, i: number) => {
+                        return (
+                          <SelectItem
+                            key={i}
+                            className={`w-full px-4`}
+                            value={year?.value}>
+                            {year?.value}
+                          </SelectItem>
+                        );
+                      }
+                    )}
+                </div>
               </SelectContent>
             </Select>
           </div>

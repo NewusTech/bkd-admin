@@ -61,3 +61,19 @@ export function truncateTitle(title: string, maxLength = 35) {
     return title;
   }
 }
+
+export function getLast10Years(createdAt: string) {
+  const createdDate = new Date(createdAt);
+  const currentYear = createdDate.getFullYear();
+  const last10Years = [];
+
+  for (let i = 0; i < 10; i++) {
+    const year = currentYear - i;
+    last10Years.push({
+      id: i + 1,
+      value: year.toString(),
+    });
+  }
+
+  return last10Years;
+}
