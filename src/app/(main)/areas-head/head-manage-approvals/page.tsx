@@ -2,7 +2,7 @@
 
 import DatePages from "@/components/elements/date";
 import SearchPages from "@/components/elements/search";
-import { formatDate } from "@/lib/utils";
+import { formatDate, getLast10Years } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 import {
   Select,
@@ -45,6 +45,8 @@ export default function HeadManageApprovalsScreen() {
   const debounceSearch = useDebounce(search, 500);
   const [layananId, setLayananId] = useState<number | undefined>(undefined);
   const [month, setMonth] = useState<number | undefined>(undefined);
+  const [year, setYear] = useState<string | undefined>("");
+  const [years, setYears] = useState<{ id: number; value: string }[]>([]);
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
   const [startDate, setStartDate] = useState<Date | undefined>(firstDayOfMonth);
@@ -81,6 +83,11 @@ export default function HeadManageApprovalsScreen() {
     : undefined;
   const endDateFormatted = endDate ? formatDate(new Date(endDate)) : undefined;
 
+  useEffect(() => {
+    const years = getLast10Years(new Date().toISOString());
+    setYears(years);
+  }, []);
+
   const fetchApplicationHistoryUser = async (
     page: number,
     limit: number,
@@ -89,6 +96,7 @@ export default function HeadManageApprovalsScreen() {
     start_date?: string,
     end_date?: string,
     month?: number,
+    year?: string,
     layanan_id?: number
   ) => {
     try {
@@ -100,6 +108,7 @@ export default function HeadManageApprovalsScreen() {
         start_date,
         end_date,
         month,
+        year,
         layanan_id
       );
 
@@ -128,6 +137,7 @@ export default function HeadManageApprovalsScreen() {
         startDateFormatted,
         endDateFormatted,
         month,
+        year,
         layananId
       );
     }
@@ -137,12 +147,23 @@ export default function HeadManageApprovalsScreen() {
     endDateFormatted,
     layananId,
     month,
+    year,
     role,
   ]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchApplicationHistoryUser(newPage, 10, 7, "", "", "", month, layananId);
+      fetchApplicationHistoryUser(
+        newPage,
+        10,
+        7,
+        "",
+        "",
+        "",
+        month,
+        year,
+        layananId
+      );
     }
   };
 
@@ -185,6 +206,8 @@ export default function HeadManageApprovalsScreen() {
           endDate={endDate}
           setEndDate={setEndDate}
           setMonth={setMonth}
+          years={years}
+          setYear={setYear}
         />
       )}
 
@@ -204,6 +227,8 @@ export default function HeadManageApprovalsScreen() {
             endDate={endDate}
             setEndDate={setEndDate}
             setMonth={setMonth}
+            years={years}
+            setYear={setYear}
           />
         )}
       </div>

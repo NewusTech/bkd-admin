@@ -1,19 +1,6 @@
 "use client";
 
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React, { useEffect, useState } from "react";
 import SuperDashboardCard from "@/components/all_cards/superDashboardCard";
 import {
@@ -29,21 +16,16 @@ import {
   getService,
   getSuperAdminDashboard,
 } from "@/services/api";
-import { formatDate } from "@/lib/utils";
+import { formatDate, getLast10Years } from "@/lib/utils";
 import { useDebounce } from "@/hooks/useDebounce";
-import VerificationUserApplicationHistoryTablePages from "@/components/tables/verification_admin_user_application_history_table";
-import PaginationComponent from "@/components/elements/pagination";
-import DataNotFound from "@/components/elements/data_not_found";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
-import MobileDivisionVerificationAdminApplicationHistoryCard from "@/components/mobile_all_cards/mobileDivisionVerificationAdminApplicationHistoryCard";
-import HistoryApplicationFilter from "@/components/elements/filters/website/historyApplicationFilter";
-import HistoryApplicationMobileFilter from "@/components/elements/filters/mobile/historyApplicationMobileFilter";
+import TabsApplicationSuperAdminDashBoard from "@/components/elements/tabs/superadmin/application";
 
 export default function SuperAdminDashboardPages() {
-  const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
   const [layananId, setLayananId] = useState<number | undefined>(undefined);
   const [month, setMonth] = useState<number | undefined>(undefined);
+  const [year, setYear] = useState<string | undefined>("");
+  const [years, setYears] = useState<{ id: number; value: string }[]>([]);
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
   const [startDate, setStartDate] = useState<Date | undefined>(firstDayOfMonth);
@@ -64,6 +46,11 @@ export default function SuperAdminDashboardPages() {
     : undefined;
   const endDateFormatted = endDate ? formatDate(new Date(endDate)) : undefined;
 
+  useEffect(() => {
+    const years = getLast10Years(new Date().toISOString());
+    setYears(years);
+  }, []);
+
   const fetchApplicationHistoryUser = async (
     page: number,
     limit: number,
@@ -72,6 +59,7 @@ export default function SuperAdminDashboardPages() {
     start_date?: string,
     end_date?: string,
     month?: number,
+    year?: string,
     layanan_id?: number
   ) => {
     try {
@@ -83,6 +71,7 @@ export default function SuperAdminDashboardPages() {
         start_date,
         end_date,
         month,
+        year,
         layanan_id
       );
 
@@ -107,13 +96,31 @@ export default function SuperAdminDashboardPages() {
       startDateFormatted,
       endDateFormatted,
       month,
+      year,
       layananId
     );
-  }, [debounceSearch, startDateFormatted, endDateFormatted, month, layananId]);
+  }, [
+    debounceSearch,
+    startDateFormatted,
+    endDateFormatted,
+    month,
+    layananId,
+    year,
+  ]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchApplicationHistoryUser(newPage, 10, 1, "", "", "", month, layananId);
+      fetchApplicationHistoryUser(
+        newPage,
+        10,
+        1,
+        "",
+        "",
+        "",
+        month,
+        year,
+        layananId
+      );
     }
   };
 
@@ -147,23 +154,6 @@ export default function SuperAdminDashboardPages() {
 
   // ini batas
 
-  const chartData = superAdmin?.countbyLayanan?.map((item) => {
-    return {
-      nama: item?.layanan_name,
-      permohonan: item?.permohonanCount,
-    };
-  });
-
-  const chartConfig = {
-    reporting: {
-      label: "Total Permohonan",
-    },
-    permohonan: {
-      label: "Permohonan",
-      color: "#3572EF",
-    },
-  } satisfies ChartConfig;
-
   // Api PDF
   const fetchPdf = async () => {
     return await getDownloadApplicationPrint(layananId);
@@ -175,7 +165,7 @@ export default function SuperAdminDashboardPages() {
 
   return (
     <div className="w-full flex flex-col gap-y-5 mb-24">
-      <div className="w-full h-[450px] md:h-full verticalScroll md:horizontalScroll flex flex-col md:flex-row gap-y-3 md:gap-x-5 items-center md:items-start bg-primary-40 bg-opacity-20 rounded-lg pl-3 pt-3 pb-3">
+      <div className="w-full h-[450px] md:h-full verticalScroll md:horizontalScroll flex flex-col md:flex-row gap-y-3 md:gap-x-5 items-center md:items-start bg-primary-40 bg-opacity-20 rounded-lg pl-3 pt-3 md:pr-3 pb-3">
         {superAdmin &&
           superAdmin.countbyBidang &&
           superAdmin.countbyBidang.length > 0 &&
@@ -186,126 +176,83 @@ export default function SuperAdminDashboardPages() {
           )}
       </div>
 
-      <div className="w-full">
-        <Card>
-          <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
-            <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-              <CardTitle className="text-black-80 font-normal text-[18px] md:text-[20px]">
-                Bar Chart - Laporan Permohonan Pengguna
-              </CardTitle>
-              {/* <CardDescription>Laporan Permohonan Pengguna</CardDescription> */}
-            </div>
-          </CardHeader>
-          <CardContent className="px-2 sm:p-1">
-            <ChartContainer
-              config={chartConfig}
-              className="aspect-auto h-[250px] w-full">
-              <BarChart
-                accessibilityLayer
-                data={chartData}
-                // margin={{
-                //   left: 1,
-                //   right: 1,
-                // }}
-              >
-                <CartesianGrid vertical={false} />
-                <XAxis
-                  dataKey="nama"
-                  tickLine={false}
-                  axisLine={false}
-                  // tickMargin={1}
-                  // minTickGap={1}
-                  // className="w-full"
-                />
-                <ChartTooltip
-                  content={
-                    <ChartTooltipContent
-                      className="w-full"
-                      nameKey="reporting"
-                    />
-                  }
-                />
-                <Bar dataKey="permohonan" className="w-full" fill="#3572EF" />
-              </BarChart>
-            </ChartContainer>
-          </CardContent>
-        </Card>
-      </div>
+      <div className="flex flex-col h-full items-center w-full gap-y-6">
+        <Tabs defaultValue="permohonan" className={`w-full flex flex-col`}>
+          <TabsList
+            className={`w-full bg-primary-40 p-3 rounded-full h-full flex flex-row gap-x-3 verticalScroll`}>
+            <TabsTrigger
+              className="w-full py-3 text-[14px] md:text-[16px] rounded-full border border-line-10 bg-opacity-20 text-line-10 data-[state=active]:border-none data-[state=active]:bg-opacity-100 data-[state=active]:bg-line-10 data-[state=active]:text-primary-40"
+              value="permohonan">
+              Permohonan
+            </TabsTrigger>
 
-      <div className="w-full bg-line-10 rounded-lg shadow-md p-4 flex flex-col gap-y-4">
-        {/* filter website */}
-        {!isMobile && (
-          <HistoryApplicationFilter
-            layananId={layananId}
-            setLayananId={setLayananId}
-            services={services}
-            fetchPdf={fetchPdf}
-            fetchExcel={fetchExcel}
-            search={search}
-            setSearch={setSearch}
-            startDate={startDate}
-            setStartDate={setStartDate}
-            endDate={endDate}
-            setEndDate={setEndDate}
-            setMonth={setMonth}
-          />
-        )}
+            <TabsTrigger
+              className="w-full py-3 text-[14px] md:text-[16px] rounded-full border border-line-10 bg-opacity-20 text-line-10 data-[state=active]:border-none data-[state=active]:bg-opacity-100 data-[state=active]:bg-line-10 data-[state=active]:text-primary-40"
+              value="pengaduan">
+              Pengaduan
+            </TabsTrigger>
 
-        {/* filter mobile */}
-        <div className="w-full">
-          {isMobile && (
-            <HistoryApplicationMobileFilter
-              layananId={layananId}
-              setLayananId={setLayananId}
-              services={services}
-              fetchPdf={fetchPdf}
-              fetchExcel={fetchExcel}
-              search={search}
-              setSearch={setSearch}
-              startDate={startDate}
-              setStartDate={setStartDate}
-              endDate={endDate}
-              setEndDate={setEndDate}
-              setMonth={setMonth}
-            />
-          )}
-        </div>
+            <TabsTrigger
+              className="w-full py-3 text-[14px] md:text-[16px] rounded-full border border-line-10 bg-opacity-20 text-line-10 data-[state=active]:border-none data-[state=active]:bg-opacity-100 data-[state=active]:bg-line-10 data-[state=active]:text-primary-40"
+              value="kepuasan">
+              Indeks Kepuasan
+            </TabsTrigger>
+          </TabsList>
 
-        <div className="w-full">
-          {!isMobile ? (
-            <>
-              {users && users.length > 0 && (
-                <VerificationUserApplicationHistoryTablePages users={users} />
-              )}
-            </>
-          ) : (
-            <div className="w-full flex flex-col gap-y-5">
-              {users &&
-                users.length > 0 &&
-                users.map(
-                  (user: UserApplicationHistoryInterface, i: number) => {
-                    return (
-                      <MobileDivisionVerificationAdminApplicationHistoryCard
-                        key={i}
-                        index={i}
-                        user={user}
-                      />
-                    );
-                  }
-                )}
-            </div>
-          )}
-        </div>
+          <TabsContent value="permohonan" className="w-full flex flex-col mt-5">
+            {superAdmin && users && services && (
+              <TabsApplicationSuperAdminDashBoard
+                layananId={layananId}
+                setLayananId={setLayananId}
+                services={services}
+                fetchPdf={fetchPdf}
+                fetchExcel={fetchExcel}
+                search={search}
+                setSearch={setSearch}
+                startDate={startDate}
+                setStartDate={setStartDate}
+                endDate={endDate}
+                setEndDate={setEndDate}
+                setMonth={setMonth}
+                years={years}
+                setYear={setYear}
+                users={users}
+                pagination={pagination}
+                handlePageChange={handlePageChange}
+                superAdmin={superAdmin}
+              />
+            )}
+          </TabsContent>
+          <TabsContent value="pengaduan" className="w-full flex flex-col mt-5">
+            {/* {user && subDistricts && villages && (
+              <PersonalDataProfileScreen
+                userData={userData}
+                setUserData={setUserData}
+                returnDate={returnDate}
+                setReturnDate={setReturnDate}
+                subDistricts={subDistricts}
+                villages={villages}
+                isLoadingUserCreate={isLoadingUserCreate}
+                handleSubmitPersonalDataUser={handleSubmitPersonalDataUser}
+              />
+            )} */}
+          </TabsContent>
 
-        <div className="w-full">
-          <PaginationComponent
-            currentPage={pagination.currentPage}
-            totalPages={pagination.totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
-
-        <div className="w-full">{users.length === 0 && <DataNotFound />}</div>
+          <TabsContent value="kepuasan" className="w-full flex flex-col mt-5">
+            {/* {user && subDistricts && villages && (
+              <PersonalDataProfileScreen
+                userData={userData}
+                setUserData={setUserData}
+                returnDate={returnDate}
+                setReturnDate={setReturnDate}
+                subDistricts={subDistricts}
+                villages={villages}
+                isLoadingUserCreate={isLoadingUserCreate}
+                handleSubmitPersonalDataUser={handleSubmitPersonalDataUser}
+              />
+            )} */}
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );

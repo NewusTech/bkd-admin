@@ -2,7 +2,7 @@
 
 import DatePages from "@/components/elements/date";
 import SearchPages from "@/components/elements/search";
-import { formatDate } from "@/lib/utils";
+import { formatDate, getLast10Years } from "@/lib/utils";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import {
@@ -44,6 +44,8 @@ export default function DepartmentSecretarySignatureValidationScreen() {
   const debounceSearch = useDebounce(search, 500);
   const [layananId, setLayananId] = useState<number | undefined>(undefined);
   const [month, setMonth] = useState<number | undefined>(undefined);
+  const [year, setYear] = useState<string | undefined>("");
+  const [years, setYears] = useState<{ id: number; value: string }[]>([]);
   const [role, setRole] = useState<string | null>(null);
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
@@ -81,6 +83,11 @@ export default function DepartmentSecretarySignatureValidationScreen() {
     : undefined;
   const endDateFormatted = endDate ? formatDate(new Date(endDate)) : undefined;
 
+  useEffect(() => {
+    const years = getLast10Years(new Date().toISOString());
+    setYears(years);
+  }, []);
+
   const fetchApplicationHistoryUser = async (
     page: number,
     limit: number,
@@ -89,6 +96,7 @@ export default function DepartmentSecretarySignatureValidationScreen() {
     start_date?: string,
     end_date?: string,
     month?: number,
+    year?: string,
     layanan_id?: number
   ) => {
     try {
@@ -100,6 +108,7 @@ export default function DepartmentSecretarySignatureValidationScreen() {
         start_date,
         end_date,
         month,
+        year,
         layanan_id
       );
 
@@ -125,6 +134,7 @@ export default function DepartmentSecretarySignatureValidationScreen() {
         startDateFormatted,
         endDateFormatted,
         month,
+        year,
         layananId
       );
     } else if (role && role === "Kepala Dinas") {
@@ -136,6 +146,7 @@ export default function DepartmentSecretarySignatureValidationScreen() {
         startDateFormatted,
         endDateFormatted,
         month,
+        year,
         layananId
       );
     } else if (
@@ -150,6 +161,7 @@ export default function DepartmentSecretarySignatureValidationScreen() {
         startDateFormatted,
         endDateFormatted,
         month,
+        year,
         layananId
       );
     }
@@ -160,11 +172,22 @@ export default function DepartmentSecretarySignatureValidationScreen() {
     layananId,
     month,
     role,
+    year,
   ]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchApplicationHistoryUser(newPage, 10, 1, "", "", "", month, layananId);
+      fetchApplicationHistoryUser(
+        newPage,
+        10,
+        1,
+        "",
+        "",
+        "",
+        month,
+        year,
+        layananId
+      );
     }
   };
 
@@ -207,6 +230,8 @@ export default function DepartmentSecretarySignatureValidationScreen() {
           endDate={endDate}
           setEndDate={setEndDate}
           setMonth={setMonth}
+          setYear={setYear}
+          years={years}
         />
       )}
 
@@ -226,6 +251,8 @@ export default function DepartmentSecretarySignatureValidationScreen() {
             endDate={endDate}
             setEndDate={setEndDate}
             setMonth={setMonth}
+            setYear={setYear}
+            years={years}
           />
         )}
       </div>
