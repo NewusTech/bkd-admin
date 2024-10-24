@@ -585,12 +585,21 @@ export interface SuperAdminDashboardServiceInterface {
   layanan_createdAt: string;
   layanan_name: string;
   permohonanCount: number;
+  pengaduanCount: number;
+  totalFeedback: number;
+  rataRataNilaiFeedback: string;
 }
 
 export interface VerificationAdminAreasDataInterface {
   id: number;
   desc: string;
   nama: string;
+}
+
+export interface SuperAdminStaffInterface {
+  id: number;
+  name: string;
+  pegawai_count: number;
 }
 
 export interface SuperAdminDashboardInterface {
@@ -601,6 +610,7 @@ export interface SuperAdminDashboardInterface {
   countbyLayanan: SuperAdminDashboardServiceInterface[];
   allLayananMonth: VericationAdminInterface[];
   databidang: VerificationAdminAreasDataInterface[];
+  countPegawaibyBidang: SuperAdminStaffInterface[];
   totalMenungguVerifikasi: number;
   totalMenunggu: number;
   totalDisetujui: number;
@@ -740,4 +750,37 @@ export interface TabsApplicationSuperAdminDashBoardInterface {
   pagination: PaginationTabsInterface;
   handlePageChange: (newPage: number) => void;
   superAdmin: SuperAdminDashboardInterface;
+}
+
+export interface DataJsonServiceForm {
+  id: number;
+  key: string;
+}
+
+export interface FormServiceInterface {
+  id: number;
+  field: string;
+  tipedata: string;
+  datajson: DataJsonServiceForm[] | null;
+  maxinput: number;
+  mininput: number;
+  layanan_id: number;
+  isrequired: number;
+  status: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ApplicationFormServiceInterface {
+  nama: string;
+  slug: string;
+  desc: string;
+  Layanan_forms: FormServiceInterface[];
+}
+
+export interface ApplicationFormServiceDocInterface {
+  nama: string;
+  slug: string;
+  desc: string;
+  Layanan_forms: FormServiceInterface[];
 }

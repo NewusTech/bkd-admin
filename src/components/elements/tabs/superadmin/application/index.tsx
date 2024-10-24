@@ -28,6 +28,7 @@ import {
   UserApplicationHistoryInterface,
 } from "@/types/interface";
 import React from "react";
+import { string } from "zod";
 
 export default function TabsApplicationSuperAdminDashBoard({
   layananId,
@@ -51,19 +52,13 @@ export default function TabsApplicationSuperAdminDashBoard({
 }: TabsApplicationSuperAdminDashBoardInterface) {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
-  let colour: string | undefined = "#FF6600";
+  const chartData = superAdmin?.countbyBidang?.map((item, index) => {
+    let colour: string | undefined = "#FF6600";
+    if (index === 0) colour = "#FF6600";
+    else if (index === 1) colour = "#27DE27";
+    else if (index === 2) colour = "#1B99E9";
+    else if (index === 3) colour = "#FFD94F";
 
-  if (superAdmin?.countbyBidang[0]) {
-    colour = "#FF6600";
-  } else if (superAdmin?.countbyBidang[1]) {
-    colour = "#27DE27";
-  } else if (superAdmin?.countbyBidang[2]) {
-    colour = "#1B99E9";
-  } else if (superAdmin?.countbyBidang[3]) {
-    colour = "#FFD94F";
-  }
-
-  const chartData = superAdmin?.countbyBidang?.map((item) => {
     return {
       nama: item?.name,
       permohonan: item?.permohonan_count,
@@ -72,50 +67,33 @@ export default function TabsApplicationSuperAdminDashBoard({
   });
 
   const chartConfig = {
-    reporting: {
-      label: "Total Permohonan",
-    },
     permohonan: {
       label: "Permohonan",
-      color: colour,
     },
   } satisfies ChartConfig;
 
-  // console.log(superAdmin, "superAdmin");
+  const chartDataStaff = superAdmin?.countPegawaibyBidang?.map(
+    (item, index) => {
+      let color: string | undefined = "#FF0000";
 
-  // const chartData = [
-  //   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  //   { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  //   { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-  //   { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  //   { browser: "other", visitors: 90, fill: "var(--color-other)" },
-  // ];
+      if (index === 0) color = "#FF0000";
+      else if (index === 1) color = "#44E6FF";
+      else if (index === 2) color = "#646464";
+      else if (index === 3) color = "#5033F5";
 
-  // const chartConfig = {
-  //   visitors: {
-  //     label: "Visitors",
-  //   },
-  //   chrome: {
-  //     label: "Chrome",
-  //     color: "hsl(var(--chart-1))",
-  //   },
-  //   safari: {
-  //     label: "Safari",
-  //     color: "hsl(var(--chart-2))",
-  //   },
-  //   firefox: {
-  //     label: "Firefox",
-  //     color: "hsl(var(--chart-3))",
-  //   },
-  //   edge: {
-  //     label: "Edge",
-  //     color: "hsl(var(--chart-4))",
-  //   },
-  //   other: {
-  //     label: "Other",
-  //     color: "hsl(var(--chart-5))",
-  //   },
-  // } satisfies ChartConfig;
+      return {
+        nama: item?.name,
+        jumlah: item?.pegawai_count,
+        fill: color,
+      };
+    }
+  );
+
+  const chartConfigStaff = {
+    jumlah: {
+      label: "Jumlah",
+    },
+  } satisfies ChartConfig;
 
   return (
     <div className="w-full flex flex-col gap-y-5">
@@ -172,13 +150,13 @@ export default function TabsApplicationSuperAdminDashBoard({
             <div className="h-0.5 w-full bg-black-80"></div>
             <CardContent className="flex-1 pb-0">
               <ChartContainer
-                config={chartConfig}
+                config={chartConfigStaff}
                 className="mx-auto aspect-square max-h-[250px] pb-0 [&_.recharts-pie-label-text]:fill-foreground">
                 <PieChart>
                   <ChartTooltip content={<ChartTooltipContent hideLabel />} />
                   <Pie
-                    data={chartData}
-                    dataKey="permohonan"
+                    data={chartDataStaff}
+                    dataKey="jumlah"
                     label
                     nameKey="nama"
                   />

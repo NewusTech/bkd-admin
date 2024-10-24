@@ -29,7 +29,6 @@ export const schemaAreaData = z.object({
 });
 
 export const schemaServiceData = z.object({
-  bidang_id: z.string({ message: "Bidang tidak boleh kosong!" }),
   nama: z
     .string({ message: "Nama tidak boleh kosong!" })
     .min(3, { message: "Bidang minimal 3 karakter" }),

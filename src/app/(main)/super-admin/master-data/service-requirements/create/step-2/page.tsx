@@ -54,7 +54,6 @@ export default function ServiceRequiremntsCreate() {
       field: "",
       tipedata: "text",
       isrequired: "",
-      // Tambahkan options hanya jika diperlukan
       ...(cards[cards.length - 1].tipedata === "radio" ||
       cards[cards.length - 1].tipedata === "checkbox"
         ? { options: [] }
@@ -62,72 +61,6 @@ export default function ServiceRequiremntsCreate() {
     };
     setCards([...cards, newCard]);
   };
-
-  // const handleAddCard = () => {
-  //   if (cards[cards.length - 1].tipedata === "radio") {
-  //     setCards([
-  //       ...cards,
-  //       {
-  //         id: Date.now(),
-  //         field: "",
-  //         tipedata: "text",
-  //         isrequired: "",
-  //         options: [],
-  //       },
-  //     ]);
-  //   } else if (cards[cards.length - 1].tipedata === "checkbox") {
-  //     setCards([
-  //       ...cards,
-  //       {
-  //         id: Date.now(),
-  //         field: "",
-  //         tipedata: "text",
-  //         isrequired: "",
-  //         options: [],
-  //       },
-  //     ]);
-  //   } else if (cards[cards.length - 1].tipedata === "date") {
-  //     setCards([
-  //       ...cards,
-  //       {
-  //         id: Date.now(),
-  //         field: "",
-  //         tipedata: "text",
-  //         isrequired: "",
-  //       },
-  //     ]);
-  //   } else if (cards[cards.length - 1].tipedata === "number") {
-  //     setCards([
-  //       ...cards,
-  //       {
-  //         id: Date.now(),
-  //         field: "",
-  //         tipedata: "text",
-  //         isrequired: "",
-  //       },
-  //     ]);
-  //   } else if (cards[cards.length - 1].tipedata === "textarea") {
-  //     setCards([
-  //       ...cards,
-  //       {
-  //         id: Date.now(),
-  //         field: "",
-  //         tipedata: "text",
-  //         isrequired: "",
-  //       },
-  //     ]);
-  //   } else {
-  //     setCards([
-  //       ...cards,
-  //       {
-  //         id: Date.now(),
-  //         field: "",
-  //         tipedata: "text",
-  //         isrequired: "",
-  //       },
-  //     ]);
-  //   }
-  // };
 
   const handleRemoveCard = (id: number) => {
     const updatedCards = cards.filter((card) => card.id !== id);
@@ -315,14 +248,6 @@ export default function ServiceRequiremntsCreate() {
               className="bg-white border border-[#E4E4E7] p-4 md:p-10">
               <div className="flex-none md:flex text-xs md:text-sm gap-8">
                 <div className="w-full md:w-[70%]">
-                  {/* Apakah kamu bersedia melakukan pendaftaran? */}
-                  {/* <InputComponent
-                    typeInput="formInput"
-                    value={card.field}
-                    onChange={(e) =>
-                      handleCardChange(card.id, "field", e.target.value)
-                    }
-                  /> */}
                   <Input
                     type="text"
                     placeholder="Judul / Pertanyaan"
@@ -332,7 +257,6 @@ export default function ServiceRequiremntsCreate() {
                       handleCardChange(card.id, "field", e.target.value)
                     }
                   />
-                  {/* <hr className="border-t-1 border-[#E4E4E7] my-2 w-full" /> */}
                 </div>
                 <div className="w-full mt-2 md:w-[30%]">
                   <div className="p-2">
@@ -366,12 +290,10 @@ export default function ServiceRequiremntsCreate() {
               </div>
               <div className="flex-none justify-start md:flex md:justify-between mt-3">
                 <div className="space-y-2 text-sm text-neutral-900">
-                  {/* <p>Apakah wajib diisi?</p> */}
                   <RadioGroup
                     onValueChange={(e) =>
                       handleCardChange(card.id, "isrequired", parseInt(e))
                     }
-                    // defaultValue={card.isrequired.toString()}
                     value={card.isrequired.toString()}
                     className="flex-none md:flex space-x-4 md:space-x-1">
                     <div className="flex items-center space-x-2 space-y-0">
@@ -414,7 +336,6 @@ export default function ServiceRequiremntsCreate() {
                     </div>
                   ))}
                   <Button
-                    // size="xs"
                     className="mt-2 border border-primary-700 bg-transparent text-primary-700 hover:bg-primary-700 hover:text-neutral-50 rounded-full"
                     onClick={() => addOption(card.id)}>
                     <p className="text-xs">Tambah Pilihan</p>
