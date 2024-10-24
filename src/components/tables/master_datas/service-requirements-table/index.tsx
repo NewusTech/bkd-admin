@@ -22,8 +22,8 @@ export default function SuperServiceRequirementsMasterDataTablePages({
         <TableHeader className="bg-primary-40 text-line-10">
           <TableRow className="w-full">
             <TableHead className="text-center">No.</TableHead>
-            <TableHead className="text-center">Nama Bidang</TableHead>
             <TableHead className="text-center">Nama Layanan</TableHead>
+            <TableHead className="text-center">Aksi</TableHead>
             {/* <TableHead className="text-center">Aksi</TableHead> */}
           </TableRow>
         </TableHeader>

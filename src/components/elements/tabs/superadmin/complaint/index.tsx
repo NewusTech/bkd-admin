@@ -1,7 +1,15 @@
 "use client";
 
 import { TrendingUp } from "lucide-react";
-import { LabelList, Pie, PieChart } from "recharts";
+import {
+  CartesianGrid,
+  LabelList,
+  Line,
+  LineChart,
+  Pie,
+  PieChart,
+  XAxis,
+} from "recharts";
 import {
   Card,
   CardContent,
@@ -24,167 +32,246 @@ import MobileDivisionVerificationAdminApplicationHistoryCard from "@/components/
 import VerificationUserApplicationHistoryTablePages from "@/components/tables/verification_admin_user_application_history_table";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import {
+  JwtPayload,
+  SuperAdminDashboardInterface,
   TabsApplicationSuperAdminDashBoardInterface,
   UserApplicationHistoryInterface,
+  UserComplaintInterface,
 } from "@/types/interface";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  getDownloadUserComplaintExcelPrint,
+  getDownloadUserComplaintPrint,
+  getUserComplaints,
+} from "@/services/api";
+import { formatDate } from "@/lib/utils";
+import { jwtDecode } from "jwt-decode";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { useDebounce } from "@/hooks/useDebounce";
+import HistoryUserComplaintFilter from "@/components/elements/filters/website/historyUserComplaintFilter";
+import HistoryUserComplaintMobileFilter from "@/components/elements/filters/mobile/historyUserComplaintMobileFilter";
+import MobileUserComplaintCardPages from "@/components/mobile_all_cards/mobileUserComplaintCard";
+import VerificationUserComplaintTablePages from "@/components/tables/verification_admin_user_compaint_table";
 
 export default function TabsComplaintSuperAdminDashBoard({
-  layananId,
-  setLayananId,
-  services,
-  fetchPdf,
-  fetchExcel,
-  search,
-  setSearch,
-  startDate,
-  setStartDate,
-  endDate,
-  setEndDate,
-  setMonth,
-  setYear,
-  years,
-  users,
-  pagination,
-  handlePageChange,
   superAdmin,
-}: TabsApplicationSuperAdminDashBoardInterface) {
+}: {
+  superAdmin: SuperAdminDashboardInterface;
+}) {
+  const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const [search, setSearch] = useState("");
+  const deboucedSearch = useDebounce(search, 500);
+  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState<number | undefined>(undefined);
+  const [month, setMonth] = useState<number | undefined>(undefined);
+  const [role, setRole] = useState<string | null>(null);
+  const [areaId, setAreaId] = useState<number | undefined>(undefined);
+  const now = new Date();
+  const firstDayOfMonth = new Date(now.getFullYear(), 0, 1);
+  const [startDate, setStartDate] = useState<Date | undefined>(firstDayOfMonth);
+  const [endDate, setEndDate] = useState<Date | undefined>(new Date());
+  const [complaints, setComplaints] = useState<UserComplaintInterface[]>();
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    perPage: 10,
+    totalPages: 1,
+    totalCount: 0,
+  });
 
-  console.log(superAdmin?.countbyBidang[2], "superAdmin?.countbyBidang");
+  useEffect(() => {
+    const token = Cookies.get("Authorization");
 
-  let colour: string | undefined = "#FF6600";
+    if (token) {
+      try {
+        const decoded = jwtDecode<JwtPayload>(token);
 
-  if (superAdmin?.countbyBidang[0]) {
-    colour = "#FF6600";
-  } else if (superAdmin?.countbyBidang[1]) {
-    colour = "#27DE27";
-  } else if (superAdmin?.countbyBidang[2]) {
-    colour = "#1B99E9";
-  } else if (superAdmin?.countbyBidang[3]) {
-    colour = "#FFD94F";
-  }
+        if (decoded && decoded.role !== undefined) {
+          setRole(decoded.role);
+          setAreaId(decoded.bidang_id);
+        }
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    } else {
+      router.push("/login");
+    }
+  }, [router]);
 
-  const chartData = superAdmin?.countbyBidang?.map((item) => {
+  const startDateFormatted = startDate
+    ? formatDate(new Date(startDate))
+    : undefined;
+  const endDateFormatted = endDate ? formatDate(new Date(endDate)) : undefined;
+
+  const fetchUserComplaints = useCallback(
+    async (
+      page: number,
+      limit: number,
+      search?: string,
+      start_date?: string,
+      end_date?: string,
+      status?: number,
+      month?: number,
+      bidang_id?: number
+    ) => {
+      try {
+        let response: any;
+        if (role === "Admin Verifikasi" || role === "Kepala Bidang") {
+          response = await getUserComplaints(
+            page,
+            limit,
+            search,
+            start_date,
+            end_date,
+            status,
+            month,
+            bidang_id
+          );
+        } else {
+          response = await getUserComplaints(
+            page,
+            limit,
+            search,
+            start_date,
+            end_date,
+            status,
+            month
+          );
+        }
+
+        setComplaints(response.data);
+        setPagination((prev) => ({
+          ...prev,
+          currentPage: page,
+          totalPages: response?.pagination?.totalPages,
+          totalCount: response?.pagination?.totalCount,
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [role]
+  );
+
+  useEffect(() => {
+    if (role === "Admin Verifikasi" || role === "Kepala Bidang") {
+      fetchUserComplaints(
+        1,
+        10,
+        deboucedSearch,
+        startDateFormatted,
+        endDateFormatted,
+        status,
+        month,
+        areaId
+      );
+    } else {
+      fetchUserComplaints(
+        1,
+        10,
+        deboucedSearch,
+        startDateFormatted,
+        endDateFormatted,
+        status,
+        month
+      );
+    }
+  }, [
+    deboucedSearch,
+    startDateFormatted,
+    endDateFormatted,
+    status,
+    role,
+    areaId,
+    fetchUserComplaints,
+    month,
+  ]);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage !== pagination.currentPage) {
+      if (areaId) {
+        fetchUserComplaints(newPage, 10, "", "", "", status, areaId);
+      } else {
+        fetchUserComplaints(newPage, 10, "", "", "", status);
+      }
+    }
+  };
+
+  // Api PDF
+  const fetchPdf = async () => {
+    return await getDownloadUserComplaintPrint();
+  };
+  // Api Excel
+  const fetchExcel = async () => {
+    return await getDownloadUserComplaintExcelPrint();
+  };
+
+  const chartData = superAdmin?.countbyLayanan?.map((item, index) => {
     return {
-      nama: item?.name,
-      permohonan: item?.permohonan_count,
-      fill: colour,
+      nama: item?.layanan_name,
+      jumlah: item?.pengaduanCount,
     };
   });
 
   const chartConfig = {
-    reporting: {
-      label: "Total Permohonan",
-    },
-    permohonan: {
-      label: "Permohonan",
-      color: colour,
+    jumlah: {
+      label: "Jumlah",
+      color: "#1B99E9",
     },
   } satisfies ChartConfig;
-
-  // console.log(superAdmin, "superAdmin");
-
-  // const chartData = [
-  //   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  //   { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  //   { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-  //   { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  //   { browser: "other", visitors: 90, fill: "var(--color-other)" },
-  // ];
-
-  // const chartConfig = {
-  //   visitors: {
-  //     label: "Visitors",
-  //   },
-  //   chrome: {
-  //     label: "Chrome",
-  //     color: "hsl(var(--chart-1))",
-  //   },
-  //   safari: {
-  //     label: "Safari",
-  //     color: "hsl(var(--chart-2))",
-  //   },
-  //   firefox: {
-  //     label: "Firefox",
-  //     color: "hsl(var(--chart-3))",
-  //   },
-  //   edge: {
-  //     label: "Edge",
-  //     color: "hsl(var(--chart-4))",
-  //   },
-  //   other: {
-  //     label: "Other",
-  //     color: "hsl(var(--chart-5))",
-  //   },
-  // } satisfies ChartConfig;
 
   return (
     <div className="w-full flex flex-col gap-y-5">
       <div className="w-full flex flex-row gap-x-5">
         <div className="w-full bg-line-10 rounded-lg shadow-md p-5">
-          <Card className="flex flex-col px-3 gap-y-3 p-3 border-none">
-            <CardHeader className="w-full flex flex-col items-start pb-0 p-0">
-              <CardDescription className="md:text-[16px] font-light">
-                Statistik Permohonan Per Bidang
-              </CardDescription>
-              <CardTitle className="md:text-[20px] font-normal">
-                Jumlah Keseluruhan Permohonan
-              </CardTitle>
+          <Card>
+            <CardHeader>
+              <CardTitle>Line Chart - Label</CardTitle>
+              <CardDescription>January - June 2024</CardDescription>
             </CardHeader>
-            <div className="h-0.5 w-full bg-black-80"></div>
-            <CardContent className="flex-1 pb-0">
-              <ChartContainer
-                config={chartConfig}
-                className="mx-auto aspect-square max-h-[250px] pb-0 [&_.recharts-pie-label-text]:fill-foreground">
-                <PieChart>
-                  <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-                  <Pie
-                    data={chartData}
-                    dataKey="permohonan"
-                    label
-                    className="border border-line-10 text-line-10"
-                    nameKey="nama">
-                    {/* <LabelList
-                      dataKey="nama"
-                      className="text-black-80"
-                      // stroke="none"
-                      fontSize={8}
-                      // formatter={(value: keyof typeof chartConfig) =>
-                      //   chartConfig[value]?.label
-                      // }
-                    /> */}
-                  </Pie>
-                </PieChart>
-              </ChartContainer>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="w-full bg-line-10 rounded-lg shadow-md p-5">
-          <Card className="flex flex-col px-3 gap-y-3 p-3">
-            <CardHeader className="w-full flex flex-col items-start pb-0 p-0">
-              <CardDescription className="md:text-[16px] font-light">
-                Statistik Pegawai Per Bidang
-              </CardDescription>
-              <CardTitle className="md:text-[20px] font-normal">
-                Jumlah Keseluruhan Pegawai
-              </CardTitle>
-            </CardHeader>
-            <div className="h-0.5 w-full bg-black-80"></div>
-            <CardContent className="flex-1 pb-0">
-              <ChartContainer
-                config={chartConfig}
-                className="mx-auto aspect-square max-h-[250px] pb-0 [&_.recharts-pie-label-text]:fill-foreground">
-                <PieChart>
-                  <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-                  <Pie
-                    data={chartData}
-                    dataKey="permohonan"
-                    label
-                    nameKey="nama"
+            <CardContent>
+              <ChartContainer config={chartConfig}>
+                <LineChart
+                  accessibilityLayer
+                  data={chartData}
+                  margin={{
+                    top: 40,
+                    left: 12,
+                    right: 12,
+                    bottom: 40,
+                  }}>
+                  <CartesianGrid vertical={false} />
+                  <XAxis
+                    dataKey="nama"
+                    tickLine={false}
+                    axisLine={false}
+                    tickMargin={8}
+                    tickFormatter={(value) => value.slice(8)}
                   />
-                </PieChart>
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent indicator="line" />}
+                  />
+                  <Line
+                    dataKey="jumlah"
+                    type="natural"
+                    stroke="#FF6600"
+                    strokeWidth={2}
+                    dot={{
+                      fill: "#27DE27",
+                    }}
+                    activeDot={{
+                      r: 6,
+                    }}>
+                    <LabelList
+                      position="top"
+                      offset={12}
+                      className="text-[#1B99E9]"
+                      fontSize={12}
+                    />
+                  </Line>
+                </LineChart>
               </ChartContainer>
             </CardContent>
           </Card>
@@ -194,10 +281,7 @@ export default function TabsComplaintSuperAdminDashBoard({
       <div className="w-full bg-line-10 rounded-lg shadow-md p-4 flex flex-col gap-y-4">
         {/* filter website */}
         {!isMobile && (
-          <HistoryApplicationFilter
-            layananId={layananId}
-            setLayananId={setLayananId}
-            services={services}
+          <HistoryUserComplaintFilter
             fetchPdf={fetchPdf}
             fetchExcel={fetchExcel}
             search={search}
@@ -206,19 +290,15 @@ export default function TabsComplaintSuperAdminDashBoard({
             setStartDate={setStartDate}
             endDate={endDate}
             setEndDate={setEndDate}
+            setStatus={setStatus}
             setMonth={setMonth}
-            setYear={setYear}
-            years={years}
           />
         )}
 
         {/* filter mobile */}
         <div className="w-full">
           {isMobile && (
-            <HistoryApplicationMobileFilter
-              layananId={layananId}
-              setLayananId={setLayananId}
-              services={services}
+            <HistoryUserComplaintMobileFilter
               fetchPdf={fetchPdf}
               fetchExcel={fetchExcel}
               search={search}
@@ -227,9 +307,8 @@ export default function TabsComplaintSuperAdminDashBoard({
               setStartDate={setStartDate}
               endDate={endDate}
               setEndDate={setEndDate}
+              setStatus={setStatus}
               setMonth={setMonth}
-              setYear={setYear}
-              years={years}
             />
           )}
         </div>
@@ -237,38 +316,40 @@ export default function TabsComplaintSuperAdminDashBoard({
         <div className="w-full">
           {!isMobile ? (
             <>
-              {users && users.length > 0 && (
-                <VerificationUserApplicationHistoryTablePages users={users} />
+              {complaints && complaints.length > 0 && (
+                <VerificationUserComplaintTablePages complaints={complaints} />
               )}
             </>
           ) : (
             <div className="w-full flex flex-col gap-y-5">
-              {users &&
-                users.length > 0 &&
-                users.map(
-                  (user: UserApplicationHistoryInterface, i: number) => {
-                    return (
-                      <MobileDivisionVerificationAdminApplicationHistoryCard
-                        key={i}
-                        index={i}
-                        user={user}
-                      />
-                    );
-                  }
-                )}
+              {complaints &&
+                complaints.length > 0 &&
+                complaints?.map((item: UserComplaintInterface, i: number) => {
+                  return (
+                    <MobileUserComplaintCardPages
+                      key={i}
+                      complaint={item}
+                      index={i}
+                    />
+                  );
+                })}
             </div>
           )}
         </div>
 
-        <div className="w-full">
-          <PaginationComponent
-            currentPage={pagination?.currentPage}
-            totalPages={pagination?.totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
+        {complaints && complaints?.length > 0 && (
+          <div className="w-full">
+            <PaginationComponent
+              currentPage={pagination.currentPage}
+              totalPages={pagination.totalPages}
+              onPageChange={handlePageChange}
+            />
+          </div>
+        )}
 
-        <div className="w-full">{users.length === 0 && <DataNotFound />}</div>
+        <div className="w-full">
+          {complaints && complaints.length === 0 && <DataNotFound />}
+        </div>
       </div>
     </div>
   );

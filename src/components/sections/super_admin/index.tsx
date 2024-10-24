@@ -19,6 +19,8 @@ import {
 import { formatDate, getLast10Years } from "@/lib/utils";
 import { useDebounce } from "@/hooks/useDebounce";
 import TabsApplicationSuperAdminDashBoard from "@/components/elements/tabs/superadmin/application";
+import TabsComplaintSuperAdminDashBoard from "@/components/elements/tabs/superadmin/complaint";
+import TabsSurveySuperAdminDashBoard from "@/components/elements/tabs/superadmin/survey";
 
 export default function SuperAdminDashboardPages() {
   const [search, setSearch] = useState("");
@@ -224,33 +226,15 @@ export default function SuperAdminDashboardPages() {
             )}
           </TabsContent>
           <TabsContent value="pengaduan" className="w-full flex flex-col mt-5">
-            {/* {user && subDistricts && villages && (
-              <PersonalDataProfileScreen
-                userData={userData}
-                setUserData={setUserData}
-                returnDate={returnDate}
-                setReturnDate={setReturnDate}
-                subDistricts={subDistricts}
-                villages={villages}
-                isLoadingUserCreate={isLoadingUserCreate}
-                handleSubmitPersonalDataUser={handleSubmitPersonalDataUser}
-              />
-            )} */}
+            {superAdmin && (
+              <TabsComplaintSuperAdminDashBoard superAdmin={superAdmin} />
+            )}
           </TabsContent>
 
           <TabsContent value="kepuasan" className="w-full flex flex-col mt-5">
-            {/* {user && subDistricts && villages && (
-              <PersonalDataProfileScreen
-                userData={userData}
-                setUserData={setUserData}
-                returnDate={returnDate}
-                setReturnDate={setReturnDate}
-                subDistricts={subDistricts}
-                villages={villages}
-                isLoadingUserCreate={isLoadingUserCreate}
-                handleSubmitPersonalDataUser={handleSubmitPersonalDataUser}
-              />
-            )} */}
+            {superAdmin && (
+              <TabsSurveySuperAdminDashBoard superAdmin={superAdmin} />
+            )}
           </TabsContent>
         </Tabs>
       </div>
