@@ -76,6 +76,9 @@ export default function RegionalSecretaryDashboardPages() {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
+  const [month, setMonth] = useState<number | undefined>(undefined);
+  const [year, setYear] = useState<string | undefined>("");
+  const [years, setYears] = useState<{ id: number; value: string }[]>([]);
   const [role, setRole] = useState<string | null>(null);
   const [layananId, setLayananId] = useState<number | undefined>(undefined);
   const now = new Date();
@@ -122,6 +125,8 @@ export default function RegionalSecretaryDashboardPages() {
     search?: string,
     start_date?: string,
     end_date?: string,
+    month?: number,
+    year?: string,
     layanan_id?: number
   ) => {
     try {
@@ -132,6 +137,8 @@ export default function RegionalSecretaryDashboardPages() {
         search,
         start_date,
         end_date,
+        month,
+        year,
         layanan_id
       );
 
@@ -156,6 +163,8 @@ export default function RegionalSecretaryDashboardPages() {
         debounceSearch,
         startDateFormatted,
         endDateFormatted,
+        month,
+        year,
         layananId
       );
     } else if (role && role === "Kepala Dinas") {
@@ -166,6 +175,8 @@ export default function RegionalSecretaryDashboardPages() {
         debounceSearch,
         startDateFormatted,
         endDateFormatted,
+        month,
+        year,
         layananId
       );
     } else if (role && role === "Sekretaris Dinas") {
@@ -176,10 +187,20 @@ export default function RegionalSecretaryDashboardPages() {
         debounceSearch,
         startDateFormatted,
         endDateFormatted,
+        month,
+        year,
         layananId
       );
     }
-  }, [debounceSearch, startDateFormatted, endDateFormatted, layananId, role]);
+  }, [
+    debounceSearch,
+    startDateFormatted,
+    endDateFormatted,
+    layananId,
+    role,
+    month,
+    year,
+  ]);
 
   const fetchDashboardData = async () => {
     try {
@@ -206,7 +227,17 @@ export default function RegionalSecretaryDashboardPages() {
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchApplicationHistoryUser(newPage, 10, 1, "", "", "", layananId);
+      fetchApplicationHistoryUser(
+        newPage,
+        10,
+        1,
+        "",
+        "",
+        "",
+        month,
+        year,
+        layananId
+      );
     }
   };
 
@@ -232,23 +263,6 @@ export default function RegionalSecretaryDashboardPages() {
     };
   });
 
-  // const chartDataBar = [
-  //   {
-  //     service: "Layanan Mutasi PNS",
-  //     device: 300,
-  //     perangkat: 80,
-  //     fill: "#1947BC",
-  //   },
-  //   {
-  //     service: "Layanan Kenaikan",
-  //     device: 305,
-  //     perangkat: 80,
-  //     fill: "#BC6D19",
-  //   },
-  //   { service: "Layanan Pensiun", device: 237, perangkat: 80, fill: "#D51C7F" },
-  //   { service: "Layanan Cuti PNS", device: 73, perangkat: 80, fill: "#4D56B7" },
-  // ];
-
   const chartConfigBar = {
     bidang: {
       label: "Bidang",
@@ -263,70 +277,12 @@ export default function RegionalSecretaryDashboardPages() {
     };
   });
 
-  // const chartDataLegend = useMemo(
-  //   () => [
-  //     {
-  //       bidang: "Bidang Mutasi",
-  //       selesai: 275,
-  //       ditolak: 255,
-  //       direvisi: 235,
-  //       fill: "#1947BC",
-  //     },
-  //     {
-  //       bidang: "Bidang Kenaikan",
-  //       selesai: 265,
-  //       ditolak: 245,
-  //       direvisi: 225,
-  //       fill: "#D51C7F",
-  //     },
-  //     {
-  //       bidang: "Bidang Pensiun",
-  //       selesai: 185,
-  //       ditolak: 165,
-  //       direvisi: 145,
-  //       fill: "#BC6D19",
-  //     },
-  //     {
-  //       bidang: "Bidang Cuti",
-  //       selesai: 175,
-  //       ditolak: 155,
-  //       direvisi: 135,
-  //       fill: "#4D56B7",
-  //     },
-  //   ],
-  //   []
-  // );
-
   const chartConfigLegend = {
     permohonan: {
       label: "Permohonan",
       color: "#1947BC",
     },
-    // selesai: {
-    //   label: "Selesai",
-    //   color: "#1947BC",
-    // },
-    // ditolak: {
-    //   label: "Ditolak",
-    //   color: "#D51C7F",
-    // },
-    // direvisi: {
-    //   label: "Direvisi",
-    //   color: "#BC6D19",
-    // },
-    // edge: {
-    //   label: "Edge",
-    //   color: "#D51C7F",
-    // },
-    // other: {
-    //   label: "Other",
-    //   color: "#4D56B7",
-    // },
   } satisfies ChartConfig;
-
-  // const totalVisitors = useMemo(() => {
-  //   return chartDataLegend?.reduce((acc, curr) => acc + curr.visitors, 0);
-  // }, [chartDataLegend]);
 
   return (
     <div className="w-full flex flex-col gap-y-5 mb-24">
@@ -391,7 +347,6 @@ export default function RegionalSecretaryDashboardPages() {
                   <CardTitle className="text-[16px] font-normal">
                     Jumlah Keseluruhan Pengajuan
                   </CardTitle>
-                  {/* <CardDescription>Bidang Pengadaan</CardDescription> */}
                 </div>
 
                 <div className="w-full h-0.5 bg-line-20"></div>
@@ -415,7 +370,6 @@ export default function RegionalSecretaryDashboardPages() {
                   margin={{
                     right: 16,
                   }}>
-                  {/* <CartesianGrid horizontal={false} /> */}
                   <YAxis
                     dataKey="nama"
                     type="category"
@@ -433,16 +387,6 @@ export default function RegionalSecretaryDashboardPages() {
                     tickMargin={10}
                     axisLine={false}
                   />
-                  {/* <YAxis
-                    dataKey="service"
-                    type="category"
-                    tickLine={false}
-                    tickMargin={10}
-                    axisLine={false}
-                    // tickFormatter={(value) => value.slice(0, 3)}
-                    hide
-                  />
-                  <XAxis dataKey="device" type="number" hide /> */}
                   <ChartTooltip
                     cursor={false}
                     content={<ChartTooltipContent indicator="line" />}
@@ -476,21 +420,21 @@ export default function RegionalSecretaryDashboardPages() {
               <CardTitle className="text-[16px] font-normal">
                 Grafik Status
               </CardTitle>
-              <div className="flex items-center w-5/12 justify-between">
-                <Select
-                // onValueChange={handleSelectStatusChange}
-                >
+              {/* <div className="flex items-center w-5/12 justify-between">
+                <Select */}
+              {/* // onValueChange={handleSelectStatusChange} */}
+              {/* >
                   <SelectTrigger
-                    className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-                    {/* <Checks className="w-6 h-6 text-black-80" /> */}
-                    <SelectValue
+                    className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}> */}
+              {/* <Checks className="w-6 h-6 text-black-80" /> */}
+              {/* <SelectValue
                       placeholder="Sort By"
                       className="text-black-80 w-full"
                     />
                   </SelectTrigger>
                   <SelectContent className="bg-line-10">
-                    <div className="pt-2">
-                      {/* {statusDatas &&
+                    <div className="pt-2"> */}
+              {/* {statusDatas &&
                   statusDatas.map(
                     (status: { id: number; value: string }, i: number) => {
                       return (
@@ -503,13 +447,13 @@ export default function RegionalSecretaryDashboardPages() {
                       );
                     }
                   )} */}
-                      <SelectItem className="w-full px-4 pl-8" value="1">
+              {/* <SelectItem className="w-full px-4 pl-8" value="1">
                         Hello World
                       </SelectItem>
                     </div>
                   </SelectContent>
                 </Select>
-              </div>
+              </div> */}
             </div>
 
             <div className="w-full h-0.5 bg-line-20"></div>

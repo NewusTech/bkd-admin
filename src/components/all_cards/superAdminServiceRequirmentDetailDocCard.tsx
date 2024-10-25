@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { Trash } from "@phosphor-icons/react";
 import { FormServiceInterface } from "@/types/interface";
 import { Loader } from "lucide-react";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 export default function SuperAdminServiceRequirmentDetailDocCard({
   item,
@@ -13,6 +14,8 @@ export default function SuperAdminServiceRequirmentDetailDocCard({
   handleDeleteDoc: (id: number) => void;
   isLoadingDoc: boolean;
 }) {
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   return (
     <div className="w-full flex flex-row justify-between px-3 py-5 border-b-2 border-line-20">
       <div className="w-full flex flex-row items-center">
@@ -32,7 +35,9 @@ export default function SuperAdminServiceRequirmentDetailDocCard({
             <div className="w-full flex flex-row justify-center gap-x-3">
               <Trash className="w-5 h-5 group-hover:text-line-10" />
 
-              <span className="text-[14px] md:text-[16px]">Hapus</span>
+              {!isMobile && (
+                <span className="text-[14px] md:text-[16px]">Hapus</span>
+              )}
             </div>
           )}
         </Button>

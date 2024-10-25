@@ -31,8 +31,8 @@ export default function SuperDashboardCard({
   }, [item?.permohonan_count]);
 
   return (
-    <div className="w-full min-h-[250px] group flex flex-row gap-x-5 p-5 bg-line-10 hover:bg-primary-40 rounded-lg shadow-md border border-line-20 justify-between">
-      <div className="min-w-[175px] flex flex-col gap-y-5">
+    <div className="w-full mih-h-[150px] md:min-h-[250px] group flex flex-row gap-x-5 p-5 bg-line-10 hover:bg-primary-40 rounded-lg shadow-md border border-line-20 justify-between">
+      <div className="min-h-[125px] md:min-w-[175px] flex flex-col gap-y-5">
         <h4 className="text-black-80 group-hover:text-line-10 font-normal text-[20px]">
           {item?.name && item?.name}
         </h4>

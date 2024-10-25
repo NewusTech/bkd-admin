@@ -1415,14 +1415,14 @@ export const getReportHistories = async (
   page?: number,
   limit?: number,
   search?: string,
-  layanan_id?: number,
   start_date?: string,
-  end_date?: string
+  end_date?: string,
+  layanan_id?: number
 ) => {
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/layanan/report/get?page=${page}&limit=${limit}&search=${search}&layanan_id=${layanan_id}&start_date=${start_date}&end_date=${end_date}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/layanan/report/get?page=${page}&limit=${limit}&search=${search}&start_date=${start_date}&end_date=${end_date}&${layanan_id && `layanan_id=${layanan_id}`}`,
     {
       method: "GET",
       headers: {

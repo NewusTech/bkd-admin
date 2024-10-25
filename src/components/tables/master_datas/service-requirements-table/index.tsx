@@ -7,8 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import SuperAreasMasterDataCard from "@/components/all_cards/superAreasMasterDataCard";
-import { AreasInterface, ServiceInterface } from "@/types/interface";
+import { ServiceInterface } from "@/types/interface";
 import SuperServiceRequirementsCard from "@/components/all_cards/superServiceRequirementsCard";
 
 export default function SuperServiceRequirementsMasterDataTablePages({
@@ -24,7 +23,6 @@ export default function SuperServiceRequirementsMasterDataTablePages({
             <TableHead className="text-center">No.</TableHead>
             <TableHead className="text-center">Nama Layanan</TableHead>
             <TableHead className="text-center">Aksi</TableHead>
-            {/* <TableHead className="text-center">Aksi</TableHead> */}
           </TableRow>
         </TableHeader>
         <TableBody>
