@@ -75,7 +75,7 @@ const InputComponent = ({
         </SelectTrigger>
         <SelectContent className="pt-10 bg-white">
           <div className="px-2 fixed border-b w-full top-0 flex items-center justify-between z-10">
-            <Search className="text-slate-400" />
+            <Search className="text-line-30" />
             <Input
               placeholder="Search..."
               className="w-full border-0 text-[14px] md:text-[16px]"
@@ -130,13 +130,12 @@ const InputComponent = ({
       <Popover>
         <PopoverTrigger asChild>
           <Button
-            variant={"outline"}
             className={cn(
               "w-[280px] justify-between text-left font-normal",
               !date && "text-muted-foreground"
             )}>
             {date ? format(date, "PP") : <span>Pilih Tanggal</span>}
-            <CalendarIcon className="ml-2 h-4 w-4 text-primary-700" />
+            <CalendarIcon className="ml-2 h-4 w-4 text-primary-40" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">
@@ -206,7 +205,7 @@ const InputComponent = ({
         />
         <label
           htmlFor="file"
-          className="cursor-pointer inline-block bg-transparent border border-primary-700 text-primary-700 py-2 px-5 rounded-full font-semibold text-[14px] md:text-[16px] hover:bg-violet-100">
+          className="cursor-pointer inline-block bg-transparent border border-primary-40 text-primary-40 py-2 px-5 rounded-full font-semibold text-[14px] md:text-[16px] hover:bg-primary-30">
           {label}
         </label>
       </div>

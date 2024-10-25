@@ -97,7 +97,7 @@ export default function TabsApplicationSuperAdminDashBoard({
 
   return (
     <div className="w-full flex flex-col gap-y-5">
-      <div className="w-full flex flex-row gap-x-5">
+      <div className="w-full flex flex-col md:flex-row gap-x-5 gap-y-5">
         <div className="w-full bg-line-10 rounded-lg shadow-md p-5">
           <Card className="flex flex-col px-3 gap-y-3 p-3 border-none">
             <CardHeader className="w-full flex flex-col items-start pb-0 p-0">

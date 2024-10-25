@@ -1,49 +1,24 @@
 "use client";
 
-import {
-  deleteAreas,
-  getAreas,
-  getService,
-  postAreas,
-  updateAreas,
-} from "@/services/api";
+import { getService } from "@/services/api";
 import { AreasInterface, ServiceInterface } from "@/types/interface";
 import React, { useEffect, useState } from "react";
-import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import PaginationComponent from "@/components/elements/pagination";
-import InputComponent from "@/components/InputComponent";
 import SuperServiceRequirementsMasterDataTablePages from "@/components/tables/master_datas/service-requirements-table";
 import Link from "next/link";
 import AddIcon from "@/components/elements/add_button";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import SearchPages from "@/components/elements/search";
 import { useDebounce } from "@/hooks/useDebounce";
 import MobileSuperServiceRequirementsMasterDataTablePages from "@/components/mobile_all_cards/mobileSuperServiceRequirementsMasterDataTablePages";
 import NotFoundSearch from "@/components/ui/SearchNotFound";
 
 export default function ServiceRequiremnts() {
-  const [instance, setInstance] = useState<string>("");
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const router = useRouter();
   const [search, setSearch] = useState<string>("");
   const deboucedSearch = useDebounce(search, 500);
-  const [searchInputInstance, setSearchInputInstance] = useState("");
-  const router = useRouter();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isDialogEditOpen, setIsDialogEditOpen] = useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isDrawerEditOpen, setIsDrawerEditOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
-  const [isUpdateLoading, setIsUpdateLoading] = useState(false);
-  const [areas, setAreas] = useState<AreasInterface[]>([]);
   const [services, setServices] = useState<ServiceInterface[]>([]);
-  const [data, setData] = useState({
-    nama: "",
-    desc: "",
-    nip_pj: "",
-    pj: "",
-  });
   const [pagination, setPagination] = useState({
     currentPage: 1,
     perPage: 10,
@@ -77,83 +52,6 @@ export default function ServiceRequiremnts() {
     }
   };
 
-  //   const handleDeleteAreas = async (slug: string) => {
-  //     setIsDeleteLoading(true);
-  //     try {
-  //       const result = await Swal.fire({
-  //         title: "Apakah Anda Yakin Menghapus Bidang?",
-  //         text: "Bidang yang telah dihapus tidak dapat dipulihkan!",
-  //         icon: "warning",
-  //         showCancelButton: true,
-  //         confirmButtonColor: "#0000FF",
-  //         cancelButtonColor: "#EE3F62",
-  //         confirmButtonText: "Delete",
-  //       });
-
-  //       if (result.isConfirmed) {
-  //         const response = await deleteAreas(slug);
-
-  //         if (response.status === 200) {
-  //           await Swal.fire({
-  //             icon: "success",
-  //             title: `Bidang berhasil dihapus!`,
-  //             timer: 2000,
-  //             position: "center",
-  //           });
-  //           setIsDeleteLoading(false);
-  //           fetchAreas(pagination.currentPage, 10);
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     } finally {
-  //       setIsDeleteLoading(false);
-  //     }
-  //   };
-
-  //   const handleUpdateArea = async (
-  //     e: React.FormEvent<HTMLFormElement>,
-  //     slug: string
-  //   ) => {
-  //     e.preventDefault();
-  //     setIsUpdateLoading(true);
-
-  //     try {
-  //       const response = await updateAreas(slug, data);
-
-  //       if (response.status === 200) {
-  //         setData({
-  //           nama: "",
-  //           desc: "",
-  //           nip_pj: "",
-  //           pj: "",
-  //         });
-  //         Swal.fire({
-  //           icon: "success",
-  //           title: "Berhasil Mengupdate Bidang!",
-  //           timer: 2000,
-  //           showConfirmButton: false,
-  //           position: "center",
-  //         });
-  //         fetchAreas(pagination.currentPage, 10);
-  //         setIsDialogEditOpen(false);
-  //         router.push("/super-admin/master-data/areas");
-  //       } else {
-  //         Swal.fire({
-  //           icon: "error",
-  //           title: "Gagal Menagupdate Bidang!",
-  //           timer: 2000,
-  //           showConfirmButton: false,
-  //           position: "center",
-  //         });
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     } finally {
-  //       setIsUpdateLoading(false);
-  //     }
-  //   };
-
   return (
     <>
       {!isMobile ? (
@@ -162,13 +60,6 @@ export default function ServiceRequiremnts() {
           <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
             <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
               <div className="w-full flex flex-row justify-end gap-x-5">
-                {/* <div className="w-[80%] border border-b rounded-lg z-50">
-                  <SearchPages
-                    search={search}
-                    change={(e: any) => setSearch(e.target.value)}
-                    placeholder="Pencarian"
-                  />
-                </div> */}
                 <div className="w-fit flex justify-end ">
                   <Link
                     href="/super-admin/master-data/service-requirements/create"
@@ -195,23 +86,7 @@ export default function ServiceRequiremnts() {
           {/* mobile */}
           <section className="w-full flex flex-col items-center gap-y-5 px-5 mt-5">
             <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5">
-              {/* <h1 className="text-lg text-center">Kelola Persyaratan</h1> */}
-
               <div className="w-full gap-x-5">
-                {/* <div className="w-full border border-b rounded-lg z-50">
-                  <InputComponent
-                    typeInput="selectSearch"
-                    valueInput={searchInputInstance}
-                    onChangeInputSearch={(e) =>
-                      setSearchInputInstance(e.target.value)
-                    }
-                    // items={result}
-                    label="Instansi"
-                    placeholder="Pilih Instansi"
-                    value={instance}
-                    onChange={(e: any) => setInstance(e)}
-                  />
-                </div> */}
                 <div className="w-full mt-2">
                   <div className="flex justify-end items-center w-full">
                     <Link
@@ -226,12 +101,6 @@ export default function ServiceRequiremnts() {
             </div>
             <div className="bg-line-10 shadow-md rounded-lg w-full flex flex-col p-5 gap-y-5 mt-2">
               <div className="w-full">
-                {/* {services && services.length > 0 && (
-                  <MobileSuperServiceRequirementsMasterDataTablePages
-                    services={services}
-                  />
-                )} */}
-
                 {services && services.length > 0 ? (
                   services.map((item: ServiceInterface, i: number) => {
                     return (
@@ -239,12 +108,6 @@ export default function ServiceRequiremnts() {
                         key={i}
                         item={item}
                         index={i}
-                      // data={data}
-                      // setData={setData}
-                      // isUpdateLoading={isUpdateLoading}
-                      // handleUpdateNews={handleUpdateNews}
-                      // isDialogEditOpen={isDialogEditOpen}
-                      // setIsDialogEditOpen={setIsDialogEditOpen}
                       />
                     );
                   })

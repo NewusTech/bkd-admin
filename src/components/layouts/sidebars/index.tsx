@@ -1416,7 +1416,7 @@ export default function DashBoardSidebarPages() {
                     </div>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="md:text-start pb-0 text-justify w-full h-full">
+                <AccordionContent className="md:text-start pb-0 mt-2 text-justify w-full h-full">
                   <div className="w-full flex flex-row px-5">
                     <Button
                       onClick={handleLogout}

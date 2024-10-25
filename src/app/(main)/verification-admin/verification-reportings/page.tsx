@@ -69,18 +69,18 @@ export default function VerificationUserApplicationRevitionHistoriesScreen() {
     page: number,
     limit: number,
     search: string,
-    layanan_id?: number,
     start_date?: string,
-    end_date?: string
+    end_date?: string,
+    layanan_id?: number
   ) => {
     try {
       const response = await getReportHistories(
         page,
         limit,
         search,
-        layanan_id,
         start_date,
         end_date
+        // layanan_id
       );
 
       setReports(response?.data?.report);
@@ -100,9 +100,9 @@ export default function VerificationUserApplicationRevitionHistoriesScreen() {
       1,
       5,
       debounceSearch,
-      layananId,
       startDateFormatted,
-      endDateFormatted
+      endDateFormatted,
+      layananId
     );
   }, [debounceSearch, layananId, startDateFormatted, endDateFormatted]);
 
@@ -112,9 +112,9 @@ export default function VerificationUserApplicationRevitionHistoriesScreen() {
         newPage,
         5,
         "",
-        layananId,
         startDateFormatted,
-        endDateFormatted
+        endDateFormatted,
+        layananId
       );
     }
   };
@@ -207,7 +207,7 @@ export default function VerificationUserApplicationRevitionHistoriesScreen() {
         />
       </div>
 
-      <div className="w-full">{reports.length === 0 && <DataNotFound />}</div>
+      <div className="w-full">{reports?.length === 0 && <DataNotFound />}</div>
     </section>
   );
 }

@@ -75,7 +75,7 @@ export default function ServiceRequirmentMasterDataDetailPages({
         if (response.status === 200) {
           await Swal.fire({
             icon: "success",
-            title: `Pertanayaan berhasil dihapus!`,
+            title: `Pertanyaan berhasil dihapus!`,
             timer: 2000,
             position: "center",
           });
@@ -110,7 +110,7 @@ export default function ServiceRequirmentMasterDataDetailPages({
         if (response.status === 200) {
           await Swal.fire({
             icon: "success",
-            title: `Pertanayaan berhasil dihapus!`,
+            title: `Pertanyaan Dokumen berhasil dihapus!`,
             timer: 2000,
             position: "center",
           });
@@ -134,14 +134,16 @@ export default function ServiceRequirmentMasterDataDetailPages({
             <ChevronLeft className="w-7 h-7 text-black-80 mr-2" />
           </button>
 
-          <h5 className="text-xl text-start text-black-80 font-normal">
+          <h5 className="text-[18px] md:text-[20px] text-start text-black-80 font-normal">
             Detail Persyaratan
           </h5>
         </div>
 
         <div className="flex flex-col h-full items-center w-full verticalScroll gap-y-6">
           <div className="w-full flex flex-col gap-y-3">
-            <h5 className="text-primary-40 text-[18px]">Nama Layanan</h5>
+            <h5 className="text-primary-40 text-[16px] md:text-[18px]">
+              Nama Layanan
+            </h5>
 
             <p className="text-[14px] md:text-[16px] text-black-80">
               {form && form?.nama}
@@ -150,8 +152,10 @@ export default function ServiceRequirmentMasterDataDetailPages({
 
           <div className="h-0.5 w-full bg-black-80"></div>
 
-          <div className="w-full bg-primary-40 px-3 py-3 rounded-md">
-            <h5 className="text-line-10 text-[18px]">Formulir</h5>
+          <div className="w-full bg-primary-40 px-3 py-2 md:py-3 rounded-md">
+            <h5 className="text-line-10 text-[16px] md:text-[18px]">
+              Formulir
+            </h5>
           </div>
 
           <div className="w-full flex flex-col p-3 gap-y-5 border border-line-20 rounded-lg">
@@ -172,8 +176,8 @@ export default function ServiceRequirmentMasterDataDetailPages({
         </div>
 
         <div className="flex flex-col h-full items-center w-full verticalScroll gap-y-6">
-          <div className="w-full bg-primary-40 px-3 py-3 rounded-md">
-            <h5 className="text-line-10 text-[18px]">Dokumen</h5>
+          <div className="w-full bg-primary-40 px-3 py-2 md:py-3 rounded-md">
+            <h5 className="text-line-10 text-[16px] md:text-[18px]">Dokumen</h5>
           </div>
         </div>
 

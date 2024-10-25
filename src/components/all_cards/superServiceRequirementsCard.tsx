@@ -1,24 +1,10 @@
 "use client";
 
-// import "quill/dist/quill.snow.css";
-// import { useQuill } from "react-quilljs";
 import React, { useState } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
-import Link from "next/link";
 import { Button } from "../ui/button";
-import { AreasInterface, ServiceInterface } from "@/types/interface";
+import { ServiceInterface } from "@/types/interface";
 import { EllipsisVertical, Loader } from "lucide-react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,9 +19,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { Textarea } from "../ui/textarea";
 import { useRouter } from "next/navigation";
 
 export default function SuperServiceRequirementsCard({
@@ -63,9 +46,7 @@ export default function SuperServiceRequirementsCard({
     setIsLoadingUpdate(true);
     setTimeout(() => {
       setIsLoadingUpdate(false);
-      router.push(
-        `/super-admin/master-data/service-requirements/update/form/${item?.id}`
-      );
+      router.push(`/super-admin/master-data/service-requirements/${item?.id}`);
     }, 2000);
   };
 

@@ -167,7 +167,7 @@ export default function SuperAdminDashboardPages() {
 
   return (
     <div className="w-full flex flex-col gap-y-5 mb-24">
-      <div className="w-full h-[450px] md:h-full verticalScroll md:horizontalScroll flex flex-col md:flex-row gap-y-3 md:gap-x-5 items-center md:items-start bg-primary-40 bg-opacity-20 rounded-lg pl-3 pt-3 md:pr-3 pb-3">
+      <div className="w-full h-[450px] md:h-full verticalScroll md:horizontalScroll flex flex-col md:flex-row gap-y-3 md:gap-x-5 items-center md:items-start bg-primary-40 bg-opacity-20 rounded-lg pl-3 pt-3 pr-3 pb-3">
         {superAdmin &&
           superAdmin.countbyBidang &&
           superAdmin.countbyBidang.length > 0 &&
@@ -179,9 +179,9 @@ export default function SuperAdminDashboardPages() {
       </div>
 
       <div className="flex flex-col h-full items-center w-full gap-y-6">
-        <Tabs defaultValue="permohonan" className={`w-full flex flex-col`}>
+        <Tabs defaultValue="permohonan" className="w-full flex flex-col">
           <TabsList
-            className={`w-full bg-primary-40 p-3 rounded-full h-full flex flex-row gap-x-3 verticalScroll`}>
+            className={`w-full bg-primary-40 md:p-3 rounded-full h-full flex flex-row gap-x-1 md:gap-x-3 md:verticalScroll`}>
             <TabsTrigger
               className="w-full py-3 text-[14px] md:text-[16px] rounded-full border border-line-10 bg-opacity-20 text-line-10 data-[state=active]:border-none data-[state=active]:bg-opacity-100 data-[state=active]:bg-line-10 data-[state=active]:text-primary-40"
               value="permohonan">
@@ -201,7 +201,9 @@ export default function SuperAdminDashboardPages() {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="permohonan" className="w-full flex flex-col mt-5">
+          <TabsContent
+            value="permohonan"
+            className="w-full flex flex-col mt-0 md:mt-5">
             {superAdmin && users && services && (
               <TabsApplicationSuperAdminDashBoard
                 layananId={layananId}
@@ -225,13 +227,17 @@ export default function SuperAdminDashboardPages() {
               />
             )}
           </TabsContent>
-          <TabsContent value="pengaduan" className="w-full flex flex-col mt-5">
+          <TabsContent
+            value="pengaduan"
+            className="w-full flex flex-col mt-0 md:mt-5">
             {superAdmin && (
               <TabsComplaintSuperAdminDashBoard superAdmin={superAdmin} />
             )}
           </TabsContent>
 
-          <TabsContent value="kepuasan" className="w-full flex flex-col mt-5">
+          <TabsContent
+            value="kepuasan"
+            className="w-full flex flex-col mt-0 md:mt-5">
             {superAdmin && (
               <TabsSurveySuperAdminDashBoard superAdmin={superAdmin} />
             )}
