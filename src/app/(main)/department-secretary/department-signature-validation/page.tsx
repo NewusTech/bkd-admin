@@ -26,6 +26,7 @@ import {
 } from "@/types/interface";
 import {
   getApplicationUserHistories,
+  getDownloadApplicationExcelPrint,
   getDownloadApplicationPrint,
   getService,
 } from "@/services/api";
@@ -91,7 +92,7 @@ export default function DepartmentSecretarySignatureValidationScreen() {
   const fetchApplicationHistoryUser = async (
     page: number,
     limit: number,
-    status?: number,
+    status?: number | number[],
     search?: string,
     start_date?: string,
     end_date?: string,
@@ -129,7 +130,7 @@ export default function DepartmentSecretarySignatureValidationScreen() {
       fetchApplicationHistoryUser(
         1,
         10,
-        7,
+        6,
         debounceSearch,
         startDateFormatted,
         endDateFormatted,
@@ -141,7 +142,7 @@ export default function DepartmentSecretarySignatureValidationScreen() {
       fetchApplicationHistoryUser(
         1,
         10,
-        6,
+        5,
         debounceSearch,
         startDateFormatted,
         endDateFormatted,
@@ -149,14 +150,11 @@ export default function DepartmentSecretarySignatureValidationScreen() {
         year,
         layananId
       );
-    } else if (
-      role &&
-      (role === "Sekretaris Dinas" || role === "Super Admin")
-    ) {
+    } else if (role && role === "Super Admin") {
       fetchApplicationHistoryUser(
         1,
         10,
-        5,
+        [6, 7],
         debounceSearch,
         startDateFormatted,
         endDateFormatted,
@@ -177,17 +175,43 @@ export default function DepartmentSecretarySignatureValidationScreen() {
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchApplicationHistoryUser(
-        newPage,
-        10,
-        1,
-        "",
-        "",
-        "",
-        month,
-        year,
-        layananId
-      );
+      if (role && role === "Super Admin") {
+        fetchApplicationHistoryUser(
+          newPage,
+          10,
+          [6, 7],
+          "",
+          "",
+          "",
+          month,
+          year,
+          layananId
+        );
+      } else if (role && role === "Kepala Dinas") {
+        fetchApplicationHistoryUser(
+          newPage,
+          10,
+          5,
+          "",
+          "",
+          "",
+          month,
+          year,
+          layananId
+        );
+      } else if (role && role === "Sekretaris Dinas") {
+        fetchApplicationHistoryUser(
+          newPage,
+          10,
+          6,
+          "",
+          "",
+          "",
+          month,
+          year,
+          layananId
+        );
+      }
     }
   };
 
@@ -206,12 +230,25 @@ export default function DepartmentSecretarySignatureValidationScreen() {
   }, []);
 
   // Api PDF
-  const fetchPdf = async (id?: number) => {
-    return await getDownloadApplicationPrint(id);
+  const fetchPdf = async () => {
+    return await getDownloadApplicationPrint(
+      startDateFormatted,
+      endDateFormatted,
+      year,
+      month,
+      layananId
+    );
   };
+
   // Api Excel
-  const fetchExcel = async (id?: number) => {
-    return await getDownloadApplicationPrint(id);
+  const fetchExcel = async () => {
+    return await getDownloadApplicationExcelPrint(
+      startDateFormatted,
+      endDateFormatted,
+      year,
+      month,
+      layananId
+    );
   };
 
   return (

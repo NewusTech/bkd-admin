@@ -1111,7 +1111,7 @@ export const serviceRequirementStep2 = async (data: any) => {
 export const getApplicationUserHistories = async (
   page: number,
   limit: number,
-  status?: number,
+  status?: number | number[],
   search?: string,
   start_date?: string,
   end_date?: string,
@@ -1535,7 +1535,11 @@ export const updateSignatureLetterApplication = async (
 
 // get Application history output
 export const getDownloadApplicationPrint = async (
-  layanan_id: number | undefined
+  start_date?: string,
+  end_date?: string,
+  year?: string,
+  month?: number,
+  layanan_id?: number | undefined
 ) =>
   // bidang_id?: number,
   // layanan_id?: number,
@@ -1546,7 +1550,7 @@ export const getDownloadApplicationPrint = async (
     const token = Cookies.get("Authorization");
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/admin/document/print/application/get?${!layanan_id ? `layanan_id=${layanan_id}` : ""}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/admin/document/print/application/get?start_date=${start_date}&end_date=${end_date}&year=${year}&month=${month}&${!layanan_id ? `layanan_id=${layanan_id}` : ""}`,
       {
         method: "GET",
         headers: {
@@ -1705,7 +1709,11 @@ export const deleteBKDStructure = async (id: number) => {
 
 // get Application history output
 export const getDownloadApplicationExcelPrint = async (
-  layanan_id: number | undefined
+  start_date?: string,
+  end_date?: string,
+  year?: string,
+  month?: number,
+  layanan_id?: number | undefined
 ) =>
   // bidang_id?: number,
   // layanan_id?: number,
@@ -1716,7 +1724,7 @@ export const getDownloadApplicationExcelPrint = async (
     const token = Cookies.get("Authorization");
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/admin/document/excel/print/application/get?${!layanan_id ? `layanan_id=${layanan_id}` : ""}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/admin/document/excel/print/application/get?start_date=${start_date}&end_date=${end_date}&year=${year}&month=${month}&${!layanan_id ? `layanan_id=${layanan_id}` : ""}`,
       {
         method: "GET",
         headers: {
@@ -1866,6 +1874,43 @@ export const deleteDocDetailServiceRequirment = async (serviceId: number) => {
     `${process.env.NEXT_PUBLIC_API_URL}/user/layanan/form/delete/${serviceId}`,
     {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// update signature barcode
+export const SignatureBarcode = async (id: number) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/form/${id}/barcode`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// form detail
+export const getSignatureBarcode = async (id: number) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/form/${id}/barcode/get`,
+    {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

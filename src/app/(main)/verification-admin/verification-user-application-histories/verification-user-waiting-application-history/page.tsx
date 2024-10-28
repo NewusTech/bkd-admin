@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import VerificationUserApplicationHistoryTablePages from "@/components/tables/verification_admin_user_application_history_table";
 import {
   getApplicationUserHistories,
+  getDownloadApplicationExcelPrint,
   getDownloadApplicationPrint,
   getService,
 } from "@/services/api";
@@ -151,12 +152,24 @@ export default function VerificationUserApplicationHistoriesScreen() {
   }, []);
 
   // Api PDF
-  const fetchPdf = async (id?: number) => {
-    return await getDownloadApplicationPrint(id);
+  const fetchPdf = async () => {
+    return await getDownloadApplicationPrint(
+      startDateFormatted,
+      endDateFormatted,
+      year,
+      month,
+      layananId
+    );
   };
   // Api Excel
-  const fetchExcel = async (id?: number) => {
-    return await getDownloadApplicationPrint(id);
+  const fetchExcel = async () => {
+    return await getDownloadApplicationExcelPrint(
+      startDateFormatted,
+      endDateFormatted,
+      year,
+      month,
+      layananId
+    );
   };
 
   return (

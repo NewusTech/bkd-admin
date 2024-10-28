@@ -6,7 +6,7 @@ import revision from "@/../../public/assets/icons/admin-dashboard-revision.png";
 import failed from "@/../../public/assets/icons/admin-dashboard-reject.png";
 import dasboard from "@/../../public/assets/images/dashboard-dashboard.png";
 import Image from "next/image";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -472,15 +472,14 @@ export default function RegionalSecretaryDashboardPages() {
                     cursor={false}
                     content={<ChartTooltipContent indicator="line" />}
                   />
-                  <PolarAngleAxis dataKey="bulan" fill="#BC6D19" />
-                  <PolarGrid />
+                  <PolarAngleAxis dataKey="bulan" tick={{ fill: "#BC6D19" }} />
+                  <PolarGrid stroke="#cccccc" />
                   <Radar
                     dataKey="permohonan"
                     fill="#1947BC"
-                    // fillOpacity={0.6}
+                    stroke="#1947BC"
+                    fillOpacity={0.6}
                   />
-                  {/* {/* <Radar dataKey="ditolak" fill="#BC6D19" /> */}
-                  {/* <Radar dataKey="direvisi" fill="#4D56B7" /> */}
                   <ChartLegend
                     className="mt-8"
                     content={<ChartLegendContent />}
@@ -520,7 +519,11 @@ export default function RegionalSecretaryDashboardPages() {
                 : "Sedang Ditandatangi"}
           </p>
           <p className="text-primary-40 font-semibold text-xl md:text-4xl">
-            {data && data?.totalMenungguVerifikasi}
+            {role && role === "Sekretaris Daerah"
+              ? data?.totalMenungguTandatangan
+              : role === "Kepala Dinas"
+                ? data?.totalMenungguVerifikasi
+                : data?.totalMenungguVerifikasi}
           </p>
         </div>
 
@@ -536,7 +539,9 @@ export default function RegionalSecretaryDashboardPages() {
           </div>
           <p className="text-black-80 md:text-sm text-xs">Permohonan Selesai</p>
           <p className="text-primary-40 font-semibold text-xl md:text-4xl">
-            {data && data?.totalDisetujui}
+            {role && role === "Sekretaris Daerah"
+              ? data?.totalDitandatangan
+              : data?.totalDisetujui}
           </p>
         </div>
 
@@ -656,8 +661,7 @@ export default function RegionalSecretaryDashboardPages() {
           </div>
         )}
 
-        {/* <div className="w-full">{users.length === 0 && <DataNotFound />}</div> */}
-        <div className="w-full">{users === undefined && <DataNotFound />}</div>
+        <div className="w-full">{users.length === 0 && <DataNotFound />}</div>
       </div>
     </div>
   );

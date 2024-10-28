@@ -163,12 +163,24 @@ export default function VerificationUserRevisionApplicationHistoriesScreen() {
   }, []);
 
   // Api PDF
-  const fetchPdf = async (id: number) => {
-    return await getDownloadApplicationPrint(id);
+  const fetchPdf = async () => {
+    return await getDownloadApplicationPrint(
+      startDateFormatted,
+      endDateFormatted,
+      year,
+      month,
+      layananId
+    );
   };
   // Api Excel
-  const fetchExcel = async (id: number) => {
-    return await getDownloadApplicationPrint(id);
+  const fetchExcel = async () => {
+    return await getDownloadApplicationPrint(
+      startDateFormatted,
+      endDateFormatted,
+      year,
+      month,
+      layananId
+    );
   };
 
   return (

@@ -216,18 +216,33 @@ export default function DivisionVerificationAdminDashboardPages() {
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchApplicationHistoryUser(
-        newPage,
-        10,
-        1,
-        "",
-        "",
-        "",
-        month,
-        year,
-        layananId,
-        areaId
-      );
+      if (role && role === "Admin Verifikasi") {
+        fetchApplicationHistoryUser(
+          newPage,
+          10,
+          1,
+          "",
+          "",
+          "",
+          month,
+          year,
+          layananId,
+          areaId
+        );
+      } else if (role && role === "Kepala Bidang") {
+        fetchApplicationHistoryUser(
+          newPage,
+          10,
+          2,
+          "",
+          "",
+          "",
+          month,
+          year,
+          layananId,
+          areaId
+        );
+      }
     }
   };
 
@@ -274,49 +289,10 @@ export default function DivisionVerificationAdminDashboardPages() {
     };
   });
 
-  // const chartDataBar = [
-  //   {
-  //     service: "Layanan Mutasi PNS",
-  //     device: 300,
-  //     perangkat: 80,
-  //     fill: "#1947BC",
-  //   },
-  //   {
-  //     service: "Layanan Kenaikan",
-  //     device: 305,
-  //     perangkat: 80,
-  //     fill: "#BC6D19",
-  //   },
-  //   { service: "Layanan Pensiun", device: 237, perangkat: 80, fill: "#D51C7F" },
-  //   { service: "Layanan Cuti PNS", device: 73, perangkat: 80, fill: "#4D56B7" },
-  // ];
-
   const chartConfigBar = {
     layanan: {
       label: "Layanan",
     },
-    // device: {
-    //   label: "Device",
-    // },
-    // perangkat: {
-    //   label: "Perangkat",
-    // },
-    // laptop: {
-    //   label: "Laptop",
-    //   color: "#1947BC",
-    // },
-    // mobile: {
-    //   label: "Mobile",
-    //   color: "#BC6D19",
-    // },
-    // tab: {
-    //   label: "Tab",
-    //   color: "#D51C7F",
-    // },
-    // iphone: {
-    //   label: "Iphone",
-    //   color: "#4D56B7",
-    // },
   } satisfies ChartConfig;
 
   const chartConfigPie = {
@@ -324,80 +300,6 @@ export default function DivisionVerificationAdminDashboardPages() {
       label: "Visitors",
     },
   } satisfies ChartConfig;
-
-  // const chartDataPie = data?.monthlyCounts?.map((item) => {
-  //   console.log(item?.permohonanCount, "ini permohonancount");
-
-  //   return {
-  //     bulan: item?.month,
-  //     permohonan: item?.permohonanCount,
-  //     fill: "#1947BC",
-  //   };
-  // });
-
-  // const chartDataPie = useMemo(
-  //   () => [
-  //     { browser: "chrome", visitors: 275, fill: "#1947BC" },
-  //     { browser: "safari", visitors: 200, fill: "#1947BC" },
-  //     { browser: "firefox", visitors: 287, fill: "#BC6D19" },
-  //     { browser: "edge", visitors: 173, fill: "#D51C7F" },
-  //     { browser: "other", visitors: 190, fill: "#4D56B7" },
-  //   ],
-  //   []
-  // );
-
-  // const chartConfigLegend = {
-  //   permohonan: {
-  //     label: "Permohonan",
-  //     color: "#1947BC",
-  //   },
-  //   // selesai: {
-  //   //   label: "Selesai",
-  //   //   color: "#1947BC",
-  //   // },
-  //   // ditolak: {
-  //   //   label: "Ditolak",
-  //   //   color: "#D51C7F",
-  //   // },
-  //   // direvisi: {
-  //   //   label: "Direvisi",
-  //   //   color: "#BC6D19",
-  //   // },
-  //   // edge: {
-  //   //   label: "Edge",
-  //   //   color: "#D51C7F",
-  //   // },
-  //   // other: {
-  //   //   label: "Other",
-  //   //   color: "#4D56B7",
-  //   // },
-  // } satisfies ChartConfig;
-
-  // const chartConfigPie = {
-  //   visitors: {
-  //     label: "Visitors",
-  //   },
-  //   chrome: {
-  //     label: "Chrome",
-  //     color: "#1947BC",
-  //   },
-  //   safari: {
-  //     label: "Safari",
-  //     color: "#1947BC",
-  //   },
-  //   firefox: {
-  //     label: "Firefox",
-  //     color: "#BC6D19",
-  //   },
-  //   edge: {
-  //     label: "Edge",
-  //     color: "#D51C7F",
-  //   },
-  //   other: {
-  //     label: "Other",
-  //     color: "#4D56B7",
-  //   },
-  // } satisfies ChartConfig;
 
   const chartDataPie = useMemo(
     () => [
@@ -427,26 +329,6 @@ export default function DivisionVerificationAdminDashboardPages() {
       label: "Permohonan",
       color: "#1947BC",
     },
-    // selesai: {
-    //   label: "Selesai",
-    //   color: "#1947BC",
-    // },
-    // ditolak: {
-    //   label: "Ditolak",
-    //   color: "#D51C7F",
-    // },
-    // direvisi: {
-    //   label: "Direvisi",
-    //   color: "#BC6D19",
-    // },
-    // edge: {
-    //   label: "Edge",
-    //   color: "#D51C7F",
-    // },
-    // other: {
-    //   label: "Other",
-    //   color: "#4D56B7",
-    // },
   } satisfies ChartConfig;
 
   return (
@@ -495,7 +377,6 @@ export default function DivisionVerificationAdminDashboardPages() {
                     <CardTitle className="text-sm md:text-[16px] font-normal">
                       Jumlah Keseluruhan Pengajuan
                     </CardTitle>
-                    {/* <CardDescription>Bidang Pengadaan</CardDescription> */}
                   </div>
                   <div className="w-full h-0.5 bg-line-20"></div>
                   <div className="w-full flex flex-row justify-center items-center gap-x-4">
@@ -516,7 +397,6 @@ export default function DivisionVerificationAdminDashboardPages() {
                     margin={{
                       right: 16,
                     }}>
-                    {/* <CartesianGrid horizontal={false} /> */}
                     <YAxis
                       dataKey="nama"
                       type="category"
@@ -534,16 +414,6 @@ export default function DivisionVerificationAdminDashboardPages() {
                       tickMargin={10}
                       axisLine={false}
                     />
-                    {/* <YAxis
-                    dataKey="service"
-                    type="category"
-                    tickLine={false}
-                    tickMargin={10}
-                    axisLine={false}
-                    // tickFormatter={(value) => value.slice(0, 3)}
-                    hide
-                  />
-                  <XAxis dataKey="device" type="number" hide /> */}
                     <ChartTooltip
                       cursor={false}
                       content={<ChartTooltipContent indicator="line" />}
@@ -580,7 +450,6 @@ export default function DivisionVerificationAdminDashboardPages() {
                     <CardTitle className="text-sm md:text-[16px] font-normal">
                       Jumlah Keseluruhan Pengajuan
                     </CardTitle>
-                    {/* <CardDescription>Bidang Pengadaan</CardDescription> */}
                   </div>
                   <div className="w-full h-0.5 bg-line-20"></div>
                   <div className="w-full flex flex-row justify-center items-center gap-x-4">
@@ -602,7 +471,6 @@ export default function DivisionVerificationAdminDashboardPages() {
                     margin={{
                       right: 16,
                     }}>
-                    {/* <CartesianGrid horizontal={false} /> */}
                     <YAxis
                       dataKey="nama"
                       type="category"
@@ -620,16 +488,6 @@ export default function DivisionVerificationAdminDashboardPages() {
                       tickMargin={10}
                       axisLine={false}
                     />
-                    {/* <YAxis
-                    dataKey="service"
-                    type="category"
-                    tickLine={false}
-                    tickMargin={10}
-                    axisLine={false}
-                    // tickFormatter={(value) => value.slice(0, 3)}
-                    hide
-                  />
-                  <XAxis dataKey="device" type="number" hide /> */}
                     <ChartTooltip
                       cursor={false}
                       content={<ChartTooltipContent indicator="line" />}
@@ -748,18 +606,11 @@ export default function DivisionVerificationAdminDashboardPages() {
                 </ChartContainer>
               </CardContent>
               <CardFooter className="flex-col gap-2 text-sm">
-                {/* <div className="flex items-center gap-2 font-medium leading-none">
-                Trending up by 5.2% this month{" "}
-                <TrendingUp className="h-4 w-4" />
-              </div>
-              <div className="leading-none text-muted-foreground">
-                Showing total visitors for the last 6 months
-              </div> */}
                 <div className="flex">
                   <div className="border-[##E4E4E7] border-t-4 border-r-4 p-4">
                     <div className="div">Menunggu</div>
                     <div className="text-center text-[#3572EF]">
-                      {data?.totalMenunggu}
+                      {data?.totalMenungguVerifikasi}
                     </div>
                   </div>
                   <div className="border-[##E4E4E7] border-t-4 border-r-4 p-4">
@@ -865,13 +716,6 @@ export default function DivisionVerificationAdminDashboardPages() {
                 </ChartContainer>
               </CardContent>
               <CardFooter className="flex-col gap-2 text-sm">
-                {/* <div className="flex items-center gap-2 font-medium leading-none">
-                Trending up by 5.2% this month{" "}
-                <TrendingUp className="h-4 w-4" />
-              </div>
-              <div className="leading-none text-muted-foreground">
-                Showing total visitors for the last 6 months
-              </div> */}
                 <div className="flex">
                   <div className="border-[##E4E4E7] border-t-4 border-r-4 p-4">
                     <div className="div">Menunggu</div>
@@ -909,9 +753,9 @@ export default function DivisionVerificationAdminDashboardPages() {
               className="w-1/2 h-1/2 md:w-full md:h-full flex justify-center m-auto"
             />
           </div>
-          <p className="text-black-80 md:text-sm text-xs">Sedang Divalidasi</p>
+          <p className="text-black-80 md:text-sm text-xs">Sedang Diproses</p>
           <p className="text-primary-40 font-semibold text-xl md:text-4xl">
-            {data && data?.totalMenunggu}
+            {data && data?.totalMenungguVerifikasi}
           </p>
         </div>
 
@@ -1081,7 +925,6 @@ export default function DivisionVerificationAdminDashboardPages() {
         )}
 
         <div className="w-full">{users.length === 0 && <DataNotFound />}</div>
-        {/* <div className="w-full">{users === undefined && <DataNotFound />}</div> */}
       </div>
     </div>
   );

@@ -138,7 +138,7 @@ export default function TabsApplicationSuperAdminDashBoard({
         </div>
 
         <div className="w-full bg-line-10 rounded-lg shadow-md p-5">
-          <Card className="flex flex-col px-3 gap-y-3 p-3">
+          <Card className="flex flex-col px-3 gap-y-3 p-3 border-none">
             <CardHeader className="w-full flex flex-col items-start pb-0 p-0">
               <CardDescription className="md:text-[16px] font-light">
                 Statistik Pegawai Per Bidang

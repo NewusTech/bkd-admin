@@ -81,13 +81,32 @@ export default function HeadUserApplicationHistoryDetailScreen({
     setIsLoading(true);
 
     try {
-      const response = await updateUserApplicationHistoryDetail(
-        {
-          ...data,
-          status: 5,
-        },
-        id
-      );
+      let response: any;
+      if (role && role === "Super Admin") {
+        response = await updateUserApplicationHistoryDetail(
+          {
+            ...data,
+            status: 7,
+          },
+          id
+        );
+      } else if (role && role === "Kepala Bidang") {
+        response = await updateUserApplicationHistoryDetail(
+          {
+            ...data,
+            status: 5,
+          },
+          id
+        );
+      } else if (role && role === "Sekretaris Dinas") {
+        response = await updateUserApplicationHistoryDetail(
+          {
+            ...data,
+            status: 6,
+          },
+          id
+        );
+      }
 
       if (response.status === 200) {
         setData({
@@ -103,7 +122,10 @@ export default function HeadUserApplicationHistoryDetailScreen({
         });
         if (role && role === "Super Admin") {
           router.push(`/department-secretary/department-signature-validation`);
-        } else if (role && role === "Kepala Bidang") {
+        } else if (
+          role &&
+          (role === "Kepala Bidang" || role === "Sekretaris Dinas")
+        ) {
           router.push(`/areas-head/head-manage-approvals`);
         }
       } else {
