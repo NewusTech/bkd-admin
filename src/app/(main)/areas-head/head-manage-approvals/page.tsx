@@ -1,20 +1,8 @@
 "use client";
 
-import DatePages from "@/components/elements/date";
-import SearchPages from "@/components/elements/search";
 import { formatDate, getLast10Years } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Checks, Printer } from "@phosphor-icons/react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { Button } from "@/components/ui/button";
-import FilterDataPages from "@/components/elements/data_filters";
 import VerificationAdminManageApprovalsTablePages from "@/components/tables/head_manage_approvals_table";
 import {
   JwtPayload,
@@ -23,6 +11,8 @@ import {
 } from "@/types/interface";
 import {
   getApplicationUserHistories,
+  getDownloadApplicationExcelPrint,
+  getDownloadApplicationPrint,
   getDownloadUserComplaintPrint,
   getService,
 } from "@/services/api";
@@ -33,7 +23,6 @@ import { useRouter } from "next/navigation";
 import MobileHeadManageApprovalCard from "@/components/mobile_all_cards/mobileHeadManageApprovalCard";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
-import UnduhMenus from "@/components/ui/UnduhMenus";
 import HistoryApplicationMobileFilter from "@/components/elements/filters/mobile/historyApplicationMobileFilter";
 import HistoryApplicationFilter from "@/components/elements/filters/website/historyApplicationFilter";
 
@@ -91,7 +80,7 @@ export default function HeadManageApprovalsScreen() {
   const fetchApplicationHistoryUser = async (
     page: number,
     limit: number,
-    status?: number,
+    status?: number | number[],
     search?: string,
     start_date?: string,
     end_date?: string,
@@ -125,14 +114,35 @@ export default function HeadManageApprovalsScreen() {
   };
 
   useEffect(() => {
-    if (
-      role &&
-      (role === "Super Admin" || (role && role === "Kepala Bidang"))
-    ) {
+    if (role && role === "Kepala Bidang") {
       fetchApplicationHistoryUser(
         1,
         10,
         2,
+        debounceSearch,
+        startDateFormatted,
+        endDateFormatted,
+        month,
+        year,
+        layananId
+      );
+    } else if (role === "Sekretaris Dinas") {
+      fetchApplicationHistoryUser(
+        1,
+        10,
+        5,
+        debounceSearch,
+        startDateFormatted,
+        endDateFormatted,
+        month,
+        year,
+        layananId
+      );
+    } else if (role === "Super Admin") {
+      fetchApplicationHistoryUser(
+        1,
+        10,
+        [2, 5],
         debounceSearch,
         startDateFormatted,
         endDateFormatted,
@@ -153,17 +163,43 @@ export default function HeadManageApprovalsScreen() {
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== pagination.currentPage) {
-      fetchApplicationHistoryUser(
-        newPage,
-        10,
-        7,
-        "",
-        "",
-        "",
-        month,
-        year,
-        layananId
-      );
+      if (role && role === "Super Admin") {
+        fetchApplicationHistoryUser(
+          newPage,
+          10,
+          [2, 5],
+          "",
+          "",
+          "",
+          month,
+          year,
+          layananId
+        );
+      } else if (role && role === "Sekretaris Dinas") {
+        fetchApplicationHistoryUser(
+          newPage,
+          10,
+          5,
+          "",
+          "",
+          "",
+          month,
+          year,
+          layananId
+        );
+      } else if (role && role === "Kepala Bidang") {
+        fetchApplicationHistoryUser(
+          newPage,
+          10,
+          2,
+          "",
+          "",
+          "",
+          month,
+          year,
+          layananId
+        );
+      }
     }
   };
 
@@ -183,11 +219,23 @@ export default function HeadManageApprovalsScreen() {
 
   // Api PDF
   const fetchPdf = async () => {
-    return await getDownloadUserComplaintPrint();
+    return await getDownloadApplicationPrint(
+      startDateFormatted,
+      endDateFormatted,
+      year,
+      month,
+      layananId
+    );
   };
   // Api Excel
   const fetchExcel = async () => {
-    return await getDownloadUserComplaintPrint();
+    return await getDownloadApplicationExcelPrint(
+      startDateFormatted,
+      endDateFormatted,
+      year,
+      month,
+      layananId
+    );
   };
 
   return (

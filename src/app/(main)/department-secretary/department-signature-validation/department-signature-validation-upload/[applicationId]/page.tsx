@@ -20,10 +20,16 @@ import ReactSignatureCanvas from "react-signature-canvas";
 import {
   getApplicationDocumentOutput,
   getOutputLetterDetail,
+  getSignatureBarcode,
+  SignatureBarcode,
   updateSignatureLetterApplication,
   updateUserApplicationHistoryDetail,
 } from "@/services/api";
-import { JwtPayload, OutputLetterDetailInterface } from "@/types/interface";
+import {
+  JwtPayload,
+  OutputLetterDetailInterface,
+  SignatureBarcodeInterface,
+} from "@/types/interface";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
@@ -38,6 +44,8 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [role, setRole] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingNext, setIsLoadingNext] = useState(false);
+  const [isLoadingBarcode, setIsLoadingBarcode] = useState(false);
   const [signatureData, setSignatureData] = useState<string | null>(null);
   const [isSigned, setIsSigned] = useState(false);
   const [pdfFile, setPdfFile] = useState<File | null>(null);
@@ -50,6 +58,7 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
     status: 8,
     pesan: "",
   });
+  const [sign, setSign] = useState<string | null>("");
   const [output, setOutput] = useState<OutputLetterDetailInterface>();
   const [previewFile, setPreviewFile] = useState<string>("");
 
@@ -264,6 +273,51 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
     setData({ ...data, sign: "" });
   };
 
+  const handleSignature = async (
+    e: React.FormEvent<HTMLFormElement>,
+    id: number
+  ) => {
+    e.preventDefault();
+    setIsLoadingBarcode(true);
+    try {
+      const response = await SignatureBarcode(id);
+
+      console.log(response, "ini response");
+
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil Generate Barcode!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+        setSign(response?.data?.sign);
+        setIsLoadingBarcode(false);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal Generate Barcode!",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "center",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoadingBarcode(false);
+    }
+  };
+
+  const handleNext = async () => {
+    setIsLoadingNext(true);
+    setTimeout(() => {
+      setIsLoadingNext(false);
+      router.push("/department-secretary/department-signature-validation");
+    }, 3000);
+  };
+
   return (
     <section className="w-full flex flex-col px-5">
       <div className="w-full flex flex-col items-center p-5 mt-5 gap-y-8 bg-line-10 rounded-lg shadow-md">
@@ -316,11 +370,16 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
                         value="upload">
                         Upload
                       </TabsTrigger>
-                      <div className="w-4/12">
+                      <TabsTrigger
+                        className="w-full text-[14px] md:text-[16px] text-primary-40 border border-primary-40 bg-line-10 py-2 rounded-lg data-[state=active]:bg-primary-40 data-[state=active]:text-line-10"
+                        value="digital">
+                        Digital Signature
+                      </TabsTrigger>
+                      {/* <div className="w-4/12">
                         <Button className="w-full text-[14px] md:text-[16px] bg-secondary-40 hover:bg-secondary-70 text-line-10">
                           Digital Signature
                         </Button>
-                      </div>
+                      </div> */}
                     </TabsList>
 
                     <TabsContent value="image" className="w-full">
@@ -441,6 +500,50 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
                           </Button>
                         </div>
                       </form>
+                    </TabsContent>
+
+                    <TabsContent value="digital" className="w-full">
+                      <form className="flex flex-col w-full">
+                        <div className="flex flex-col w-full md:h-[150px] border border-line-20 rounded-lg mt-2 px-4">
+                          {sign && (
+                            <Image
+                              src={sign}
+                              alt="Digital Signature"
+                              width={1000}
+                              height={1000}
+                              className="w-full h-full object-contain"
+                            />
+                          )}
+                        </div>
+                        <div className="flex justify-center items-end self-end w-4/12 md:self-start md:mt-2">
+                          <Button
+                            onClick={(e: any) =>
+                              handleSignature(e, params?.applicationId)
+                            }
+                            className="w-full bg-secondary-40 hover:bg-secondary-50 text-neutral-50 h-[30px] md:h-[40px] text-[14px] md:text-[16px]"
+                            type="submit"
+                            disabled={isLoadingBarcode}>
+                            {isLoadingBarcode ? (
+                              <Loader className="animate-spin" />
+                            ) : (
+                              "Generate Barcode"
+                            )}
+                          </Button>
+                        </div>
+                      </form>
+
+                      <div className="flex justify-center items-end self-end w-full md:self-center my-4 md:pb-[30px] mt-4 pr-2 md:pr-0">
+                        <Button
+                          className="w-full bg-primary-40 hover:bg-primary-70 text-neutral-50 h-[30px] md:h-[40px] text-[14px] md:text-[16px]"
+                          onClick={handleNext}
+                          disabled={isLoadingNext}>
+                          {isLoadingNext ? (
+                            <Loader className="animate-spin" />
+                          ) : (
+                            "Tanda Tangan"
+                          )}
+                        </Button>
+                      </div>
                     </TabsContent>
                   </Tabs>
                 </div>

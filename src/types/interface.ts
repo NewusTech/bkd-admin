@@ -617,6 +617,8 @@ export interface SuperAdminDashboardInterface {
   totalDitolak: number;
   totalDirevisi: number;
   totalKeseluruhanPermohonan: number;
+  totalMenungguTandatangan: number;
+  totalDitandatangan: number;
 }
 
 export interface GradeInterface {
@@ -692,6 +694,10 @@ export interface OutputLetterDetailInterface {
   Layanan: OutputLetterDetailServiceInterface;
   fileoutput: ZodStringCheck;
   id: LargeNumberLike;
+}
+
+export interface SignatureBarcodeInterface {
+  sign: string;
 }
 
 export interface HistoryApplicationFilterInterface {

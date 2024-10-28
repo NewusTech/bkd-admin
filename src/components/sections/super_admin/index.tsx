@@ -158,11 +158,23 @@ export default function SuperAdminDashboardPages() {
 
   // Api PDF
   const fetchPdf = async () => {
-    return await getDownloadApplicationPrint(layananId);
+    return await getDownloadApplicationPrint(
+      startDateFormatted,
+      endDateFormatted,
+      year,
+      month,
+      layananId
+    );
   };
   // Api Excel
   const fetchExcel = async () => {
-    return await getDownloadApplicationExcelPrint(layananId);
+    return await getDownloadApplicationExcelPrint(
+      startDateFormatted,
+      endDateFormatted,
+      year,
+      month,
+      layananId
+    );
   };
 
   return (

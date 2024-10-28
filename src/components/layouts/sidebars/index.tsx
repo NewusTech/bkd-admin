@@ -483,13 +483,11 @@ export default function DashBoardSidebarPages() {
 
               <div className="w-full flex flex-col gap-y-4">
                 <div
-                  className={`${pathName === "/department-secretary/department-signature-validation" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-detail" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-upload" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/areas-head/head-manage-approvals" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
                   <Link
-                    href={
-                      "/department-secretary/department-signature-validation"
-                    }
+                    href={"/areas-head/head-manage-approvals"}
                     className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
-                    Pengesahan Tanda Tangan
+                    Kelola Persetujuan
                   </Link>
                 </div>
 
