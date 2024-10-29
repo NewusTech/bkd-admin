@@ -31,18 +31,22 @@ import MobileDivisionVerificationAdminApplicationHistoryCard from "@/components/
 import VerificationUserApplicationHistoryTablePages from "@/components/tables/verification_admin_user_application_history_table";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import {
+  SatisfactionFeedbackInterface,
   SuperAdminDashboardInterface,
   SuperAdminDashboardServiceInterface,
   TabsApplicationSuperAdminDashBoardInterface,
   UserApplicationHistoryInterface,
+  VerificationAdminAreasDataInterface,
 } from "@/types/interface";
 import React from "react";
 import { ProgressBar } from "@/components/elements/progress_bars";
 
 export default function TabsSurveySuperAdminDashBoard({
   superAdmin,
+  role,
 }: {
   superAdmin: SuperAdminDashboardInterface;
+  role: string | null;
 }) {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -57,18 +61,56 @@ export default function TabsSurveySuperAdminDashBoard({
           </div>
 
           <div>
-            {superAdmin &&
-              superAdmin.countbyLayanan?.map(
-                (item: SuperAdminDashboardServiceInterface, i: number) => {
-                  return (
-                    <ProgressBar
-                      key={i}
-                      name={item?.layanan_name}
-                      value={item?.totalFeedback}
-                    />
-                  );
-                }
-              )}
+            {role && role === "Super Admin" && (
+              <>
+                {superAdmin &&
+                  superAdmin.countbyLayanan?.map(
+                    (item: SuperAdminDashboardServiceInterface, i: number) => {
+                      return (
+                        <ProgressBar
+                          key={i}
+                          name={item?.layanan_name}
+                          value={item?.totalFeedback}
+                        />
+                      );
+                    }
+                  )}
+              </>
+            )}
+
+            {role && role === "Admin Verifikasi" && (
+              <>
+                {superAdmin &&
+                  superAdmin.allFeedbackData?.map(
+                    (item: SatisfactionFeedbackInterface, i: number) => {
+                      return (
+                        <ProgressBar
+                          key={i}
+                          name={item?.LayananName}
+                          value={item?.TotalFeedback}
+                        />
+                      );
+                    }
+                  )}
+              </>
+            )}
+
+            {role && role === "Kepala Bidang" && (
+              <>
+                {superAdmin &&
+                  superAdmin.allUserFeedback?.map(
+                    (item: SatisfactionFeedbackInterface, i: number) => {
+                      return (
+                        <ProgressBar
+                          key={i}
+                          name={item?.LayananName}
+                          value={item?.TotalFeedback}
+                        />
+                      );
+                    }
+                  )}
+              </>
+            )}
           </div>
         </div>
       </div>
