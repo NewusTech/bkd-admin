@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import DatePages from "../../date";
-import { months } from "@/constants/main";
+import { months, statusApps } from "@/constants/main";
 import SearchPages from "../../search";
 import {
   HistoryApplicationFilterInterface,
@@ -33,6 +33,9 @@ export default function HistoryApplicationFilter({
   setMonth,
   years,
   setYear,
+  status,
+  setStatus,
+  keys,
 }: HistoryApplicationFilterInterface) {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -72,6 +75,44 @@ export default function HistoryApplicationFilter({
             </SelectContent>
           </Select>
         </div>
+
+        {keys === true && (
+          <div className="flex items-center w-full h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
+            <Select
+              onValueChange={(value) =>
+                setStatus &&
+                setStatus(value === "all" ? undefined : Number(value))
+              }>
+              <SelectTrigger
+                className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                <SelectValue
+                  placeholder="Pilih Status"
+                  className="text-black-80 tex-[14px] w-full"
+                />
+              </SelectTrigger>
+              <SelectContent className="bg-line-10">
+                <div className="pt-2">
+                  <SelectItem className="w-full px-4" value="all">
+                    Semua Status
+                  </SelectItem>
+                  {statusApps &&
+                    statusApps.map(
+                      (item: { id: number; name: string }, i: number) => {
+                        return (
+                          <SelectItem
+                            key={i}
+                            className={`w-full px-4`}
+                            value={item.id.toString()}>
+                            {item?.name}
+                          </SelectItem>
+                        );
+                      }
+                    )}
+                </div>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
 
         <div className="w-full">
           <SearchPages

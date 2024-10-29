@@ -97,39 +97,60 @@ export default function TabsApplicationVerificationAdminDashBoard({
     },
   } satisfies ChartConfig;
 
+  let chartDataPie: any;
+  if (role === "Kepala Bidang") {
+    chartDataPie = [
+      {
+        permohonan: "Menunggu",
+        totals: superAdmin?.totalMenungguVerifikasi,
+        fill: "#1947BC",
+      },
+      {
+        permohonan: "Selesai",
+        totals: superAdmin?.totalDisetujui,
+        fill: "#1947BC",
+      },
+      {
+        permohonan: "Ditolak",
+        totals: superAdmin?.totalDitolak,
+        fill: "#BC6D19",
+      },
+    ];
+  } else if (role === "Admin Verifikasi") {
+    chartDataPie = [
+      {
+        permohonan: "Menunggu",
+        totals: superAdmin?.totalMenunggu,
+        fill: "#1947BC",
+      },
+      {
+        permohonan: "Selesai",
+        totals: superAdmin?.totalDisetujui,
+        fill: "#1947BC",
+      },
+      {
+        permohonan: "Ditolak",
+        totals: superAdmin?.totalDitolak,
+        fill: "#BC6D19",
+      },
+    ];
+  }
+
   const chartConfigPie = {
-    visitors: {
-      label: "Visitors",
+    totals: {
+      label: "Total",
     },
-  } satisfies ChartConfig;
-
-  const chartDataPie = useMemo(
-    () => [
-      { browser: "chrome", visitors: 275, fill: "#1947BC" },
-      { browser: "safari", visitors: 200, fill: "#1947BC" },
-      { browser: "firefox", visitors: 287, fill: "#BC6D19" },
-      { browser: "edge", visitors: 173, fill: "#D51C7F" },
-      { browser: "other", visitors: 190, fill: "#4D56B7" },
-    ],
-    []
-  );
-
-  const totalVisitors = useMemo(() => {
-    return chartDataPie?.reduce((acc, curr) => acc + curr.visitors, 0);
-  }, [chartDataPie]);
-
-  const chartDataLegend = superAdmin?.monthlyCounts?.map((item) => {
-    return {
-      bulan: item?.month,
-      permohonan: item?.permohonanCount,
-      fill: "#1947BC",
-    };
-  });
-
-  const chartConfigLegend = {
-    permohonan: {
-      label: "Permohonan",
+    Menunggu: {
+      label: "Menunggu",
       color: "#1947BC",
+    },
+    Selesai: {
+      label: "Selesai",
+      color: "#1947BC",
+    },
+    Ditolak: {
+      label: "Ditolak",
+      color: "#BC6D19",
     },
   } satisfies ChartConfig;
 
@@ -288,44 +309,10 @@ export default function TabsApplicationVerificationAdminDashBoard({
 
           {user && user?.role_name && user.role_name === "Kepala Bidang" ? (
             <Card className="bg-line-10 shadow-md rounded-lg border-none px-4 md:w-5/12 w-full">
-              <div className="w-full flex flex-row justify-between items-center p-3">
-                <CardTitle className="text-sm md:text-[16px] font-normal">
+              <div className="w-full flex flex-row justify-center items-center p-5">
+                <CardTitle className="text-sm md:text-[16px] text-center font-normal">
                   Grafik Status
                 </CardTitle>
-                <div className="flex items-center w-5/12 justify-between">
-                  <Select
-                  // onValueChange={handleSelectStatusChange}
-                  >
-                    <SelectTrigger
-                      className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-                      {/* <Checks className="w-6 h-6 text-black-80" /> */}
-                      <SelectValue
-                        placeholder="Sort By"
-                        className="text-black-80 w-full"
-                      />
-                    </SelectTrigger>
-                    <SelectContent className="bg-line-10">
-                      <div className="pt-2">
-                        {/* {statusDatas &&
-                  statusDatas.map(
-                    (status: { id: number; value: string }, i: number) => {
-                      return (
-                        <SelectItem
-                          key={i}
-                          className={`w-full px-4`}
-                          value={status.id.toString()}>
-                          {status.value}
-                        </SelectItem>
-                      );
-                    }
-                  )} */}
-                        <SelectItem className="w-full px-4 pl-8" value="1">
-                          Hello World
-                        </SelectItem>
-                      </div>
-                    </SelectContent>
-                  </Select>
-                </div>
               </div>
               <div className="w-full h-0.5 bg-line-20"></div>
               <CardContent className="flex-1 pb-0">
@@ -339,8 +326,8 @@ export default function TabsApplicationVerificationAdminDashBoard({
                     />
                     <Pie
                       data={chartDataPie}
-                      dataKey="visitors"
-                      nameKey="browser"
+                      dataKey="totals"
+                      nameKey="permohonan"
                       innerRadius={60}
                       strokeWidth={5}>
                       <Label
@@ -362,7 +349,7 @@ export default function TabsApplicationVerificationAdminDashBoard({
                                   x={viewBox.cx}
                                   y={(viewBox.cy || 0) + 24}
                                   className="fill-muted-foreground">
-                                  Visitors
+                                  Total
                                 </tspan>
                               </text>
                             );
@@ -404,44 +391,10 @@ export default function TabsApplicationVerificationAdminDashBoard({
             </Card>
           ) : (
             <Card className="bg-line-10 shadow-md rounded-lg border-none px-4 md:w-5/12 w-full">
-              <div className="w-full flex flex-row justify-between items-center p-3">
-                <CardTitle className="text-sm md:text-[16px] font-normal">
+              <div className="w-full flex flex-row justify-center items-center p-5">
+                <CardTitle className="text-sm text-center md:text-[16px] font-normal">
                   Grafik Status
                 </CardTitle>
-                <div className="flex items-center w-5/12 justify-between">
-                  <Select
-                  // onValueChange={handleSelectStatusChange}
-                  >
-                    <SelectTrigger
-                      className={`w-full gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
-                      {/* <Checks className="w-6 h-6 text-black-80" /> */}
-                      <SelectValue
-                        placeholder="Sort By"
-                        className="text-black-80 w-full"
-                      />
-                    </SelectTrigger>
-                    <SelectContent className="bg-line-10">
-                      <div className="pt-2">
-                        {/* {statusDatas &&
-                  statusDatas.map(
-                    (status: { id: number; value: string }, i: number) => {
-                      return (
-                        <SelectItem
-                          key={i}
-                          className={`w-full px-4`}
-                          value={status.id.toString()}>
-                          {status.value}
-                        </SelectItem>
-                      );
-                    }
-                  )} */}
-                        <SelectItem className="w-full px-4 pl-8" value="1">
-                          Hello World
-                        </SelectItem>
-                      </div>
-                    </SelectContent>
-                  </Select>
-                </div>
               </div>
               <div className="w-full h-0.5 bg-line-20"></div>
               <CardContent className="flex-1 pb-0">
@@ -455,8 +408,8 @@ export default function TabsApplicationVerificationAdminDashBoard({
                     />
                     <Pie
                       data={chartDataPie}
-                      dataKey="visitors"
-                      nameKey="browser"
+                      dataKey="totals"
+                      nameKey="permohonan"
                       innerRadius={60}
                       strokeWidth={5}>
                       <Label

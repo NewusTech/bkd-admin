@@ -282,8 +282,6 @@ export default function DepartmentSecretarySignatureValidationUploadScreen({
     try {
       const response = await SignatureBarcode(id);
 
-      console.log(response, "ini response");
-
       if (response.status === 200) {
         Swal.fire({
           icon: "success",

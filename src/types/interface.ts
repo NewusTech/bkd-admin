@@ -566,8 +566,18 @@ export interface SuperAdminDashboardMonthInterface {
   permohonanCount: number;
 }
 
+export interface SatisfactionComplaintInterface {
+  id: number;
+  name: string;
+  nilai_feedback: string;
+  total_feedback: number;
+  total_pengaduan: number;
+  total_permohonan: number;
+}
+
 export interface SuperAdminDashboardAreasInterface {
   id: number;
+  layanans: SatisfactionComplaintInterface[];
   name: string;
   permohonan_count: number;
 }
@@ -576,6 +586,7 @@ export interface VericationAdminInterface {
   LayananId: number;
   LayananName: string;
   LayananformnumCount: number;
+  TotalPengaduan: number;
 }
 
 export interface SuperAdminDashboardServiceInterface {
@@ -724,6 +735,9 @@ export interface HistoryApplicationFilterInterface {
   setMonth: (value?: number) => void;
   years: { id: number; value: string }[];
   setYear: (value?: string) => void;
+  status?: number | undefined;
+  setStatus?: (value?: number | undefined) => void;
+  keys?: boolean;
 }
 
 export interface HistoryUserComplaintFilterInterface {

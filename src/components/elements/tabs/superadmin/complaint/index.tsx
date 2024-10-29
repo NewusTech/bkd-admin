@@ -207,12 +207,30 @@ export default function TabsComplaintSuperAdminDashBoard({
     return await getDownloadUserComplaintExcelPrint();
   };
 
-  const chartData = superAdmin?.countbyLayanan?.map((item, index) => {
-    return {
-      nama: item?.layanan_name,
-      jumlah: item?.pengaduanCount,
-    };
-  });
+  let chartData;
+
+  if (role === "Kepala Bidang" || role === "Admin Verifikasi") {
+    chartData = superAdmin?.allLayananMonth?.map((item, index) => {
+      return {
+        nama: item?.LayananName,
+        jumlah: item?.TotalPengaduan,
+      };
+    });
+  } else if (role === "Super Admin") {
+    chartData = superAdmin?.countbyLayanan?.map((item, index) => {
+      return {
+        nama: item?.layanan_name,
+        jumlah: item?.pengaduanCount,
+      };
+    });
+  } else {
+    chartData = superAdmin?.countbyBidang?.flatMap((items) =>
+      items?.layanans?.map((item) => ({
+        nama: item?.name,
+        jumlah: item?.total_pengaduan,
+      }))
+    );
+  }
 
   const chartConfig = {
     jumlah: {
@@ -242,13 +260,13 @@ export default function TabsComplaintSuperAdminDashBoard({
                     bottom: 40,
                   }}>
                   <CartesianGrid vertical={false} />
-                  <XAxis
+                  {/* <XAxis
                     dataKey="nama"
                     tickLine={false}
                     axisLine={false}
                     tickMargin={8}
                     tickFormatter={(value) => value.slice(8)}
-                  />
+                  /> */}
                   <ChartTooltip
                     cursor={false}
                     content={<ChartTooltipContent indicator="line" />}
