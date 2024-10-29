@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React, { useEffect, useState } from "react";
 import SuperDashboardCard from "@/components/all_cards/superDashboardCard";
 import {
+  JwtPayload,
   ServiceInterface,
   SuperAdminDashboardAreasInterface,
   SuperAdminDashboardInterface,
@@ -21,9 +22,14 @@ import { useDebounce } from "@/hooks/useDebounce";
 import TabsApplicationSuperAdminDashBoard from "@/components/elements/tabs/superadmin/application";
 import TabsComplaintSuperAdminDashBoard from "@/components/elements/tabs/superadmin/complaint";
 import TabsSurveySuperAdminDashBoard from "@/components/elements/tabs/superadmin/survey";
+import { jwtDecode } from "jwt-decode";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 export default function SuperAdminDashboardPages() {
+  const router = useRouter();
   const [search, setSearch] = useState("");
+  const [role, setRole] = useState<string | null>(null);
   const [layananId, setLayananId] = useState<number | undefined>(undefined);
   const [month, setMonth] = useState<number | undefined>(undefined);
   const [year, setYear] = useState<string | undefined>("");
@@ -42,6 +48,24 @@ export default function SuperAdminDashboardPages() {
     totalCount: 0,
   });
   const debounceSearch = useDebounce(search);
+
+  useEffect(() => {
+    const token = Cookies.get("Authorization");
+
+    if (token) {
+      try {
+        const decoded = jwtDecode<JwtPayload>(token);
+
+        if (decoded && decoded.role !== undefined) {
+          setRole(decoded.role);
+        }
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    } else {
+      router.push("/login");
+    }
+  }, [router]);
 
   const startDateFormatted = startDate
     ? formatDate(new Date(startDate))
@@ -251,7 +275,10 @@ export default function SuperAdminDashboardPages() {
             value="kepuasan"
             className="w-full flex flex-col mt-0 md:mt-5">
             {superAdmin && (
-              <TabsSurveySuperAdminDashBoard superAdmin={superAdmin} />
+              <TabsSurveySuperAdminDashBoard
+                superAdmin={superAdmin}
+                role={role}
+              />
             )}
           </TabsContent>
         </Tabs>

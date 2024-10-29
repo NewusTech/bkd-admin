@@ -602,11 +602,20 @@ export interface SuperAdminStaffInterface {
   pegawai_count: number;
 }
 
+export interface SatisfactionFeedbackInterface {
+  LayananId: number;
+  LayananName: string;
+  RataRataNilai: string;
+  TotalFeedback: number;
+}
+
 export interface SuperAdminDashboardInterface {
   permohonanCount: number;
   monthlyCounts: SuperAdminDashboardMonthInterface[];
   countbyBidang: SuperAdminDashboardAreasInterface[];
   layananByBidang: [];
+  allFeedbackData: SatisfactionFeedbackInterface[];
+  allUserFeedback: SatisfactionFeedbackInterface[];
   countbyLayanan: SuperAdminDashboardServiceInterface[];
   allLayananMonth: VericationAdminInterface[];
   databidang: VerificationAdminAreasDataInterface[];
@@ -756,6 +765,8 @@ export interface TabsApplicationSuperAdminDashBoardInterface {
   pagination: PaginationTabsInterface;
   handlePageChange: (newPage: number) => void;
   superAdmin: SuperAdminDashboardInterface;
+  role?: string | null;
+  user?: AdminProfileInterface;
 }
 
 export interface DataJsonServiceForm {
