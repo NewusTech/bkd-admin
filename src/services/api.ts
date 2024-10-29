@@ -1123,7 +1123,7 @@ export const getApplicationUserHistories = async (
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/history/form?page=${page}&limit=${limit}&status=${status}&search=${search}&start_date=${start_date}&end_date=${end_date}&month=${month}&year=${year}&layanan_id=${layanan_id}&bidang_id=${bidang_id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/history/form?page=${page}&limit=${limit}&${status && `status=${status}`}&search=${search}&start_date=${start_date}&end_date=${end_date}&month=${month}&year=${year}&layanan_id=${layanan_id}&bidang_id=${bidang_id}`,
     {
       method: "GET",
       headers: {

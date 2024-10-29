@@ -31,6 +31,7 @@ import MobileDivisionVerificationAdminApplicationHistoryCard from "@/components/
 import VerificationUserApplicationHistoryTablePages from "@/components/tables/verification_admin_user_application_history_table";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import {
+  SatisfactionComplaintInterface,
   SatisfactionFeedbackInterface,
   SuperAdminDashboardInterface,
   SuperAdminDashboardServiceInterface,
@@ -78,6 +79,27 @@ export default function TabsSurveySuperAdminDashBoard({
               </>
             )}
 
+            {role &&
+              (role === "Sekretaris Dinas" ||
+                role === "Kepala Dinas" ||
+                role === "Sekretaris Daerah") && (
+                <>
+                  {superAdmin?.countbyBidang?.flatMap((items) =>
+                    items.layanans.map(
+                      (item: SatisfactionComplaintInterface) => {
+                        return (
+                          <ProgressBar
+                            key={item?.name}
+                            name={item?.name}
+                            value={Number(item?.nilai_feedback)}
+                          />
+                        );
+                      }
+                    )
+                  )}
+                </>
+              )}
+
             {role && role === "Admin Verifikasi" && (
               <>
                 {superAdmin &&
@@ -87,7 +109,7 @@ export default function TabsSurveySuperAdminDashBoard({
                         <ProgressBar
                           key={i}
                           name={item?.LayananName}
-                          value={item?.TotalFeedback}
+                          value={Number(item?.RataRataNilai)}
                         />
                       );
                     }
@@ -104,7 +126,7 @@ export default function TabsSurveySuperAdminDashBoard({
                         <ProgressBar
                           key={i}
                           name={item?.LayananName}
-                          value={item?.TotalFeedback}
+                          value={Number(item?.RataRataNilai)}
                         />
                       );
                     }

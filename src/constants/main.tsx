@@ -514,3 +514,46 @@ export const months = [
     name: "Desember",
   },
 ];
+
+export const statusApps = [
+  {
+    id: 1,
+    name: "Menunggu",
+  },
+  {
+    id: 2,
+    name: "Sedang Diproses",
+  },
+  {
+    id: 3,
+    name: "Butuh Perbaikan",
+  },
+  {
+    id: 4,
+    name: "Sudah Diperbaiki",
+  },
+  {
+    id: 5,
+    name: "Sedang divalidasi",
+  },
+  {
+    id: 6,
+    name: "sudah divalidasi",
+  },
+  {
+    id: 7,
+    name: "Sedang ditandatangani",
+  },
+  {
+    id: 8,
+    name: "Sudah ditandatangani",
+  },
+  {
+    id: 9,
+    name: "Selesai",
+  },
+  {
+    id: 10,
+    name: "Ditolak",
+  },
+];

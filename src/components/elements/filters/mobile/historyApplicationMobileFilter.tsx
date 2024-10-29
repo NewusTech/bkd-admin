@@ -18,7 +18,7 @@ import {
 import DatePages from "../../date";
 import UnduhMenus from "@/components/ui/UnduhMenus";
 import SearchPages from "../../search";
-import { months } from "@/constants/main";
+import { months, statusApps } from "@/constants/main";
 import {
   HistoryApplicationFilterInterface,
   ServiceInterface,
@@ -42,6 +42,8 @@ export default function HistoryApplicationMobileFilter({
   setMonth,
   years,
   setYear,
+  status,
+  setStatus,
 }: HistoryApplicationFilterInterface) {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -68,6 +70,13 @@ export default function HistoryApplicationMobileFilter({
                   onClick={() => handleFilterClick("layanan")}>
                   Filter Layanan
                 </MenubarItem>
+                {status && (
+                  <MenubarItem
+                    className="hover:text-primary-40 text-[14px]"
+                    onClick={() => handleFilterClick("status")}>
+                    Filter Status
+                  </MenubarItem>
+                )}
                 <MenubarItem
                   className="hover:text-primary-40 text-[14px]"
                   onClick={() => handleFilterClick("search")}>
@@ -126,6 +135,44 @@ export default function HistoryApplicationMobileFilter({
                     {service?.nama}
                   </SelectItem>
                 ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+
+        {activeFilter === "status" && (
+          <div className="w-full flex items-center h-[40px] justify-between bg-line-10 border border-primary-40 rounded-lg">
+            <Select
+              onValueChange={(value) =>
+                setStatus &&
+                setStatus(value === "all" ? undefined : Number(value))
+              }>
+              <SelectTrigger
+                className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                <SelectValue
+                  placeholder="Bulan"
+                  className="text-black-80 tex-[14px] w-full"
+                />
+              </SelectTrigger>
+              <SelectContent className="bg-line-10">
+                <div className="pt-2">
+                  <SelectItem className="w-full px-4" value="all">
+                    Semua Bulan
+                  </SelectItem>
+                  {statusApps &&
+                    statusApps.map(
+                      (item: { id: number; name: string }, i: number) => {
+                        return (
+                          <SelectItem
+                            key={i}
+                            className={`w-full px-4`}
+                            value={item.id.toString()}>
+                            {item?.name}
+                          </SelectItem>
+                        );
+                      }
+                    )}
+                </div>
               </SelectContent>
             </Select>
           </div>
