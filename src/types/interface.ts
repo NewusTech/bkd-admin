@@ -815,3 +815,8 @@ export interface ApplicationFormServiceDocInterface {
   desc: string;
   Layanan_forms: FormServiceInterface[];
 }
+
+export interface NipInterface {
+  id: number;
+  nip: string;
+}

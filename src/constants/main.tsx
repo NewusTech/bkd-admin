@@ -276,6 +276,11 @@ export const AccountManagement = [
     name: "Roles",
     value: "Peran",
   },
+  {
+    id: 2,
+    name: "ASN",
+    value: "Data ASN",
+  },
   // {
   //   id: 2,
   //   name: "Users",
