@@ -1,8 +1,5 @@
 "use client";
 
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import { useQuill } from "react-quilljs";
 import SearchPages from "@/components/elements/search";
 import SuperAreasMasterDataTablePages from "@/components/tables/master_datas/areas_table";
 import { Button } from "@/components/ui/button";

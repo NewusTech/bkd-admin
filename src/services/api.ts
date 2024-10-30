@@ -162,6 +162,88 @@ export const getServices = async () => {
   return await response.json();
 };
 
+// get NIP Data
+export const getNIPData = async (
+  page: number,
+  limit: number,
+  search: string
+) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/info/admin/nip/get?page=${page}&limit=${limit}&search=${search}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// post NIP Data
+export const postNIPData = async (data: any) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/info/admin/nip/create`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// update NIP Data
+export const updateNIPData = async (data: any, id: number) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/info/admin/nip/update/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// post NIP Data Import
+export const postNIPDataImport = async (formData: FormData) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/info/import/excel`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
 // get areas / bidang
 export const getAreas = async (
   page?: number,

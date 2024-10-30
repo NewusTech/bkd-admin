@@ -1219,6 +1219,10 @@ export default function DashBoardSidebarPages() {
                                   linking =
                                     "/super-admin/account-managing-users";
                                   break;
+                                case "ASN":
+                                  linking =
+                                    "/super-admin/management-list-employees";
+                                  break;
                                 default:
                                   break;
                               }
@@ -1226,7 +1230,7 @@ export default function DashBoardSidebarPages() {
                               return (
                                 <Link
                                   key={i}
-                                  href={`${bar?.name === "Roles" ? "/super-admin/account-managing-roles" : "/super-admin/account-managing-users"}`}
+                                  href={`${bar?.name === "Roles" ? "/super-admin/account-managing-roles" : bar?.name === "ASN" ? "/super-admin/management-list-employees" : "/super-admin/account-managing-users"}`}
                                   className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-full py-2 hover:pl-2 ease-in-out duration-300 animate-in flex items-center justify-center bg-opacity-50`}>
                                   <div className="w-10/12 flex flex-row items-center gap-x-2">
                                     <DotIcon

@@ -64,6 +64,12 @@ export const schemaGalleryData = z.object({
     .min(3, { message: "Judul minimal 3 karakter" }),
 });
 
+export const schemaNIPData = z.object({
+  nip: z
+    .string({ message: "NIP tidak boleh kosong!" })
+    .length(18, { message: "Panjang NIP Harus 18 karakter" }),
+});
+
 export const schemaFaqData = z.object({
   question: z
     .string({ message: "Pertanyaan tidak boleh kosong!" })
