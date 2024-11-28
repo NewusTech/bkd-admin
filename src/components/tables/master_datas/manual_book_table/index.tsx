@@ -26,16 +26,21 @@ export default function SuperManualBookMasterDataTablePages({
   handleDragOver,
   handleDragLeave,
   handleDropImage,
+  handleDropVideo,
   handleImageChange,
+  handleVideoChange,
   fileName,
+  videoName,
   previewFile,
+  previewVideo,
 }: {
   books: any;
-  data: { dokumen: string; title: string };
+  data: { dokumen: string; title: string; video_tutorial: string };
   setData: React.Dispatch<
     React.SetStateAction<{
       title: string;
       dokumen: string;
+      video_tutorial: string;
     }>
   >;
   isUpdateLoading: boolean;
@@ -51,9 +56,13 @@ export default function SuperManualBookMasterDataTablePages({
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
   handleDragLeave: (e: React.DragEvent<HTMLDivElement>) => void;
   handleDropImage: (e: React.DragEvent<HTMLDivElement>) => void;
+  handleDropVideo: (e: React.DragEvent<HTMLDivElement>) => void;
   handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleVideoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   fileName: string;
+  videoName: string;
   previewFile: string;
+  previewVideo: string;
 }) {
   return (
     <>
@@ -78,8 +87,11 @@ export default function SuperManualBookMasterDataTablePages({
                 handleDragLeave={handleDragLeave}
                 handleDropImage={handleDropImage}
                 handleImageChange={handleImageChange}
+                handleVideoChange={handleVideoChange}
                 fileName={fileName}
+                videoName={videoName}
                 previewFile={previewFile}
+                previewVideo={previewVideo}
                 isDrawerEditOpen={isDrawerEditOpen}
                 setIsDrawerEditOpen={setIsDrawerEditOpen}
               />
@@ -97,6 +109,7 @@ export default function SuperManualBookMasterDataTablePages({
                 <TableHead className="">No.</TableHead>
                 <TableHead className="text-center">Nama Manual Book</TableHead>
                 <TableHead className="text-center">File</TableHead>
+                <TableHead className="text-center">Video</TableHead>
                 <TableHead className="text-center">Tanggal Dibuat</TableHead>
                 <TableHead className="text-center w-3/12">Aksi</TableHead>
               </TableRow>
@@ -119,9 +132,13 @@ export default function SuperManualBookMasterDataTablePages({
                     handleDragOver={handleDragOver}
                     handleDragLeave={handleDragLeave}
                     handleDropImage={handleDropImage}
+                    handleDropVideo={handleDropVideo}
                     handleImageChange={handleImageChange}
+                    handleVideoChange={handleVideoChange}
                     fileName={fileName}
+                    videoName={videoName}
                     previewFile={previewFile}
+                    previewVideo={previewVideo}
                   />
                 ))}
             </TableBody>

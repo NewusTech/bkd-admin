@@ -281,11 +281,11 @@ export const AccountManagement = [
     name: "ASN",
     value: "Data ASN",
   },
-  // {
-  //   id: 2,
-  //   name: "Users",
-  //   value: "Pengguna",
-  // },
+  {
+    id: 2,
+    name: "Users",
+    value: "Pengguna",
+  },
 ];
 
 export const areasHeadBars = [

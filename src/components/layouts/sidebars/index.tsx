@@ -95,7 +95,8 @@ export default function DashBoardSidebarPages() {
         <div className="w-full flex flex-col py-5 verticalScroll gap-y-5 h-full border bg-line-10 shadow-md border-line-20">
           <Link
             href={"/"}
-            className={`${pathName === "/" ? "bg-primary-40 group bg-opacity-20" : ""} hover:pl-5 ease-in-out duration-300 animate-in py-3 w-full flex flex-row items-center cursor-pointer px-4 gap-x-3`}>
+            className={`${pathName === "/" ? "bg-primary-40 group bg-opacity-20" : ""} hover:pl-5 ease-in-out duration-300 animate-in py-3 w-full flex flex-row items-center cursor-pointer px-4 gap-x-3`}
+          >
             <HomeIcon className="w-5 h-5 text-black-80 group-hover:text-primary-40" />
 
             <p className="text-[14px] md:text-[16px] text-black-80 group-hover:text-primary-40">
@@ -114,12 +115,15 @@ export default function DashBoardSidebarPages() {
                   value={activeAccordionValue}
                   onValueChange={(value) => {
                     setActiveAccordionValue(value);
-                  }}>
+                  }}
+                >
                   <AccordionItem
                     className="w-full border-none flex flex-col"
-                    value={`item-1`}>
+                    value={`item-1`}
+                  >
                     <AccordionTrigger
-                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}>
+                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}
+                    >
                       <div className="w-full flex flex-row items-center gap-x-2">
                         <p className="text-black-80 text-[14px] md:text-[16px]">
                           Riwayat Permohonan
@@ -149,7 +153,8 @@ export default function DashBoardSidebarPages() {
                                       ? "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history"
                                       : "/verification-admin/verification-user-application-histories/verification-user-revision-application-history"
                                   }`}
-                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}
+                                >
                                   <div className="w-10/12 flex flex-row items-center gap-x-2">
                                     <DotIcon
                                       className={`w-5 h-5 ${
@@ -163,7 +168,8 @@ export default function DashBoardSidebarPages() {
                                         isWaitingPath || isRevisionPath
                                           ? "text-primary-40"
                                           : "text-black-80"
-                                      }`}>
+                                      }`}
+                                    >
                                       {bar.name}
                                     </p>
                                   </div>
@@ -179,41 +185,49 @@ export default function DashBoardSidebarPages() {
 
               <div className="w-full flex flex-col gap-y-4">
                 <div
-                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={
                       "/verification-admin/verification-user-complaint-history"
                     }
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Pengaduan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/verification-admin/verification-reportings"}
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Laporan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/super-admin/application-history-lists" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/super-admin/application-history-lists" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/super-admin/application-history-lists"}
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Daftar Permohonan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={
                       "/verification-admin/verification-satisfaction-index-history"
                     }
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Indeks Kepuasan
                   </Link>
                 </div>
@@ -232,12 +246,15 @@ export default function DashBoardSidebarPages() {
                   value={activeAccordionValue}
                   onValueChange={(value) => {
                     setActiveAccordionValue(value);
-                  }}>
+                  }}
+                >
                   <AccordionItem
                     className="w-full border-none flex flex-col"
-                    value={`item-1`}>
+                    value={`item-1`}
+                  >
                     <AccordionTrigger
-                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}>
+                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}
+                    >
                       <div className="w-full flex flex-row items-center gap-x-2">
                         <p className="text-black-80 text-[14px] md:text-[16px]">
                           Riwayat Permohonan
@@ -267,7 +284,8 @@ export default function DashBoardSidebarPages() {
                                       ? "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history"
                                       : "/verification-admin/verification-user-application-histories/verification-user-revision-application-history"
                                   }`}
-                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}
+                                >
                                   <div className="w-10/12 flex flex-row items-center gap-x-2">
                                     <DotIcon
                                       className={`w-5 h-5 ${
@@ -281,7 +299,8 @@ export default function DashBoardSidebarPages() {
                                         isWaitingPath || isRevisionPath
                                           ? "text-primary-40"
                                           : "text-black-80"
-                                      }`}>
+                                      }`}
+                                    >
                                       {bar.name}
                                     </p>
                                   </div>
@@ -297,50 +316,60 @@ export default function DashBoardSidebarPages() {
 
               <div className="w-full flex flex-col gap-y-4">
                 <div
-                  className={`${pathName === "/areas-head/head-manage-approvals" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/areas-head/head-manage-approvals" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/areas-head/head-manage-approvals"}
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Kelola Persetujuan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={
                       "/verification-admin/verification-user-complaint-history"
                     }
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Pengaduan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/verification-admin/verification-reportings"}
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Laporan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/super-admin/application-history-lists" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/super-admin/application-history-lists" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/super-admin/application-history-lists"}
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Daftar Permohonan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={
                       "/verification-admin/verification-satisfaction-index-history"
                     }
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Indeks Kepuasan
                   </Link>
                 </div>
@@ -354,12 +383,15 @@ export default function DashBoardSidebarPages() {
                   value={activeAccordionValue}
                   onValueChange={(value) => {
                     setActiveAccordionValue(value);
-                  }}>
+                  }}
+                >
                   <AccordionItem
                     className="w-full border-none flex flex-col"
-                    value={`item-3`}>
+                    value={`item-3`}
+                  >
                     <AccordionTrigger
-                      className={`${pathName === "/super-admin/master-data/areas" || pathName === "/super-admin/master-data/services" || pathName === "/super-admin/master-data/service-requirements" || pathName === "/super-admin/master-data/news" || pathName === "/super-admin/master-data/bkd-gallery-activities" || pathName === "/super-admin/master-data/about-us-vision-mission" || pathName === "/super-admin/master-data/structure-organization" || pathName === "/super-admin/master-data/structure-organization-main" || pathName === "/super-admin/master-data/faqs" || pathName === "/super-admin/master-data/terms-and-conditions" || pathName === "/super-admin/master-data/manual-book" || pathName === "/super-admin/master-data/logo" || pathName === "/super-admin/master-data/carousel-slider" || pathName === "/super-admin/master-data/location-maps" ? "bg-primary-40 bg-opacity-20 text-primary-40" : "text-black-80"} px-4 py-3 font-normal text-sm text-start h-[50px] md:h-full pr-4`}>
+                      className={`${pathName === "/super-admin/master-data/areas" || pathName === "/super-admin/master-data/services" || pathName === "/super-admin/master-data/service-requirements" || pathName === "/super-admin/master-data/news" || pathName === "/super-admin/master-data/bkd-gallery-activities" || pathName === "/super-admin/master-data/about-us-vision-mission" || pathName === "/super-admin/master-data/structure-organization" || pathName === "/super-admin/master-data/structure-organization-main" || pathName === "/super-admin/master-data/faqs" || pathName === "/super-admin/master-data/terms-and-conditions" || pathName === "/super-admin/master-data/manual-book" || pathName === "/super-admin/master-data/logo" || pathName === "/super-admin/master-data/carousel-slider" || pathName === "/super-admin/master-data/location-maps" ? "bg-primary-40 bg-opacity-20 text-primary-40" : "text-black-80"} px-4 py-3 font-normal text-sm text-start h-[50px] md:h-full pr-4`}
+                    >
                       <div className="w-full flex flex-row items-center gap-x-2">
                         <p className="text-[14px] md:text-[16px]">
                           Data Master
@@ -393,7 +425,8 @@ export default function DashBoardSidebarPages() {
                                 <Link
                                   key={i}
                                   href={`${linking}`}
-                                  className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50`}>
+                                  className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50`}
+                                >
                                   <div className="w-10/12 flex flex-row items-center gap-x-2">
                                     <DotIcon
                                       className={`w-5 h-5 ${pathName === linking ? "text-primary-40" : "text-black-80"}`}
@@ -414,10 +447,12 @@ export default function DashBoardSidebarPages() {
 
               <div className="w-full flex flex-col gap-y-3">
                 <div
-                  className={`${pathName === "/super-admin/settings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/super-admin/settings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/super-admin/settings"}
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Pengaturan
                   </Link>
                 </div>
@@ -436,12 +471,15 @@ export default function DashBoardSidebarPages() {
                   value={activeAccordionValue}
                   onValueChange={(value) => {
                     setActiveAccordionValue(value);
-                  }}>
+                  }}
+                >
                   <AccordionItem
                     className="w-full border-none flex flex-col"
-                    value={`item-1`}>
+                    value={`item-1`}
+                  >
                     <AccordionTrigger
-                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}>
+                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}
+                    >
                       <div className="w-full flex flex-row items-center gap-x-2">
                         <p className="text-black-80 text-[14px] md:text-[16px]">
                           Riwayat Permohonan
@@ -471,7 +509,8 @@ export default function DashBoardSidebarPages() {
                                       ? "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history"
                                       : "/verification-admin/verification-user-application-histories/verification-user-revision-application-history"
                                   }`}
-                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}
+                                >
                                   <div className="w-10/12 flex flex-row items-center gap-x-2">
                                     <DotIcon
                                       className={`w-5 h-5 ${
@@ -485,7 +524,8 @@ export default function DashBoardSidebarPages() {
                                         isWaitingPath || isRevisionPath
                                           ? "text-primary-40"
                                           : "text-black-80"
-                                      }`}>
+                                      }`}
+                                    >
                                       {bar.name}
                                     </p>
                                   </div>
@@ -501,50 +541,60 @@ export default function DashBoardSidebarPages() {
 
               <div className="w-full flex flex-col gap-y-4">
                 <div
-                  className={`${pathName === "/areas-head/head-manage-approvals" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/areas-head/head-manage-approvals" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/areas-head/head-manage-approvals"}
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Kelola Persetujuan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={
                       "/verification-admin/verification-user-complaint-history"
                     }
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Pengaduan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/verification-admin/verification-reportings"}
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Laporan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/super-admin/application-history-lists" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/super-admin/application-history-lists" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/super-admin/application-history-lists"}
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Daftar Permohonan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={
                       "/verification-admin/verification-satisfaction-index-history"
                     }
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Indeks Kepuasan
                   </Link>
                 </div>
@@ -563,12 +613,15 @@ export default function DashBoardSidebarPages() {
                   value={activeAccordionValue}
                   onValueChange={(value) => {
                     setActiveAccordionValue(value);
-                  }}>
+                  }}
+                >
                   <AccordionItem
                     className="w-full border-none flex flex-col"
-                    value={`item-1`}>
+                    value={`item-1`}
+                  >
                     <AccordionTrigger
-                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}>
+                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}
+                    >
                       <div className="w-full flex flex-row items-center gap-x-2">
                         <p className="text-black-80 text-[14px] md:text-[16px]">
                           Riwayat Permohonan
@@ -598,7 +651,8 @@ export default function DashBoardSidebarPages() {
                                       ? "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history"
                                       : "/verification-admin/verification-user-application-histories/verification-user-revision-application-history"
                                   }`}
-                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}
+                                >
                                   <div className="w-10/12 flex flex-row items-center gap-x-2">
                                     <DotIcon
                                       className={`w-5 h-5 ${
@@ -612,7 +666,8 @@ export default function DashBoardSidebarPages() {
                                         isWaitingPath || isRevisionPath
                                           ? "text-primary-40"
                                           : "text-black-80"
-                                      }`}>
+                                      }`}
+                                    >
                                       {bar.name}
                                     </p>
                                   </div>
@@ -628,52 +683,62 @@ export default function DashBoardSidebarPages() {
 
               <div className="w-full flex flex-col gap-y-4">
                 <div
-                  className={`${pathName === "/department-secretary/department-signature-validation" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-detail" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-upload" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/department-secretary/department-signature-validation" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-detail" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-upload" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={
                       "/department-secretary/department-signature-validation"
                     }
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Pengesahan Tanda Tangan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={
                       "/verification-admin/verification-user-complaint-history"
                     }
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Pengaduan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/verification-admin/verification-reportings"}
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Laporan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/super-admin/application-history-lists" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/super-admin/application-history-lists" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/super-admin/application-history-lists"}
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Daftar Permohonan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={
                       "/verification-admin/verification-satisfaction-index-history"
                     }
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Indeks Kepuasan
                   </Link>
                 </div>
@@ -687,12 +752,15 @@ export default function DashBoardSidebarPages() {
                   value={activeAccordionValue}
                   onValueChange={(value) => {
                     setActiveAccordionValue(value);
-                  }}>
+                  }}
+                >
                   <AccordionItem
                     className="w-full border-none flex flex-col"
-                    value={`item-3`}>
+                    value={`item-3`}
+                  >
                     <AccordionTrigger
-                      className={`${pathName === "/super-admin/master-data/areas" || pathName === "/super-admin/master-data/services" || pathName === "/super-admin/master-data/service-requirements" || pathName === "/super-admin/master-data/news" || pathName === "/super-admin/master-data/bkd-gallery-activities" || pathName === "/super-admin/master-data/about-us-vision-mission" || pathName === "/super-admin/master-data/structure-organization" || pathName === "/super-admin/master-data/structure-organization-main" || pathName === "/super-admin/master-data/faqs" || pathName === "/super-admin/master-data/terms-and-conditions" || pathName === "/super-admin/master-data/manual-book" || pathName === "/super-admin/master-data/logo" || pathName === "/super-admin/master-data/carousel-slider" || pathName === "/super-admin/master-data/location-maps" ? "bg-primary-40 bg-opacity-20 text-primary-40" : "text-black-80"} px-4 py-3 font-normal text-sm text-start h-[50px] md:h-full pr-4`}>
+                      className={`${pathName === "/super-admin/master-data/areas" || pathName === "/super-admin/master-data/services" || pathName === "/super-admin/master-data/service-requirements" || pathName === "/super-admin/master-data/news" || pathName === "/super-admin/master-data/bkd-gallery-activities" || pathName === "/super-admin/master-data/about-us-vision-mission" || pathName === "/super-admin/master-data/structure-organization" || pathName === "/super-admin/master-data/structure-organization-main" || pathName === "/super-admin/master-data/faqs" || pathName === "/super-admin/master-data/terms-and-conditions" || pathName === "/super-admin/master-data/manual-book" || pathName === "/super-admin/master-data/logo" || pathName === "/super-admin/master-data/carousel-slider" || pathName === "/super-admin/master-data/location-maps" ? "bg-primary-40 bg-opacity-20 text-primary-40" : "text-black-80"} px-4 py-3 font-normal text-sm text-start h-[50px] md:h-full pr-4`}
+                    >
                       <div className="w-full flex flex-row items-center gap-x-2">
                         <p className="text-[14px] md:text-[16px]">
                           Data Master
@@ -770,7 +838,8 @@ export default function DashBoardSidebarPages() {
                                 <Link
                                   key={i}
                                   href={`${linking}`}
-                                  className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50`}>
+                                  className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50`}
+                                >
                                   <div className="w-10/12 flex flex-row items-center gap-x-2">
                                     <DotIcon
                                       className={`w-5 h-5 ${pathName === linking ? "text-primary-40" : "text-black-80"}`}
@@ -802,12 +871,15 @@ export default function DashBoardSidebarPages() {
                   value={activeAccordionValue}
                   onValueChange={(value) => {
                     setActiveAccordionValue(value);
-                  }}>
+                  }}
+                >
                   <AccordionItem
                     className="w-full border-none flex flex-col"
-                    value={`item-1`}>
+                    value={`item-1`}
+                  >
                     <AccordionTrigger
-                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}>
+                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}
+                    >
                       <div className="w-full flex flex-row items-center gap-x-2">
                         <p className="text-black-80 text-[14px] md:text-[16px]">
                           Riwayat Permohonan
@@ -837,7 +909,8 @@ export default function DashBoardSidebarPages() {
                                       ? "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history"
                                       : "/verification-admin/verification-user-application-histories/verification-user-revision-application-history"
                                   }`}
-                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                                  className={`w-full py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}
+                                >
                                   <div className="w-10/12 flex flex-row items-center gap-x-2">
                                     <DotIcon
                                       className={`w-5 h-5 ${
@@ -851,7 +924,8 @@ export default function DashBoardSidebarPages() {
                                         isWaitingPath || isRevisionPath
                                           ? "text-primary-40"
                                           : "text-black-80"
-                                      }`}>
+                                      }`}
+                                    >
                                       {bar.name}
                                     </p>
                                   </div>
@@ -867,52 +941,62 @@ export default function DashBoardSidebarPages() {
 
               <div className="w-full flex flex-col gap-y-4">
                 <div
-                  className={`${pathName === "/department-secretary/department-signature-validation" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-detail" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-upload" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/department-secretary/department-signature-validation" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-detail" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-upload" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={
                       "/department-secretary/department-signature-validation"
                     }
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Pengesahan Tanda Tangan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={
                       "/verification-admin/verification-user-complaint-history"
                     }
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Pengaduan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/verification-admin/verification-reportings"}
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Laporan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/super-admin/application-history-lists" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/super-admin/application-history-lists" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/super-admin/application-history-lists"}
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Daftar Permohonan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={
                       "/verification-admin/verification-satisfaction-index-history"
                     }
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Indeks Kepuasan
                   </Link>
                 </div>
@@ -931,12 +1015,15 @@ export default function DashBoardSidebarPages() {
                   value={activeAccordionValue}
                   onValueChange={(value) => {
                     setActiveAccordionValue(value);
-                  }}>
+                  }}
+                >
                   <AccordionItem
                     className="w-full border-none flex flex-col"
-                    value={`item-1`}>
+                    value={`item-1`}
+                  >
                     <AccordionTrigger
-                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal hover:pl-5 ease-in-out duration-300 animate-in text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}>
+                      className={`${pathName === "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history" || pathName === "/verification-admin/verification-user-application-histories/verification-user-revision-application-history" ? "bg-primary-40 bg-opacity-20" : ""} px-4 py-3 font-normal hover:pl-5 ease-in-out duration-300 animate-in text-neutral-700 text-sm text-start h-[50px] md:h-full pr-4`}
+                    >
                       <div className="w-full flex flex-row items-center gap-x-2">
                         <p className="text-black-80 text-[14px] md:text-[16px]">
                           Riwayat Permohonan
@@ -966,7 +1053,8 @@ export default function DashBoardSidebarPages() {
                                       ? "/verification-admin/verification-user-application-histories/verification-user-waiting-application-history"
                                       : "/verification-admin/verification-user-application-histories/verification-user-revision-application-history"
                                   }`}
-                                  className={`w-full hover:pl-2 ease-in-out duration-300 animate-in py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}>
+                                  className={`w-full hover:pl-2 ease-in-out duration-300 animate-in py-2 flex items-center justify-center bg-line-10 bg-opacity-50 text-black-80`}
+                                >
                                   <div className="w-10/12 flex flex-row items-center gap-x-2">
                                     <DotIcon
                                       className={`w-5 h-5 ${
@@ -980,7 +1068,8 @@ export default function DashBoardSidebarPages() {
                                         isWaitingPath || isRevisionPath
                                           ? "text-primary-40"
                                           : "text-black-80"
-                                      }`}>
+                                      }`}
+                                    >
                                       {bar.name}
                                     </p>
                                   </div>
@@ -996,70 +1085,84 @@ export default function DashBoardSidebarPages() {
 
               <div className="w-full flex flex-col gap-y-4">
                 <div
-                  className={`${pathName === "/department-secretary/department-signature-validation" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-detail" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-upload" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/department-secretary/department-signature-validation" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-detail" || pathName === "/department-secretary/department-signature-validation/department-signature-validation-upload" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={
                       "/department-secretary/department-signature-validation"
                     }
-                    className={`w-full flex flex-row hover:pl-5 ease-in-out duration-300 animate-in text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row hover:pl-5 ease-in-out duration-300 animate-in text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Pengesahan Tanda Tangan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/areas-head/head-manage-approvals" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/areas-head/head-manage-approvals" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/areas-head/head-manage-approvals"}
-                    className={`w-full flex flex-row hover:pl-5 ease-in-out duration-300 animate-in text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row hover:pl-5 ease-in-out duration-300 animate-in text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Kelola Persetujuan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-user-complaint-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={
                       "/verification-admin/verification-user-complaint-history"
                     }
-                    className={`w-full flex flex-row hover:pl-5 ease-in-out duration-300 animate-in text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row hover:pl-5 ease-in-out duration-300 animate-in text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Pengaduan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/department-head/lead-bkd-staff" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/department-head/lead-bkd-staff" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/department-head/lead-bkd-staff"}
-                    className={`w-full flex flex-row hover:pl-5 ease-in-out duration-300 animate-in text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row hover:pl-5 ease-in-out duration-300 animate-in text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Staff BKD
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-reportings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/verification-admin/verification-reportings"}
-                    className={`w-full flex flex-row hover:pl-5 ease-in-out duration-300 animate-in text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row hover:pl-5 ease-in-out duration-300 animate-in text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Laporan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/super-admin/application-history-lists" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/super-admin/application-history-lists" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/super-admin/application-history-lists"}
-                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Daftar Permohonan
                   </Link>
                 </div>
 
                 <div
-                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/verification-admin/verification-satisfaction-index-history" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={
                       "/verification-admin/verification-satisfaction-index-history"
                     }
-                    className={`w-full flex flex-row hover:pl-5 ease-in-out duration-300 animate-in text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row hover:pl-5 ease-in-out duration-300 animate-in text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Indeks Kepuasan
                   </Link>
                 </div>
@@ -1073,12 +1176,15 @@ export default function DashBoardSidebarPages() {
                   value={activeAccordionValue}
                   onValueChange={(value) => {
                     setActiveAccordionValue(value);
-                  }}>
+                  }}
+                >
                   <AccordionItem
                     className="w-full border-none flex flex-col"
-                    value={`item-3`}>
+                    value={`item-3`}
+                  >
                     <AccordionTrigger
-                      className={`${pathName === "/super-admin/master-data/areas" || pathName === "/super-admin/master-data/services" || pathName === "/super-admin/master-data/service-requirements" || pathName === "/super-admin/master-data/news" || pathName === "/super-admin/master-data/bkd-gallery-activities" || pathName === "/super-admin/master-data/about-us-vision-mission" || pathName === "/super-admin/master-data/structure-organization" || pathName === "/super-admin/master-data/structure-organization-main" || pathName === "/super-admin/master-data/faqs" || pathName === "/super-admin/master-data/terms-and-conditions" || pathName === "/super-admin/master-data/manual-book" || pathName === "/super-admin/master-data/logo" || pathName === "/super-admin/master-data/carousel-slider" || pathName === "/super-admin/master-data/location-maps" ? "bg-primary-40 bg-opacity-20 text-primary-40" : "text-black-80"} px-4 py-3 font-normal hover:pl-5 ease-in-out duration-300 animate-in text-sm text-start h-[50px] md:h-full pr-4`}>
+                      className={`${pathName === "/super-admin/master-data/areas" || pathName === "/super-admin/master-data/services" || pathName === "/super-admin/master-data/service-requirements" || pathName === "/super-admin/master-data/news" || pathName === "/super-admin/master-data/bkd-gallery-activities" || pathName === "/super-admin/master-data/about-us-vision-mission" || pathName === "/super-admin/master-data/structure-organization" || pathName === "/super-admin/master-data/structure-organization-main" || pathName === "/super-admin/master-data/faqs" || pathName === "/super-admin/master-data/terms-and-conditions" || pathName === "/super-admin/master-data/manual-book" || pathName === "/super-admin/master-data/logo" || pathName === "/super-admin/master-data/carousel-slider" || pathName === "/super-admin/master-data/location-maps" ? "bg-primary-40 bg-opacity-20 text-primary-40" : "text-black-80"} px-4 py-3 font-normal hover:pl-5 ease-in-out duration-300 animate-in text-sm text-start h-[50px] md:h-full pr-4`}
+                    >
                       <div className="w-full flex flex-row items-center gap-x-2">
                         <p className="text-[14px] md:text-[16px]">
                           Data Master
@@ -1160,7 +1266,8 @@ export default function DashBoardSidebarPages() {
                                 <Link
                                   key={i}
                                   href={`${linking}`}
-                                  className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-full py-2 flex items-center justify-center bg-line-10 hover:pl-2 ease-in-out duration-300 animate-in bg-opacity-50`}>
+                                  className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-full py-2 flex items-center justify-center bg-line-10 hover:pl-2 ease-in-out duration-300 animate-in bg-opacity-50`}
+                                >
                                   <div className="w-10/12 flex flex-row items-center gap-x-2">
                                     <DotIcon
                                       className={`w-5 h-5 ${pathName === linking ? "text-primary-40" : "text-black-80"}`}
@@ -1187,12 +1294,15 @@ export default function DashBoardSidebarPages() {
                   value={activeAccordionValue}
                   onValueChange={(value) => {
                     setActiveAccordionValue(value);
-                  }}>
+                  }}
+                >
                   <AccordionItem
                     className="w-full border-none flex flex-col"
-                    value={`item-4`}>
+                    value={`item-4`}
+                  >
                     <AccordionTrigger
-                      className={`${pathName === "/super-admin/account-managing-roles" || pathName === "/super-admin/account-managing-users" ? "bg-primary-40 bg-opacity-20 text-primary-40" : "text-black-80"} px-4 py-3 hover:pl-5 ease-in-out duration-300 animate-in font-normal text-[14px] md:text-[16px] text-start h-[50px] md:h-full pr-4`}>
+                      className={`${pathName === "/super-admin/account-managing-roles" || pathName === "/super-admin/account-managing-users" ? "bg-primary-40 bg-opacity-20 text-primary-40" : "text-black-80"} px-4 py-3 hover:pl-5 ease-in-out duration-300 animate-in font-normal text-[14px] md:text-[16px] text-start h-[50px] md:h-full pr-4`}
+                    >
                       <div className="w-full flex flex-row items-center gap-x-2">
                         <p className="text-black-80 text-[14px] md:text-[16px]">
                           Kelola Akun
@@ -1231,13 +1341,15 @@ export default function DashBoardSidebarPages() {
                                 <Link
                                   key={i}
                                   href={`${bar?.name === "Roles" ? "/super-admin/account-managing-roles" : bar?.name === "ASN" ? "/super-admin/management-list-employees" : "/super-admin/account-managing-users"}`}
-                                  className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-full py-2 hover:pl-2 ease-in-out duration-300 animate-in flex items-center justify-center bg-opacity-50`}>
+                                  className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-full py-2 hover:pl-2 ease-in-out duration-300 animate-in flex items-center justify-center bg-opacity-50`}
+                                >
                                   <div className="w-10/12 flex flex-row items-center gap-x-2">
                                     <DotIcon
                                       className={`${pathName === linking ? "text-primary-40" : "text-black-80"} w-5 h-5`}
                                     />
                                     <p
-                                      className={`${pathName === linking ? "text-primary-40" : "text-black-80"} text-[14px] md:text-[16px]`}>
+                                      className={`${pathName === linking ? "text-primary-40" : "text-black-80"} text-[14px] md:text-[16px]`}
+                                    >
                                       {bar?.value}
                                     </p>
                                   </div>
@@ -1253,10 +1365,12 @@ export default function DashBoardSidebarPages() {
 
               <div className="w-full flex flex-col gap-y-3">
                 <div
-                  className={`${pathName === "/super-admin/settings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}>
+                  className={`${pathName === "/super-admin/settings" ? "bg-primary-40 bg-opacity-20" : ""} w-full py-3`}
+                >
                   <Link
                     href={"/super-admin/settings"}
-                    className={`w-full flex flex-row hover:pl-5 ease-in-out duration-300 animate-in text-black-80 text-[14px] md:text-[16px] px-4`}>
+                    className={`w-full flex flex-row hover:pl-5 ease-in-out duration-300 animate-in text-black-80 text-[14px] md:text-[16px] px-4`}
+                  >
                     Pengaturan
                   </Link>
                 </div>
@@ -1276,17 +1390,22 @@ export default function DashBoardSidebarPages() {
               value={activeAccordionValue}
               onValueChange={(value) => {
                 setActiveAccordionValue(value);
-              }}>
+              }}
+            >
               <AccordionItem
                 className="w-full border-none flex flex-col"
-                value={`item-5`}>
+                value={`item-5`}
+              >
                 <AccordionTrigger className="px-4 py-2 hover:pl-5 ease-in-out duration-300 animate-in bg-white font-normal text-neutral-700 text-[14px] md:text-[16px] text-start h-[50px] md:h-full pr-4">
                   <div className="w-full flex flex-row gap-x-3 px-4">
                     <div className="w-3/12 h-full">
-                      <img
+                      <Image
+                        key={user?.role_name}
                         src={`https://ui-avatars.com/api/?name=${user?.role_name}&background=random&rounded=true`}
                         alt="image"
                         className="rounded-full w-full h-full"
+                        width={600}
+                        height={600}
                       />
                     </div>
 
@@ -1303,7 +1422,8 @@ export default function DashBoardSidebarPages() {
                   <div className="w-full flex flex-row px-5">
                     <Button
                       onClick={handleLogout}
-                      className="w-full flex flex-row items-center rounded-lg bg-error-50 bg-opacity-30 justify-start px-5 py-6 gap-x-3 group">
+                      className="w-full flex flex-row items-center rounded-lg bg-error-50 bg-opacity-30 justify-start px-5 py-6 gap-x-3 group"
+                    >
                       {isLoadingOut ? (
                         <Loader className="animate-spin" />
                       ) : (

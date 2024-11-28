@@ -135,6 +135,15 @@ export interface AccountManagingRolesInterface {
   Bidang: string;
 }
 
+export interface AccountAdminInterface {
+  id: number;
+  nik: string;
+  nip: string;
+  role_id: number;
+  role_name: string;
+  slug: string;
+}
+
 export interface AreasCreateInterface {
   nama: string;
   desc: string;
@@ -235,6 +244,7 @@ export interface ManualBooksInterfaceInterface {
   id: number;
   title: string;
   dokumen: string;
+  video_tutorial?: string;
   role_id: string;
   createdAt: string;
   updatedAt: string;
@@ -819,4 +829,27 @@ export interface ApplicationFormServiceDocInterface {
 export interface NipInterface {
   id: number;
   nip: string;
+  name: string;
+}
+
+export interface UserAccountInterface {
+  id: number;
+  user_id: number;
+  name: string;
+  slug: string;
+  nip: string;
+  nik: string;
+  email: string;
+  telepon: string;
+  kecamatan_id?: string;
+  desa_id?: string;
+  rt?: string;
+  rw?: string;
+  alamat: string;
+  agama: string;
+  tempat_lahir: string;
+  tgl_lahir: string;
+  gender: string;
+  goldar: string;
+  Bidang?: string;
 }

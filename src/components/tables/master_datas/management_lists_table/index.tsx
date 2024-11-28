@@ -29,10 +29,11 @@ export default function SuperManagementListTablePages({
   nip: NipInterface[];
   nipId: number | null;
   setNipId: React.Dispatch<React.SetStateAction<number | null>>;
-  data2: { nip: string };
+  data2: { nip: string, name:string };
   setData2: React.Dispatch<
     React.SetStateAction<{
       nip: string;
+      name:string
     }>
   >;
   isUpdateLoading: boolean;
@@ -78,6 +79,7 @@ export default function SuperManagementListTablePages({
             <TableRow className="w-full">
               <TableHead className="text-center text-[14px]">No.</TableHead>
               <TableHead className="text-center text-[14px]">NIP</TableHead>
+              <TableHead className="text-center text-[14px]">Nama</TableHead>
               <TableHead className="text-center text-[14px]">Aksi</TableHead>
             </TableRow>
           </TableHeader>

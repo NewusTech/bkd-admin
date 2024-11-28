@@ -14,16 +14,20 @@ export default function ManualBookScreen() {
   const [books, setBooks] = useState([]);
   const [fileName, setFileName] = useState<string>("");
   const [manualFile, setManualFile] = useState<File | null>(null);
+  const [videoTutorial, setVideoTutorial] = useState<File | null>(null);
+  const [videoName, setVideoName] = useState<string>("");
   const [previewFile, setPreviewFile] = useState<string>("");
+  const [previewVideo, setPreviewVideo] = useState<string>("");
   const [data, setData] = useState({
     title: "",
     dokumen: "",
+    video_tutorial: "",
   });
 
   const fetchManualBooks = async () => {
     try {
       const response = await getManualBooks();
-
+      console.log(response.data);
       setBooks(response.data);
     } catch (error) {
       console.log(error);
@@ -46,6 +50,20 @@ export default function ManualBookScreen() {
     }
     const fileUrl = URL.createObjectURL(file);
     setPreviewFile(fileUrl);
+  };
+
+  const handleVideoChange = (e: any) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setVideoTutorial(file);
+      setVideoName(file.name);
+      setData({
+        ...data,
+        video_tutorial: file.name,
+      });
+    }
+    const fileUrl = URL.createObjectURL(file);
+    setPreviewVideo(fileUrl);
   };
 
   const handleDragOver = (e: any) => {
@@ -73,6 +91,23 @@ export default function ManualBookScreen() {
     setPreviewFile(fileUrl);
   };
 
+  const handleDropVideo = (e: any) => {
+    e.preventDefault();
+
+    const file = e.dataTransfer.files?.[0];
+    if (file) {
+      setVideoTutorial(file);
+      setVideoName(file.name);
+      setData({
+        ...data,
+        video_tutorial: file.name,
+      });
+    }
+
+    const fileUrl = URL.createObjectURL(file);
+    setPreviewFile(fileUrl);
+  };
+
   const handleUpdateManualBook = async (
     e: React.FormEvent<HTMLFormElement>,
     id: number
@@ -86,6 +121,9 @@ export default function ManualBookScreen() {
     if (manualFile) {
       formData.append("dokumen", manualFile);
     }
+    if (videoTutorial) {
+      formData.append("video_tutorial", videoTutorial);
+    }
 
     try {
       const response = await updateManualBooks(formData, id);
@@ -94,6 +132,7 @@ export default function ManualBookScreen() {
         setData({
           title: "",
           dokumen: "",
+          video_tutorial: "",
         });
         Swal.fire({
           icon: "success",
@@ -141,9 +180,13 @@ export default function ManualBookScreen() {
               handleDragOver={handleDragOver}
               handleDragLeave={handleDragLeave}
               handleDropImage={handleDropImage}
+              handleDropVideo={handleDropVideo}
               handleImageChange={handleImageChange}
+              handleVideoChange={handleVideoChange}
               fileName={fileName}
+              videoName={videoName}
               previewFile={previewFile}
+              previewVideo={previewVideo}
             />
           )}
         </div>

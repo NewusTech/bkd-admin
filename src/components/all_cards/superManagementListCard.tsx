@@ -40,10 +40,12 @@ export default function SuperManagementListCard({
   setNipId: React.Dispatch<React.SetStateAction<number | null>>;
   data2: {
     nip: string;
+    name: string;
   };
   setData2: React.Dispatch<
     React.SetStateAction<{
       nip: string;
+      name: string;
     }>
   >;
   isUpdateLoading: boolean;
@@ -57,6 +59,7 @@ export default function SuperManagementListCard({
   const handleSetNipData = () => {
     setData2({
       nip: item?.nip,
+      name: item.name,
     });
 
     setNipId(item?.id);
@@ -74,22 +77,26 @@ export default function SuperManagementListCard({
       <TableRow className="border border-line-20 text-[14px]">
         <TableCell className="text-[14px] text-center">{index + 1}</TableCell>
         <TableCell className="text-[14px text-center">{item?.nip}</TableCell>
+        <TableCell className="text-[14px text-center">{item?.name}</TableCell>
         <TableCell className="text-center flex items-center w-full">
           <div className="w-full flex flex-row items-center justify-center gap-x-2">
             <div className="w-1/2">
               <AlertDialog
                 open={isDialogEditOpen}
-                onOpenChange={setIsDialogEditOpen}>
+                onOpenChange={setIsDialogEditOpen}
+              >
                 <AlertDialogTrigger
                   key={item?.id}
                   onClick={() => {
                     handleSetNipData();
                     setIsDialogEditOpen(true);
                   }}
-                  className="w-full">
+                  className="w-full"
+                >
                   <div
                     title="Edit Data"
-                    className="w-full text-[14px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                    className="w-full text-[14px] bg-black-80 bg-opacity-20 hover:bg-opacity-40 flex items-center justify-center h-10 text-black-80 hover:text-line-10 rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2"
+                  >
                     Edit
                   </div>
                 </AlertDialogTrigger>
@@ -110,7 +117,8 @@ export default function SuperManagementListCard({
                       onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                         handleUpdateNipData(e, nipId as number)
                       }
-                      className="w-full flex flex-col gap-y-3 max-h-[500px]">
+                      className="w-full flex flex-col gap-y-3 max-h-[500px]"
+                    >
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label className="focus-within:text-primary-70 font-normal text-[16px] text-left">
@@ -118,7 +126,7 @@ export default function SuperManagementListCard({
                           </Label>
 
                           <Input
-                            id="nama-bidang"
+                            id="nip"
                             name="nip"
                             value={data2?.nip}
                             onChange={(
@@ -127,6 +135,23 @@ export default function SuperManagementListCard({
                             type="text"
                             className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
                             placeholder="Masukkan NIP"
+                          />
+                        </div>
+                        <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
+                          <Label className="focus-within:text-primary-70 font-normal text-[16px] text-left">
+                            Nama
+                          </Label>
+
+                          <Input
+                            id="name"
+                            name="name"
+                            value={data2?.name}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => setData2({ ...data2, name: e.target.value })}
+                            type="text"
+                            className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                            placeholder="Masukkan Nama"
                           />
                         </div>
                       </div>
@@ -141,7 +166,8 @@ export default function SuperManagementListCard({
                           title="Simpan Data"
                           type="submit"
                           disabled={isUpdateLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[16px] px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[16px] px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2"
+                        >
                           {isUpdateLoading ? (
                             <Loader className="animate-spin" />
                           ) : (

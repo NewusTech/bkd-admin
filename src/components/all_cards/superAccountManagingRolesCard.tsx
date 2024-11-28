@@ -5,6 +5,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import {
+  AccountAdminInterface,
   AccountManagingRolesInterface,
   AreasInterface,
   RolesInterface,
@@ -70,7 +71,7 @@ export default function SuperAccountManagingRolesCard({
   seen,
   setSeen,
 }: {
-  account: AccountManagingRolesInterface;
+  account: AccountAdminInterface;
   areas: AreasInterface[];
   roles: RolesInterface[];
   index: number;
@@ -122,13 +123,13 @@ export default function SuperAccountManagingRolesCard({
       <TableRow className="border border-line-20 text-sm text-left">
         <TableCell className="text-sm">{index + 1}</TableCell>
         <TableCell className="text-sm">
-          {account?.name && account?.name}
+          {account?.role_name && account?.role_name}
         </TableCell>
         <TableCell className="text-sm">
           {account?.nip && account?.nip}
         </TableCell>
         <TableCell className="text-sm">
-          {account?.Role && account?.Role}
+          {account?.nik && account?.nik}
         </TableCell>
         <TableCell className="">
           <div className="w-full flex flex-row items-center justify-center gap-x-2">
@@ -371,17 +372,20 @@ export default function SuperAccountManagingRolesCard({
             <div className="w-full">
               <AlertDialog
                 open={isDialogEditOpen}
-                onOpenChange={setIsDialogEditOpen}>
+                onOpenChange={setIsDialogEditOpen}
+              >
                 <AlertDialogTrigger
                   onClick={() => {
                     // handleSetArea();
                     setIsDialogEditOpen(true);
                   }}
-                  className="w-full">
+                  className="w-full"
+                >
                   <div
                     // name="Edit"
                     // title="Edit Data"
-                    className="h-10 text-[14px] px-3 rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-fit m-auto">
+                    className="h-10 text-[14px] px-3 rounded-lg border border-primary text-center font-medium justify-center flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 bg-black-80 bg-opacity-20 hover:bg-opacity-40 text-black-80 hover:text-line-10 w-fit m-auto"
+                  >
                     Edit
                   </div>
                 </AlertDialogTrigger>
@@ -402,7 +406,8 @@ export default function SuperAccountManagingRolesCard({
                       // onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                       //   handleUpdateArea(e, area?.slug)
                       // }
-                      className="w-full flex flex-col gap-y-3 max-h-[500px]">
+                      className="w-full flex flex-col gap-y-3 max-h-[500px]"
+                    >
                       <div className="w-full flex flex-col gap-y-3 verticalScroll">
                         <div className="w-full focus-within:text-black-80 flex flex-col gap-y-2">
                           <Label className="focus-within:text-black-800 font-normal text-[14px] md:text-smtext-left">
@@ -412,9 +417,11 @@ export default function SuperAccountManagingRolesCard({
                             <Select
                               onValueChange={(value) =>
                                 setData({ ...data, bidang_id: value })
-                              }>
+                              }
+                            >
                               <SelectTrigger
-                                className={`w-full text-[14px] gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                className={`w-full text-[14px] gap-x-4 rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}
+                              >
                                 <SelectValue
                                   placeholder="Pilih Bidang"
                                   className="text-black-80 text-[14px] w-full"
@@ -430,7 +437,8 @@ export default function SuperAccountManagingRolesCard({
                                           <SelectItem
                                             key={i}
                                             className={`w-full px-4`}
-                                            value={area.id.toString()}>
+                                            value={area.id.toString()}
+                                          >
                                             {area.nama}
                                           </SelectItem>
                                         );
@@ -450,9 +458,11 @@ export default function SuperAccountManagingRolesCard({
                             <Select
                               onValueChange={(value) =>
                                 setData({ ...data, role_id: value })
-                              }>
+                              }
+                            >
                               <SelectTrigger
-                                className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}>
+                                className={`w-full gap-x-4 text-[14px] rounded-lg border-none active:border-none active:outline-none focus:border-none focus:outline-none`}
+                              >
                                 <SelectValue
                                   placeholder="Pilih Bidang"
                                   className="text-black-80 tetx-[14px] w-full"
@@ -468,7 +478,8 @@ export default function SuperAccountManagingRolesCard({
                                           <SelectItem
                                             key={i}
                                             className={`w-full px-4`}
-                                            value={role.id.toString()}>
+                                            value={role.id.toString()}
+                                          >
                                             {role?.name}
                                           </SelectItem>
                                         );
@@ -483,7 +494,8 @@ export default function SuperAccountManagingRolesCard({
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label
                             htmlFor="name"
-                            className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                            className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm"
+                          >
                             Nama Lengkap
                           </Label>
                           <Input
@@ -502,7 +514,8 @@ export default function SuperAccountManagingRolesCard({
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label
                             htmlFor="nip"
-                            className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                            className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm"
+                          >
                             NIP
                           </Label>
                           <Input
@@ -522,7 +535,8 @@ export default function SuperAccountManagingRolesCard({
                         <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                           <Label
                             htmlFor="email"
-                            className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm">
+                            className="focus-within:text-primary-70 font-normal text-left text-xs md:text-sm"
+                          >
                             Email
                           </Label>
                           <Input
@@ -541,7 +555,8 @@ export default function SuperAccountManagingRolesCard({
                         <div className="w-full focus-within:text-black-70 flex flex-col gap-y-2">
                           <Label
                             htmlFor="password"
-                            className="focus-within:text-primary-40 text-[14px] font-normal">
+                            className="focus-within:text-primary-40 text-[14px] font-normal"
+                          >
                             Kata Sandi
                           </Label>
 
@@ -566,7 +581,8 @@ export default function SuperAccountManagingRolesCard({
 
                             <div
                               onClick={() => setSeen(!seen)}
-                              className="p-2 cursor-pointer">
+                              className="p-2 cursor-pointer"
+                            >
                               {seen ? (
                                 <EyeOff className="text-black-40 focus-within:text-primary-40 w-[20px] h-[20px]" />
                               ) : (
@@ -587,7 +603,8 @@ export default function SuperAccountManagingRolesCard({
                           title="Simpan Data"
                           type="submit"
                           disabled={isUpdateLoading ? true : false}
-                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                          className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-xs md:text-sm px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2"
+                        >
                           {isUpdateLoading ? (
                             <Loader className="animate-spin" />
                           ) : (

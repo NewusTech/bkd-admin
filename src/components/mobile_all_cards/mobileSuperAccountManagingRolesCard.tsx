@@ -4,6 +4,7 @@ import React from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 import {
+  AccountAdminInterface,
   AccountManagingRolesInterface,
   AreasInterface,
   RolesInterface,
@@ -72,7 +73,7 @@ export default function MobileSuperAccountManagingRolesCard({
   seen,
   setSeen,
 }: {
-  account: AccountManagingRolesInterface;
+  account: AccountAdminInterface;
   areas: AreasInterface[];
   roles: RolesInterface[];
   index: number;
@@ -129,9 +130,9 @@ export default function MobileSuperAccountManagingRolesCard({
           </div>
 
           <div className="w-full grid grid-cols-3">
-            <div className="w-full font-medium text-black">Nama</div>
+            <div className="w-full font-medium text-black">Nama Role</div>
             <div className="w-full col-span-2">
-              : {account?.name && account?.name}
+              : {account?.role_name && account?.role_name}
             </div>
           </div>
 
@@ -142,19 +143,19 @@ export default function MobileSuperAccountManagingRolesCard({
             </div>
           </div>
 
+          <div className="w-full grid grid-cols-3">
+            <div className="w-full font-medium text-black">NIK</div>
+            <div className="w-full col-span-2">
+              : {account?.nik && account?.nik}
+            </div>
+          </div>
+
           {/* <div className="w-full grid grid-cols-3">
                         <div className="w-full font-medium text-black">
                             Bidang
                         </div>
                         <div className="w-full col-span-2">: {account?.Bidang && account?.Bidang}</div>
                     </div> */}
-
-          <div className="w-full grid grid-cols-3">
-            <div className="w-full font-medium text-black">Role</div>
-            <div className="w-full col-span-2">
-              :{account?.Role && account?.Role}
-            </div>
-          </div>
 
           {/* <div className="card-table text-[12px] p-4 rounded-2xl border border-primary bg-white shadow-sm">
                         <div className="wrap-konten flex flex-col gap-2">

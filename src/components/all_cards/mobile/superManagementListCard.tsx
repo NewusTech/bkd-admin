@@ -70,10 +70,12 @@ export default function MobileSuperManagementListCard({
   index: number;
   data2: {
     nip: string;
+    name:string
   };
   setData2: React.Dispatch<
     React.SetStateAction<{
       nip: string;
+      name:string
     }>
   >;
   isUpdateLoading: boolean;
@@ -87,6 +89,7 @@ export default function MobileSuperManagementListCard({
   const handleSetNipData = () => {
     setData2({
       nip: item?.nip,
+      name : item.name
     });
 
     setNipId(item?.id);
@@ -168,6 +171,27 @@ export default function MobileSuperManagementListCard({
                                         setData2({
                                           ...data2,
                                           nip: e.target.value,
+                                        })
+                                      }
+                                      type="text"
+                                      className="w-full focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70 text-[14px]"
+                                      placeholder="Masukkan NIP"
+                                    />
+                                  </div>
+                                  <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                                    <Label className="focus-within:text-primary-70 font-normal text-[14px] text-left">
+                                      NAMA
+                                    </Label>
+                                    <Input
+                                      id="name"
+                                      name="name"
+                                      value={data2?.name}
+                                      onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                      ) =>
+                                        setData2({
+                                          ...data2,
+                                          name: e.target.value,
                                         })
                                       }
                                       type="text"

@@ -78,6 +78,7 @@ export default function ManagementListEmployeesScreen() {
   });
   const [data2, setData2] = useState({
     nip: "",
+    name: "",
   });
   const [pagination, setPagination] = useState({
     currentPage: 1,
@@ -119,7 +120,6 @@ export default function ManagementListEmployeesScreen() {
   const fetchNipData = async (page: number, limit: number, search: string) => {
     try {
       const response = await getNIPData(page, limit, search);
-
       setNip(response.data);
       setPagination((prev) => ({
         ...prev,
@@ -169,6 +169,7 @@ export default function ManagementListEmployeesScreen() {
         if (response.status === 201) {
           setData2({
             nip: "",
+            name: "",
           });
           Swal.fire({
             icon: "success",
@@ -259,6 +260,7 @@ export default function ManagementListEmployeesScreen() {
       if (response.status === 200) {
         setData2({
           nip: "",
+          name: "",
         });
         Swal.fire({
           icon: "success",
@@ -352,12 +354,14 @@ export default function ManagementListEmployeesScreen() {
               <div className="w-full">
                 <Drawer
                   open={isDrawerOpenImport}
-                  onOpenChange={setIsDrawerOpenImport}>
+                  onOpenChange={setIsDrawerOpenImport}
+                >
                   <DrawerTrigger
                     onClick={() => {
                       setIsDrawerOpenImport(true);
                     }}
-                    className="w-full">
+                    className="w-full"
+                  >
                     <div className="w-full text-[14px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                       <Import />
                       Tambah
@@ -369,7 +373,8 @@ export default function ManagementListEmployeesScreen() {
 
                       <form
                         onSubmit={handleCreateNIPImport}
-                        className="w-full flex flex-col gap-y-3 max-h-full">
+                        className="w-full flex flex-col gap-y-3 max-h-full"
+                      >
                         <div className="text-center mb-4">
                           <TypingEffect
                             className="text-[14px]"
@@ -390,7 +395,8 @@ export default function ManagementListEmployeesScreen() {
                                 onDrop={handleDropFile}
                                 className={`w-full ${
                                   previewFileName ? "md:w-8/12" : "w-full"
-                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                                }  h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}
+                              >
                                 <>
                                   <input
                                     type="file"
@@ -401,7 +407,8 @@ export default function ManagementListEmployeesScreen() {
                                   />
                                   <label
                                     htmlFor="file-input-image"
-                                    className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                    className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer"
+                                  >
                                     {previewFileName
                                       ? previewFileName
                                       : "Drag and drop file here or click to select file"}
@@ -422,7 +429,8 @@ export default function ManagementListEmployeesScreen() {
                             title="Simpan Data"
                             type="submit"
                             disabled={isLoadingImport ? true : false}
-                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full"
+                          >
                             {isLoadingImport ? (
                               <Loader className="animate-spin" />
                             ) : (
@@ -442,7 +450,8 @@ export default function ManagementListEmployeesScreen() {
                     onClick={() => {
                       setIsDrawerOpen(true);
                     }}
-                    className="w-full">
+                    className="w-full"
+                  >
                     <div className="w-full text-[14px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 h-10 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                       <AddIcon />
                       Tambah
@@ -454,7 +463,8 @@ export default function ManagementListEmployeesScreen() {
 
                       <form
                         onSubmit={handleCreateNIP}
-                        className="w-full flex flex-col gap-y-3 max-h-full">
+                        className="w-full flex flex-col gap-y-3 max-h-full"
+                      >
                         <div className="text-center mb-4">
                           <TypingEffect
                             className="text-[14px]"
@@ -483,6 +493,26 @@ export default function ManagementListEmployeesScreen() {
                               </div>
                             )}
                           </div>
+                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                            <Label className="focus-within:text-primary-70 font-normal text-left text-[14px]">
+                              Nama
+                            </Label>
+                            <Input
+                              id="name"
+                              name="name"
+                              value={data2.name}
+                              onChange={handleChange}
+                              type="text"
+                              className="w-full text-[14px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                              placeholder="Masukkan NAMA"
+                            />
+
+                            {hasSubmitted && errors?.name?._errors && (
+                              <div className="text-red-500 text-[14px] md:text-[16px]">
+                                {errors.name._errors[0]}
+                              </div>
+                            )}
+                          </div>
                         </div>
 
                         <div className="flex gap-4 justify-between">
@@ -495,7 +525,8 @@ export default function ManagementListEmployeesScreen() {
                             title="Simpan Data"
                             type="submit"
                             disabled={isLoading ? true : false}
-                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full">
+                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[14px] px-3 rounded-lg border border-primary text-center font-medium gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2 w-full"
+                          >
                             {isLoading ? (
                               <Loader className="animate-spin" />
                             ) : (
@@ -529,12 +560,14 @@ export default function ManagementListEmployeesScreen() {
               <div className="w-full">
                 <AlertDialog
                   open={isDialogOpenImport}
-                  onOpenChange={setIsDialogOpenImport}>
+                  onOpenChange={setIsDialogOpenImport}
+                >
                   <AlertDialogTrigger
                     onClick={() => {
                       setIsDialogOpenImport(true);
                     }}
-                    className="w-full">
+                    className="w-full"
+                  >
                     <div className="w-full h-12 text-[14px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                       <Import />
                       Import
@@ -555,7 +588,8 @@ export default function ManagementListEmployeesScreen() {
 
                       <form
                         onSubmit={handleCreateNIPImport}
-                        className="w-full flex flex-col gap-y-3 max-h-[500px]">
+                        className="w-full flex flex-col gap-y-3 max-h-[500px]"
+                      >
                         <div className="w-full flex flex-col gap-y-5 verticalScroll">
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-2">
                             <Label className="focus-within:text-primary-70 font-normal text-[14px] md:text-[16px]">
@@ -567,7 +601,8 @@ export default function ManagementListEmployeesScreen() {
                                 onDragOver={handleDragOver}
                                 onDragLeave={handleDragLeave}
                                 onDrop={handleDropFile}
-                                className={`w-full h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}>
+                                className={`w-full h-[100px] border-2 border-dashed rounded-xl mt-1 flex flex-col items-center justify-center }`}
+                              >
                                 <>
                                   <input
                                     type="file"
@@ -578,7 +613,8 @@ export default function ManagementListEmployeesScreen() {
                                   />
                                   <label
                                     htmlFor="file-input-image"
-                                    className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer">
+                                    className="text-[14px] md:text-[16px] text-center text-neutral-600 p-2 md:p-4 font-light cursor-pointer"
+                                  >
                                     {previewFileName
                                       ? previewFileName
                                       : "Drag and drop file here or click to select file"}
@@ -598,7 +634,8 @@ export default function ManagementListEmployeesScreen() {
                           <Button
                             type="submit"
                             disabled={isLoadingImport ? true : false}
-                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[16px] px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[16px] px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2"
+                          >
                             {isLoadingImport ? (
                               <Loader className="animate-spin" />
                             ) : (
@@ -618,7 +655,8 @@ export default function ManagementListEmployeesScreen() {
                     onClick={() => {
                       setIsDialogOpen(true);
                     }}
-                    className="w-full">
+                    className="w-full"
+                  >
                     <div className="w-full h-12 text-[14px] bg-primary-40 flex items-center justify-center hover:bg-primary-70 text-line-10 px-3 rounded-lg border border-primary text-center font-medium gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
                       <AddIcon />
                       Tambah
@@ -639,7 +677,8 @@ export default function ManagementListEmployeesScreen() {
 
                       <form
                         onSubmit={handleCreateNIP}
-                        className="w-full flex flex-col gap-y-3 max-h-[500px]">
+                        className="w-full flex flex-col gap-y-3 max-h-[500px]"
+                      >
                         <div className="w-full flex flex-col gap-y-5 verticalScroll">
                           <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
                             <Label className="focus-within:text-primary-70 font-normal text-left text-[16px]">
@@ -661,6 +700,26 @@ export default function ManagementListEmployeesScreen() {
                               </div>
                             )}
                           </div>
+                          <div className="w-full focus-within:text-primary-70 flex flex-col gap-y-3">
+                            <Label className="focus-within:text-primary-70 font-normal text-left text-[16px]">
+                              Name
+                            </Label>
+                            <Input
+                              id="name"
+                              name="name"
+                              value={data2.name}
+                              onChange={handleChange}
+                              type="number"
+                              className="w-full text-[16px] focus-visible:text-black-70 focus-visible:border focus-visible:border-primary-70"
+                              placeholder="Masukkan Nama"
+                            />
+
+                            {hasSubmitted && errors?.name?._errors && (
+                              <div className="text-red-500 text-[14px] md:text-[16px]">
+                                {errors.name._errors[0]}
+                              </div>
+                            )}
+                          </div>
                         </div>
 
                         <div className="w-full flex flex-row justify-between items-center gap-x-5">
@@ -672,7 +731,8 @@ export default function ManagementListEmployeesScreen() {
                           <Button
                             type="submit"
                             disabled={isLoading ? true : false}
-                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[16px] px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2">
+                            className="bg-primary-40 hover:bg-primary-70 text-line-10 h-10 text-[16px] px-3 rounded-lg border border-primary text-center font-medium justify-end flex gap-2 items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 py-2"
+                          >
                             {isLoading ? (
                               <Loader className="animate-spin" />
                             ) : (

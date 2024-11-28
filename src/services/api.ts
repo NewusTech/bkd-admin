@@ -88,7 +88,29 @@ export const getAccountManagingRoles = async (
   const token = Cookies.get("Authorization");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/info/get?page=${page}&limit=${limit}`,
+    // `${process.env.NEXT_PUBLIC_API_URL}/user/info/get?page=${page}&limit=${limit}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/admin/get?page=${page}&limit=${limit}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+export const getAccountUser = async (
+  page: number,
+  limit: number,
+  search: string
+) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/info/get?page=${page}&limit=${limit}&search=${search}`,
     {
       method: "GET",
       headers: {
@@ -1997,6 +2019,26 @@ export const getSignatureBarcode = async (id: number) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      cache: "no-store",
+    }
+  );
+
+  return await response.json();
+};
+
+// update Password User / Reset Password User
+export const updateUserPasswordByAdmin = async (data: any, slug: string) => {
+  const token = Cookies.get("Authorization");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/change/password/by/admin/${slug}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
       cache: "no-store",
     }
   );
