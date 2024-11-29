@@ -96,8 +96,7 @@ export default function SuperAccountManagingUsersScreen() {
 
     try {
       const response = await updateUserPasswordByAdmin(payload, payload.slug);
-
-      if (response.status === 200) {
+      if (response.ok) {
         setPayload({
           confirmNewPassword: "",
           newPassword: "",
@@ -308,7 +307,7 @@ export default function SuperAccountManagingUsersScreen() {
                                                   {isLoading ? (
                                                     <Loader className="animate-spin" />
                                                   ) : (
-                                                    "Simpan Password"
+                                                    "Simpan Password Baru"
                                                   )}
                                                 </Button>
                                               </div>
@@ -485,7 +484,7 @@ export default function SuperAccountManagingUsersScreen() {
                                           {isLoading ? (
                                             <Loader className="animate-spin" />
                                           ) : (
-                                            "Simpan Password"
+                                            "Simpan Password Baru"
                                           )}
                                         </Button>
                                       </div>

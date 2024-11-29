@@ -2033,7 +2033,7 @@ export const updateUserPasswordByAdmin = async (data: any, slug: string) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/user/change/password/by/admin/${slug}`,
     {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -2043,5 +2043,5 @@ export const updateUserPasswordByAdmin = async (data: any, slug: string) => {
     }
   );
 
-  return await response.json();
+  return response;
 };
